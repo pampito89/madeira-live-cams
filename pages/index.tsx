@@ -42,10 +42,8 @@ const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
       <h2 className="font-semibold text-navy">
         Madeira Airport live camera
       </h2>
-
       <p className="mt-1 text-xs text-slate-500">
-        Watch live conditions at Cristiano Ronaldo Madeira International Airport
-        (FNC / LPMA), including runway activity, cloud cover and visibility.
+  FNC / LPMA · runway and weather conditions.
       </p>
     </div>
 
@@ -63,12 +61,9 @@ const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
       allowFullScreen
     />
   </div>
-
-  <p className="text-[11px] text-slate-500">
-    Live stream by Madeira Woman Spotter. Airport activity and weather conditions
-    may change quickly.
+  <p className="mt-1 text-xs text-slate-500">
+  Live status on Flightradar24.
   </p>
-
   <form
   onSubmit={trackFlight}
   className="mt-1 rounded-lg border border-slate-200 bg-panel p-3"
@@ -102,11 +97,6 @@ const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
         Track flight
       </button>
     </div>
-
-    <p className="text-[11px] text-slate-500">
-      Flight data opens on Flightradar24. Enter the airline code and flight
-      number without spaces.
-    </p>
   </div>
 </form>
 </div>
