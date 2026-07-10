@@ -241,10 +241,8 @@ export default function WeatherGuidePage() {
 </Head>
       <main className="page-shell">
         <section className="mb-6">
-          <p className="text-sm font-medium text-ocean">Weather guide</p>
-
           <h1 className="mt-1 text-2xl font-semibold text-navy sm:text-3xl">
-            Pico do Arieiro sunrise forecast
+            Pico do Arieiro Sunrise Forecast
           </h1>
 
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
@@ -253,13 +251,7 @@ export default function WeatherGuidePage() {
         </section>
 
         <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-          <div className="mb-5 rounded-xl bg-panel p-4 text-sm text-slate-600">
-            <p className="font-semibold text-navy">How the rating works</p>
-            <p className="mt-1">
-            Ratings use the hourly forecast that contains the sunrise time at Pico do Arieiro.
-            </p>
-          </div>
-
+          
           {forecast.loading && (
             <div className="rounded-xl bg-panel p-5 text-sm text-slate-600">
               Loading the 7-day sunrise forecast…
