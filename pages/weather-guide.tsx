@@ -45,45 +45,6 @@ function formatSunrise(time: string) {
     timeZone: 'Atlantic/Madeira',
   }).format(new Date(time));
 }
-function createWindyUrl(sunrise: string) {
-  const [datePart, timePart] = sunrise.split('T');
-  const [year, month, day] = datePart.split('-').map(Number);
-  const [hour, minute] = timePart.split(':').map(Number);
-
-  // For each forecast date determine whether Madeira is UTC+0 or UTC+1.
-  const offsetText = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Atlantic/Madeira',
-    timeZoneName: 'longOffset',
-  })
-    .formatToParts(new Date(Date.UTC(year, month - 1, day, 12)))
-    .find((part) => part.type === 'timeZoneName')?.value ?? 'GMT';
-
-  const offsetMatch = offsetText.match(/GMT([+-])(\d{2}):?(\d{2})?/);
-
-  const offsetMinutes = offsetMatch
-    ? (offsetMatch[1] === '+' ? 1 : -1) *
-      (Number(offsetMatch[2]) * 60 + Number(offsetMatch[3] ?? 0))
-    : 0;
-
-  const utcTime = new Date(
-    Date.UTC(year, month - 1, day, hour, minute) - offsetMinutes * 60_000
-  );
-
-  // Windy uses three-hour UTC timestamps.
-  utcTime.setUTCHours(
-    Math.floor(utcTime.getUTCHours() / 3) * 3,
-    0,
-    0,
-    0
-  );
-
-  const yyyy = utcTime.getUTCFullYear();
-  const mm = String(utcTime.getUTCMonth() + 1).padStart(2, '0');
-  const dd = String(utcTime.getUTCDate()).padStart(2, '0');
-  const hh = String(utcTime.getUTCHours()).padStart(2, '0');
-
-  return `https://www.windy.com/?wind,${yyyy}-${mm}-${dd}-${hh},${PICO_DO_ARIEIRO.latitude},${PICO_DO_ARIEIRO.longitude},11`;
-}
 function sunriseRating(day: SunriseDay) {
   const clearUpperSky = day.midClouds === 0 && day.highClouds === 0;
   const lowCloudsAreGood = day.lowClouds <= 70;
@@ -120,17 +81,41 @@ function sunriseRating(day: SunriseDay) {
     className: 'bg-slate-100 text-slate-700 border-slate-200',
   };
 }
-function windyCloudUrl(date: string, sunrise: string) {
-  const sunriseDate = new Date(sunrise);
+function windyCloudUrl(sunrise: string) {
+  const [datePart, timePart] = sunrise.split('T');
+  const [year, month, day] = datePart.split('-').map(Number);
+  const [hour, minute] = timePart.split(':').map(Number);
 
-  // Windy URL supports forecast times in 3-hour increments.
-  // Round down to the closest 3-hour forecast point.
-  const hour = sunriseDate.getHours();
-  const windyHour = Math.floor(hour / 3) * 3;
+  // Madeira can be GMT or GMT+1. Read its correct offset for this date.
+  const offsetText =
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Atlantic/Madeira',
+      timeZoneName: 'longOffset',
+    })
+      .formatToParts(new Date(Date.UTC(year, month - 1, day, 12)))
+      .find((part) => part.type === 'timeZoneName')?.value ?? 'GMT';
 
-  const time = `${date}-${String(windyHour).padStart(2, '0')}`;
+  const match = offsetText.match(/GMT([+-])(\d{2}):?(\d{2})?/);
 
-  return `https://www.windy.com/?lclouds,${time},32.7352,-16.9280,11`;
+  const offsetMinutes = match
+    ? (match[1] === '+' ? 1 : -1) *
+      (Number(match[2]) * 60 + Number(match[3] ?? 0))
+    : 0;
+
+  // Convert Madeira sunrise time to UTC.
+  const utcTime = new Date(
+    Date.UTC(year, month - 1, day, hour, minute) - offsetMinutes * 60_000
+  );
+
+  // Windy accepts 3-hour UTC forecast steps: 00, 03, 06, 09, etc.
+  utcTime.setUTCHours(Math.floor(utcTime.getUTCHours() / 3) * 3, 0, 0, 0);
+
+  const yyyy = utcTime.getUTCFullYear();
+  const mm = String(utcTime.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(utcTime.getUTCDate()).padStart(2, '0');
+  const hh = String(utcTime.getUTCHours()).padStart(2, '0');
+
+  return `https://www.windy.com/?lclouds,${yyyy}-${mm}-${dd}-${hh},32.7352,-16.9280,11,d:picker`;
 }
 export default function WeatherGuidePage() {
   const [forecast, setForecast] = useState<ForecastState>({
@@ -322,22 +307,13 @@ return {
                       </div>
                     </div>
                     <a
-  href={windyCloudUrl(day.date, day.sunrise)}
+  href={windyCloudUrl(day.sunrise)}
   target="_blank"
   rel="noopener noreferrer"
   className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-3 py-2 text-xs font-medium text-navy hover:bg-slate-100"
 >
-  View low clouds on Windy
+  View Pico do Arieiro low clouds on Windy
 </a>
-
-                    <a
-                      href={createWindyUrl(day.sunrise)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-700"
-                    >
-                      Compare with Windy
-                    </a>
                   </article>
                 );
               })}
