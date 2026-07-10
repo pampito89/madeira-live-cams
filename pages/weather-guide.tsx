@@ -120,7 +120,18 @@ function sunriseRating(day: SunriseDay) {
     className: 'bg-slate-100 text-slate-700 border-slate-200',
   };
 }
+function windyCloudUrl(date: string, sunrise: string) {
+  const sunriseDate = new Date(sunrise);
 
+  // Windy URL supports forecast times in 3-hour increments.
+  // Round down to the closest 3-hour forecast point.
+  const hour = sunriseDate.getHours();
+  const windyHour = Math.floor(hour / 3) * 3;
+
+  const time = `${date}-${String(windyHour).padStart(2, '0')}`;
+
+  return `https://www.windy.com/?lclouds,${time},32.7352,-16.9280,11`;
+}
 export default function WeatherGuidePage() {
   const [forecast, setForecast] = useState<ForecastState>({
     loading: true,
@@ -310,6 +321,14 @@ return {
                         </p>
                       </div>
                     </div>
+                    <a
+  href={windyCloudUrl(day.date, day.sunrise)}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-3 py-2 text-xs font-medium text-navy hover:bg-slate-100"
+>
+  View low clouds on Windy
+</a>
 
                     <a
                       href={createWindyUrl(day.sunrise)}
