@@ -55,15 +55,12 @@ const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
   <div className="aspect-video overflow-hidden rounded-lg bg-slate-900">
     <iframe
       className="h-full w-full"
-      src="https://www.youtube.com/embed/Cai6b9-Nkgs?autoplay=0&mute=1"
+      src="https://www.youtube.com/watch?v=0iDQDwx21Oo?autoplay=0&mute=1"
       title="Madeira Airport live camera — FNC / LPMA"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
     />
   </div>
-  <p className="mt-1 text-xs text-slate-500">
-  Live status on Flightradar24.
-  </p>
   <form
   onSubmit={trackFlight}
   className="mt-1 rounded-lg border border-slate-200 bg-panel p-3"
