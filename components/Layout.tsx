@@ -32,7 +32,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     href="/weather-guide"
     className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
   >
-    Weather
+    Sunrise P. do Ariero
   </Link>
 
   <Link
