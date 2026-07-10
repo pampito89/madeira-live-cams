@@ -118,6 +118,13 @@ function windyCloudUrl(sunrise: string) {
 
   return `https://www.windy.com/?lclouds,${yyyy}-${mm}-${dd}-${hh},32.7352,-16.9280,11,d:picker`;
 }
+function sunriseRatingIcon(title: string) {
+  if (title === 'Excellent') return '☀️';
+  if (title === 'Good') return '🌤️';
+  if (title === 'Cloudy risk') return '🌧️';
+
+  return '☁️';
+}
 export default function WeatherGuidePage() {
   const [forecast, setForecast] = useState<ForecastState>({
     loading: true,
@@ -287,12 +294,15 @@ export default function WeatherGuidePage() {
                       </div>
                     </div>
                     <div
-  className={`mt-4 rounded-xl border px-4 py-3 text-base font-semibold ${rating.className}`}
+  className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
+  aria-label={`${rating.title} sunrise conditions`}
+  title={`${rating.title} sunrise conditions`}
 >
-  <p>{rating.title} sunrise conditions</p>
-  <p className="mt-1 text-sm font-normal opacity-90">
-    {rating.description}
-  </p>
+  <span aria-hidden="true" className="text-sm">
+    {sunriseRatingIcon(rating.title)}
+  </span>
+
+  <span>{rating.title}</span>
 </div>
                     <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                       <div className="rounded-lg bg-panel p-3">
