@@ -6,7 +6,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center gap-3">
   <img
     src="/images/logo.svg"
@@ -15,20 +15,33 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   />
 
   <div className="flex flex-col">
-    <span className="font-semibold text-navy">
-      Madeira Live Cams
-    </span>
-    <span className="text-xs text-slate-500">
-      Check the weather. Choose your view.
-    </span>
+    <span className="whitespace-nowrap text-base font-semibold text-navy sm:text-lg">
+  Madeira Live Cams
+</span>
   </div>
 </Link>
-          <nav className="flex items-center gap-4 text-sm text-navy">
-            <Link href="/cameras" className="hover:text-ocean">Explore Cameras</Link>
-            <Link href="/map" className="hover:text-ocean">Map</Link>
-            <Link href="/weather-guide" className="hover:text-ocean">Weather Guide</Link>
-            <Link href="/about" className="hover:text-ocean">About</Link>
-          </nav>
+          <nav className="grid w-full grid-cols-3 gap-2 text-center sm:flex sm:w-auto sm:items-center sm:justify-end sm:gap-4">
+  <Link
+    href="/cameras"
+    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+  >
+    Explore
+  </Link>
+
+  <Link
+    href="/weather-guide"
+    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+  >
+    Weather
+  </Link>
+
+  <Link
+    href="/about"
+    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+  >
+    About
+  </Link>
+</nav>
         </div>
       </header>
       <main className="flex-1 bg-panel">
