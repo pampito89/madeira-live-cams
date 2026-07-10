@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/xhWjJvm4rSmnb8t7gSBqk/_buildManifest.js",
-    "static/xhWjJvm4rSmnb8t7gSBqk/_ssgManifest.js"
+    "static/-IeEdq0WUXTNcBahLCzRj/_buildManifest.js",
+    "static/-IeEdq0WUXTNcBahLCzRj/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -21,7 +21,7 @@
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-8b0186800519fc26.js",
-      "static/css/c9aa42b8fb260ae0.css",
+      "static/css/e93d7e83eb02b285.css",
       "static/chunks/pages/_app-a7e2d84213bc89e5.js"
     ],
     "/_error": [
@@ -49,7 +49,7 @@
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-8b0186800519fc26.js",
       "static/chunks/664-806b52bf69b97e98.js",
-      "static/chunks/pages/weather-guide-776bfc24af8cd6ad.js"
+      "static/chunks/pages/weather-guide-4e813e045920d7c1.js"
     ]
   },
   "ampFirstPages": []
