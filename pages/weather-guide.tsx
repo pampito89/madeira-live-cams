@@ -133,7 +133,7 @@ export default function WeatherGuidePage() {
   `&longitude=${PICO_DO_ARIEIRO.longitude}` +
   '&hourly=cloud_cover_low,cloud_cover_mid,cloud_cover_high,precipitation_probability,wind_speed_10m,wind_direction_10m' +
   '&daily=sunrise' +
-  '&forecast_days=7' +
+  '&forecast_days=8' +
   '&timezone=Atlantic%2FMadeira';
 
         const response = await fetch(url);
@@ -144,44 +144,36 @@ export default function WeatherGuidePage() {
 
         const data = await response.json();
 
-        const days: SunriseDay[] = data.daily.time.map(
-          (date: string, index: number) => {
-            const sunrise = data.daily.sunrise[index];
-const sunriseIndex = data.hourly.time.findIndex(
-  (time: string) => time === sunrise
-);
+        const days: SunriseDay[] = data.daily.time
+  .slice(1, 8)
+  .map((date: string, forecastIndex: number) => {
+    const index = forecastIndex + 1;
+    const sunrise = data.daily.sunrise[index];
 
-// Open-Meteo returns hourly values (for example, 06:00).
-// Sunrise may be 06:42, so use the forecast hour that contains sunrise.
-const sunriseHour = sunrise.slice(0, 13) + ':00';
+    const sunriseHour = sunrise.slice(0, 13) + ':00';
 
-const exactSunriseIndex = data.hourly.time.findIndex(
-  (time: string) => time === sunriseHour
-);
+    const exactSunriseIndex = data.hourly.time.findIndex(
+      (time: string) => time === sunriseHour
+    );
 
-const safeIndex =
-  exactSunriseIndex >= 0
-    ? exactSunriseIndex
-    : sunriseIndex >= 0
-      ? sunriseIndex
-      : index * 24 + 7;
-return {
-  date,
-  sunrise,
-  lowClouds: Math.round(data.hourly.cloud_cover_low[safeIndex] ?? 0),
-  midClouds: Math.round(data.hourly.cloud_cover_mid[safeIndex] ?? 0),
-  highClouds: Math.round(data.hourly.cloud_cover_high[safeIndex] ?? 0),
-  rainChance: Math.round(
-    data.hourly.precipitation_probability[safeIndex] ?? 0
-  ),
-  windSpeed: Math.round(data.hourly.wind_speed_10m[safeIndex] ?? 0),
-  windDirection: Math.round(
-    data.hourly.wind_direction_10m[safeIndex] ?? 0
-  ),
-};
-          }
-        );
+    const safeIndex =
+      exactSunriseIndex >= 0 ? exactSunriseIndex : index * 24 + 7;
 
+    return {
+      date,
+      sunrise,
+      lowClouds: Math.round(data.hourly.cloud_cover_low[safeIndex] ?? 0),
+      midClouds: Math.round(data.hourly.cloud_cover_mid[safeIndex] ?? 0),
+      highClouds: Math.round(data.hourly.cloud_cover_high[safeIndex] ?? 0),
+      rainChance: Math.round(
+        data.hourly.precipitation_probability[safeIndex] ?? 0
+      ),
+      windSpeed: Math.round(data.hourly.wind_speed_10m[safeIndex] ?? 0),
+      windDirection: Math.round(
+        data.hourly.wind_direction_10m[safeIndex] ?? 0
+      ),
+    };
+  });
         setForecast({
           loading: false,
           error: null,
@@ -213,7 +205,7 @@ return {
           </h1>
 
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            Seven-day forecast for sunrise conditions at 1,818 m.
+            Next seven sunrise forecasts at 1,818 m, starting tomorrow.
           </p>
         </section>
 
