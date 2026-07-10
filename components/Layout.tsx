@@ -6,44 +6,47 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <Link href="/" className="flex items-center gap-3">
-  <img
-    src="/images/logo.svg"
-    alt="Madeira Live Cams"
-    className="h-10 w-auto"
-  />
+  <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-between gap-3">
+      <Link href="/" className="flex min-w-0 items-center gap-2">
+        <img
+          src="/images/logo.svg"
+          alt="Madeira Live Cams"
+          width={32}
+          height={32}
+          className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
+        />
 
-  <div className="flex flex-col">
-    <span className="whitespace-nowrap text-base font-semibold text-navy sm:text-lg">
-  Madeira Live Cams
-</span>
+        <span className="truncate text-sm font-semibold text-navy sm:text-lg">
+          Madeira Live Cams
+        </span>
+      </Link>
+
+      <nav className="flex shrink-0 items-center gap-1.5 sm:gap-4">
+        <Link
+          href="/cameras"
+          className="rounded-lg px-2 py-2 text-[13px] font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+        >
+          Explore
+        </Link>
+
+        <Link
+          href="/weather-guide"
+          className="rounded-lg px-2 py-2 text-[13px] font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+        >
+          Sunrise
+        </Link>
+
+        <Link
+          href="/about"
+          className="rounded-lg px-2 py-2 text-[13px] font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
+        >
+          About
+        </Link>
+      </nav>
+    </div>
   </div>
-</Link>
-          <nav className="grid w-full grid-cols-3 gap-2 text-center sm:flex sm:w-auto sm:items-center sm:justify-end sm:gap-4">
-  <Link
-    href="/cameras"
-    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
-  >
-    Explore
-  </Link>
-
-  <Link
-    href="/weather-guide"
-    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
-  >
-    Sunrise P. do Ariero
-  </Link>
-
-  <Link
-    href="/about"
-    className="rounded-lg px-2 py-2 text-xs font-medium text-navy hover:bg-panel hover:text-ocean sm:p-0 sm:text-sm"
-  >
-    About
-  </Link>
-</nav>
-        </div>
-      </header>
+</header>
       <main className="flex-1 bg-panel">
         {children}
       </main>
