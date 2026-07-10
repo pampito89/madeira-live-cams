@@ -7,15 +7,22 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-white">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-ocean text-white font-bold text-lg">
-              ML
-            </span>
-            <div className="flex flex-col">
-              <span className="font-semibold text-navy">Madeira Live Cams</span>
-              <span className="text-xs text-slate-500">Check the weather. Choose your view.</span>
-            </div>
-          </Link>
+          <Link href="/" className="flex items-center gap-3">
+  <img
+    src="/images/logo.svg"
+    alt="Madeira Live Cams"
+    className="h-10 w-auto"
+  />
+
+  <div className="flex flex-col">
+    <span className="font-semibold text-navy">
+      Madeira Live Cams
+    </span>
+    <span className="text-xs text-slate-500">
+      Check the weather. Choose your view.
+    </span>
+  </div>
+</Link>
           <nav className="flex items-center gap-4 text-sm text-navy">
             <Link href="/cameras" className="hover:text-ocean">Explore Cameras</Link>
             <Link href="/map" className="hover:text-ocean">Map</Link>
