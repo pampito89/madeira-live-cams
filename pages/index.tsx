@@ -35,43 +35,7 @@ const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
   return (
     <Layout>
       <div className="mx-auto max-w-6xl px-4 py-6 flex flex-col gap-6">
-        <section className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-2xl md:text-3xl font-semibold text-navy">
-              Check the weather. Choose your view. Explore Madeira.
-            </h1>
-            <p className="text-sm text-slate-600">
-              See live conditions across Madeira before you drive to Pico do Arieiro, pick a beach in Machico,
-              or visit the natural pools in Porto Moniz.
-            </p>
-            <div className="flex flex-col gap-3">
-              <label className="text-xs font-medium text-slate-700">Search camera locations</label>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Try Arieiro, Machico, Seixal, Porto Moniz..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ocean focus:border-ocean"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2 mt-3 text-xs">
-              {['Mountains','Beaches','Towns','Roads','Sunrise spots'].map((label) => (
-                <span
-                  key={label}
-                  className="px-3 py-1 rounded-full bg-panel text-slate-700 border border-slate-200"
-                >
-                  {label}
-                </span>
-              ))}
-            </div>
-            <div className="mt-4 text-xs text-slate-500 bg-white rounded-lg border border-slate-200 p-3">
-              <p className="font-semibold mb-1">Weather planning tip</p>
-              <p>
-                Mountain webcams (Pico do Arieiro, Achada do Teixeira, Eira do Serrado) change fast with clouds and
-                fog. Check them just before you leave, and compare at least two sources.
-              </p>
-            </div>
-          </div>
+        <section className="w-full">
           <div className="rounded-xl bg-white border border-slate-200 p-4 flex flex-col gap-3">
   <div className="flex items-start justify-between gap-3">
     <div>
