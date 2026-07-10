@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import Head from 'next/head';
 
 type SunriseDay = {
   date: string;
@@ -196,6 +197,41 @@ export default function WeatherGuidePage() {
 
   return (
     <Layout>
+        <Head>
+  <title>Pico do Arieiro Sunrise Forecast | Madeira Live Cams</title>
+
+  <meta
+    name="description"
+    content="Check the next 7 sunrise forecasts for Pico do Arieiro, Madeira. See low, mid and high cloud cover, rain chance, wind and sunrise conditions."
+  />
+
+  <link
+    rel="canonical"
+    href="https://madeiralivecams.com/weather-guide"
+  />
+
+  <meta
+    property="og:title"
+    content="Pico do Arieiro Sunrise Forecast | Madeira Live Cams"
+  />
+
+  <meta
+    property="og:description"
+    content="Plan your Pico do Arieiro sunrise with a 7-day cloud, rain and wind forecast."
+  />
+
+  <meta
+    property="og:url"
+    content="https://madeiralivecams.com/weather-guide"
+  />
+
+  <meta property="og:type" content="website" />
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+</Head>
       <main className="page-shell">
         <section className="mb-6">
           <p className="text-sm font-medium text-ocean">Weather guide</p>
