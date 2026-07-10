@@ -257,18 +257,15 @@ return {
                         Sunrise: {formatSunrise(day.sunrise)} · Conditions at sunrise
                         </p>
                       </div>
-
-                      <span
-                        className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
-                      >
-                        {rating.title}
-                      </span>
                     </div>
-
-                    <p className="mt-3 text-sm text-slate-600">
-                      {rating.description}
-                    </p>
-
+                    <div
+  className={`mt-4 rounded-xl border px-4 py-3 text-base font-semibold ${rating.className}`}
+>
+  <p>{rating.title} sunrise conditions</p>
+  <p className="mt-1 text-sm font-normal opacity-90">
+    {rating.description}
+  </p>
+</div>
                     <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                       <div className="rounded-lg bg-panel p-3">
                         <p className="text-xs text-slate-500">Low clouds</p>
@@ -310,9 +307,9 @@ return {
   href={windyCloudUrl(day.sunrise)}
   target="_blank"
   rel="noopener noreferrer"
-  className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-3 py-2 text-xs font-medium text-navy hover:bg-slate-100"
+  className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-[#4A939C] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#34737B]"
 >
-  View Pico do Arieiro low clouds on Windy
+  Open in Windy
 </a>
                   </article>
                 );
