@@ -283,28 +283,30 @@ export default function WeatherGuidePage() {
                     className="rounded-xl border border-slate-200 bg-white p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="font-semibold text-navy">
-                          {formatDate(day.date)}
-                        </h2>
+  <div>
+    <h2 className="font-semibold text-navy">
+      {formatDate(day.date)}
+    </h2>
 
-                        <p className="mt-1 text-sm text-slate-500">
-                        Sunrise: {formatSunrise(day.sunrise)} · Conditions at sunrise
-                        </p>
-                      </div>
-                    </div>
-                    <div
-  className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
-  aria-label={`${rating.title} sunrise conditions`}
-  title={`${rating.title} sunrise conditions`}
->
-  <span aria-hidden="true" className="text-sm">
-    {sunriseRatingIcon(rating.title)}
-  </span>
+    <p className="mt-1 text-sm text-slate-500">
+      Sunrise: {formatSunrise(day.sunrise)} · Conditions at sunrise
+    </p>
+  </div>
 
-  <span>{rating.title}</span>
+  <div
+    className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
+    aria-label={`${rating.title} sunrise conditions`}
+    title={`${rating.title} sunrise conditions`}
+  >
+    <span aria-hidden="true" className="text-sm">
+      {sunriseRatingIcon(rating.title)}
+    </span>
+
+    <span>{rating.title}</span>
+  </div>
 </div>
-                    <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+
+<div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                       <div className="rounded-lg bg-panel p-3">
                         <p className="text-xs text-slate-500">Low clouds</p>
                         <p className="mt-1 font-semibold text-navy">
