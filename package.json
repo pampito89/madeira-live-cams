@@ -9,21 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-<<<<<<< HEAD
-    "typescript": "^5.6.3",
-=======
-    "typescript": "5.4.0",
->>>>>>> a103d53bf9b8c97429848fa783bda19c06bd1ee2
-    "tailwindcss": "3.4.0",
-    "postcss": "8.4.0",
-    "autoprefixer": "10.4.0",
-    "@types/react": "18.2.0",
-    "@types/node": "20.0.0",
-    "@headlessui/react": "1.7.17",
-    "@heroicons/react": "2.0.18",
-    "axios": "1.6.0"
+    "next": "14.2.33",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.30",
+    "@types/react": "18.3.20",
+    "@types/react-dom": "18.3.7",
+    "autoprefixer": "10.4.21",
+    "postcss": "8.5.3",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.8.3"
   }
 }
