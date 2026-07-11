@@ -4,18 +4,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { locations } from '../data/locations';
-
-const filters = [
-  'All',
-  'Viewpoints',
-  'Hiking',
-  'Beaches',
-  'City & culture',
-  'Levada walks',
-];
+import { useMessages } from '../lib/i18n/useMessages';
 
 export default function CamerasPage() {
+  const { messages } = useMessages();
   const [activeFilter, setActiveFilter] = useState('All');
+
+  const filters = [
+    { value: 'All', label: messages.exploreList.filters.all },
+    {
+      value: 'Viewpoints',
+      label: messages.exploreList.filters.viewpoints,
+    },
+    { value: 'Hiking', label: messages.exploreList.filters.hiking },
+    { value: 'Beaches', label: messages.exploreList.filters.beaches },
+    {
+      value: 'City & culture',
+      label: messages.exploreList.filters.cityCulture,
+    },
+    {
+      value: 'Levada walks',
+      label: messages.exploreList.filters.levadaWalks,
+    },
+  ];
 
   const filteredLocations = useMemo(() => {
     if (activeFilter === 'All') {
@@ -23,7 +34,7 @@ export default function CamerasPage() {
     }
 
     return locations.filter((location) =>
-      location.tags.includes(activeFilter)
+      location.tags.includes(activeFilter),
     );
   }, [activeFilter]);
 
@@ -42,44 +53,49 @@ export default function CamerasPage() {
 
       <main className="page-shell">
         <section className="max-w-3xl">
-          <p className="text-sm font-medium text-ocean">Explore Madeira</p>
+          <p className="text-sm font-medium text-ocean">
+            {messages.exploreList.eyebrow}
+          </p>
 
           <h1 className="mt-1 text-2xl font-semibold text-navy sm:text-3xl">
-            Places to explore around Madeira
+            {messages.exploreList.title}
           </h1>
 
           <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
-            Browse viewpoints, mountain hikes, levada walks, beaches, gardens
-            and coastal places across Madeira.
+            {messages.exploreList.intro}
           </p>
         </section>
 
         <section className="mt-6" aria-label="Filter locations">
-          <p className="text-sm font-semibold text-navy">Browse by interest</p>
+          <p className="text-sm font-semibold text-navy">
+            {messages.exploreList.browseByInterest}
+          </p>
 
           <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
             {filters.map((filter) => {
-              const isActive = activeFilter === filter;
+              const isActive = activeFilter === filter.value;
 
               return (
                 <button
-                  key={filter}
+                  key={filter.value}
                   type="button"
-                  onClick={() => setActiveFilter(filter)}
+                  onClick={() => setActiveFilter(filter.value)}
                   className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
                     isActive
                       ? 'border-ocean bg-ocean text-white'
                       : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
                   }`}
                 >
-                  {filter}
+                  {filter.label}
                 </button>
               );
             })}
           </div>
 
           <p className="mt-2 text-sm text-slate-500">
-            Showing {filteredLocations.length} of {locations.length} places
+            {messages.exploreList.showing} {filteredLocations.length}{' '}
+            {messages.exploreList.of} {locations.length}{' '}
+            {messages.exploreList.places}
           </p>
         </section>
 
@@ -111,7 +127,7 @@ export default function CamerasPage() {
                 </p>
 
                 <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
-                  Read the guide →
+                  {messages.exploreList.readGuide}
                 </span>
               </div>
 

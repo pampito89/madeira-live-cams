@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
+import { useMessages } from '../../lib/i18n/useMessages';
 // TypeScript may sometimes fail to resolve the data module's types in some setups.
 // Suppress the module-not-found type error for this import here.
 // @ts-ignore: Module resolution for '../../data/locations' can vary by environment
@@ -23,6 +24,7 @@ function mapUrl(query: string) {
 }
 
 export default function LocationPage({ location }: LocationPageProps) {
+  const { messages } = useMessages();
   return (
     <Layout>
       <Head>
@@ -45,7 +47,7 @@ export default function LocationPage({ location }: LocationPageProps) {
           href="/cameras"
           className="inline-flex text-sm font-medium text-ocean hover:underline"
         >
-          ← Back to Explore Madeira
+          {messages.location.back}
         </Link>
 
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -75,7 +77,7 @@ export default function LocationPage({ location }: LocationPageProps) {
 
             <section className="mt-8">
               <h2 className="text-xl font-semibold text-navy">
-                History and character
+                {messages.location.history}
               </h2>
 
               <p className="mt-3 leading-7 text-slate-600">
@@ -84,7 +86,7 @@ export default function LocationPage({ location }: LocationPageProps) {
             </section>
 
             <section className="mt-8">
-              <h2 className="text-xl font-semibold text-navy">Why visit</h2>
+              <h2 className="text-xl font-semibold text-navy">{messages.location.whyVisit}</h2>
 
               <ul className="mt-3 space-y-2 text-slate-600">
                 {location.article.highlights.map((highlight) => (
@@ -99,7 +101,7 @@ export default function LocationPage({ location }: LocationPageProps) {
             </section>
 
             <section className="mt-8 rounded-xl bg-panel p-4">
-              <h2 className="font-semibold text-navy">Practical tip</h2>
+              <h2 className="font-semibold text-navy">{messages.location.practicalTip}</h2>
 
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 {location.article.practicalTip}
@@ -112,7 +114,7 @@ export default function LocationPage({ location }: LocationPageProps) {
               rel="noopener noreferrer"
               className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#4A939C] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#34737B] sm:w-auto"
             >
-              Open in Google Maps
+              {messages.location.openMaps}
             </a>
           </div>
         </article>
@@ -122,10 +124,15 @@ export default function LocationPage({ location }: LocationPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const locales = ['en', 'uk'];
+
   return {
-    paths: locations.map((location) => ({
-      params: { slug: location.slug },
-    })),
+    paths: locations.flatMap((location) =>
+      locales.map((locale) => ({
+        params: { slug: location.slug },
+        locale,
+      })),
+    ),
     fallback: false,
   };
 };
