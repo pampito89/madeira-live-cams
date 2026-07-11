@@ -10,9 +10,7 @@ const filters = [
   'Viewpoints',
   'Hiking',
   'Beaches',
-  'Nature',
   'City & culture',
-  'Gardens',
   'Levada walks',
 ];
 

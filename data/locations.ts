@@ -48,8 +48,8 @@ tags: ['Viewpoints'],
     name: 'Monte Palace Tropical Garden',
     area: 'Monte, Funchal',
     category: 'Garden',
-    // Monte Palace
-tags: ['Gardens', 'City & culture'],
+    // Monte Palace Tropical Garden
+tags: ['City & culture'],
     summary:
       'A hillside garden above Funchal, known for tropical plants, water features and city views.',
     image: '/images/explore/monte-palace-tropical-garden.jpg',
@@ -178,8 +178,8 @@ tags: ['Hiking'],
     name: 'Fajã dos Padres',
     area: 'South coast',
     category: 'Coast',
-    // Fajã dos Padres
-tags: ['Nature', 'Beaches'],
+// Fajã dos Padres
+tags: ['Beaches'],
     summary:
       'A quiet coastal estate below towering cliffs, reached by cable car or boat.',
     image: '/images/explore/faja-dos-padres.jpg',
@@ -282,8 +282,8 @@ tags: ['Beaches'],
     name: 'Vereda da Ponta de São Lourenço',
     area: 'East peninsula',
     category: 'Hiking',
-    // Ponta de São Lourenço
-tags: ['Hiking', 'Nature'],
+// Ponta de São Lourenço
+tags: ['Hiking'],
     summary:
       'A coastal trail across Madeira’s dry eastern peninsula with dramatic cliffs and ocean views.',
     image: '/images/explore/ponta-de-sao-lourenco.jpg',
@@ -334,8 +334,8 @@ tags: ['Beaches'],
     name: 'Fanal Forest',
     area: 'Paul da Serra',
     category: 'Nature',
-    // Fanal Forest
-tags: ['Nature', 'Hiking'],
+// Fanal Forest
+tags: ['Hiking'],
     summary:
       'An ancient laurel forest known for its twisted trees, mist and atmospheric walks.',
     image: '/images/explore/fanal-forest.jpg',
@@ -360,8 +360,8 @@ tags: ['Nature', 'Hiking'],
     name: 'Praia do Porto do Seixal',
     area: 'Seixal',
     category: 'Beach',
-    // Praia do Porto do Seixal
-tags: ['Beaches', 'Nature'],
+// Praia do Porto do Seixal
+tags: ['Beaches'],
     summary:
       'A black-sand beach on the north coast, surrounded by green mountains and waterfalls.',
     image: '/images/explore/praia-do-porto-do-seixal.jpg',
@@ -386,8 +386,8 @@ tags: ['Beaches', 'Nature'],
     name: 'Porto Moniz Natural Swimming Pools',
     area: 'Porto Moniz',
     category: 'Natural pools',
-    // Porto Moniz Natural Swimming Pools
-tags: ['Beaches', 'Nature'],
+// Porto Moniz Natural Swimming Pools
+tags: ['Beaches'],
     summary:
       'Volcanic rock pools continuously refreshed by Atlantic seawater on Madeira’s north-west coast.',
     image: '/images/explore/porto-moniz-pools.jpg',
