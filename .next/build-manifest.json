@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/1i2J1Oi8Ep0vOOwRM4KXE/_buildManifest.js",
-    "static/1i2J1Oi8Ep0vOOwRM4KXE/_ssgManifest.js"
+    "static/sPa_h50So24bEpJO_2YpO/_buildManifest.js",
+    "static/sPa_h50So24bEpJO_2YpO/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -21,7 +21,7 @@
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-8b0186800519fc26.js",
-      "static/css/d94703234552c193.css",
+      "static/css/8decd6241373539e.css",
       "static/chunks/pages/_app-b2349bceeb355796.js"
     ],
     "/_error": [
@@ -35,7 +35,7 @@
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-8b0186800519fc26.js",
       "static/chunks/664-806b52bf69b97e98.js",
-      "static/chunks/pages/cameras-88bb0842f5b0c803.js"
+      "static/chunks/pages/cameras-20aa4cc07fe27d8c.js"
     ],
     "/cameras/[id]": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
@@ -43,6 +43,13 @@
       "static/chunks/main-8b0186800519fc26.js",
       "static/chunks/664-806b52bf69b97e98.js",
       "static/chunks/pages/cameras/[id]-0fd190082e692b7a.js"
+    ],
+    "/explore/[slug]": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-2c16ac744b6cdea6.js",
+      "static/chunks/main-8b0186800519fc26.js",
+      "static/chunks/664-806b52bf69b97e98.js",
+      "static/chunks/pages/explore/[slug]-43bc3fc5f748fb0e.js"
     ],
     "/weather-guide": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",

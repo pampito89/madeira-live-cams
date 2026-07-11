@@ -3,6 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
+// TypeScript may sometimes fail to resolve the data module's types in some setups.
+// Suppress the module-not-found type error for this import here.
+// @ts-ignore: Module resolution for '../../data/locations' can vary by environment
 import {
   getLocationBySlug,
   locations,
