@@ -3,6 +3,7 @@ export type Location = {
   name: string;
   area: string;
   category: string;
+  tags: string[];
   summary: string;
   image: string;
   imageAlt: string;
@@ -21,6 +22,8 @@ export const locations: Location[] = [
     name: 'Cristo Rei Viewpoint',
     area: 'Garajau, Caniço',
     category: 'Viewpoint',
+    // Cristo Rei
+tags: ['Viewpoints'],
     summary:
       'A clifftop viewpoint above Garajau with wide Atlantic views and the Cristo Rei statue.',
     image: '/images/explore/cristo-rei.jpg',
@@ -45,6 +48,8 @@ export const locations: Location[] = [
     name: 'Monte Palace Tropical Garden',
     area: 'Monte, Funchal',
     category: 'Garden',
+    // Monte Palace
+tags: ['Gardens', 'City & culture'],
     summary:
       'A hillside garden above Funchal, known for tropical plants, water features and city views.',
     image: '/images/explore/monte-palace-tropical-garden.jpg',
@@ -69,6 +74,8 @@ export const locations: Location[] = [
     name: 'Funchal',
     area: 'South coast',
     category: 'City',
+    // Funchal
+tags: ['City & culture'],
     summary:
       'Madeira’s capital, with a harbour, old town, restaurants, museums and coastal promenades.',
     	image: '/images/explore/funchal.jpg',
@@ -93,6 +100,8 @@ export const locations: Location[] = [
     name: 'Mercado dos Lavradores',
     area: 'Funchal Old Town',
     category: 'Market',
+    // Mercado dos Lavradores
+tags: ['City & culture'],
     summary:
       'Funchal’s traditional market for fruit, flowers, local produce and fresh fish.',
     image: '/images/explore/mercado-dos-lavradores.jpg',
@@ -117,6 +126,8 @@ export const locations: Location[] = [
     name: 'Pico do Arieiro',
     area: 'Central mountains',
     category: 'Sunrise & hiking',
+    // Pico do Arieiro
+tags: ['Hiking', 'Viewpoints'],
     summary:
       'A high mountain viewpoint popular for sunrise, cloud inversions and the route towards Pico Ruivo.',
     image: '/images/explore/pico-do-arieiro.jpg',
@@ -141,6 +152,8 @@ export const locations: Location[] = [
     name: 'Pico Ruivo',
     area: 'Central mountains',
     category: 'Hiking',
+    // Pico Ruivo
+tags: ['Hiking'],
     summary:
       'Madeira’s highest peak, reached by mountain trails with expansive views in clear weather.',
     image: '/images/explore/pico-ruivo.jpg',
@@ -165,6 +178,8 @@ export const locations: Location[] = [
     name: 'Fajã dos Padres',
     area: 'South coast',
     category: 'Coast',
+    // Fajã dos Padres
+tags: ['Nature', 'Beaches'],
     summary:
       'A quiet coastal estate below towering cliffs, reached by cable car or boat.',
     image: '/images/explore/faja-dos-padres.jpg',
@@ -189,6 +204,8 @@ export const locations: Location[] = [
     name: 'Cabo Girão Skywalk',
     area: 'Câmara de Lobos',
     category: 'Viewpoint',
+    // Cabo Girão
+tags: ['Viewpoints'],
     summary:
       'A glass-floored platform above the south coast with views over cliffs, ocean and farmland.',
     image: '/images/explore/cabo-girao-skywalk.jpg',
@@ -213,6 +230,8 @@ export const locations: Location[] = [
     name: 'Levada Nova & Levada do Moinho',
     area: 'Ponta do Sol',
     category: 'Levada walk',
+    // Levada Nova & Levada do Moinho
+tags: ['Levada walks', 'Hiking'],
     summary:
       'A scenic levada walk through valleys, tunnels, waterfalls and cultivated terraces.',
     image: '/images/explore/levada-nova-levada-do-moinho.jpg',
@@ -237,6 +256,8 @@ export const locations: Location[] = [
     name: 'Calheta Beach',
     area: 'Calheta',
     category: 'Beach',
+    // Calheta Beach
+tags: ['Beaches'],
     summary:
       'A sheltered sandy beach with calmer water, cafés and a marina nearby.',
     image: '/images/explore/calheta-beach.jpg',
@@ -261,6 +282,8 @@ export const locations: Location[] = [
     name: 'Vereda da Ponta de São Lourenço',
     area: 'East peninsula',
     category: 'Hiking',
+    // Ponta de São Lourenço
+tags: ['Hiking', 'Nature'],
     summary:
       'A coastal trail across Madeira’s dry eastern peninsula with dramatic cliffs and ocean views.',
     image: '/images/explore/ponta-de-sao-lourenco.jpg',
@@ -285,6 +308,8 @@ export const locations: Location[] = [
     name: 'Prainha do Caniçal',
     area: 'Caniçal',
     category: 'Beach',
+    // Prainha do Caniçal
+tags: ['Beaches'],
     summary:
       'A small natural beach on Madeira’s east coast, close to the São Lourenço peninsula.',
     image: '/images/explore/prainha-do-canical.jpg',
@@ -309,6 +334,8 @@ export const locations: Location[] = [
     name: 'Fanal Forest',
     area: 'Paul da Serra',
     category: 'Nature',
+    // Fanal Forest
+tags: ['Nature', 'Hiking'],
     summary:
       'An ancient laurel forest known for its twisted trees, mist and atmospheric walks.',
     image: '/images/explore/fanal-forest.jpg',
@@ -333,6 +360,8 @@ export const locations: Location[] = [
     name: 'Praia do Porto do Seixal',
     area: 'Seixal',
     category: 'Beach',
+    // Praia do Porto do Seixal
+tags: ['Beaches', 'Nature'],
     summary:
       'A black-sand beach on the north coast, surrounded by green mountains and waterfalls.',
     image: '/images/explore/praia-do-porto-do-seixal.jpg',
@@ -357,6 +386,8 @@ export const locations: Location[] = [
     name: 'Porto Moniz Natural Swimming Pools',
     area: 'Porto Moniz',
     category: 'Natural pools',
+    // Porto Moniz Natural Swimming Pools
+tags: ['Beaches', 'Nature'],
     summary:
       'Volcanic rock pools continuously refreshed by Atlantic seawater on Madeira’s north-west coast.',
     image: '/images/explore/porto-moniz-pools.jpg',

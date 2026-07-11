@@ -1,10 +1,34 @@
+import { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { locations } from '../data/locations';
 
+const filters = [
+  'All',
+  'Viewpoints',
+  'Hiking',
+  'Beaches',
+  'Nature',
+  'City & culture',
+  'Gardens',
+  'Levada walks',
+];
+
 export default function CamerasPage() {
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  const filteredLocations = useMemo(() => {
+    if (activeFilter === 'All') {
+      return locations;
+    }
+
+    return locations.filter((location) =>
+      location.tags.includes(activeFilter)
+    );
+  }, [activeFilter]);
+
   return (
     <Layout>
       <Head>
@@ -19,7 +43,7 @@ export default function CamerasPage() {
       </Head>
 
       <main className="page-shell">
-        <section className="mb-8 max-w-3xl">
+        <section className="max-w-3xl">
           <p className="text-sm font-medium text-ocean">Explore Madeira</p>
 
           <h1 className="mt-1 text-2xl font-semibold text-navy sm:text-3xl">
@@ -32,11 +56,40 @@ export default function CamerasPage() {
           </p>
         </section>
 
+        <section className="mt-6" aria-label="Filter locations">
+          <p className="text-sm font-semibold text-navy">Browse by interest</p>
+
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
+            {filters.map((filter) => {
+              const isActive = activeFilter === filter;
+
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => setActiveFilter(filter)}
+                  className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
+                    isActive
+                      ? 'border-ocean bg-ocean text-white'
+                      : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
+                  }`}
+                >
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Showing {filteredLocations.length} of {locations.length} places
+          </p>
+        </section>
+
         <section
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           aria-label="Madeira locations"
         >
-          {locations.map((location) => (
+          {filteredLocations.map((location) => (
             <Link
               key={location.slug}
               href={`/explore/${location.slug}`}

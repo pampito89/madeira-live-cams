@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/No8h-LfvpVYVxIWMrDXqo/_buildManifest.js",
-    "static/No8h-LfvpVYVxIWMrDXqo/_ssgManifest.js"
+    "static/DUTtPapo_OwHzuEg1TYrm/_buildManifest.js",
+    "static/DUTtPapo_OwHzuEg1TYrm/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -21,7 +21,7 @@
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-8b0186800519fc26.js",
-      "static/css/bc28111d8a9dd35d.css",
+      "static/css/a8d041da55dda9ae.css",
       "static/chunks/pages/_app-b2349bceeb355796.js"
     ],
     "/_error": [
@@ -36,7 +36,7 @@
       "static/chunks/main-8b0186800519fc26.js",
       "static/chunks/664-806b52bf69b97e98.js",
       "static/chunks/675-45f9f7ae57ff0f95.js",
-      "static/chunks/pages/cameras-a19fb269414a8e06.js"
+      "static/chunks/pages/cameras-b6a4bdfe67957af9.js"
     ],
     "/cameras/[id]": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
