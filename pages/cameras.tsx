@@ -40,24 +40,14 @@ export default function CamerasPage() {
             <Link
   key={location.slug}
   href={`/explore/${location.slug}`}
-  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
+  className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
 >
-  <div className="relative aspect-[4/1] bg-slate-100">
-    <Image
-      src={location.image}
-      alt={location.imageAlt}
-      fill
-      className="object-cover transition duration-300 group-hover:scale-105"
-      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-    />
-  </div>
-
-  <div className="flex h-full flex-col p-5">
+  <div className="min-w-0 flex-1">
     <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
       {location.category}
     </p>
 
-    <h2 className="mt-2 text-lg font-semibold text-navy">
+    <h2 className="mt-1 text-lg font-semibold text-navy">
       {location.name}
     </h2>
 
@@ -65,13 +55,23 @@ export default function CamerasPage() {
       {location.area}
     </p>
 
-    <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+    <p className="mt-3 text-sm leading-6 text-slate-600">
       {location.summary}
     </p>
 
-    <span className="mt-5 text-sm font-semibold text-ocean group-hover:underline">
+    <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
       Read the guide →
     </span>
+  </div>
+
+  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:h-24 sm:w-24">
+    <Image
+      src={location.image}
+      alt={location.imageAlt}
+      fill
+      className="object-cover transition duration-300 group-hover:scale-105"
+      sizes="(max-width: 640px) 80px, 96px"
+    />
   </div>
 </Link>
           ))}
