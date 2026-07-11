@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { locations } from '../data/locations';
@@ -37,30 +38,42 @@ export default function CamerasPage() {
         >
           {locations.map((location) => (
             <Link
-              key={location.slug}
-              href={`/explore/${location.slug}`}
-              className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
-                {location.category}
-              </p>
+  key={location.slug}
+  href={`/explore/${location.slug}`}
+  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
+>
+  <div className="relative aspect-[16/9] bg-slate-100">
+    <Image
+      src={location.image}
+      alt={location.imageAlt}
+      fill
+      className="object-cover transition duration-300 group-hover:scale-105"
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    />
+  </div>
 
-              <h2 className="mt-2 text-lg font-semibold text-navy">
-                {location.name}
-              </h2>
+  <div className="flex h-full flex-col p-5">
+    <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
+      {location.category}
+    </p>
 
-              <p className="mt-1 text-sm font-medium text-slate-500">
-                {location.area}
-              </p>
+    <h2 className="mt-2 text-lg font-semibold text-navy">
+      {location.name}
+    </h2>
 
-              <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
-                {location.summary}
-              </p>
+    <p className="mt-1 text-sm font-medium text-slate-500">
+      {location.area}
+    </p>
 
-              <span className="mt-5 text-sm font-semibold text-ocean group-hover:underline">
-                Read the guide →
-              </span>
-            </Link>
+    <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+      {location.summary}
+    </p>
+
+    <span className="mt-5 text-sm font-semibold text-ocean group-hover:underline">
+      Read the guide →
+    </span>
+  </div>
+</Link>
           ))}
         </section>
       </main>
