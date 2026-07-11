@@ -38,42 +38,42 @@ export default function CamerasPage() {
         >
           {locations.map((location) => (
             <Link
-  key={location.slug}
-  href={`/explore/${location.slug}`}
-  className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
->
-  <div className="min-w-0 flex-1">
-    <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
-      {location.category}
-    </p>
+              key={location.slug}
+              href={`/explore/${location.slug}`}
+              className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
+                  {location.category}
+                </p>
 
-    <h2 className="mt-1 text-lg font-semibold text-navy">
-      {location.name}
-    </h2>
+                <h2 className="mt-1 text-lg font-semibold text-navy">
+                  {location.name}
+                </h2>
 
-    <p className="mt-1 text-sm font-medium text-slate-500">
-      {location.area}
-    </p>
+                <p className="mt-1 text-sm font-medium text-slate-500">
+                  {location.area}
+                </p>
 
-    <p className="mt-3 text-sm leading-6 text-slate-600">
-      {location.summary}
-    </p>
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  {location.summary}
+                </p>
 
-    <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
-      Read the guide →
-    </span>
-  </div>
+                <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
+                  Read the guide →
+                </span>
+              </div>
 
-  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:h-24 sm:w-24">
-    <Image
-      src={location.image}
-      alt={location.imageAlt}
-      fill
-      className="object-cover transition duration-300 group-hover:scale-105"
-      sizes="(max-width: 640px) 80px, 96px"
-    />
-  </div>
-</Link>
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:h-24 sm:w-24">
+                <Image
+                  src={location.image}
+                  alt={location.imageAlt}
+                  fill
+                  className="object-cover transition duration-300 group-hover:scale-105"
+                  sizes="(max-width: 640px) 80px, 96px"
+                />
+              </div>
+            </Link>
           ))}
         </section>
       </main>
