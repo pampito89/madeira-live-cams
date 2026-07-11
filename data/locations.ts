@@ -23,7 +23,7 @@ export const locations: Location[] = [
     category: 'Viewpoint',
     summary:
       'A clifftop viewpoint above Garajau with wide Atlantic views and the Cristo Rei statue.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/cristo-rei.jpg',
     imageAlt: 'Cristo Rei viewpoint in Garajau, Madeira',
     mapQuery: 'Cristo Rei Viewpoint Garajau Madeira',
     article: {
@@ -47,7 +47,7 @@ export const locations: Location[] = [
     category: 'Garden',
     summary:
       'A hillside garden above Funchal, known for tropical plants, water features and city views.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/monte-palace-tropical-garden.jpg',
     imageAlt: 'Monte Palace Tropical Garden above Funchal',
     mapQuery: 'Monte Palace Tropical Garden Madeira',
     article: {
@@ -71,7 +71,7 @@ export const locations: Location[] = [
     category: 'City',
     summary:
       'Madeira’s capital, with a harbour, old town, restaurants, museums and coastal promenades.',
-    image: '/images/explore/placeholder.jpg',
+    	image: '/images/explore/funchal.jpg',
     imageAlt: 'Funchal harbour and city on Madeira',
     mapQuery: 'Funchal Madeira',
     article: {
@@ -95,7 +95,7 @@ export const locations: Location[] = [
     category: 'Market',
     summary:
       'Funchal’s traditional market for fruit, flowers, local produce and fresh fish.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/mercado-dos-lavradores.jpg',
     imageAlt: 'Mercado dos Lavradores market in Funchal',
     mapQuery: 'Mercado dos Lavradores Funchal',
     article: {
@@ -143,7 +143,7 @@ export const locations: Location[] = [
     category: 'Hiking',
     summary:
       'Madeira’s highest peak, reached by mountain trails with expansive views in clear weather.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/pico-ruivo.jpg',
     imageAlt: 'Mountain ridge near Pico Ruivo in Madeira',
     mapQuery: 'Pico Ruivo Madeira',
     article: {
@@ -167,7 +167,7 @@ export const locations: Location[] = [
     category: 'Coast',
     summary:
       'A quiet coastal estate below towering cliffs, reached by cable car or boat.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/faja-dos-padres.jpg',
     imageAlt: 'Fajã dos Padres coast below cliffs in Madeira',
     mapQuery: 'Faja dos Padres Madeira',
     article: {
@@ -191,7 +191,7 @@ export const locations: Location[] = [
     category: 'Viewpoint',
     summary:
       'A glass-floored platform above the south coast with views over cliffs, ocean and farmland.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/cabo-girao-skywalk.jpg',
     imageAlt: 'Cabo Girao Skywalk above Madeira south coast',
     mapQuery: 'Cabo Girao Skywalk Madeira',
     article: {
@@ -215,7 +215,7 @@ export const locations: Location[] = [
     category: 'Levada walk',
     summary:
       'A scenic levada walk through valleys, tunnels, waterfalls and cultivated terraces.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/levada-nova-levada-do-moinho.jpg',
     imageAlt: 'Levada path near Ponta do Sol in Madeira',
     mapQuery: 'Levada Nova Levada do Moinho Madeira',
     article: {
@@ -239,7 +239,7 @@ export const locations: Location[] = [
     category: 'Beach',
     summary:
       'A sheltered sandy beach with calmer water, cafés and a marina nearby.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/calheta-beach.jpg',
     imageAlt: 'Calheta Beach on Madeira south-west coast',
     mapQuery: 'Calheta Beach Madeira',
     article: {
@@ -263,7 +263,7 @@ export const locations: Location[] = [
     category: 'Hiking',
     summary:
       'A coastal trail across Madeira’s dry eastern peninsula with dramatic cliffs and ocean views.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/ponta-de-sao-lourenco.jpg',
     imageAlt: 'Coastal cliffs on Ponta de Sao Lourenco in Madeira',
     mapQuery: 'Ponta de Sao Lourenco Trail Madeira',
     article: {
@@ -287,7 +287,7 @@ export const locations: Location[] = [
     category: 'Beach',
     summary:
       'A small natural beach on Madeira’s east coast, close to the São Lourenço peninsula.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/prainha-do-canical.jpg',
     imageAlt: 'Prainha beach near Canical in Madeira',
     mapQuery: 'Prainha do Canical Madeira',
     article: {
@@ -335,7 +335,7 @@ export const locations: Location[] = [
     category: 'Beach',
     summary:
       'A black-sand beach on the north coast, surrounded by green mountains and waterfalls.',
-    image: '/images/explore/placeholder.jpg',
+    image: '/images/explore/praia-do-porto-do-seixal.jpg',
     imageAlt: 'Black sand beach at Seixal on Madeira',
     mapQuery: 'Praia do Porto do Seixal Madeira',
     article: {
