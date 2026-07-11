@@ -42,7 +42,7 @@ export default function CamerasPage() {
   href={`/explore/${location.slug}`}
   className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
 >
-  <div className="relative aspect-[16/9] bg-slate-100">
+  <div className="relative aspect-[4/1] bg-slate-100">
     <Image
       src={location.image}
       alt={location.imageAlt}
