@@ -1,1 +1,8 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/explore/[slug]":"pages/explore/[slug].js","/_document":"pages/_document.js","/en/404":"pages/en/404.html","/uk/404":"pages/uk/404.html","/en/500":"pages/en/500.html","/uk/500":"pages/uk/500.html","/en/about":"pages/en/about.html","/uk/about":"pages/uk/about.html","/en/weather-guide":"pages/en/weather-guide.html","/uk/weather-guide":"pages/uk/weather-guide.html","/en/cameras/[id]":"pages/en/cameras/[id].html","/uk/cameras/[id]":"pages/uk/cameras/[id].html","/en/cameras":"pages/en/cameras.html","/uk/cameras":"pages/uk/cameras.html","/en":"pages/en.html","/uk":"pages/uk.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/weather-guide": "pages/weather-guide.js",
+  "/cameras": "pages/cameras.js",
+  "/": "pages/index.js"
+}

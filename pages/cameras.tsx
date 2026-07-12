@@ -3,11 +3,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import { locations } from '../data/locations';
+import { getLocalizedLocation, locations } from '../data/locations';
 import { useMessages } from '../lib/i18n/useMessages';
 
 export default function CamerasPage() {
-  const { messages } = useMessages();
+  const { locale, messages } = useMessages();
   const [activeFilter, setActiveFilter] = useState('All');
 
   const filters = [
@@ -16,8 +16,14 @@ export default function CamerasPage() {
       value: 'Viewpoints',
       label: messages.exploreList.filters.viewpoints,
     },
-    { value: 'Hiking', label: messages.exploreList.filters.hiking },
-    { value: 'Beaches', label: messages.exploreList.filters.beaches },
+    {
+      value: 'Hiking',
+      label: messages.exploreList.filters.hiking,
+    },
+    {
+      value: 'Beaches',
+      label: messages.exploreList.filters.beaches,
+    },
     {
       value: 'City & culture',
       label: messages.exploreList.filters.cityCulture,
@@ -41,11 +47,11 @@ export default function CamerasPage() {
   return (
     <Layout>
       <Head>
-        <title>Explore Madeira | Viewpoints, Hikes, Beaches & Places</title>
+        <title>{messages.exploreList.pageTitle}</title>
 
         <meta
           name="description"
-          content="Explore Madeira’s best viewpoints, hiking trails, beaches, gardens and places to visit, from Pico do Arieiro to Porto Moniz."
+          content={messages.exploreList.pageDescription}
         />
 
         <link rel="canonical" href="https://madeiralivecams.com/cameras" />
@@ -66,7 +72,10 @@ export default function CamerasPage() {
           </p>
         </section>
 
-        <section className="mt-6" aria-label="Filter locations">
+        <section
+          className="mt-6"
+          aria-label={messages.exploreList.filterAriaLabel}
+        >
           <p className="text-sm font-semibold text-navy">
             {messages.exploreList.browseByInterest}
           </p>
@@ -101,47 +110,51 @@ export default function CamerasPage() {
 
         <section
           className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          aria-label="Madeira locations"
+          aria-label={messages.exploreList.locationsAriaLabel}
         >
-          {filteredLocations.map((location) => (
-            <Link
-              key={location.slug}
-              href={`/explore/${location.slug}`}
-              className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
-            >
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
-                  {location.category}
-                </p>
+          {filteredLocations.map((location) => {
+            const displayLocation = getLocalizedLocation(location, locale);
 
-                <h2 className="mt-1 text-lg font-semibold text-navy">
-                  {location.name}
-                </h2>
+            return (
+              <Link
+                key={displayLocation.slug}
+                href={`/explore/${displayLocation.slug}`}
+                className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
+                    {displayLocation.category}
+                  </p>
 
-                <p className="mt-1 text-sm font-medium text-slate-500">
-                  {location.area}
-                </p>
+                  <h2 className="mt-1 text-lg font-semibold text-navy">
+                    {displayLocation.name}
+                  </h2>
 
-                <p className="mt-3 text-sm leading-6 text-slate-600">
-                  {location.summary}
-                </p>
+                  <p className="mt-1 text-sm font-medium text-slate-500">
+                    {displayLocation.area}
+                  </p>
 
-                <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
-                  {messages.exploreList.readGuide}
-                </span>
-              </div>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">
+                    {displayLocation.summary}
+                  </p>
 
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-mist sm:h-24 sm:w-24">
-                <Image
-                  src={location.image}
-                  alt={location.imageAlt}
-                  fill
-                  className="object-cover transition duration-300 group-hover:scale-105"
-                  sizes="(max-width: 640px) 80px, 96px"
-                />
-              </div>
-            </Link>
-          ))}
+                  <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
+                    {messages.exploreList.readGuide}
+                  </span>
+                </div>
+
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-mist sm:h-24 sm:w-24">
+                  <Image
+                    src={displayLocation.image}
+                    alt={displayLocation.imageAlt}
+                    fill
+                    className="object-cover transition duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 80px, 96px"
+                  />
+                </div>
+              </Link>
+            );
+          })}
         </section>
       </main>
     </Layout>

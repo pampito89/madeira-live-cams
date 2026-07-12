@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
+import { useMessages } from '../lib/i18n/useMessages';
 
 type SunriseDay = {
   date: string;
@@ -29,8 +30,8 @@ function windDirectionLabel(degrees: number) {
   return directions[Math.round(degrees / 45) % 8];
 }
 
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat('en-GB', {
+function formatDate(date: string, locale: 'en' | 'uk') {
+  return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -38,58 +39,13 @@ function formatDate(date: string) {
   }).format(new Date(`${date}T12:00:00`));
 }
 
-function formatSunrise(time: string) {
-  return new Intl.DateTimeFormat('en-GB', {
+function formatSunrise(time: string, locale: 'en' | 'uk') {
+  return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
     timeZone: 'Atlantic/Madeira',
   }).format(new Date(time));
-}
-
-function sunriseRating(day: SunriseDay) {
-  const clearUpperSky = day.midClouds === 0 && day.highClouds === 0;
-  const lowCloudsAreGood = day.lowClouds <= 70;
-  const noRainRisk = day.rainChance === 0;
-  const calmWind = day.windSpeed <= 5;
-
-  if (clearUpperSky && lowCloudsAreGood && noRainRisk && calmWind) {
-    return {
-      title: 'Excellent',
-      description: 'Strong chance of a clear and calm sunrise.',
-      className: 'border-moss bg-mist text-forest',
-    };
-  }
-
-  if (clearUpperSky && lowCloudsAreGood && noRainRisk) {
-    return {
-      title: 'Good',
-      description: 'Good sunrise potential; wind may affect comfort.',
-      className: 'border-leaf/30 bg-leaf/10 text-forest',
-    };
-  }
-
-  if (day.rainChance > 0) {
-    return {
-      title: 'Cloudy risk',
-      description: 'Rain risk often means cloudier conditions at sunrise.',
-      className: 'border-clay/50 bg-clay/15 text-[#7A4028]',
-    };
-  }
-
-  return {
-    title: 'Mixed',
-    description: 'Cloud layers may reduce visibility or colour.',
-    className: 'border-slate-300 bg-slate-100 text-slate-700',
-  };
-}
-
-function sunriseRatingIcon(title: string) {
-  if (title === 'Excellent') return '☀️';
-  if (title === 'Good') return '🌤️';
-  if (title === 'Cloudy risk') return '🌧️';
-
-  return '☁️';
 }
 
 function windyCloudUrl(sunrise: string) {
@@ -113,10 +69,15 @@ function windyCloudUrl(sunrise: string) {
     : 0;
 
   const utcTime = new Date(
-    Date.UTC(year, month - 1, day, hour, minute) - offsetMinutes * 60_000
+    Date.UTC(year, month - 1, day, hour, minute) - offsetMinutes * 60_000,
   );
 
-  utcTime.setUTCHours(Math.floor(utcTime.getUTCHours() / 3) * 3, 0, 0, 0);
+  utcTime.setUTCHours(
+    Math.floor(utcTime.getUTCHours() / 3) * 3,
+    0,
+    0,
+    0,
+  );
 
   const yyyy = utcTime.getUTCFullYear();
   const mm = String(utcTime.getUTCMonth() + 1).padStart(2, '0');
@@ -127,11 +88,50 @@ function windyCloudUrl(sunrise: string) {
 }
 
 export default function WeatherGuidePage() {
+  const { locale, messages } = useMessages();
+
   const [forecast, setForecast] = useState<ForecastState>({
     loading: true,
     error: null,
     days: [],
   });
+
+  function sunriseRating(day: SunriseDay) {
+    const clearUpperSky = day.midClouds === 0 && day.highClouds === 0;
+    const lowCloudsAreGood = day.lowClouds <= 70;
+    const noRainRisk = day.rainChance === 0;
+    const calmWind = day.windSpeed <= 5;
+
+    if (clearUpperSky && lowCloudsAreGood && noRainRisk && calmWind) {
+      return {
+        ...messages.weatherGuide.ratings.excellent,
+        className: 'border-moss bg-mist text-forest',
+        icon: '☀️',
+      };
+    }
+
+    if (clearUpperSky && lowCloudsAreGood && noRainRisk) {
+      return {
+        ...messages.weatherGuide.ratings.good,
+        className: 'border-leaf/30 bg-leaf/10 text-forest',
+        icon: '🌤️',
+      };
+    }
+
+    if (day.rainChance > 0) {
+      return {
+        ...messages.weatherGuide.ratings.cloudyRisk,
+        className: 'border-clay/50 bg-clay/15 text-[#7A4028]',
+        icon: '🌧️',
+      };
+    }
+
+    return {
+      ...messages.weatherGuide.ratings.mixed,
+      className: 'border-slate-300 bg-slate-100 text-slate-700',
+      icon: '☁️',
+    };
+  }
 
   useEffect(() => {
     const loadForecast = async () => {
@@ -148,7 +148,7 @@ export default function WeatherGuidePage() {
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error('Weather service is temporarily unavailable.');
+          throw new Error(messages.weatherGuide.errorFallback);
         }
 
         const data = await response.json();
@@ -161,7 +161,7 @@ export default function WeatherGuidePage() {
             const sunriseHour = sunrise.slice(0, 13) + ':00';
 
             const exactSunriseIndex = data.hourly.time.findIndex(
-              (time: string) => time === sunriseHour
+              (time: string) => time === sunriseHour,
             );
 
             const safeIndex =
@@ -172,13 +172,15 @@ export default function WeatherGuidePage() {
               sunrise,
               lowClouds: Math.round(data.hourly.cloud_cover_low[safeIndex] ?? 0),
               midClouds: Math.round(data.hourly.cloud_cover_mid[safeIndex] ?? 0),
-              highClouds: Math.round(data.hourly.cloud_cover_high[safeIndex] ?? 0),
+              highClouds: Math.round(
+                data.hourly.cloud_cover_high[safeIndex] ?? 0,
+              ),
               rainChance: Math.round(
-                data.hourly.precipitation_probability[safeIndex] ?? 0
+                data.hourly.precipitation_probability[safeIndex] ?? 0,
               ),
               windSpeed: Math.round(data.hourly.wind_speed_10m[safeIndex] ?? 0),
               windDirection: Math.round(
-                data.hourly.wind_direction_10m[safeIndex] ?? 0
+                data.hourly.wind_direction_10m[safeIndex] ?? 0,
               ),
             };
           });
@@ -194,23 +196,23 @@ export default function WeatherGuidePage() {
           error:
             error instanceof Error
               ? error.message
-              : 'Could not load the sunrise forecast.',
+              : messages.weatherGuide.errorFallback,
           days: [],
         });
       }
     };
 
     loadForecast();
-  }, []);
+  }, [messages.weatherGuide.errorFallback]);
 
   return (
     <Layout>
       <Head>
-        <title>Pico do Arieiro Sunrise Forecast | Madeira Live Cams</title>
+        <title>{messages.weatherGuide.pageTitle}</title>
 
         <meta
           name="description"
-          content="Check the next 7 sunrise forecasts for Pico do Arieiro, Madeira. See low, mid and high cloud cover, rain chance, wind and sunrise conditions."
+          content={messages.weatherGuide.pageDescription}
         />
 
         <link
@@ -218,14 +220,11 @@ export default function WeatherGuidePage() {
           href="https://madeiralivecams.com/weather-guide"
         />
 
-        <meta
-          property="og:title"
-          content="Pico do Arieiro Sunrise Forecast | Madeira Live Cams"
-        />
+        <meta property="og:title" content={messages.weatherGuide.pageTitle} />
 
         <meta
           property="og:description"
-          content="Plan your Pico do Arieiro sunrise with a 7-day cloud, rain and wind forecast."
+          content={messages.weatherGuide.ogDescription}
         />
 
         <meta
@@ -234,36 +233,34 @@ export default function WeatherGuidePage() {
         />
 
         <meta property="og:type" content="website" />
-
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <main className="page-shell">
         <section className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-forest via-ocean to-leaf px-5 py-7 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-9">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-moss">
-            Madeira mountain weather
+            {messages.weatherGuide.eyebrow}
           </p>
 
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Pico do Arieiro Sunrise Forecast
+            {messages.weatherGuide.title}
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-white/85 sm:text-base">
-            Next seven sunrise forecasts at 1,818 m, starting tomorrow. Check
-            clouds, rain and wind before planning an early mountain visit.
+            {messages.weatherGuide.intro}
           </p>
         </section>
 
         <section className="rounded-2xl border border-moss/60 bg-white p-4 shadow-sm sm:p-6">
           {forecast.loading && (
             <div className="rounded-xl border border-moss/40 bg-panel p-5 text-sm text-slate-600">
-              Loading the 7-day sunrise forecast…
+              {messages.weatherGuide.loading}
             </div>
           )}
 
           {forecast.error && (
             <div className="rounded-xl border border-lava/40 bg-lava/10 p-5 text-sm text-[#7A3021]">
-              {forecast.error} Please try again shortly.
+              {forecast.error} {messages.weatherGuide.errorRetry}
             </div>
           )}
 
@@ -280,22 +277,23 @@ export default function WeatherGuidePage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h2 className="font-semibold text-navy">
-                          {formatDate(day.date)}
+                          {formatDate(day.date, locale)}
                         </h2>
 
                         <p className="mt-1 text-sm text-slate-500">
-                          Sunrise: {formatSunrise(day.sunrise)} · Conditions at
-                          sunrise
+                          {messages.weatherGuide.sunrise}:{' '}
+                          {formatSunrise(day.sunrise, locale)} ·{' '}
+                          {messages.weatherGuide.conditionsAtSunrise}
                         </p>
                       </div>
 
                       <div
                         className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
-                        aria-label={`${rating.title} sunrise conditions`}
-                        title={`${rating.title} sunrise conditions`}
+                        aria-label={`${rating.title}: ${rating.description}`}
+                        title={`${rating.title}: ${rating.description}`}
                       >
                         <span aria-hidden="true" className="text-sm">
-                          {sunriseRatingIcon(rating.title)}
+                          {rating.icon}
                         </span>
 
                         <span>{rating.title}</span>
@@ -308,28 +306,36 @@ export default function WeatherGuidePage() {
 
                     <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                       <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">Low clouds</p>
+                        <p className="text-xs text-slate-500">
+                          {messages.weatherGuide.lowClouds}
+                        </p>
                         <p className="mt-1 font-semibold text-navy">
                           {day.lowClouds}%
                         </p>
                       </div>
 
                       <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">Mid clouds</p>
+                        <p className="text-xs text-slate-500">
+                          {messages.weatherGuide.midClouds}
+                        </p>
                         <p className="mt-1 font-semibold text-navy">
                           {day.midClouds}%
                         </p>
                       </div>
 
                       <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">High clouds</p>
+                        <p className="text-xs text-slate-500">
+                          {messages.weatherGuide.highClouds}
+                        </p>
                         <p className="mt-1 font-semibold text-navy">
                           {day.highClouds}%
                         </p>
                       </div>
 
                       <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">Rain chance</p>
+                        <p className="text-xs text-slate-500">
+                          {messages.weatherGuide.rainChance}
+                        </p>
                         <p className="mt-1 font-semibold text-navy">
                           {day.rainChance}%
                         </p>
@@ -337,7 +343,7 @@ export default function WeatherGuidePage() {
 
                       <div className="col-span-2 rounded-lg border border-moss/40 bg-panel p-3">
                         <p className="text-xs text-slate-500">
-                          Wind at sunrise
+                          {messages.weatherGuide.windAtSunrise}
                         </p>
                         <p className="mt-1 font-semibold text-navy">
                           {day.windSpeed} km/h ·{' '}
@@ -352,7 +358,7 @@ export default function WeatherGuidePage() {
                       rel="noopener noreferrer"
                       className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-ocean px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2"
                     >
-                      Open in Windy
+                      {messages.weatherGuide.openWindy}
                     </a>
                   </article>
                 );
@@ -361,8 +367,7 @@ export default function WeatherGuidePage() {
           )}
 
           <p className="mt-5 rounded-lg bg-mist px-4 py-3 text-xs leading-5 text-slate-600">
-            Forecast guidance only. Mountain weather and cloud cover can change
-            quickly; check the live Pico do Arieiro camera before leaving.
+            {messages.weatherGuide.guidance}
           </p>
         </section>
       </main>

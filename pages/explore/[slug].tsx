@@ -4,10 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { useMessages } from '../../lib/i18n/useMessages';
-// TypeScript may sometimes fail to resolve the data module's types in some setups.
-// Suppress the module-not-found type error for this import here.
-// @ts-ignore: Module resolution for '../../data/locations' can vary by environment
 import {
+  getLocalizedLocation,
   getLocationBySlug,
   locations,
   type Location,
@@ -24,21 +22,29 @@ function mapUrl(query: string) {
 }
 
 export default function LocationPage({ location }: LocationPageProps) {
-  const { messages } = useMessages();
+  const { locale, messages } = useMessages();
+  const displayLocation = getLocalizedLocation(location, locale);
+
   return (
     <Layout>
       <Head>
-        <title>{location.name} | Madeira Travel Guide</title>
+        <title>
+          {displayLocation.name} | {messages.location.pageTitleSuffix}
+        </title>
 
-        <meta name="description" content={location.summary} />
+        <meta name="description" content={displayLocation.summary} />
 
         <link
           rel="canonical"
-          href={`https://madeiralivecams.com/explore/${location.slug}`}
+          href={`https://madeiralivecams.com/explore/${displayLocation.slug}`}
         />
 
-        <meta property="og:title" content={`${location.name} | Madeira`} />
-        <meta property="og:description" content={location.summary} />
+        <meta
+          property="og:title"
+          content={`${displayLocation.name} | ${messages.location.ogTitleSuffix}`}
+        />
+
+        <meta property="og:description" content={displayLocation.summary} />
         <meta property="og:type" content="article" />
       </Head>
 
@@ -53,8 +59,8 @@ export default function LocationPage({ location }: LocationPageProps) {
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="relative aspect-[16/9] bg-slate-100">
             <Image
-              src={location.image}
-              alt={location.imageAlt}
+              src={displayLocation.image}
+              alt={displayLocation.imageAlt}
               fill
               priority
               className="object-cover"
@@ -64,15 +70,15 @@ export default function LocationPage({ location }: LocationPageProps) {
 
           <div className="p-5 sm:p-8">
             <p className="text-sm font-medium text-ocean">
-              {location.category} · {location.area}
+              {displayLocation.category} · {displayLocation.area}
             </p>
 
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
-              {location.name}
+              {displayLocation.name}
             </h1>
 
             <p className="mt-5 text-base leading-7 text-slate-700">
-              {location.article.intro}
+              {displayLocation.article.intro}
             </p>
 
             <section className="mt-8">
@@ -81,15 +87,17 @@ export default function LocationPage({ location }: LocationPageProps) {
               </h2>
 
               <p className="mt-3 leading-7 text-slate-600">
-                {location.article.history}
+                {displayLocation.article.history}
               </p>
             </section>
 
             <section className="mt-8">
-              <h2 className="text-xl font-semibold text-navy">{messages.location.whyVisit}</h2>
+              <h2 className="text-xl font-semibold text-navy">
+                {messages.location.whyVisit}
+              </h2>
 
               <ul className="mt-3 space-y-2 text-slate-600">
-                {location.article.highlights.map((highlight) => (
+                {displayLocation.article.highlights.map((highlight) => (
                   <li key={highlight} className="flex gap-2 leading-6">
                     <span className="font-bold text-ocean" aria-hidden="true">
                       •
@@ -101,18 +109,20 @@ export default function LocationPage({ location }: LocationPageProps) {
             </section>
 
             <section className="mt-8 rounded-xl bg-panel p-4">
-              <h2 className="font-semibold text-navy">{messages.location.practicalTip}</h2>
+              <h2 className="font-semibold text-navy">
+                {messages.location.practicalTip}
+              </h2>
 
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                {location.article.practicalTip}
+                {displayLocation.article.practicalTip}
               </p>
             </section>
 
             <a
-              href={mapUrl(location.mapQuery)}
+              href={mapUrl(displayLocation.mapQuery)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#4A939C] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#34737B] sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-ocean px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest sm:w-auto"
             >
               {messages.location.openMaps}
             </a>
