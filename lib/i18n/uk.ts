@@ -24,7 +24,7 @@ export const ukMessages = {
     allCameras: 'Усі камери',
   },
 
-    cameraCard: {
+  cameraCard: {
     liveStreamTitleSuffix: 'онлайн-трансляція',
     streamOnSource: 'Онлайн-трансляція доступна на сайті джерела',
     openLiveCamera: 'Відкрити онлайн-камеру',
@@ -90,6 +90,7 @@ export const ukMessages = {
     highClouds: 'Високі хмари',
     rainChance: 'Імовірність дощу',
     windAtSunrise: 'Вітер на світанку',
+    openCamera: 'Відкрити камеру',
     openWindy: 'Відкрити у Windy',
     guidance:
       'Прогноз має довідковий характер. Погода в горах і хмарність можуть швидко змінюватися; перед виїздом перевірте онлайн-камеру Піку-ду-Аріейру.',

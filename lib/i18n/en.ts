@@ -24,7 +24,7 @@ export const enMessages = {
     allCameras: 'All cameras',
   },
 
-    cameraCard: {
+  cameraCard: {
     liveStreamTitleSuffix: 'live stream',
     streamOnSource: 'Live stream available on the source website',
     openLiveCamera: 'Open live camera',
@@ -90,6 +90,7 @@ export const enMessages = {
     highClouds: 'High clouds',
     rainChance: 'Rain chance',
     windAtSunrise: 'Wind at sunrise',
+    openCamera: 'Open camera',
     openWindy: 'Open in Windy',
     guidance:
       'Forecast guidance only. Mountain weather and cloud cover can change quickly; check the live Pico do Arieiro camera before leaving.',

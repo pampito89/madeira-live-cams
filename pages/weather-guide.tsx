@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import Layout from '../components/Layout';
 import { useMessages } from '../lib/i18n/useMessages';
 
@@ -352,14 +353,23 @@ export default function WeatherGuidePage() {
                       </div>
                     </div>
 
-                    <a
-                      href={windyCloudUrl(day.sunrise)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-ocean px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2"
-                    >
-                      {messages.weatherGuide.openWindy}
-                    </a>
+                    <div className="mt-4 flex gap-2">
+                      <Link
+                        href="/cameras/pico-do-arieiro"
+                        className="inline-flex flex-1 items-center justify-center rounded-lg border border-ocean bg-white px-3 py-2.5 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
+                      >
+                        {messages.weatherGuide.openCamera}
+                      </Link>
+
+                      <a
+                        href={windyCloudUrl(day.sunrise)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex flex-1 items-center justify-center rounded-lg bg-ocean px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2"
+                      >
+                        {messages.weatherGuide.openWindy}
+                      </a>
+                    </div>
                   </article>
                 );
               })}
