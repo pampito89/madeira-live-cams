@@ -46,25 +46,85 @@ export type DisplayLocation = {
   };
 };
 
+function keepOriginalPlaceNames(text: string, locale: Locale) {
+  if (locale !== 'uk') {
+    return text;
+  }
+
+  const replacements: Array<[string, string]> = [
+    ['Порту-Моніші', 'Porto Moniz'],
+    ['Порту-Моніш', 'Porto Moniz'],
+    ['Порту-ду-Сейшал', 'Porto do Seixal'],
+    ['Понта-де-Сан-Лоренсу', 'Ponta de São Lourenço'],
+    ['Піку-ду-Аріейру', 'Pico do Arieiro'],
+    ['Піку-Руйву', 'Pico Ruivo'],
+    ['Фажан-душ-Падреш', 'Fajã dos Padres'],
+    ['Кабу-Жіран', 'Cabo Girão'],
+    ['Камара-де-Лобуш', 'Câmara de Lobos'],
+    ['Левада-ду-Мойню', 'Levada do Moinho'],
+    ['Левада-Нова', 'Levada Nova'],
+    ['Праіня-ду-Канісал', 'Prainha do Caniçal'],
+    ['Понта-ду-Сол', 'Ponta do Sol'],
+    ['Паул-да-Серра', 'Paul da Serra'],
+    ['Крішту-Рей', 'Cristo Rei'],
+    ['Монте-Палас', 'Monte Palace'],
+    ['Канісала', 'Caniçal'],
+    ['Канісалу', 'Caniçal'],
+    ['Канісал', 'Caniçal'],
+    ['Гаражау', 'Garajau'],
+    ['Фуншалом', 'Funchal'],
+    ['Фуншалі', 'Funchal'],
+    ['Фуншала', 'Funchal'],
+    ['Фуншал', 'Funchal'],
+    ['Калети', 'Calheta'],
+    ['Калета', 'Calheta'],
+    ['Сейшала', 'Seixal'],
+    ['Сейшалі', 'Seixal'],
+    ['Сейшал', 'Seixal'],
+    ['Фанал', 'Fanal'],
+    ['Монте', 'Monte'],
+    ['Мадейри', 'Madeira'],
+    ['Мадейра', 'Madeira'],
+    ['Сан-Лоренсу', 'São Lourenço'],
+    ['Ашада-ду-Тейшейра', 'Achada do Teixeira'],
+    ['Чарльз Мюррей', 'Charles Murray'],
+    ['Алфреду Гільєрме Родрігеш', 'Alfredo Guilherme Rodrigues'],
+    ['Жозе Мануел Родрігеш Берарду', 'José Manuel Rodrigues Berardo'],
+    ['Кінта-ду-Празер', 'Quinta do Prazer'],
+    ['Рейну', 'Rhine'],
+    ['Німеччині', 'Germany'],
+  ];
+
+  return replacements.reduce(
+    (result, [from, to]) => result.replaceAll(from, to),
+    text,
+  );
+}
+
 export function getLocalizedLocation(
   location: Location,
   locale: Locale,
 ): DisplayLocation {
   return {
     slug: location.slug,
-    name: location.name[locale],
-    area: location.area[locale],
+    name: keepOriginalPlaceNames(location.name[locale], locale),
+    area: keepOriginalPlaceNames(location.area[locale], locale),
     category: location.category[locale],
     tags: location.tags,
-    summary: location.summary[locale],
+    summary: keepOriginalPlaceNames(location.summary[locale], locale),
     image: location.image,
-    imageAlt: location.imageAlt[locale],
+    imageAlt: keepOriginalPlaceNames(location.imageAlt[locale], locale),
     mapQuery: location.mapQuery,
     article: {
-      intro: location.article.intro[locale],
-      history: location.article.history[locale],
-      highlights: location.article.highlights[locale],
-      practicalTip: location.article.practicalTip[locale],
+      intro: keepOriginalPlaceNames(location.article.intro[locale], locale),
+      history: keepOriginalPlaceNames(location.article.history[locale], locale),
+      highlights: location.article.highlights[locale].map((highlight) =>
+        keepOriginalPlaceNames(highlight, locale),
+      ),
+      practicalTip: keepOriginalPlaceNames(
+        location.article.practicalTip[locale],
+        locale,
+      ),
     },
   };
 }
@@ -74,11 +134,11 @@ export const locations: Location[] = [
     slug: 'cristo-rei',
     name: {
       en: 'Cristo Rei Viewpoint',
-      uk: 'Оглядовий майданчик Крішту-Рей',
+      uk: 'Оглядовий майданчик Cristo Rei',
     },
     area: {
       en: 'Garajau, Caniço',
-      uk: 'Гаражау, Канісу',
+      uk: 'Garajau, Caniço',
     },
     category: {
       en: 'Viewpoint',
@@ -87,22 +147,22 @@ export const locations: Location[] = [
     tags: ['Viewpoints'],
     summary: {
       en: 'A clifftop viewpoint above Garajau with wide Atlantic views and the Cristo Rei statue.',
-      uk: 'Оглядовий майданчик над Гаражау з широкими видами на Атлантику та статуєю Крішту-Рей.',
+      uk: 'Оглядовий майданчик над Garajau з широкими видами на Атлантику та статуєю Cristo Rei.',
     },
     image: '/images/explore/cristo-rei.jpg',
     imageAlt: {
       en: 'Cristo Rei viewpoint in Garajau, Madeira',
-      uk: 'Оглядовий майданчик Крішту-Рей у Гаражау, Мадейра',
+      uk: 'Оглядовий майданчик Cristo Rei у Garajau, Мадейра',
     },
     mapQuery: 'Cristo Rei Viewpoint Garajau Madeira',
     article: {
       intro: {
         en: 'Cristo Rei is a peaceful coastal viewpoint in Garajau, on the south-east side of Madeira. It looks across the Atlantic and towards the Garajau nature reserve.',
-        uk: 'Крішту-Рей — спокійний прибережний оглядовий майданчик у Гаражау, на південному сході Мадейри. Звідси відкривається вид на Атлантичний океан і природний заповідник Гаражау.',
+        uk: 'Cristo Rei — спокійний прибережний оглядовий майданчик у Garajau, на південному сході Мадейри. Звідси відкривається вид на Атлантичний океан і природний заповідник Garajau.',
       },
       history: {
         en: 'The viewpoint is known for its Christ the King statue and has become a popular stop for visitors exploring Caniço and the eastern coast.',
-        uk: 'Майданчик відомий статуєю Христа-Царя та став популярною зупинкою для мандрівників, які досліджують Канісу і східне узбережжя острова.',
+        uk: 'Майданчик відомий статуєю Христа-Царя та став популярною зупинкою для мандрівників, які досліджують Caniço і східне узбережжя острова.',
       },
       highlights: {
         en: [
@@ -112,13 +172,13 @@ export const locations: Location[] = [
         ],
         uk: [
           'Відкриті види на Атлантику з високих прибережних скель',
-          'Статуя Крішту-Рей і узбережжя Гаражау поруч',
-          'Зручна зупинка дорогою між Фуншалом та аеропортом',
+          'Статуя Cristo Rei і узбережжя Garajau поруч',
+          'Зручна зупинка дорогою між Funchal та аеропортом',
         ],
       },
       practicalTip: {
         en: 'Visit in the morning or late afternoon for softer light, and combine it with a walk or swim around Garajau.',
-        uk: 'Приїжджайте вранці або наприкінці дня, коли світло м’якше. Можна поєднати візит із прогулянкою чи купанням у районі Гаражау.',
+        uk: 'Приїжджайте вранці або наприкінці дня, коли світло м’якше. Можна поєднати візит із прогулянкою чи купанням у районі Garajau.',
       },
     },
   },
@@ -126,11 +186,11 @@ export const locations: Location[] = [
     slug: 'monte-palace-tropical-garden',
     name: {
       en: 'Monte Palace Tropical Garden',
-      uk: 'Тропічний сад Монте-Палас',
+      uk: 'Тропічний сад Monte Palace',
     },
     area: {
       en: 'Monte, Funchal',
-      uk: 'Монте, Фуншал',
+      uk: 'Monte, Funchal',
     },
     category: {
       en: 'Garden & culture',
@@ -139,22 +199,22 @@ export const locations: Location[] = [
     tags: ['City & culture'],
     summary: {
       en: 'A hillside garden above Funchal where tropical plants, water features, Portuguese tiles and art collections meet.',
-      uk: 'Сад на схилі над Фуншалом, де поєднуються тропічні рослини, водойми, португальські кахлі та мистецькі колекції.',
+      uk: 'Сад на схилі над Funchal, де поєднуються тропічні рослини, водойми, португальські кахлі та мистецькі колекції.',
     },
     image: '/images/explore/monte-palace-tropical-garden.jpg',
     imageAlt: {
       en: 'Tropical garden, lake and lush plants at Monte Palace in Madeira',
-      uk: 'Тропічний сад, озеро та пишна рослинність у Монте-Палас на Мадейрі',
+      uk: 'Тропічний сад, озеро та пишна рослинність у Monte Palace на Мадейрі',
     },
     mapQuery: 'Monte Palace Tropical Garden Madeira',
     article: {
       intro: {
         en: 'Monte Palace Tropical Garden is one of Madeira’s best-known botanical and cultural attractions. Set high above Funchal in Monte, the 70,000-square-metre garden brings together exotic plants, lakes, historic Portuguese tiles, Asian-inspired design and museum collections.',
-        uk: 'Тропічний сад Монте-Палас — одна з найвідоміших ботанічних і культурних пам’яток Мадейри. Розташований високо над Фуншалом у районі Монте, сад площею 70 000 квадратних метрів поєднує екзотичні рослини, озера, історичні португальські кахлі, азійські мотиви та музейні колекції.',
+        uk: 'Тропічний сад Monte Palace — одна з найвідоміших ботанічних і культурних пам’яток Мадейри. Розташований високо над Funchal у районі Monte, сад площею 70 000 квадратних метрів поєднує екзотичні рослини, озера, історичні португальські кахлі, азійські мотиви та музейні колекції.',
       },
       history: {
         en: 'The site began in the 18th century, when British consul Charles Murray created the Quinta do Prazer estate south of Monte Church. In 1897, Alfredo Guilherme Rodrigues acquired the property and built a palace-like residence inspired by the castles he had seen along Germany’s Rhine. It later became the Monte Palace Hotel, but after closing it fell into decline. In 1987, Madeiran businessman, art collector and philanthropist José Manuel Rodrigues Berardo acquired the former hotel and transformed the estate into the garden visitors see today.',
-        uk: 'Історія місця почалася у XVIII столітті, коли британський консул Чарльз Мюррей створив маєток Кінта-ду-Празер на південь від церкви Монте. У 1897 році власність придбав Алфреду Гільєрме Родрігеш і збудував резиденцію, схожу на палац, натхненну замками, які він бачив уздовж Рейну в Німеччині. Пізніше тут працював готель Monte Palace, але після закриття будівля занепала. У 1987 році мадейрський підприємець, колекціонер і меценат Жозе Мануел Родрігеш Берарду придбав колишній готель і перетворив маєток на сад, який відвідувачі бачать сьогодні.',
+        uk: 'Історія місця почалася у XVIII столітті, коли британський консул Чарльз Мюррей створив маєток Кінта-ду-Празер на південь від церкви Monte. У 1897 році власність придбав Алфреду Гільєрме Родрігеш і збудував резиденцію, схожу на палац, натхненну замками, які він бачив уздовж Рейну в Німеччині. Пізніше тут працював готель Monte Palace, але після закриття будівля занепала. У 1987 році мадейрський підприємець, колекціонер і меценат Жозе Мануел Родрігеш Берарду придбав колишній готель і перетворив маєток на сад, який відвідувачі бачать сьогодні.',
       },
       highlights: {
         en: [
@@ -173,12 +233,12 @@ export const locations: Location[] = [
           'Панно з 166 кахлів «Пригоди португальців у Японії»',
           'Японські й китайські мотиви: ліхтарі, містки та буддійські статуї',
           'Триповерховий музей із мінералами, напівдорогоцінним камінням і сучасною скульптурою Зімбабве',
-          'Види на затоку Фуншала та Атлантику зі стежок на схилі',
+          'Види на затоку Funchal та Атлантику зі стежок на схилі',
         ],
       },
       practicalTip: {
         en: 'Allow at least two to three hours. The garden is steep, with many paths and steps, so wear comfortable shoes. A cable car from Funchal is one of the most scenic ways to reach Monte.',
-        uk: 'Виділіть щонайменше дві-три години. Сад розташований на схилі, тут багато стежок і сходів, тому взуйте зручне взуття. Канатна дорога з Фуншала — один із наймальовничіших способів дістатися до Монте.',
+        uk: 'Виділіть щонайменше дві-три години. Сад розташований на схилі, тут багато стежок і сходів, тому взуйте зручне взуття. Канатна дорога з Funchal — один із наймальовничіших способів дістатися до Monte.',
       },
     },
   },
@@ -186,7 +246,7 @@ export const locations: Location[] = [
     slug: 'funchal',
     name: {
       en: 'Funchal',
-      uk: 'Фуншал',
+      uk: 'Funchal',
     },
     area: {
       en: 'South coast',
@@ -204,13 +264,13 @@ export const locations: Location[] = [
     image: '/images/explore/funchal.jpg',
     imageAlt: {
       en: 'Funchal harbour and city on Madeira',
-      uk: 'Гавань і місто Фуншал на Мадейрі',
+      uk: 'Гавань і місто Funchal на Мадейрі',
     },
     mapQuery: 'Funchal Madeira',
     article: {
       intro: {
         en: 'Funchal is Madeira’s capital and the best base for travellers who want restaurants, museums, markets and easy access to the south coast.',
-        uk: 'Фуншал — столиця Мадейри та найкраща база для мандрівників, які хочуть бути поруч із ресторанами, музеями, ринками та південним узбережжям.',
+        uk: 'Funchal — столиця Мадейри та найкраща база для мандрівників, які хочуть бути поруч із ресторанами, музеями, ринками та південним узбережжям.',
       },
       history: {
         en: 'The city grew around its sheltered bay and harbour, becoming Madeira’s main commercial and administrative centre.',
@@ -224,7 +284,7 @@ export const locations: Location[] = [
         ],
         uk: [
           'Історичні вулиці Старого міста',
-          'Набережні гавані та види на затоку Фуншала',
+          'Набережні гавані та види на затоку Funchal',
           'Зручна база для автобусів, турів і канатних доріг',
         ],
       },
@@ -242,7 +302,7 @@ export const locations: Location[] = [
     },
     area: {
       en: 'Funchal Old Town',
-      uk: 'Старе місто Фуншала',
+      uk: 'Старе місто Funchal',
     },
     category: {
       en: 'Market',
@@ -251,18 +311,18 @@ export const locations: Location[] = [
     tags: ['City & culture'],
     summary: {
       en: 'Funchal’s traditional market for fruit, flowers, local produce and fresh fish.',
-      uk: 'Традиційний ринок Фуншала з фруктами, квітами, місцевими продуктами та свіжою рибою.',
+      uk: 'Традиційний ринок Funchal з фруктами, квітами, місцевими продуктами та свіжою рибою.',
     },
     image: '/images/explore/mercado-dos-lavradores.jpg',
     imageAlt: {
       en: 'Mercado dos Lavradores market in Funchal',
-      uk: 'Ринок Mercado dos Lavradores у Фуншалі',
+      uk: 'Ринок Mercado dos Lavradores у Funchal',
     },
     mapQuery: 'Mercado dos Lavradores Funchal',
     article: {
       intro: {
         en: 'Mercado dos Lavradores is Funchal’s best-known traditional market, close to the Old Town and waterfront.',
-        uk: 'Mercado dos Lavradores — найвідоміший традиційний ринок Фуншала, розташований біля Старого міста та набережної.',
+        uk: 'Mercado dos Lavradores — найвідоміший традиційний ринок Funchal, розташований біля Старого міста та набережної.',
       },
       history: {
         en: 'The market has long been a meeting point for local produce, flowers and fish, and remains one of the city’s most recognisable buildings.',
@@ -277,7 +337,7 @@ export const locations: Location[] = [
         uk: [
           'Яскраві прилавки з квітами та фруктами',
           'Зона ринку зі свіжою рибою',
-          'Центральне розташування поруч зі Старим містом Фуншала',
+          'Центральне розташування поруч зі Старим містом Funchal',
         ],
       },
       practicalTip: {
@@ -290,7 +350,7 @@ export const locations: Location[] = [
     slug: 'pico-do-arieiro',
     name: {
       en: 'Pico do Arieiro',
-      uk: 'Піку-ду-Аріейру',
+      uk: 'Pico do Arieiro',
     },
     area: {
       en: 'Central mountains',
@@ -303,18 +363,18 @@ export const locations: Location[] = [
     tags: ['Hiking', 'Viewpoints'],
     summary: {
       en: 'A high mountain viewpoint popular for sunrise, cloud inversions and the route towards Pico Ruivo.',
-      uk: 'Високогірний оглядовий майданчик, популярний для зустрічі світанку, спостереження за хмарами та маршрутів у бік Піку-Руйву.',
+      uk: 'Високогірний оглядовий майданчик, популярний для зустрічі світанку, спостереження за хмарами та маршрутів у бік Pico Ruivo.',
     },
     image: '/images/explore/pico-do-arieiro.jpg',
     imageAlt: {
       en: 'Sunrise above the clouds at Pico do Arieiro, Madeira',
-      uk: 'Світанок над хмарами на Піку-ду-Аріейру, Мадейра',
+      uk: 'Світанок над хмарами на Pico do Arieiro, Мадейра',
     },
     mapQuery: 'Pico do Arieiro Madeira',
     article: {
       intro: {
         en: 'Pico do Arieiro is one of Madeira’s most accessible high-mountain viewpoints. At 1,818 metres, it offers broad views across the central mountain massif when the weather is clear.',
-        uk: 'Піку-ду-Аріейру — один із найдоступніших високогірних оглядових майданчиків Мадейри. На висоті 1 818 метрів він відкриває широкі види на центральний гірський масив у ясну погоду.',
+        uk: 'Pico do Arieiro — один із найдоступніших високогірних оглядових майданчиків Мадейри. На висоті 1 818 метрів він відкриває широкі види на центральний гірський масив у ясну погоду.',
       },
       history: {
         en: 'Its high road access and dramatic ridgelines made it a landmark for visitors long before sunrise tourism became popular.',
@@ -329,7 +389,7 @@ export const locations: Location[] = [
         uk: [
           'Світанок над морем хмар за сприятливих умов',
           'Види на центральний гірський масив Мадейри',
-          'Початкова точка гірських маршрутів у напрямку Піку-Руйву',
+          'Початкова точка гірських маршрутів у напрямку Pico Ruivo',
         ],
       },
       practicalTip: {
@@ -342,7 +402,7 @@ export const locations: Location[] = [
     slug: 'pico-ruivo',
     name: {
       en: 'Pico Ruivo',
-      uk: 'Піку-Руйву',
+      uk: 'Pico Ruivo',
     },
     area: {
       en: 'Central mountains',
@@ -360,17 +420,17 @@ export const locations: Location[] = [
     image: '/images/explore/pico-ruivo.jpg',
     imageAlt: {
       en: 'Mountain ridge near Pico Ruivo in Madeira',
-      uk: 'Гірський хребет поблизу Піку-Руйву на Мадейрі',
+      uk: 'Гірський хребет поблизу Pico Ruivo на Мадейрі',
     },
     mapQuery: 'Pico Ruivo Madeira',
     article: {
       intro: {
         en: 'Pico Ruivo is Madeira’s highest summit and a major goal for hikers visiting the island’s central mountains.',
-        uk: 'Піку-Руйву — найвища вершина Мадейри та одна з головних цілей для туристів, які ходять центральними горами острова.',
+        uk: 'Pico Ruivo — найвища вершина Мадейри та одна з головних цілей для туристів, які ходять центральними горами острова.',
       },
       history: {
         en: 'The peak has long been connected by highland paths, with routes from Achada do Teixeira and the Pico do Arieiro area.',
-        uk: 'Вершина давно сполучена високогірними стежками; популярні маршрути ведуть із Ашада-ду-Тейшейра та району Піку-ду-Аріейру.',
+        uk: 'Вершина давно сполучена високогірними стежками; популярні маршрути ведуть із Ашада-ду-Тейшейра та району Pico do Arieiro.',
       },
       highlights: {
         en: [
@@ -394,7 +454,7 @@ export const locations: Location[] = [
     slug: 'faja-dos-padres',
     name: {
       en: 'Fajã dos Padres',
-      uk: 'Фажан-душ-Падреш',
+      uk: 'Fajã dos Padres',
     },
     area: {
       en: 'South coast',
@@ -412,13 +472,13 @@ export const locations: Location[] = [
     image: '/images/explore/faja-dos-padres.jpg',
     imageAlt: {
       en: 'Fajã dos Padres coast below cliffs in Madeira',
-      uk: 'Узбережжя Фажан-душ-Падреш під скелями на Мадейрі',
+      uk: 'Узбережжя Fajã dos Padres під скелями на Мадейрі',
     },
     mapQuery: 'Faja dos Padres Madeira',
     article: {
       intro: {
         en: 'Fajã dos Padres is a sheltered strip of coast below Madeira’s high southern cliffs.',
-        uk: 'Фажан-душ-Падреш — захищена смуга узбережжя під високими південними скелями Мадейри.',
+        uk: 'Fajã dos Padres — захищена смуга узбережжя під високими південними скелями Мадейри.',
       },
       history: {
         en: 'Its unusual location beneath the cliffs supported cultivation and a small coastal settlement over many generations.',
@@ -446,11 +506,11 @@ export const locations: Location[] = [
     slug: 'cabo-girao-skywalk',
     name: {
       en: 'Cabo Girão Skywalk',
-      uk: 'Скайвок Кабу-Жіран',
+      uk: 'Скайвок Cabo Girão',
     },
     area: {
       en: 'Câmara de Lobos',
-      uk: 'Камара-де-Лобуш',
+      uk: 'Câmara de Lobos',
     },
     category: {
       en: 'Viewpoint',
@@ -464,13 +524,13 @@ export const locations: Location[] = [
     image: '/images/explore/cabo-girao-skywalk.jpg',
     imageAlt: {
       en: 'Cabo Girao Skywalk above Madeira south coast',
-      uk: 'Скайвок Кабу-Жіран над південним узбережжям Мадейри',
+      uk: 'Скайвок Cabo Girão над південним узбережжям Мадейри',
     },
     mapQuery: 'Cabo Girao Skywalk Madeira',
     article: {
       intro: {
         en: 'Cabo Girão is a dramatic sea-cliff viewpoint west of Funchal, best known for its glass-floored skywalk.',
-        uk: 'Кабу-Жіран — вражаючий оглядовий майданчик на морській скелі на захід від Фуншала, найбільш відомий скляною платформою.',
+        uk: 'Cabo Girão — вражаючий оглядовий майданчик на морській скелі на захід від Funchal, найбільш відомий скляною платформою.',
       },
       history: {
         en: 'The cape became an iconic viewpoint because of its high cliffs and the small cultivated plots far below.',
@@ -498,11 +558,11 @@ export const locations: Location[] = [
     slug: 'levada-nova-levada-do-moinho',
     name: {
       en: 'Levada Nova & Levada do Moinho',
-      uk: 'Левада-Нова та Левада-ду-Мойню',
+      uk: 'Levada Nova та Levada do Moinho',
     },
     area: {
       en: 'Ponta do Sol',
-      uk: 'Понта-ду-Сол',
+      uk: 'Ponta do Sol',
     },
     category: {
       en: 'Levada walk',
@@ -516,13 +576,13 @@ export const locations: Location[] = [
     image: '/images/explore/levada-nova-levada-do-moinho.jpg',
     imageAlt: {
       en: 'Levada path near Ponta do Sol in Madeira',
-      uk: 'Стежка левадою біля Понта-ду-Сол на Мадейрі',
+      uk: 'Стежка левадою біля Ponta do Sol на Мадейрі',
     },
     mapQuery: 'Levada Nova Levada do Moinho Madeira',
     article: {
       intro: {
         en: 'Levada Nova and Levada do Moinho are popular water-channel paths in the Ponta do Sol area.',
-        uk: 'Левада-Нова та Левада-ду-Мойню — популярні маршрути вздовж водних каналів у районі Понта-ду-Сол.',
+        uk: 'Levada Nova та Levada do Moinho — популярні маршрути вздовж водних каналів у районі Ponta do Sol.',
       },
       history: {
         en: 'Like many Madeira levadas, these channels were built to carry water to agricultural land and are now used as walking routes.',
@@ -550,11 +610,11 @@ export const locations: Location[] = [
     slug: 'calheta-beach',
     name: {
       en: 'Calheta Beach',
-      uk: 'Пляж Калета',
+      uk: 'Пляж Calheta',
     },
     area: {
       en: 'Calheta',
-      uk: 'Калета',
+      uk: 'Calheta',
     },
     category: {
       en: 'Beach',
@@ -568,17 +628,17 @@ export const locations: Location[] = [
     image: '/images/explore/calheta-beach.jpg',
     imageAlt: {
       en: 'Calheta Beach on Madeira south-west coast',
-      uk: 'Пляж Калета на південно-західному узбережжі Мадейри',
+      uk: 'Пляж Calheta на південно-західному узбережжі Мадейри',
     },
     mapQuery: 'Calheta Beach Madeira',
     article: {
       intro: {
         en: 'Calheta Beach is a sheltered south-west coast beach with sand, a marina and nearby cafés.',
-        uk: 'Пляж Калета — захищений пляж на південно-західному узбережжі з піском, мариною та кафе поруч.',
+        uk: 'Пляж Calheta — захищений пляж на південно-західному узбережжі з піском, мариною та кафе поруч.',
       },
       history: {
         en: 'The beach was created as part of Calheta’s coastal leisure area and is distinct from Madeira’s many pebble and black-sand beaches.',
-        uk: 'Пляж був створений як частина прибережної зони відпочинку Калети й відрізняється від численних галькових та чорнопіщаних пляжів Мадейри.',
+        uk: 'Пляж був створений як частина прибережної зони відпочинку Calheta й відрізняється від численних галькових та чорнопіщаних пляжів Мадейри.',
       },
       highlights: {
         en: [
@@ -602,7 +662,7 @@ export const locations: Location[] = [
     slug: 'ponta-de-sao-lourenco',
     name: {
       en: 'Vereda da Ponta de São Lourenço',
-      uk: 'Стежка Понта-де-Сан-Лоренсу',
+      uk: 'Стежка Ponta de São Lourenço',
     },
     area: {
       en: 'East peninsula',
@@ -620,13 +680,13 @@ export const locations: Location[] = [
     image: '/images/explore/ponta-de-sao-lourenco.jpg',
     imageAlt: {
       en: 'Coastal cliffs on Ponta de Sao Lourenco in Madeira',
-      uk: 'Прибережні скелі на Понта-де-Сан-Лоренсу, Мадейра',
+      uk: 'Прибережні скелі на Ponta de São Lourenço, Мадейра',
     },
     mapQuery: 'Ponta de Sao Lourenco Trail Madeira',
     article: {
       intro: {
         en: 'Ponta de São Lourenço is Madeira’s eastern peninsula, markedly drier and more open than the island’s green interior.',
-        uk: 'Понта-де-Сан-Лоренсу — східний півострів Мадейри, значно сухіший і відкритіший за зелений внутрішній район острова.',
+        uk: 'Ponta de São Lourenço — східний півострів Мадейри, значно сухіший і відкритіший за зелений внутрішній район острова.',
       },
       history: {
         en: 'Its exposed volcanic landscape has been shaped by Atlantic wind, salt and limited rainfall.',
@@ -654,7 +714,7 @@ export const locations: Location[] = [
     slug: 'prainha-do-canical',
     name: {
       en: 'Prainha do Caniçal',
-      uk: 'Пляж Праіня-ду-Канісал',
+      uk: 'Пляж Prainha do Caniçal',
     },
     area: {
       en: 'Caniçal',
@@ -672,13 +732,13 @@ export const locations: Location[] = [
     image: '/images/explore/prainha-do-canical.jpg',
     imageAlt: {
       en: 'Prainha beach near Canical in Madeira',
-      uk: 'Пляж Праіня біля Канісала на Мадейрі',
+      uk: 'Пляж Праіня біля Caniçal на Мадейрі',
     },
     mapQuery: 'Prainha do Canical Madeira',
     article: {
       intro: {
         en: 'Prainha do Caniçal is a small beach on Madeira’s eastern side, near the road to Ponta de São Lourenço.',
-        uk: 'Праіня-ду-Канісал — невеликий пляж на східному боці Мадейри, біля дороги до Понта-де-Сан-Лоренсу.',
+        uk: 'Prainha do Caniçal — невеликий пляж на східному боці Мадейри, біля дороги до Ponta de São Lourenço.',
       },
       history: {
         en: 'Its sheltered bay provides a contrast to the more exposed cliffs and hiking routes nearby.',
@@ -706,11 +766,11 @@ export const locations: Location[] = [
     slug: 'fanal-forest',
     name: {
       en: 'Fanal Forest',
-      uk: 'Ліс Фанал',
+      uk: 'Ліс Fanal',
     },
     area: {
       en: 'Paul da Serra',
-      uk: 'Паул-да-Серра',
+      uk: 'Paul da Serra',
     },
     category: {
       en: 'Nature',
@@ -724,13 +784,13 @@ export const locations: Location[] = [
     image: '/images/explore/fanal-forest.jpg',
     imageAlt: {
       en: 'Ancient laurel trees in mist at Fanal Forest, Madeira',
-      uk: 'Стародавні лаврові дерева в тумані у лісі Фанал, Мадейра',
+      uk: 'Стародавні лаврові дерева в тумані у лісі Fanal, Мадейра',
     },
     mapQuery: 'Fanal Forest Madeira',
     article: {
       intro: {
         en: 'Fanal Forest is a high plateau landscape in north-west Madeira, known for old laurel trees that often appear through mist and low cloud.',
-        uk: 'Ліс Фанал — це високогірний плато-ландшафт на північному заході Мадейри, відомий старими лавровими деревами, які часто виринають із туману та низьких хмар.',
+        uk: 'Ліс Fanal — це високогірний плато-ландшафт на північному заході Мадейри, відомий старими лавровими деревами, які часто виринають із туману та низьких хмар.',
       },
       history: {
         en: 'The area forms part of Madeira’s Laurissilva landscape, a remnant of ancient subtropical forest that once covered much wider areas of southern Europe.',
@@ -758,11 +818,11 @@ export const locations: Location[] = [
     slug: 'praia-do-porto-do-seixal',
     name: {
       en: 'Praia do Porto do Seixal',
-      uk: 'Пляж Порту-ду-Сейшал',
+      uk: 'Пляж Porto do Seixal',
     },
     area: {
       en: 'Seixal',
-      uk: 'Сейшал',
+      uk: 'Seixal',
     },
     category: {
       en: 'Beach',
@@ -776,17 +836,17 @@ export const locations: Location[] = [
     image: '/images/explore/praia-do-porto-do-seixal.jpg',
     imageAlt: {
       en: 'Black sand beach at Seixal on Madeira',
-      uk: 'Пляж із чорним піском у Сейшалі на Мадейрі',
+      uk: 'Пляж із чорним піском у Seixal на Мадейрі',
     },
     mapQuery: 'Praia do Porto do Seixal Madeira',
     article: {
       intro: {
         en: 'Praia do Porto do Seixal is a scenic north-coast beach framed by steep green mountains.',
-        uk: 'Пляж Порту-ду-Сейшал — мальовничий пляж північного узбережжя, оточений стрімкими зеленими горами.',
+        uk: 'Пляж Porto do Seixal — мальовничий пляж північного узбережжя, оточений стрімкими зеленими горами.',
       },
       history: {
         en: 'The beach is part of Seixal’s volcanic coastline, where dark sand and rocks contrast strongly with the surrounding vegetation.',
-        uk: 'Пляж є частиною вулканічного узбережжя Сейшала, де темний пісок і скелі яскраво контрастують із навколишньою рослинністю.',
+        uk: 'Пляж є частиною вулканічного узбережжя Seixal, де темний пісок і скелі яскраво контрастують із навколишньою рослинністю.',
       },
       highlights: {
         en: [
@@ -810,11 +870,11 @@ export const locations: Location[] = [
     slug: 'porto-moniz-natural-pools',
     name: {
       en: 'Porto Moniz Natural Swimming Pools',
-      uk: 'Природні басейни Порту-Моніш',
+      uk: 'Природні басейни Porto Moniz',
     },
     area: {
       en: 'Porto Moniz',
-      uk: 'Порту-Моніш',
+      uk: 'Porto Moniz',
     },
     category: {
       en: 'Natural pools',
@@ -828,13 +888,13 @@ export const locations: Location[] = [
     image: '/images/explore/porto-moniz-pools.jpg',
     imageAlt: {
       en: 'Volcanic natural swimming pools in Porto Moniz, Madeira',
-      uk: 'Вулканічні природні басейни в Порту-Моніші, Мадейра',
+      uk: 'Вулканічні природні басейни в Porto Moniz, Мадейра',
     },
     mapQuery: 'Porto Moniz Natural Swimming Pools Madeira',
     article: {
       intro: {
         en: 'Porto Moniz Natural Swimming Pools are seawater pools formed among black volcanic rocks on Madeira’s north-west coast.',
-        uk: 'Природні басейни Порту-Моніш — це басейни з морською водою, сформовані серед чорних вулканічних скель на північно-західному узбережжі Мадейри.',
+        uk: 'Природні басейни Porto Moniz — це басейни з морською водою, сформовані серед чорних вулканічних скель на північно-західному узбережжі Мадейри.',
       },
       history: {
         en: 'The pools are shaped by volcanic geology and receive fresh Atlantic water through natural openings in the rock.',
