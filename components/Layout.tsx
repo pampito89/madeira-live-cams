@@ -6,25 +6,31 @@ import { useMessages } from '../lib/i18n/useMessages';
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { locale, messages } = useMessages();
-
+  const saveLocale = (selectedLocale: 'en' | 'uk') => {
+    document.cookie = `NEXT_LOCALE=${selectedLocale}; path=/; max-age=31536000; SameSite=Lax`;
+  };
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-3">
-            <Link href="/" className="flex min-w-0 items-center gap-2">
-              <img
-                src="/images/logo.svg"
-                alt="Madeira Live Cams"
-                width={32}
-                height={32}
-                className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
-              />
+            <Link
+  href="/"
+  locale={locale}
+  className="flex min-w-0 items-center gap-2"
+>
+  <img
+    src="/images/logo.svg"
+    alt="Madeira Live Cams"
+    width={32}
+    height={32}
+    className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
+  />
 
-              <span className="truncate text-sm font-semibold text-navy sm:text-lg">
-                Madeira Live Cams
-              </span>
-            </Link>
+  <span className="truncate text-sm font-semibold text-navy sm:text-lg">
+    Madeira Live Cams
+  </span>
+</Link>
 
             <nav className="flex shrink-0 items-center gap-1.5 sm:gap-4">
               <Link
@@ -52,6 +58,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   <Link
     href={router.asPath}
     locale="en"
+    onClick={() => saveLocale('en')}
     className={
       locale === 'en'
         ? 'rounded-md bg-ocean px-2 py-1 text-white'
@@ -64,6 +71,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   <Link
     href={router.asPath}
     locale="uk"
+    onClick={() => saveLocale('uk')}
     className={
       locale === 'uk'
         ? 'rounded-md bg-ocean px-2 py-1 text-white'
