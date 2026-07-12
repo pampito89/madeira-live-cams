@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
-import { useMessages } from '../lib/i18n/useMessages';
 import { locationCoordinates } from '../lib/locationWeather';
+import { useMessages } from '../lib/i18n/useMessages';
 
 type CurrentWeather = {
   temperature: number;
@@ -87,10 +87,7 @@ function getWeatherDetails(code: number, locale: 'en' | 'uk') {
   };
 }
 
-function getWindDirection(
-  degrees: number,
-  locale: 'en' | 'uk',
-) {
+function getWindDirection(degrees: number, locale: 'en' | 'uk') {
   const directions =
     locale === 'uk'
       ? [
@@ -171,7 +168,6 @@ export default function CamerasPage() {
 
         const data = await response.json();
         const results = Array.isArray(data) ? data : [data];
-
         const nextWeather: WeatherByLocation = {};
 
         results.forEach((result, index) => {
@@ -343,13 +339,14 @@ export default function CamerasPage() {
                       src={displayLocation.image}
                       alt={displayLocation.imageAlt}
                       fill
+                      unoptimized
                       className="object-cover transition duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 80px, 96px"
                     />
                   </div>
 
                   {weather && weatherDetails ? (
-                    <div className="mt-2 rounded-lg bg-panel px-2 py-2 text-xs text-slate-600">
+                    <div className="mt-2 rounded-lg border border-slate-200 bg-panel px-2 py-2 text-xs text-slate-600">
                       <p className="flex items-center gap-1 font-semibold text-navy">
                         <span aria-hidden="true">{weatherDetails.icon}</span>
                         <span>{weather.temperature}°C</span>
@@ -364,12 +361,14 @@ export default function CamerasPage() {
                         title={`${getWindDirection(
                           weather.windDirection,
                           locale,
-                        )}, ${weather.windSpeed} km/h`}
+                        )}, ${weather.windSpeed} ${
+                          locale === 'uk' ? 'км/год' : 'km/h'
+                        }`}
                       >
-                        <span aria-hidden="true">
+                        <span className="font-semibold text-ocean" aria-hidden="true">
                           {getWindArrow(weather.windDirection)}
                         </span>{' '}
-                        {weather.windSpeed} км/год
+                        {weather.windSpeed} {locale === 'uk' ? 'км/год' : 'km/h'}
                       </p>
 
                       <p className="mt-1 text-[10px] leading-3 text-slate-400">
