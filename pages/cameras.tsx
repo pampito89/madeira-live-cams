@@ -1,14 +1,204 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
 import { useMessages } from '../lib/i18n/useMessages';
+import { locationCoordinates } from '../lib/locationWeather';
+
+type CurrentWeather = {
+  temperature: number;
+  weatherCode: number;
+  windSpeed: number;
+  windDirection: number;
+  time: string;
+};
+
+type WeatherByLocation = Record<string, CurrentWeather>;
+
+function getWeatherDetails(code: number, locale: 'en' | 'uk') {
+  const weather = {
+    clear: {
+      icon: '☀️',
+      en: 'Clear',
+      uk: 'Сонячно',
+    },
+    partlyCloudy: {
+      icon: '🌤️',
+      en: 'Partly cloudy',
+      uk: 'Мінлива хмарність',
+    },
+    cloudy: {
+      icon: '☁️',
+      en: 'Cloudy',
+      uk: 'Хмарно',
+    },
+    fog: {
+      icon: '🌫️',
+      en: 'Fog',
+      uk: 'Туман',
+    },
+    drizzle: {
+      icon: '🌦️',
+      en: 'Light rain',
+      uk: 'Невеликий дощ',
+    },
+    rain: {
+      icon: '🌧️',
+      en: 'Rain',
+      uk: 'Дощ',
+    },
+    snow: {
+      icon: '❄️',
+      en: 'Snow',
+      uk: 'Сніг',
+    },
+    storm: {
+      icon: '⛈️',
+      en: 'Thunderstorm',
+      uk: 'Гроза',
+    },
+  };
+
+  let condition = weather.cloudy;
+
+  if (code === 0) {
+    condition = weather.clear;
+  } else if (code === 1 || code === 2) {
+    condition = weather.partlyCloudy;
+  } else if (code === 3) {
+    condition = weather.cloudy;
+  } else if (code === 45 || code === 48) {
+    condition = weather.fog;
+  } else if ([51, 53, 55, 56, 57].includes(code)) {
+    condition = weather.drizzle;
+  } else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+    condition = weather.rain;
+  } else if ([71, 73, 75, 77, 85, 86].includes(code)) {
+    condition = weather.snow;
+  } else if ([95, 96, 99].includes(code)) {
+    condition = weather.storm;
+  }
+
+  return {
+    icon: condition.icon,
+    label: condition[locale],
+  };
+}
+
+function getWindDirection(
+  degrees: number,
+  locale: 'en' | 'uk',
+) {
+  const directions =
+    locale === 'uk'
+      ? [
+          'Північний',
+          'Північно-східний',
+          'Східний',
+          'Південно-східний',
+          'Південний',
+          'Південно-західний',
+          'Західний',
+          'Північно-західний',
+        ]
+      : [
+          'North',
+          'North-east',
+          'East',
+          'South-east',
+          'South',
+          'South-west',
+          'West',
+          'North-west',
+        ];
+
+  return directions[Math.round(degrees / 45) % 8];
+}
+
+function getWindArrow(degrees: number) {
+  const arrows = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
+
+  return arrows[Math.round(degrees / 45) % 8];
+}
+
+function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
+  const date = new Date(time);
+
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+
+  return new Intl.DateTimeFormat(
+    locale === 'uk' ? 'uk-UA' : 'en-GB',
+    {
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Atlantic/Madeira',
+    },
+  ).format(date);
+}
 
 export default function CamerasPage() {
   const { locale, messages } = useMessages();
   const [activeFilter, setActiveFilter] = useState('All');
+  const [weatherByLocation, setWeatherByLocation] =
+    useState<WeatherByLocation>({});
+
+  useEffect(() => {
+    const weatherLocations = locations.filter(
+      (location) => locationCoordinates[location.slug],
+    );
+
+    const latitude = weatherLocations
+      .map((location) => locationCoordinates[location.slug].latitude)
+      .join(',');
+
+    const longitude = weatherLocations
+      .map((location) => locationCoordinates[location.slug].longitude)
+      .join(',');
+
+    async function loadWeather() {
+      try {
+        const response = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&timezone=Europe%2FLisbon`,
+        );
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data = await response.json();
+        const results = Array.isArray(data) ? data : [data];
+
+        const nextWeather: WeatherByLocation = {};
+
+        results.forEach((result, index) => {
+          const location = weatherLocations[index];
+          const current = result.current;
+
+          if (!location || !current) {
+            return;
+          }
+
+          nextWeather[location.slug] = {
+            temperature: Math.round(current.temperature_2m),
+            weatherCode: current.weather_code,
+            windSpeed: Math.round(current.wind_speed_10m),
+            windDirection: current.wind_direction_10m,
+            time: current.time,
+          };
+        });
+
+        setWeatherByLocation(nextWeather);
+      } catch {
+        setWeatherByLocation({});
+      }
+    }
+
+    loadWeather();
+  }, []);
 
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
@@ -114,6 +304,10 @@ export default function CamerasPage() {
         >
           {filteredLocations.map((location) => {
             const displayLocation = getLocalizedLocation(location, locale);
+            const weather = weatherByLocation[location.slug];
+            const weatherDetails = weather
+              ? getWeatherDetails(weather.weatherCode, locale)
+              : null;
 
             return (
               <Link
@@ -143,14 +337,49 @@ export default function CamerasPage() {
                   </span>
                 </div>
 
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-mist sm:h-24 sm:w-24">
-                  <Image
-                    src={displayLocation.image}
-                    alt={displayLocation.imageAlt}
-                    fill
-                    className="object-cover transition duration-300 group-hover:scale-105"
-                    sizes="(max-width: 640px) 80px, 96px"
-                  />
+                <div className="w-20 shrink-0 sm:w-24">
+                  <div className="relative h-20 overflow-hidden rounded-xl bg-mist sm:h-24">
+                    <Image
+                      src={displayLocation.image}
+                      alt={displayLocation.imageAlt}
+                      fill
+                      className="object-cover transition duration-300 group-hover:scale-105"
+                      sizes="(max-width: 640px) 80px, 96px"
+                    />
+                  </div>
+
+                  {weather && weatherDetails ? (
+                    <div className="mt-2 rounded-lg bg-panel px-2 py-2 text-xs text-slate-600">
+                      <p className="flex items-center gap-1 font-semibold text-navy">
+                        <span aria-hidden="true">{weatherDetails.icon}</span>
+                        <span>{weather.temperature}°C</span>
+                      </p>
+
+                      <p className="mt-1 leading-4">
+                        {weatherDetails.label}
+                      </p>
+
+                      <p
+                        className="mt-1 leading-4"
+                        title={`${getWindDirection(
+                          weather.windDirection,
+                          locale,
+                        )}, ${weather.windSpeed} km/h`}
+                      >
+                        <span aria-hidden="true">
+                          {getWindArrow(weather.windDirection)}
+                        </span>{' '}
+                        {weather.windSpeed} км/год
+                      </p>
+
+                      <p className="mt-1 text-[10px] leading-3 text-slate-400">
+                        {locale === 'uk' ? 'Оновлено' : 'Updated'}{' '}
+                        {formatUpdatedTime(weather.time, locale)}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100" />
+                  )}
                 </div>
               </Link>
             );
