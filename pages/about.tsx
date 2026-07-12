@@ -115,7 +115,7 @@ export default function AboutPage() {
               </div>
 
               <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-  <div className="bg-gradient-to-br from-navy via-ocean to-sky-500 px-6 py-9 text-center text-white sm:px-10 sm:py-12">
+  <div className="bg-gradient-to-br from-forest via-ocean to-leaf px-6 py-9 text-center text-white sm:px-10 sm:py-12">
     <div className="mx-auto flex h-36 w-36 items-end justify-center overflow-hidden rounded-full border-4 border-white/80 bg-white/15 shadow-lg sm:h-44 sm:w-44">
       <img
         src="/images/oleksandr.png"
@@ -167,7 +167,7 @@ export default function AboutPage() {
 </div>
 
               <div id="contact" className="border-t border-slate-200 pt-8">
-  <div className="rounded-2xl bg-gradient-to-br from-ocean to-navy p-6 text-white sm:p-8">
+  <div className="rounded-2xl bg-gradient-to-br from-forest to-navy p-6 text-white shadow-lg shadow-forest/20 sm:p-8">
     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
       {locale === 'uk' ? 'Зворотний зв’язок' : 'Feedback'}
     </p>
@@ -188,7 +188,7 @@ export default function AboutPage() {
       href="https://wa.me/351932006352?text=Hello%20Oleksandr%2C%20I%20have%20an%20idea%20for%20Madeira%20Live%20Cams."
       target="_blank"
       rel="noreferrer"
-      className="mt-6 inline-flex items-center rounded-lg bg-white px-5 py-3 text-sm font-bold text-navy transition hover:bg-sky-50"
+      className="mt-6 inline-flex items-center rounded-lg bg-clay px-5 py-3 text-sm font-bold text-navy transition hover:bg-moss"
     >
       {locale === 'uk' ? 'Написати у WhatsApp' : 'Message on WhatsApp'}
     </a>

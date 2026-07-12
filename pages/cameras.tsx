@@ -107,7 +107,7 @@ export default function CamerasPage() {
             <Link
               key={location.slug}
               href={`/explore/${location.slug}`}
-              className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-ocean hover:shadow-md"
+              className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
             >
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
@@ -131,7 +131,7 @@ export default function CamerasPage() {
                 </span>
               </div>
 
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:h-24 sm:w-24">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-mist sm:h-24 sm:w-24">
                 <Image
                   src={location.image}
                   alt={location.imageAlt}
