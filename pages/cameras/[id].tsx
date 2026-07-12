@@ -1,102 +1,164 @@
-
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useMessages } from '../../lib/i18n/useMessages';
 import Layout from '../../components/Layout';
-import { cameras, Camera } from '../../components/cameraData';
-import { fetchWeatherSnapshot, WeatherSnapshot } from '../../components/weather';
+import {
+  cameras,
+  getLocalizedCamera,
+  type Camera,
+} from '../../components/cameraData';
 
-const CameraDetailPage: React.FC = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const [camera, setCamera] = useState<Camera | null>(null);
-  const [weather, setWeather] = useState<WeatherSnapshot | null>(null);
+type CameraPageProps = {
+  camera: Camera;
+};
 
-  useEffect(() => {
-    if (typeof id !== 'string') return;
-    const found = cameras.find((c) => c.id === id);
-    if (found) {
-      setCamera(found);
-      fetchWeatherSnapshot(found.latitude, found.longitude).then(setWeather);
-    }
-  }, [id]);
-
-  if (!camera) {
-    return (
-      <Layout>
-        <div className="mx-auto max-w-6xl px-4 py-6">Camera not found.</div>
-      </Layout>
-    );
-  }
+export default function CameraPage({ camera }: CameraPageProps) {
+  const { locale, messages } = useMessages();
+  const displayCamera = getLocalizedCamera(camera, locale);
 
   return (
     <Layout>
-      <div className="mx-auto max-w-6xl px-4 py-6 flex flex-col gap-6">
-        <section className="grid gap-6 md:grid-cols-[2fr,1.2fr]">
+      <Head>
+        <title>
+          {displayCamera.name} | Madeira Live Cams
+        </title>
+
+        <meta
+          name="description"
+          content={`${displayCamera.name}: ${displayCamera.region}. Live camera and current conditions in Madeira.`}
+        />
+      </Head>
+
+      <main className="page-shell">
+        <Link
+          href="/"
+          className="inline-flex text-sm font-medium text-ocean hover:underline"
+        >
+          ← {messages.home.allCameras}
+        </Link>
+
+        <section className="mt-5 grid gap-6 md:grid-cols-[2fr,1.2fr]">
           <div className="flex flex-col gap-4">
-            <h1 className="text-xl md:text-2xl font-semibold text-navy">{camera.name}</h1>
+            <h1 className="text-xl font-semibold text-navy md:text-2xl">
+              {displayCamera.name}
+            </h1>
+
             <p className="text-sm text-slate-600">
-              {camera.region} · {camera.category.join(' · ')}{' '}
-              {camera.altitudeMeters ? `· ${camera.altitudeMeters} m` : ''}
+              {displayCamera.region} ·{' '}
+              {displayCamera.category.join(' · ')}{' '}
+              {displayCamera.altitudeMeters
+                ? `· ${displayCamera.altitudeMeters} m`
+                : ''}
             </p>
-            <div className="rounded-xl bg-black text-white overflow-hidden flex items-center justify-center h-64 md:h-80">
-              {camera.youtubeId ? (
+
+            <div className="aspect-video overflow-hidden rounded-xl bg-slate-900">
+              {displayCamera.youtubeId ? (
                 <iframe
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${camera.youtubeId}?autoplay=0&mute=0`}
-                  title={`${camera.name} live stream`}
+                  className="h-full w-full"
+                  src={`https://www.youtube.com/embed/${displayCamera.youtubeId}?autoplay=0&mute=1`}
+                  title={`${displayCamera.name} ${messages.cameraCard.liveStreamTitleSuffix}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
               ) : (
-                <div className="p-4 text-center text-xs">
-                  This camera currently opens on the original provider website.
-                  Use the button below to watch the live stream.
+                <div className="flex h-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-ocean/20 via-panel to-clay/20 p-6 text-center">
+                  <p className="text-sm text-slate-600">
+                    {messages.cameraCard.streamOnSource}
+                  </p>
+
+                  <a
+                    href={displayCamera.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg bg-ocean px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-forest"
+                  >
+                    {messages.cameraCard.openLiveCamera}
+                  </a>
                 </div>
               )}
-            </div>
-            <div className="flex gap-2 mt-3">
-              <a
-                href={camera.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-ocean text-white text-xs font-medium hover:bg-ocean/90"
-              >
-                Open original source
-              </a>
             </div>
           </div>
-          <aside className="flex flex-col gap-4">
-            <div className="rounded-xl bg-white border border-slate-200 p-4 text-sm">
-              <h2 className="text-sm font-semibold text-navy mb-2">Current weather</h2>
-              {weather ? (
-                <div className="flex flex-col gap-1 text-xs text-slate-700">
-                  <p>Temperature: {weather.temperature} °C</p>
-                  <p>Wind speed: {weather.windSpeed} km/h</p>
-                  <p>Weather code: {weather.weatherCode}</p>
-                  <p className="mt-2 text-slate-500 text-[11px]">
-                    Weather data via Open-Meteo. Always double-check conditions before driving into the mountains.
-                  </p>
+
+          <aside className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="text-base font-semibold text-navy">
+              {messages.cameraCard.watchDetails}
+            </h2>
+
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="text-slate-500">{messages.cameraCard.region}</dt>
+                <dd className="mt-1 font-medium text-navy">
+                  {displayCamera.region}
+                </dd>
+              </div>
+
+              {displayCamera.altitudeMeters && (
+                <div>
+                  <dt className="text-slate-500">{messages.cameraCard.altitude}</dt>
+                  <dd className="mt-1 font-medium text-navy">
+                    {displayCamera.altitudeMeters} m
+                  </dd>
                 </div>
-              ) : (
-                <p className="text-xs text-slate-500">Weather data is loading or temporarily unavailable.</p>
               )}
-            </div>
-            <div className="rounded-xl bg-white border border-slate-200 p-4 text-xs text-slate-700 flex flex-col gap-2">
-              <h2 className="text-sm font-semibold text-navy mb-1">Travel tip</h2>
-              <p>
-                Use this webcam to check real-time conditions before you commit to a route. For mountain locations,
-                compare at least two webcams and a forecast app.
-              </p>
-              <p>
-                Madeira weather can change quickly, especially around Pico do Arieiro, Achada do Teixeira and Eira do
-                Serrado. Plan buffers and drive carefully.
-              </p>
-            </div>
+
+              <div>
+                <dt className="text-slate-500">{messages.cameraCard.coordinates}</dt>
+                <dd className="mt-1 font-medium text-navy">
+                  {displayCamera.latitude.toFixed(3)},{' '}
+                  {displayCamera.longitude.toFixed(3)}
+                </dd>
+              </div>
+            </dl>
+
+            <a
+              href={displayCamera.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-4 py-3 text-sm font-semibold text-navy transition hover:bg-mist"
+            >
+              {messages.cameraCard.openOriginalSource}
+            </a>
           </aside>
         </section>
-      </div>
+      </main>
     </Layout>
   );
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const locales = ['en', 'uk'];
+
+  return {
+    paths: cameras.flatMap((camera) =>
+      locales.map((locale) => ({
+        params: { id: camera.id },
+        locale,
+      })),
+    ),
+    fallback: false,
+  };
 };
 
-export default CameraDetailPage;
+export const getStaticProps: GetStaticProps<CameraPageProps> = async ({
+  params,
+}) => {
+  const id = params?.id;
+
+  const camera =
+    typeof id === 'string'
+      ? cameras.find((item) => item.id === id)
+      : undefined;
+
+  if (!camera) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      camera,
+    },
+  };
+};

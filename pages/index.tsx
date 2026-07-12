@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { cameras } from '../components/cameraData';
+import {
+  cameras,
+  getLocalizedCamera,
+} from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 
 const HomePage: React.FC = () => {
-  const { messages } = useMessages();
+  const { locale, messages } = useMessages();
   const [query] = useState('');
   const [flightNumber, setFlightNumber] = useState('');
 
@@ -26,11 +29,18 @@ const HomePage: React.FC = () => {
     );
   };
 
-  const filtered = cameras.filter(
-    (camera) =>
-      camera.name.toLowerCase().includes(query.toLowerCase()) ||
-      camera.region.toLowerCase().includes(query.toLowerCase()),
+  const filtered = cameras.filter((camera) => {
+  const displayCamera = getLocalizedCamera(camera, locale);
+  const searchQuery = query.toLowerCase();
+
+  return (
+    displayCamera.name.toLowerCase().includes(searchQuery) ||
+    displayCamera.region.toLowerCase().includes(searchQuery) ||
+    displayCamera.category.some((category) =>
+      category.toLowerCase().includes(searchQuery),
+    )
   );
+});
 
   return (
     <Layout>

@@ -24,6 +24,17 @@ export const enMessages = {
     allCameras: 'All cameras',
   },
 
+    cameraCard: {
+    liveStreamTitleSuffix: 'live stream',
+    streamOnSource: 'Live stream available on the source website',
+    openLiveCamera: 'Open live camera',
+    watchDetails: 'Watch details',
+    openOriginalSource: 'Open original source',
+    region: 'Region',
+    altitude: 'Altitude',
+    coordinates: 'Coordinates',
+  },
+
   exploreList: {
     eyebrow: 'Explore Madeira',
     title: 'Places to explore around Madeira',
