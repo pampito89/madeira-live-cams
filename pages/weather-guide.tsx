@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import Layout from '../components/Layout';
 import { useMessages } from '../lib/i18n/useMessages';
 
@@ -24,11 +23,28 @@ type ForecastState = {
 const PICO_DO_ARIEIRO = {
   latitude: 32.7352,
   longitude: -16.928,
+  cameraSourceUrl:
+    'https://www.netmadeira.com/webcams-madeira/pico-do-arieiro',
 };
 
-function windDirectionLabel(degrees: number) {
-  const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-  return directions[Math.round(degrees / 45) % 8];
+function windDirectionLabel(degrees: number, locale: 'en' | 'uk') {
+  const directionIndex = Math.round(degrees / 45) % 8;
+
+  const directions = {
+    en: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+    uk: [
+      'Північний',
+      'Північно-східний',
+      'Східний',
+      'Південно-східний',
+      'Південний',
+      'Південно-західний',
+      'Західний',
+      'Північно-західний',
+    ],
+  };
+
+  return directions[locale][directionIndex];
 }
 
 function formatDate(date: string, locale: 'en' | 'uk') {
@@ -301,65 +317,72 @@ export default function WeatherGuidePage() {
                       </div>
                     </div>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                    <p className="mt-2 text-sm leading-5 text-slate-600">
                       {rating.description}
                     </p>
 
-                    <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                      <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">
+                    <div className="mt-3 grid grid-cols-2 gap-1.5 text-sm">
+                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
+                        <p className="text-[11px] leading-4 text-slate-500">
                           {messages.weatherGuide.lowClouds}
                         </p>
-                        <p className="mt-1 font-semibold text-navy">
+
+                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
                           {day.lowClouds}%
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">
+                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
+                        <p className="text-[11px] leading-4 text-slate-500">
                           {messages.weatherGuide.midClouds}
                         </p>
-                        <p className="mt-1 font-semibold text-navy">
+
+                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
                           {day.midClouds}%
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">
+                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
+                        <p className="text-[11px] leading-4 text-slate-500">
                           {messages.weatherGuide.highClouds}
                         </p>
-                        <p className="mt-1 font-semibold text-navy">
+
+                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
                           {day.highClouds}%
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">
+                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
+                        <p className="text-[11px] leading-4 text-slate-500">
                           {messages.weatherGuide.rainChance}
                         </p>
-                        <p className="mt-1 font-semibold text-navy">
+
+                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
                           {day.rainChance}%
                         </p>
                       </div>
 
-                      <div className="col-span-2 rounded-lg border border-moss/40 bg-panel p-3">
-                        <p className="text-xs text-slate-500">
+                      <div className="col-span-2 rounded-lg border border-moss/40 bg-panel px-3 py-2">
+                        <p className="text-[11px] leading-4 text-slate-500">
                           {messages.weatherGuide.windAtSunrise}
                         </p>
-                        <p className="mt-1 font-semibold text-navy">
+
+                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
                           {day.windSpeed} km/h ·{' '}
-                          {windDirectionLabel(day.windDirection)}
+                          {windDirectionLabel(day.windDirection, locale)}
                         </p>
                       </div>
                     </div>
 
                     <div className="mt-4 flex gap-2">
-                      <Link
-                        href="/cameras/pico-do-arieiro"
+                      <a
+                        href={PICO_DO_ARIEIRO.cameraSourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex flex-1 items-center justify-center rounded-lg border border-ocean bg-white px-3 py-2.5 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
                       >
                         {messages.weatherGuide.openCamera}
-                      </Link>
+                      </a>
 
                       <a
                         href={windyCloudUrl(day.sunrise)}
