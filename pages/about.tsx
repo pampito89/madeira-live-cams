@@ -10,14 +10,14 @@ export default function AboutPage() {
       ? {
           title: 'Про Madeira Live Cams',
           intro:
-            'Madeira Live Cams — це практичний вебзастосунок для гідів Мадейри, мандрівників і місцевих жителів, які хочуть краще спланувати свій день на острові.',
+            'Madeira Live Cams — це практичний вебзастосунок для гідів та мандрівників, які хочуть краще спланувати свій день на острові.',
           purpose:
             'Погода на Мадейрі може сильно відрізнятися залежно від району, висоти та часу доби, а також швидко змінюватися. Сервіс допомагає швидко переглядати доступні онлайн-камери й погодні дані, щоб обрати найкращу локацію, маршрут або активність у потрібний момент.',
         }
       : {
           title: 'About Madeira Live Cams',
           intro:
-            'Madeira Live Cams is a practical web app for Madeira guides, visitors and local residents who want to plan a better day on the island.',
+            'Madeira Live Cams is a practical web app for Madeira guides and visitors who want to plan a better day on the island.',
           purpose:
             'Madeira weather can vary greatly by area, altitude and time of day, and it can change quickly. This service helps you quickly check available live cameras and weather information, so you can choose the right location, route or activity at the right time.',
         };
@@ -73,7 +73,7 @@ export default function AboutPage() {
                 </p>
 
                 <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-                  {locale === 'uk' ? 'Привіт, я Олександр' : 'Hi, I’m Oleksandr'}
+                  {locale === 'uk' ? 'Привіт, я Олександр' : 'Hi, I’m Alex'}
                 </h2>
 
                 <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-white/85">
