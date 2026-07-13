@@ -156,31 +156,37 @@ export const locations: Location[] = [
     },
     mapQuery: 'Cristo Rei Viewpoint Garajau Madeira',
     article: {
-      intro: {
-        en: 'Cristo Rei is a peaceful coastal viewpoint in Garajau, on the south-east side of Madeira. It looks across the Atlantic and towards the Garajau nature reserve.',
-        uk: 'Cristo Rei — спокійний прибережний оглядовий майданчик у Garajau, на південному сході Мадейри. Звідси відкривається вид на Атлантичний океан і природний заповідник Garajau.',
-      },
-      history: {
-        en: 'The viewpoint is known for its Christ the King statue and has become a popular stop for visitors exploring Caniço and the eastern coast.',
-        uk: 'Майданчик відомий статуєю Христа-Царя та став популярною зупинкою для мандрівників, які досліджують Caniço і східне узбережжя острова.',
-      },
-      highlights: {
-        en: [
-          'Open Atlantic views from high coastal cliffs',
-          'The Cristo Rei statue and nearby Garajau coastline',
-          'A useful stop when travelling between Funchal and the airport',
-        ],
-        uk: [
-          'Відкриті види на Атлантику з високих прибережних скель',
-          'Статуя Cristo Rei і узбережжя Garajau поруч',
-          'Зручна зупинка дорогою між Funchal та аеропортом',
-        ],
-      },
-      practicalTip: {
-        en: 'Visit in the morning or late afternoon for softer light, and combine it with a walk or swim around Garajau.',
-        uk: 'Приїжджайте вранці або наприкінці дня, коли світло м’якше. Можна поєднати візит із прогулянкою чи купанням у районі Garajau.',
-      },
-    },
+  intro: {
+    en: 'Cristo Rei, meaning “Christ the King”, is one of Madeira’s best-known monuments. It stands on the clifftop at Ponta do Garajau, in Caniço, east of Funchal, with Christ facing the Atlantic Ocean and holding his arms open. The monument is also known as the Sacred Heart of Jesus statue because it was built in honour of Sagrado Coração de Jesus.',
+    uk: 'Cristo Rei, що означає «Христос-Цар», — один із найвідоміших монументів Madeira. Він стоїть на вершині скелі в Ponta do Garajau, у Caniço на схід від Funchal: постать Христа звернена до Атлантичного океану та розкриває руки. Монумент також відомий як статуя Sacred Heart of Jesus, оскільки його спорудили на честь Sagrado Coração de Jesus.',
+  },
+  history: {
+    en: 'Cristo Rei was inaugurated on 30 October 1927, the same day that the road from Cancela to the monument officially opened. It was completed before the Christ the Redeemer statue in Rio de Janeiro, inaugurated in 1931, making Cristo Rei one of the earliest major monuments to show Christ with open arms. Aires de Ornelas, son of the last majorat of Caniço, financed and commissioned the work. The design is credited to French sculptor Georges Serraz, while historical accounts also associate French sculptor Pierre Charles Lenoir with the project. The approximately 14-metre monument is an example of Art Deco sculpture, with simple forms, a strong vertical silhouette and a monumental presence above the sea. It was built as a public expression of Catholic faith, devotion to the Sacred Heart of Jesus, peace and spiritual protection.',
+    uk: 'Cristo Rei урочисто відкрили 30 жовтня 1927 року — того самого дня офіційно відкрили дорогу від Cancela до монумента. Його завершили раніше за Christ the Redeemer у Rio de Janeiro, відкритий у 1931 році, тому Cristo Rei належить до одних із перших великих монументів із постаттю Христа з розкритими руками. Роботу профінансував і замовив Aires de Ornelas, син останнього majorat у Caniço. Автором проєкту вважають французького скульптора Georges Serraz; історичні джерела також пов’язують зі створенням монумента французького скульптора Pierre Charles Lenoir. Приблизно 14-метрова статуя є прикладом Art Deco: її вирізняють прості форми, виразний вертикальний силует і монументальна присутність над океаном. Її спорудили як публічний вияв католицької віри, відданості Sacred Heart of Jesus, миру та духовного захисту.',
+  },
+  highlights: {
+    en: [
+      'Cristo Rei was inaugurated on 30 October 1927, before Christ the Redeemer in Rio de Janeiro',
+      'An approximately 14-metre Art Deco monument by Georges Serraz, with Pierre Charles Lenoir also associated with the project',
+      'Open-armed Christ facing the Atlantic from the cliffs of Ponta do Garajau',
+      'Views of the Atlantic Ocean, Garajau Beach, Caniço de Baixo and part of Funchal Bay on clear days',
+      'Close to Garajau Partial Nature Reserve, known for clear water, rocky coast and marine life',
+      'Praia do Garajau below the viewpoint, reached by road or cable car and popular for swimming, snorkelling and diving',
+    ],
+    uk: [
+      'Cristo Rei відкрито 30 жовтня 1927 року — раніше за Christ the Redeemer у Rio de Janeiro',
+      'Приблизно 14-метровий монумент у стилі Art Deco: автором вважають Georges Serraz, а Pierre Charles Lenoir також пов’язаний із проєктом',
+      'Постать Христа з розкритими руками, звернена до Атлантики зі скель Ponta do Garajau',
+      'Види на Атлантичний океан, Garajau Beach, Caniço de Baixo та частину Funchal Bay у ясну погоду',
+      'Поруч розташований Garajau Partial Nature Reserve із чистою водою, скелястим узбережжям і морським життям',
+      'Praia do Garajau під оглядовим майданчиком: до неї можна дістатися дорогою або канатною дорогою; місце популярне для плавання, снорклінгу й дайвінгу',
+    ],
+  },
+  practicalTip: {
+    en: 'Visit in the morning or late afternoon for softer light and clearer views. The clifftop can be windy, so bring a light layer. Combine the viewpoint with Praia do Garajau, but check cable-car operating times and sea conditions before swimming.',
+    uk: 'Приїжджайте вранці або наприкінці дня, коли світло м’якше, а видимість часто краща. На вершині скелі може бути вітряно, тому візьміть легкий верхній шар одягу. Поєднайте оглядовий майданчик із Praia do Garajau, але перед купанням перевірте години роботи канатної дороги та стан моря.',
+  },
+},
   },
   {
     slug: 'monte-palace-tropical-garden',
@@ -268,31 +274,39 @@ export const locations: Location[] = [
     },
     mapQuery: 'Funchal Madeira',
     article: {
-      intro: {
-        en: 'Funchal is Madeira’s capital and the best base for travellers who want restaurants, museums, markets and easy access to the south coast.',
-        uk: 'Funchal — столиця Мадейри та найкраща база для мандрівників, які хочуть бути поруч із ресторанами, музеями, ринками та південним узбережжям.',
-      },
-      history: {
-        en: 'The city grew around its sheltered bay and harbour, becoming Madeira’s main commercial and administrative centre.',
-        uk: 'Місто виросло навколо захищеної бухти та гавані й стало головним комерційним та адміністративним центром Мадейри.',
-      },
-      highlights: {
-        en: [
-          'Historic streets in the Old Town',
-          'Harbour promenades and views across Funchal Bay',
-          'A convenient base for buses, tours and cable cars',
-        ],
-        uk: [
-          'Історичні вулиці Старого міста',
-          'Набережні гавані та види на затоку Funchal',
-          'Зручна база для автобусів, турів і канатних доріг',
-        ],
-      },
-      practicalTip: {
-        en: 'Walk the Old Town in the evening, then use the seafront promenade to reach the harbour area.',
-        uk: 'Прогуляйтеся Старим містом увечері, а потім пройдіться набережною до району гавані.',
-      },
-    },
+  intro: {
+    en: 'Funchal is the capital and largest city of the Autonomous Region of Madeira, Portugal. Set on the south coast in a natural amphitheatre between the mountains and the Atlantic, it is the island’s main centre for government, business, transport, culture, education and tourism. Its name comes from the Portuguese word funcho, meaning fennel, which once grew abundantly in the valley.',
+    uk: 'Фуншал — столиця та найбільше місто Автономного регіону Madeira у Португалії. Місто розташоване на південному узбережжі, у природному амфітеатрі між горами та Атлантичним океаном, і є головним центром управління, бізнесу, транспорту, культури, освіти й туризму на острові. Назва походить від португальського слова funcho — «фенхель», який колись рясно зростав у цій долині.',
+  },
+  history: {
+    en: 'Madeira was reached by Portuguese navigators João Gonçalves Zarco, Tristão Vaz Teixeira and Bartolomeu Perestrelo in 1419. João Gonçalves Zarco settled with his family in the fertile Funchal valley in the early 1420s, where freshwater streams, productive land and a sheltered bay supported a growing settlement. Funchal became a town on 21 August 1452 and received city status from King Manuel I on 21 August 1508. Its harbour made it an important Atlantic stop for ships travelling between Europe, Africa and the Americas. During the 15th and 16th centuries, sugar cane made Funchal wealthy; after sugar faced competition from Brazil, Madeira wine became the key export. British wine merchants later shaped the city’s international commercial character. In the 19th century, Funchal became a winter destination for European visitors, and tourism remains central to its economy today. The latest complete official census, in 2021, recorded 105,782 residents in the municipality of Funchal and 250,744 residents in the Autonomous Region of Madeira.',
+    uk: 'Мадейра була відкрита португальськими мореплавцями João Gonçalves Zarco, Tristão Vaz Teixeira та Bartolomeu Perestrelo у 1419 році. На початку 1420-х João Gonçalves Zarco оселився зі своєю родиною в родючій долині Фуншал, де прісні потоки, продуктивні землі та захищена бухта сприяли розвитку поселення. Фуншал отримав статус міста 21 серпня 1452 року, а 21 серпня 1508 року Король Мануель I надав йому статус міста. Гавань зробила Фуншал важливою зупинкою на атлантичних маршрутах між Європою, Африкою та Америками. У XV–XVI століттях місто розбагатіло завдяки вирощуванню цукрової тростини; коли цукор почав програвати конкуренцію продукції з Бразилії, головним експортним товаром стало Madeira wine. Згодом британські торговці вином вплинули на міжнародний комерційний характер міста. У XIX столітті Фуншал перетворився на зимовий курорт для європейських гостей, а сьогодні туризм залишається ключовою частиною його економіки. За останнім повним офіційним переписом 2021 року, у муніципалітеті Фуншал проживали 105 782 людини, а в Автономному регіоні Мадейра — 250 744.',
+  },
+  highlights: {
+    en: [
+      'Funchal Cathedral (Sé do Funchal), a late-15th-century landmark',
+      'Mercado dos Lavradores for flowers, fruit, fish and regional products',
+      'Zona Velha, the Old Town, with narrow streets, restaurants, galleries and painted doors',
+      'Avenida do Mar, the marina, harbour and cruise-port area',
+      'Monte, with Monte Palace Tropical Garden, the Church of Our Lady of Monte and wicker toboggan rides',
+      'Madeira Botanical Garden, with panoramic city views and plant collections',
+      'CR7 Museum, dedicated to Cristiano Ronaldo, who was born in Funchal in 1985',
+    ],
+    uk: [
+      'Funchal Cathedral (Sé do Funchal) — визначна пам’ятка кінця XV століття',
+      'Mercado dos Lavradores із квітами, фруктами, рибою та регіональними продуктами',
+      'Zona Velha — Старе місто з вузькими вуличками, ресторанами, галереями та розписаними дверима',
+      'Avenida do Mar, марина, гавань і район круїзного порту',
+      'Monte з Monte Palace Tropical Garden, Church of Our Lady of Monte та традиційними плетеними санями',
+      'Madeira Botanical Garden із панорамними видами на місто та колекціями рослин',
+      'CR7 Museum, присвячений Cristiano Ronaldo, який народився у Funchal у 1985 році',
+    ],
+  },
+  practicalTip: {
+    en: 'Start with Mercado dos Lavradores and Zona Velha in the morning, walk along Avenida do Mar and the harbour, then take the cable car to Monte in the afternoon. Funchal is hilly, so wear comfortable shoes and allow time for slopes and steps.',
+    uk: 'Почніть ранок із Mercado dos Lavradores та Zona Velha, прогуляйтеся Avenida do Mar і вздовж гавані, а вдень підніміться канатною дорогою до Monte. Funchal розташований на схилах, тому взуйте зручне взуття й закладіть додатковий час на підйоми та сходи.',
+  },
+},
   },
   {
     slug: 'mercado-dos-lavradores',
@@ -320,31 +334,39 @@ export const locations: Location[] = [
     },
     mapQuery: 'Mercado dos Lavradores Funchal',
     article: {
-      intro: {
-        en: 'Mercado dos Lavradores is Funchal’s best-known traditional market, close to the Old Town and waterfront.',
-        uk: 'Mercado dos Lavradores — найвідоміший традиційний ринок Funchal, розташований біля Старого міста та набережної.',
-      },
-      history: {
-        en: 'The market has long been a meeting point for local produce, flowers and fish, and remains one of the city’s most recognisable buildings.',
-        uk: 'Ринок давно був місцем торгівлі місцевими продуктами, квітами та рибою й досі залишається однією з найбільш упізнаваних будівель міста.',
-      },
-      highlights: {
-        en: [
-          'Colourful flower and fruit stalls',
-          'Fresh fish market area',
-          'Central location near Funchal Old Town',
-        ],
-        uk: [
-          'Яскраві прилавки з квітами та фруктами',
-          'Зона ринку зі свіжою рибою',
-          'Центральне розташування поруч зі Старим містом Funchal',
-        ],
-      },
-      practicalTip: {
-        en: 'Check prices before buying fruit, especially items sold as samples to visitors.',
-        uk: 'Перевіряйте ціни перед купівлею фруктів, особливо тих, які пропонують туристам спробувати.',
-      },
-    },
+  intro: {
+    en: 'Mercado dos Lavradores is Funchal’s historic farmers’ market, located near Zona Velha and the waterfront. It opened on 24 November 1940 as a purpose-built place for the city’s food supply: local growers, flower sellers, fishmongers and other traders could sell their goods in one central market instead of using scattered streets and squares.',
+    uk: 'Mercado dos Lavradores — історичний фермерський ринок Фуншалу, розташований поруч із Zona Velha та набережною. Він відкрився 24 листопада 1940 року як спеціально створене місце для постачання міста: місцеві фермери, продавці квітів, торговці рибою та інші продавці могли реалізовувати товари в одному центральному ринку, а не на розрізнених вулицях і площах.',
+  },
+  history: {
+    en: 'The market was designed in 1938 by Portuguese architect Edmundo Tavares and inaugurated during the municipal administration of Fernão de Ornelas. Its purpose was practical as well as civic: to organise the sale and distribution of fresh food for Funchal. Farmers from across Madeira brought fruit, vegetables, herbs and flowers; fishmongers sold the day’s catch; other traders offered meat, poultry, cheese and regional produce. The building is a notable example of Estado Novo-era architecture. Its façade, main entrance and fish market are decorated with large 1940 azulejo panels made by the Faiança Battistini factory and painted by João Rodrigues with regional scenes. More than eight decades later, Mercado dos Lavradores remains part of daily life in Funchal, although it is also one of the city’s busiest visitor attractions.',
+    uk: 'Ринок спроєктував у 1938 році португальський архітектор Edmundo Tavares, а відкриття відбулося під час муніципального управління Fernão de Ornelas. Його завдання було практичним і важливим для міста: організувати продаж та розподіл свіжих продуктів для Фуншалу. Фермери з різних частин Madeira привозили фрукти, овочі, трави й квіти; торговці рибою продавали денний улов; інші продавці пропонували м’ясо, птицю, сир і регіональні продукти. Будівля є помітним прикладом архітектури періоду Estado Novo. Фасад, головний вхід і рибний павільйон оздоблені великими панно azulejo 1940 року, виготовленими фабрикою Faiança Battistini та розписаними João Rodrigues на регіональні теми. Понад вісім десятиліть потому Mercado dos Lavradores залишається частиною повсякденного життя Фуншалу, хоча водночас є однією з найпопулярніших локацій для відвідувачів.',
+  },
+  highlights: {
+    en: [
+      'Opened on 24 November 1940 as Funchal’s central supply market',
+      'Designed by architect Edmundo Tavares and associated with the municipal period of Fernão de Ornelas',
+      'Large 1940 azulejo panels by João Rodrigues on the façade, main entrance and fish market',
+      'Flower stalls, tropical fruit, vegetables, herbs, regional products, cheese and other local goods',
+      'Fresh fish and seafood section, often including tuna and black scabbardfish, known locally as espada',
+      'Noite do Mercado, the lively night of 23 December, when locals gather in and around the market before Christmas',
+      'A working market and a useful introduction to Madeira’s food, farming and fishing traditions',
+    ],
+    uk: [
+      'Відкритий 24 листопада 1940 року як центральний ринок постачання Фуншалу',
+      'Спроєктований архітектором Edmundo Tavares і пов’язаний із муніципальним періодом Fernão de Ornelas',
+      'Великі панно azulejo 1940 року роботи João Rodrigues на фасаді, головному вході та в рибному павільйоні',
+      'Квіткові прилавки, тропічні фрукти, овочі, трави, регіональні продукти, сир та інші місцеві товари',
+      'Відділ свіжої риби й морепродуктів, де часто продають тунця та чорну шаблю-рибу, відому тут як espada',
+      'Noite do Mercado — жвавий вечір 23 грудня, коли місцеві жителі збираються на ринку та навколишніх вулицях перед Різдвом',
+      'Діючий ринок і гарне знайомство з гастрономією, фермерством та рибальськими традиціями Мадейри',
+    ],
+  },
+  practicalTip: {
+    en: 'Visit in the morning when the market is at its liveliest and the fish section is most active. Enjoy the flowers and local produce, but check prices before ordering cut fruit or buying souvenirs: stalls aimed at visitors can be more expensive than ordinary local shops.',
+    uk: 'Приходьте вранці, коли ринок найжвавіший, а рибний відділ працює найактивніше. Подивіться на квіти й місцеві продукти, але перевіряйте ціни перед тим, як замовляти нарізані фрукти чи купувати сувеніри: прилавки, орієнтовані на туристів, можуть бути дорожчими за звичайні місцеві магазини.',
+  },
+},
   },
   {
     slug: 'pico-do-arieiro',
@@ -372,31 +394,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Pico do Arieiro Madeira',
     article: {
-      intro: {
-        en: 'Pico do Arieiro is one of Madeira’s most accessible high-mountain viewpoints. At 1,818 metres, it offers broad views across the central mountain massif when the weather is clear.',
-        uk: 'Pico do Arieiro — один із найдоступніших високогірних оглядових майданчиків Мадейри. На висоті 1 818 метрів він відкриває широкі види на центральний гірський масив у ясну погоду.',
-      },
-      history: {
-        en: 'Its high road access and dramatic ridgelines made it a landmark for visitors long before sunrise tourism became popular.',
-        uk: 'Доступ автомобільною дорогою на велику висоту та драматичні гірські хребти зробили це місце знаковим для відвідувачів задовго до популярності поїздок на світанок.',
-      },
-      highlights: {
-        en: [
-          'Sunrise above a sea of clouds on suitable mornings',
-          'Views into Madeira’s central mountain massif',
-          'The starting point for mountain routes towards Pico Ruivo',
-        ],
-        uk: [
-          'Світанок над морем хмар за сприятливих умов',
-          'Види на центральний гірський масив Мадейри',
-          'Початкова точка гірських маршрутів у напрямку Pico Ruivo',
-        ],
-      },
-      practicalTip: {
-        en: 'Check mountain weather and the live camera before leaving. Bring warm layers and allow extra driving time in cloud or darkness.',
-        uk: 'Перед виїздом перевірте погоду в горах та онлайн-камеру. Візьміть теплий одяг і закладіть додатковий час на дорогу в хмарах або темряві.',
-      },
-    },
+  intro: {
+    en: 'Pico do Arieiro is one of Madeira’s highest and most accessible mountain viewpoints. At 1,818 metres above sea level, it is the island’s third-highest peak and looks across the central mountain massif, deep valleys and dramatic volcanic ridges. On clear days, the views can extend towards the north coast, Ponta de São Lourenço and, in exceptional conditions, Porto Santo.',
+    uk: 'Pico do Arieiro — одна з найвищих і найдоступніших гірських оглядових точок Madeira. На висоті 1 818 метрів над рівнем моря це третя за висотою вершина острова, звідки відкриваються види на центральний гірський масив, глибокі долини та драматичні вулканічні хребти. У ясні дні звідси можна побачити північне узбережжя, Ponta de São Lourenço, а за виняткової видимості — Porto Santo.',
+  },
+  history: {
+    en: 'Pico do Arieiro first gained strategic and scientific importance rather than being created as a tourist attraction. In 1895, a wooden weather station was built here at about 1,700 metres to collect meteorological data for the national observatory in Lisbon, the Funchal Observatory and regional information services. A masonry station lower on the mountain operated from 1936 to 1996, before it was replaced by the present automatic weather station near the road to Poiso. Over time, road access, parking, a viewpoint, café facilities and the mountain route towards Pico Ruivo made the summit far easier to visit than most of Madeira’s high peaks. Tourism developed because the location combines exceptional views with direct vehicle access and a dramatic starting point for the PR1 – Vereda do Areeiro. The trail was developed in the 1960s as an access and observation route across the central ridge; today it is one of Madeira’s best-known mountain walks.',
+    uk: 'Спочатку Pico do Arieiro набув стратегічного та наукового значення, а не був створений як туристична локація. У 1895 році тут, на висоті приблизно 1 700 метрів, збудували дерев’яну метеостанцію для збору даних для національної обсерваторії в Lisbon, Funchal Observatory та регіональних інформаційних служб. Кам’яна метеостанція нижче на горі працювала з 1936 до 1996 року, після чого її замінила сучасна автоматична метеостанція біля дороги на Poiso. Згодом автомобільний доступ, паркування, оглядові майданчики, кафе та гірський маршрут у напрямку Pico Ruivo зробили вершину значно доступнішою, ніж більшість високих гір Madeira. Туризм розвинувся тому, що це місце поєднує виняткові краєвиди з можливістю під’їхати автомобілем майже до вершини та ефектною початковою точкою маршруту PR1 – Vereda do Areeiro. Стежку облаштували у 1960-х роках як маршрут доступу й спостереження через центральний хребет; сьогодні це один із найвідоміших гірських маршрутів Madeira.',
+  },
+  highlights: {
+    en: [
+      'At 1,818 metres, Pico do Arieiro is Madeira’s third-highest peak',
+      'A mountain weather station was first built here in 1895; meteorological observation remains part of the site’s history',
+      'Road access allows visitors to reach one of Madeira’s highest viewpoints without a long hike',
+      'Sunrise views, cloud inversions and changing mountain light are the main reasons for its popularity',
+      'Miradouro do Ninho da Manta offers striking views into the central valleys and rugged mountain ridges',
+      'PR1 – Vereda do Areeiro begins here and links the high mountain landscape towards Pico Ruivo',
+      'The summit area includes parking, a café or restaurant, toilets, viewpoints and mountain-service infrastructure',
+      'Weather can change from clear sun to fog, rain and strong wind within a short time',
+    ],
+    uk: [
+      'На висоті 1 818 метрів Pico do Arieiro є третьою за висотою вершиною Мадейри',
+      'Першу гірську метеостанцію тут збудували в 1895 році; метеорологічні спостереження залишаються важливою частиною історії місця',
+      'Автомобільна дорога дозволяє відвідати одну з найвищих оглядових точок Madeira без тривалого підйому пішки',
+      'Світанки, інверсії хмар і мінливе гірське світло — головні причини популярності локації',
+      'Miradouro do Ninho da Manta відкриває вражаючі види на центральні долини та суворі гірські хребти',
+      'Тут починається PR1 – Vereda do Areeiro, що веде через високогірний ландшафт у напрямку Pico Ruivo',
+      'На вершині є паркування, кафе або ресторан, туалети, оглядові точки та гірська сервісна інфраструктура',
+      'Погода може швидко змінитися від ясного сонця до туману, дощу та сильного вітру',
+    ],
+  },
+  practicalTip: {
+    en: 'Check the mountain forecast, live camera and official PR1 trail status before leaving. Arrive early for sunrise, bring warm and windproof layers even in summer, and do not rely on clear weather in Funchal: conditions at Pico do Arieiro can be completely different. If you plan to walk PR1, confirm the current access rules or reservation requirements before travelling.',
+    uk: 'Перед виїздом перевірте гірський прогноз, онлайн-камеру та офіційний статус маршруту PR1. Для світанку приїжджайте завчасно, візьміть теплий і вітрозахисний одяг навіть улітку та не орієнтуйтеся лише на ясну погоду у Фуншалі: на Pico do Arieiro умови можуть бути зовсім іншими. Якщо плануєте пройти PR1, заздалегідь перевірте чинні правила доступу або вимоги щодо бронювання.',
+  },
+},
   },
   {
     slug: 'pico-ruivo',
@@ -424,31 +456,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Pico Ruivo Madeira',
     article: {
-      intro: {
-        en: 'Pico Ruivo is Madeira’s highest summit and a major goal for hikers visiting the island’s central mountains.',
-        uk: 'Pico Ruivo — найвища вершина Мадейри та одна з головних цілей для туристів, які ходять центральними горами острова.',
-      },
-      history: {
-        en: 'The peak has long been connected by highland paths, with routes from Achada do Teixeira and the Pico do Arieiro area.',
-        uk: 'Вершина давно сполучена високогірними стежками; популярні маршрути ведуть із Ашада-ду-Тейшейра та району Pico do Arieiro.',
-      },
-      highlights: {
-        en: [
-          'Madeira’s highest mountain summit',
-          'High-altitude walking and ridge scenery',
-          'Wide views in stable, clear weather',
-        ],
-        uk: [
-          'Найвища гірська вершина Мадейри',
-          'Високогірні маршрути та пейзажі гірських хребтів',
-          'Широкі види за стабільної ясної погоди',
-        ],
-      },
-      practicalTip: {
-        en: 'Always check official trail status and mountain conditions before setting out.',
-        uk: 'Завжди перевіряйте офіційний статус стежок і погодні умови в горах перед виходом.',
-      },
-    },
+  intro: {
+    en: 'Pico Ruivo is the highest peak in Madeira and the Madeira Archipelago, rising to 1,862 metres above sea level. Located in the central mountain massif, it offers a wide panorama of volcanic ridges, deep valleys and the island’s north and south slopes. Unlike Pico do Arieiro, Pico Ruivo has no road to the summit: every visit requires a hike.',
+    uk: 'Pico Ruivo — найвища вершина Madeira та всього архіпелагу Madeira, що піднімається на 1 862 метри над рівнем моря. Вона розташована в центральному гірському масиві й відкриває широкі панорами вулканічних хребтів, глибоких долин та північних і південних схилів острова. На відміну від Pico do Arieiro, до вершини Pico Ruivo немає автомобільної дороги: кожне відвідування потребує пішого маршруту.',
+  },
+  history: {
+    en: 'For centuries, Pico Ruivo was known mainly to shepherds, farmers and people travelling between mountain communities. The summit later became important for surveying, conservation and mountain walking because it stands at the highest point of the island. It did not become a tourist attraction through one single construction project; its popularity grew as marked trails, roads to mountain starting points and visitor infrastructure made the central massif more accessible. The route from Achada do Teixeira, now known as PR1.2 – Vereda do Pico Ruivo, provides the most direct approach. The longer PR1 – Vereda do Areeiro connects Pico do Arieiro, Pico das Torres and Pico Ruivo across the high ridge. The mountain sits within a protected high-altitude landscape of the Central Mountain Massif, where strong wind, fog, heavy rain and rapid temperature changes have shaped both the vegetation and the experience of walking here.',
+    uk: 'Протягом століть Pico Ruivo був відомий передусім пастухам, фермерам і людям, які пересувалися між гірськими поселеннями. Згодом вершина набула значення для геодезичних робіт, охорони природи та гірських прогулянок, адже це найвища точка острова. Вона не стала туристичною локацією завдяки одному окремому будівельному проєкту: популярність зростала поступово, коли марковані стежки, дороги до стартових точок і базова інфраструктура зробили центральний гірський масив доступнішим. Маршрут із Achada do Teixeira, відомий як PR1.2 – Vereda do Pico Ruivo, є найпрямішим шляхом до вершини. Довший PR1 – Vereda do Areeiro з’єднує Pico do Arieiro, Pico das Torres і Pico Ruivo через високий хребет. Гора розташована в охоронюваному високогірному ландшафті Central Mountain Massif, де сильний вітер, туман, зливи та швидкі зміни температури сформували і рослинність, і сам характер походів.',
+  },
+  highlights: {
+    en: [
+      'At 1,862 metres, the highest peak in Madeira and the Madeira Archipelago',
+      'A summit reached only on foot, which gives the visit a more remote mountain character than Pico do Arieiro',
+      'PR1.2 – Vereda do Pico Ruivo from Achada do Teixeira, the most direct marked route to the summit',
+      'PR1 – Vereda do Areeiro, the dramatic high-ridge route linking Pico do Arieiro, Pico das Torres and Pico Ruivo',
+      'Panoramic views over the Central Mountain Massif, north-coast valleys and, in clear conditions, distant islands and the Atlantic',
+      'High-altitude heath and mountain vegetation adapted to wind, mist, cold and heavy rain',
+      'Casa de Abrigo do Pico Ruivo, a shelter area near the summit where visitors can rest',
+      'A true high-mountain experience: fog, cloud inversions and rapidly changing light can transform the landscape within minutes',
+    ],
+    uk: [
+      'На висоті 1 862 метри — найвища вершина Мадейри та архіпелагу Мадейра',
+      'До вершини можна дістатися лише пішки, тому вона має більш віддалений гірський характер, ніж Pico do Arieiro',
+      'PR1.2 – Vereda do Pico Ruivo з Achada do Teixeira — найпряміший маркований маршрут до вершини',
+      'PR1 – Vereda do Areeiro — драматичний високогірний маршрут, що з’єднує Pico do Arieiro, Pico das Torres і Pico Ruivo',
+      'Панорами Central Mountain Massif, долин північного узбережжя, а за ясної погоди — далеких островів і Атлантики',
+      'Високогірні пустища та гірська рослинність, пристосована до вітру, туману, холоду й сильних дощів',
+      'Casa de Abrigo do Pico Ruivo — притулок біля вершини, де можна відпочити',
+      'Справжній високогірний досвід: туман, інверсії хмар і мінливе світло можуть повністю змінити пейзаж за лічені хвилини',
+    ],
+  },
+  practicalTip: {
+    en: 'Check the official trail status and mountain forecast before travelling. PR1.2 from Achada do Teixeira is the usual shorter approach, but it still involves uphill walking at high altitude. Wear layers, waterproof clothing and shoes with good grip, carry water and food, and do not start PR1 from Pico do Arieiro unless its full current status and access conditions have been confirmed.',
+    uk: 'Перед поїздкою перевірте офіційний статус стежок і гірський прогноз. PR1.2 з Achada do Teixeira — звичний коротший шлях, але він все одно передбачає підйом пішки на великій висоті. Одягайтеся шарами, візьміть водонепроникний одяг, взуття з хорошим зчепленням, воду та їжу; не починайте PR1 із Pico do Arieiro, доки не підтвердите повний актуальний статус маршруту та умови доступу.',
+  },
+},
   },
   {
     slug: 'faja-dos-padres',
@@ -476,31 +518,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Faja dos Padres Madeira',
     article: {
-      intro: {
-        en: 'Fajã dos Padres is a sheltered strip of coast below Madeira’s high southern cliffs.',
-        uk: 'Fajã dos Padres — захищена смуга узбережжя під високими південними скелями Мадейри.',
-      },
-      history: {
-        en: 'Its unusual location beneath the cliffs supported cultivation and a small coastal settlement over many generations.',
-        uk: 'Незвичайне розташування під скелями протягом багатьох поколінь сприяло сільському господарству та існуванню невеликого прибережного поселення.',
-      },
-      highlights: {
-        en: [
-          'A dramatic cable-car approach beneath cliffs',
-          'Quiet coast and cultivated terraces',
-          'A slower alternative to the busier south-coast resorts',
-        ],
-        uk: [
-          'Ефектний під’їзд канатною дорогою під скелями',
-          'Тихе узбережжя та оброблені тераси',
-          'Спокійніша альтернатива жвавішим курортам південного узбережжя',
-        ],
-      },
-      practicalTip: {
-        en: 'Check cable-car operating times before travelling, particularly outside the main season.',
-        uk: 'Перед поїздкою перевірте години роботи канатної дороги, особливо поза основним туристичним сезоном.',
-      },
-    },
+  intro: {
+    en: 'Fajã dos Padres is a small and exceptionally fertile strip of land on Madeira’s south coast, sheltered at the foot of a dramatic cliff beside the Atlantic Ocean. The name means “Fajã of the Priests”, referring to the Jesuits who once owned and cultivated the estate. Its warm, protected microclimate has made it one of the island’s most unusual places for farming, wine and subtropical fruit.',
+    uk: 'Fajã dos Padres — невелика й надзвичайно родюча смуга землі на південному узбережжі Мадейри, захищена біля підніжжя вражаючої скелі поруч з Атлантичним океаном. Назва означає «прибережна рівнина священників» і пов’язана з єзуїтами, яким колись належав цей маєток і які його обробляли. Теплий захищений мікроклімат зробив це місце одним із найособливіших на острові для сільського господарства, виноробства та субтропічних фруктів.',
+  },
+  history: {
+    en: 'The history of Fajã dos Padres goes back to the early settlement of Madeira in the 15th century. The estate later belonged to the Society of Jesus for around 150 years, which is why the place became known as “Fajã of the Priests”. The Jesuits helped establish vineyards here, including grapes used for Malmsey, one of Madeira’s historic fortified wines. For generations, the isolated land was reached mainly by boat, while its harvest had to be moved by sea or hauled up the cliffs. Grapes and sugar cane were important historical crops; after the Second World War, bananas became dominant for several decades. The property was restructured in the early 1980s, and the cable car opened in 2003 to provide safe, fast and practical access for people and agricultural produce. It replaced dependence on the sea and made it possible to develop visitor accommodation, a restaurant and a more accessible working farm without building a road through the unstable cliff.',
+    uk: 'Історія Fajã dos Padres сягає раннього заселення Мадейри у XV столітті. Пізніше маєток приблизно 150 років належав Ордену Єзуїтів, тому місце й стало відомим як «прибережна рівнина священників». Єзуїти допомогли закласти тут виноградники, зокрема для винограду, з якого виробляли Malmsey — один із традиційних кріплених вин Мадейри. Протягом багатьох поколінь до ізольованої ділянки діставалися переважно човном, а врожай вивозили морем або підіймали вгору по скелях. Історично тут важливими культурами були виноград і цукрова тростина; після Другої світової війни на кілька десятиліть головною культурою стали банани. На початку 1980-х маєток масштабно перебудували, а у 2003 році відкрили канатну дорогу, щоб забезпечити безпечний, швидкий і практичний доступ для людей та сільськогосподарської продукції. Вона усунула залежність від морського сполучення та дала змогу розвивати проживання для гостей, ресторан і доступнішу діючу ферму без прокладання дороги через нестабільну скелю.',
+  },
+  highlights: {
+    en: [
+      'A secluded coastal estate beneath a cliff of around 300 metres, reached by cable car or boat',
+      'A warm microclimate that allows subtropical crops to grow close to the Atlantic',
+      'Historic vineyards connected with Malmsey, one of Madeira’s traditional fortified wines',
+      'Bananas, grapes, mangoes, avocados, guavas, papayas, passion fruit, figs, pomegranates and seasonal produce',
+      'The cable car, opened in 2003, carries both visitors and farm products down and up the cliff',
+      'A roughly four-minute panoramic ride with views over the south coast, vineyards and cultivated terraces',
+      'A small beach and bay, restaurant, walking paths and accommodation among the gardens',
+      'An example of how Madeira’s isolated coastal fajãs were shaped by farming, the sea and difficult access',
+    ],
+    uk: [
+      'Відокремлений прибережний маєток під скелею висотою приблизно 300 метрів, до якого можна дістатися канатною дорогою або човном',
+      'Теплий мікроклімат, що дозволяє вирощувати субтропічні культури поруч з Атлантичним океаном',
+      'Історичні виноградники, пов’язані з Malmsey — одним із традиційних кріплених вин Мадейри',
+      'Банани, виноград, манго, авокадо, гуави, папая, маракуя, інжир, гранати та сезонні місцеві продукти',
+      'Канатна дорога, відкрита у 2003 році, перевозить і відвідувачів, і продукцію ферми вниз та вгору по скелі',
+      'Панорамна поїздка тривалістю приблизно чотири хвилини з видами на південне узбережжя, виноградники й оброблені тераси',
+      'Невеликий пляж і бухта, ресторан, прогулянкові доріжки та проживання серед садів',
+      'Приклад того, як ізольовані прибережні fajãs Madeira формувалися під впливом сільського господарства, моря та складного доступу',
+    ],
+  },
+  practicalTip: {
+    en: 'Check the cable-car timetable before travelling, especially in winter or in strong wind. Allow time to walk through the gardens and have lunch by the sea. The cable car is the normal access route; it is also used to transport farm produce, so treat it as part of the working life of Fajã dos Padres, not only as an attraction.',
+    uk: 'Перед поїздкою перевірте розклад канатної дороги, особливо взимку або за сильного вітру. Виділіть час на прогулянку садами та обід біля моря. Канатна дорога — основний спосіб дістатися сюди; нею також перевозять фермерську продукцію, тож це частина повсякденного життя Fajã dos Padres, а не лише туристична атракція.',
+  },
+},
   },
   {
     slug: 'cabo-girao-skywalk',
@@ -580,31 +632,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Levada Nova Levada do Moinho Madeira',
     article: {
-      intro: {
-        en: 'Levada Nova and Levada do Moinho are popular water-channel paths in the Ponta do Sol area.',
-        uk: 'Levada Nova та Levada do Moinho — популярні маршрути вздовж водних каналів у районі Ponta do Sol.',
-      },
-      history: {
-        en: 'Like many Madeira levadas, these channels were built to carry water to agricultural land and are now used as walking routes.',
-        uk: 'Як і багато левад Мадейри, ці канали були збудовані для подачі води на сільськогосподарські землі, а сьогодні використовуються як пішохідні маршрути.',
-      },
-      highlights: {
-        en: [
-          'Irrigation channels, valleys and terrace landscapes',
-          'Waterfalls and short tunnels on parts of the route',
-          'A classic example of Madeira’s levada network',
-        ],
-        uk: [
-          'Зрошувальні канали, долини та терасні ландшафти',
-          'Водоспади та короткі тунелі на деяких ділянках маршруту',
-          'Класичний приклад мережі левад Мадейри',
-        ],
-      },
-      practicalTip: {
-        en: 'Use a torch for tunnels and wear shoes with good grip after rain.',
-        uk: 'Візьміть ліхтарик для тунелів і взуйтеся у взуття з хорошим зчепленням, особливо після дощу.',
-      },
-    },
+  intro: {
+    en: 'Levada Nova and Levada do Moinho form one of the most interesting walks in the Ponta do Sol area because they show two generations of Madeira’s irrigation system. The route follows an older levada lower on the hillside and a newer channel higher above it, passing cultivated terraces, small farms, waterfalls and open views towards the south coast.',
+    uk: 'Levada Nova та Levada do Moinho утворюють один із найцікавіших маршрутів у районі Ponta do Sol, адже тут можна побачити два покоління іригаційної системи Мадейри. Стежка проходить уздовж старішої левади нижче на схилі та новішого каналу вище, повз оброблені тераси, невеликі ферми, водоспади й відкриті види на південне узбережжя.',
+  },
+  history: {
+    en: 'Levadas are narrow, gravity-fed channels built to carry water from the wetter mountains and north-west of Madeira to farmland and settlements in drier areas. The first systems began to appear in the early centuries of Portuguese settlement, and by the second half of the 15th century levada water was already vital to sugar-cane production. Over time, the network supported vineyards, bananas, vegetables, fruit orchards, domestic water use and, in some places, water-powered mills. Building channels along steep cliffs required difficult manual work, including carved ledges, aqueducts and tunnels. In Ponta do Sol, Levada do Moinho is the older channel. It was built between the 1920s and 1930s and takes its name from the water mills that it supplied; the water was used both for irrigation and for grinding grain. Levada Nova was constructed later to bring more irrigation water to farmland between Ribeira da Caixa and Ribeira Brava. It opened in 1962 and runs higher on the slope, which is why hikers can combine the two channels into a varied circular walk.',
+    uk: 'Левади — це вузькі канали, де вода рухається самопливом; їх будували, щоб переносити воду з вологіших гір і північного заходу Madeira до сільськогосподарських земель та поселень у сухіших районах. Перші системи почали з’являтися в ранні століття португальського заселення, а вже в другій половині XV століття вода з левад була життєво важливою для вирощування цукрової тростини. З часом мережа підтримувала виноградники, банани, овочі, фруктові сади, побутове водопостачання, а подекуди — водяні млини. Будівництво каналів уздовж крутих скель вимагало важкої ручної праці: доводилося видовбувати полиці в породі, споруджувати акведуки та прокладати тунелі. У Ponta do Sol старішим каналом є Levada do Moinho. Її будували в 1920–1930-х роках, а назву вона отримала від водяних млинів, які живила водою; її використовували і для зрошення, і для помелу зерна. Levada Nova збудували пізніше, щоб подати більше води для зрошення земель між Ribeira da Caixa та Ribeira Brava. Її відкрили в 1962 році; вона проходить вище по схилу, тому туристи можуть поєднати обидва канали в різноманітний кільцевий маршрут.',
+  },
+  highlights: {
+    en: [
+      'Two parallel levadas that reveal different stages of Madeira’s water-management history',
+      'Levada do Moinho, built in the 1920s and 1930s, named after the water mills supplied by its flow',
+      'Levada Nova, opened in 1962 to increase irrigation for farmland between Ribeira da Caixa and Ribeira Brava',
+      'A close view of cultivated terraces, vegetable plots, banana plants, vineyards and rural life around Ponta do Sol',
+      'A waterfall section where the path passes directly behind falling water',
+      'Old mill-related features that recall when flowing water powered local grain grinding',
+      'A loop that combines the older lower channel with the newer upper levada',
+      'A practical example of why levadas are both engineering works and the foundation of Madeira’s agricultural landscape',
+    ],
+    uk: [
+      'Дві паралельні левади, які показують різні етапи історії управління водними ресурсами Мадейри',
+      'Levada do Moinho, збудована у 1920–1930-х роках і названа на честь водяних млинів, що працювали завдяки її воді',
+      'Levada Nova, відкрита в 1962 році для збільшення зрошення земель між Ribeira da Caixa та Ribeira Brava',
+      'Близький погляд на оброблені тераси, городи, бананові плантації, виноградники й сільське життя навколо Ponta do Sol',
+      'Ділянка з водоспадом, де стежка проходить просто за потоком води',
+      'Сліди млинарської інфраструктури, які нагадують про часи, коли поточна вода приводила в рух місцеві млини',
+      'Кільцевий маршрут, що поєднує старіший нижній канал і новішу верхню леваду',
+      'Наочний приклад того, чому левади — це одночасно інженерні споруди та основа сільськогосподарського ландшафту Madeira',
+    ],
+  },
+  practicalTip: {
+    en: 'Start near Igreja da Lombada da Ponta do Sol and check the current trail condition before setting out. The route can be wet and slippery near the waterfall, while some sections are narrow and exposed. Wear shoes with good grip, take a light waterproof layer and torch, and do not block the levada channel: it remains part of an active water-supply system.',
+    uk: 'Починайте біля Igreja da Lombada da Ponta do Sol і перед виходом перевіряйте актуальний стан маршруту. Біля водоспаду може бути мокро й слизько, а деякі ділянки вузькі та відкриті. Взувайтеся у взуття з хорошим зчепленням, візьміть легкий водонепроникний шар і ліхтарик; не перекривайте канал левади, адже він досі є частиною діючої системи подачі води.',
+  },
+},
   },
   {
     slug: 'calheta-beach',
@@ -632,31 +694,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Calheta Beach Madeira',
     article: {
-      intro: {
-        en: 'Calheta Beach is a sheltered south-west coast beach with sand, a marina and nearby cafés.',
-        uk: 'Пляж Calheta — захищений пляж на південно-західному узбережжі з піском, мариною та кафе поруч.',
-      },
-      history: {
-        en: 'The beach was created as part of Calheta’s coastal leisure area and is distinct from Madeira’s many pebble and black-sand beaches.',
-        uk: 'Пляж був створений як частина прибережної зони відпочинку Calheta й відрізняється від численних галькових та чорнопіщаних пляжів Мадейри.',
-      },
-      highlights: {
-        en: [
-          'Sheltered swimming area',
-          'Sand beach and family-friendly facilities',
-          'Marina, cafés and south-west coast sunshine',
-        ],
-        uk: [
-          'Захищена зона для купання',
-          'Піщаний пляж і зручності для сімейного відпочинку',
-          'Марина, кафе та сонячне південно-західне узбережжя',
-        ],
-      },
-      practicalTip: {
-        en: 'It is often calmer than open-ocean beaches, but check local sea conditions before swimming.',
-        uk: 'Тут часто спокійніше, ніж на відкритих океанських пляжах, але перед купанням перевіряйте місцеві умови моря.',
-      },
-    },
+  intro: {
+    en: 'Calheta is a sunny coastal town on Madeira’s south-west coast, known for its marina, sugar-cane heritage and one of the island’s best-known places to swim. Calheta Beach is unusual in Madeira: instead of the typical volcanic rock or pebble shoreline, it has golden sand and two protected bays designed for calmer water.',
+    uk: 'Calheta — сонячне прибережне містечко на південному заході Мадейри, відоме своєю мариною, спадщиною вирощування цукрової тростини та одним із найвідоміших місць для купання на острові. Calheta Beach незвичайний для Мадейри: замість типового вулканічного або галькового берега тут золотистий пісок і дві захищені бухти, створені для спокійнішої води.',
+  },
+  history: {
+    en: 'Calheta was one of the early settlement areas of Madeira and became a town on 1 June 1502 by royal decree of King Manuel I. Its sheltered coastal location and fertile slopes supported farming, fishing and trade. Sugar cane was especially important: in the early centuries of Portuguese settlement, sugar was Madeira’s “white gold”, and Calheta’s valleys and water supply made cane cultivation possible. The local sugar industry still survives in Engenho da Calheta, a factory established in 1901 that produces sugar-cane honey and aguardente, the regional cane spirit. Calheta Beach was created much later as part of the town’s modern coastal and tourism development. Inaugurated in 2004, it became Madeira’s first artificial beach, using golden sand imported from Morocco. Two breakwaters create protected swimming areas, offering a calmer alternative to Madeira’s open Atlantic beaches.',
+    uk: 'Кальєта була однією з ранніх зон заселення Мадейри та отримала статус містечка 1 червня 1502 року королівським указом Короля Мануеля I. Захищене прибережне розташування й родючі схили сприяли розвитку сільського господарства, рибальства та торгівлі. Особливо важливою була цукрова тростина: у перші століття португальського заселення цукор називали «білим золотом» Мадейри, а долини Кальєти та доступ до води робили вирощування тростини можливим. Місцева цукрова промисловість збереглася в Engenho da Calheta — фабриці, заснованій у 1901 році, де виробляють цукровий сироп із тростини та aguardente, традиційний міцний напій із цукрової тростини. Calheta Beach створили значно пізніше як частину сучасного розвитку узбережжя та туризму. Відкритий у 2004 році, він став першим штучним пляжем Мадейри: для нього використали золотистий пісок, привезений із Марокко. Два хвилерізи формують захищені зони для плавання та пропонують спокійнішу альтернативу відкритим атлантичним пляжам Мадейри.',
+  },
+  highlights: {
+    en: [
+      'Calheta was officially established as a town on 1 June 1502',
+      'A south-west coast location known for warmer, sunnier conditions than many parts of Madeira',
+      'Calheta Beach, Madeira’s first artificial beach, inaugurated in 2004',
+      'Golden sand imported from Morocco rather than naturally occurring local beach sand',
+      'Two breakwaters creating protected bays for calmer swimming',
+      'About 100 metres of beach beside the Recreational Harbour and marina',
+      'Facilities for swimming, families, sunbathing, cafés and watersports such as kayaking and windsurfing',
+      'Engenho da Calheta, a historic sugar-cane factory where cane honey and aguardente are still produced',
+    ],
+    uk: [
+      'Кальєта офіційно отримала статус містечка 1 червня 1502 року',
+      'Південно-західне узбережжя, відоме теплішими й сонячнішими умовами, ніж у багатьох частинах Мадейри',
+      'Calheta Beach — перший штучний пляж Мадейри, відкритий у 2004 році',
+      'Золотистий пісок, привезений із Марокко, а не природний місцевий пляжний пісок',
+      'Два хвилерізи, що створюють захищені бухти для спокійнішого купання',
+      'Приблизно 100 метрів пляжу поруч із Recreational Harbour та мариною',
+      'Умови для купання, сімейного відпочинку, засмагання, кафе й водних видів спорту, зокрема каякінгу та віндсерфінгу',
+      'Engenho da Calheta — історична фабрика цукрової тростини, де й досі виробляють цукровий сироп і aguardente',
+    ],
+  },
+  practicalTip: {
+    en: 'Calheta Beach is a good choice for families and for visitors who prefer calmer water, but it can be busy on sunny weekends and holidays. Arrive earlier for easier parking and more space. Even inside the breakwaters, check flags and local sea conditions before swimming, especially when swell is forecast.',
+    uk: 'Calheta Beach — вдалий вибір для сімей і тих, хто віддає перевагу спокійнішій воді, але в сонячні вихідні та свята тут може бути багато людей. Приїжджайте раніше, щоб легше знайти паркування й мати більше місця. Навіть усередині хвилерізів перевіряйте прапори та місцеві умови моря перед купанням, особливо коли прогнозують хвилювання.',
+  },
+},
   },
   {
     slug: 'ponta-de-sao-lourenco',
@@ -684,31 +756,43 @@ export const locations: Location[] = [
     },
     mapQuery: 'Ponta de Sao Lourenco Trail Madeira',
     article: {
-      intro: {
-        en: 'Ponta de São Lourenço is Madeira’s eastern peninsula, markedly drier and more open than the island’s green interior.',
-        uk: 'Ponta de São Lourenço — східний півострів Мадейри, значно сухіший і відкритіший за зелений внутрішній район острова.',
-      },
-      history: {
-        en: 'Its exposed volcanic landscape has been shaped by Atlantic wind, salt and limited rainfall.',
-        uk: 'Його відкритий вулканічний ландшафт сформували атлантичний вітер, сіль і невелика кількість опадів.',
-      },
-      highlights: {
-        en: [
-          'Distinct dry coastal scenery',
-          'Clifftop paths and views across the Atlantic',
-          'A landscape very different from Madeira’s levadas and forests',
-        ],
-        uk: [
-          'Самобутні сухі прибережні пейзажі',
-          'Стежки над скелями та види на Атлантику',
-          'Ландшафт, зовсім не схожий на левади й ліси Мадейри',
-        ],
-      },
-      practicalTip: {
-        en: 'Bring water, sun protection and wind protection: shade is limited along the trail.',
-        uk: 'Візьміть воду, захист від сонця та вітру: тіні вздовж маршруту майже немає.',
-      },
-    },
+  intro: {
+    en: 'Ponta de São Lourenço is Madeira’s easternmost peninsula: a long, wind-shaped landscape of volcanic rock, dry grassland and steep cliffs above the Atlantic. It looks very different from the lush, green interior of the island and is one of Madeira’s most memorable coastal walks. The peninsula was among the first parts of Madeira seen by Portuguese navigators in 1419 and was named after São Lourenço, the ship associated with the island’s discovery.',
+    uk: 'Ponta de São Lourenço — найсхідніший півострів Мадейри: витягнутий, сформований вітром ландшафт із вулканічних порід, сухих трав’янистих схилів і крутих скель над Атлантикою. Він зовсім не схожий на пишний зелений центр острова та є одним із найяскравіших прибережних маршрутів Мадейри. Півострів був серед перших частин Madeira, які побачили португальські мореплавці у 1419 році, а назву отримав на честь São Lourenço — корабля, пов’язаного з відкриттям острова.',
+  },
+  history: {
+    en: 'Ponta de São Lourenço has long been shaped by its exposed location, scarce freshwater and difficult terrain. Unlike the wetter mountains of Madeira, its dry climate and strong winds support a distinctive coastal ecosystem rather than dense forest. The peninsula was classified as a protected nature reserve in 1982 to safeguard its geology, plants, seabirds and coastal habitats. The modern walking route, PR8 – Vereda da Ponta de São Lourenço, begins at Baía d’Abra and follows the eastern peninsula towards Cais do Sardinha. It is about 3 km each way to Casa do Sardinha, with a further uphill section towards Pico do Furado for broader views. Casa do Sardinha has its own story: Manuel Bettencourt Sardinha built Cais do Abra in 1905 and then had the house constructed as a private refuge and holiday place. His family owned it until 1996, when it was sold to the Autonomous Region of Madeira on the condition that it would serve nature conservation. It was used as an observation and surveillance post until 2009, renovated in 2010 and reopened as the Casa do Sardinha Reception Centre. A bar attached to the centre began operating in 2019; today, the nearby Casa do Sardinha Sea Spot Cafe continues the historic name and provides a welcome stop in this remote setting.',
+    uk: 'Ponta de São Lourenço протягом століть формувався під впливом відкритого розташування, нестачі прісної води та складного рельєфу. На відміну від вологих гір Мадейри, сухий клімат і сильні вітри підтримують тут особливу прибережну екосистему, а не густий ліс. У 1982 році півострів отримав статус охоронюваного природного резервату, щоб захистити його геологію, рослини, морських птахів і прибережні середовища існування. Сучасний пішохідний маршрут PR8 – Vereda da Ponta de São Lourenço починається в Baía d’Abra та проходить східним півостровом у напрямку Cais do Sardinha. До Casa do Sardinha приблизно 3 км в один бік, а далі є додатковий підйом до Pico do Furado з ширшими панорамами. Casa do Sardinha має власну історію: Manuel Bettencourt Sardinha збудував Cais do Abra у 1905 році, а потім звів будинок як приватний притулок і місце для відпочинку. Його родина володіла ним до 1996 року, коли будинок продали Автономному регіону Madeira за умови, що він служитиме охороні природи. До 2009 року споруду використовували як пункт спостереження та нагляду, у 2010 році її реконструювали й відкрили як Casa do Sardinha Reception Centre. У 2019 році при центрі почав працювати бар; сьогодні розташований поруч Casa do Sardinha Sea Spot Cafe зберігає історичну назву та є важливою зупинкою в цій віддаленій місцевості.',
+  },
+  highlights: {
+    en: [
+      'Madeira’s easternmost peninsula, protected as a nature reserve since 1982',
+      'PR8 – Vereda da Ponta de São Lourenço: around 3 km each way from Baía d’Abra to Casa do Sardinha',
+      'Views across both the north and south sides of Madeira, with the Desertas Islands often visible in clear weather',
+      'Dry volcanic landscape, red and ochre cliffs, basalt formations and grassland shaped by strong wind',
+      'Endemic coastal plants and seabirds adapted to a far drier environment than the rest of Madeira',
+      'Cais do Sardinha, a small sheltered bay and pier near the end of the main walking route',
+      'Casa do Sardinha, built after 1905 as a private retreat, later transformed into a nature-reception centre in 2010',
+      'Casa do Sardinha Sea Spot Cafe, a remote café reached by the PR8 trail or by boat',
+      'Pico do Furado, an optional uphill viewpoint above Casa do Sardinha with wider panoramas',
+    ],
+    uk: [
+      'Найсхідніший півострів Madeira, який перебуває під охороною як природний резерват із 1982 року',
+      'PR8 – Vereda da Ponta de São Lourenço: приблизно 3 км в один бік від Baía d’Abra до Casa do Sardinha',
+      'Види одночасно на північну й південну сторони Madeira; у ясну погоду часто видно Desertas Islands',
+      'Сухий вулканічний ландшафт, червоні та охристі скелі, базальтові утворення й трав’янисті схили, сформовані сильним вітром',
+      'Ендемічні прибережні рослини та морські птахи, пристосовані до значно сухіших умов, ніж на більшій частині Madeira',
+      'Cais do Sardinha — невелика захищена бухта й причал біля завершення основної частини маршруту',
+      'Casa do Sardinha, збудований після 1905 року як приватний притулок, а згодом перетворений у 2010 році на природоохоронний інформаційний центр',
+      'Casa do Sardinha Sea Spot Cafe — віддалене кафе, до якого можна дійти PR8 або прибути човном',
+      'Pico do Furado — додаткова оглядова точка з підйомом над Casa do Sardinha та ширшими панорамами',
+    ],
+  },
+  practicalTip: {
+    en: 'Start early because there is little shade and the wind can be strong. Take more water than you expect to need, sun protection, a windproof layer and shoes with good grip. Check the official trail status and access requirements before travelling, and do not rely on the café being open: carry food and water for the full return walk.',
+    uk: 'Вирушайте рано, адже тіні на маршруті майже немає, а вітер може бути сильним. Візьміть більше води, ніж плануєте випити, сонцезахист, вітрозахисний одяг і взуття з хорошим зчепленням. Перед поїздкою перевірте офіційний статус маршруту та вимоги щодо доступу; не розраховуйте лише на відкрите кафе — майте їжу й воду на весь шлях туди й назад.',
+  },
+},
   },
   {
     slug: 'prainha-do-canical',
@@ -736,31 +820,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Prainha do Canical Madeira',
     article: {
-      intro: {
-        en: 'Prainha do Caniçal is a small beach on Madeira’s eastern side, near the road to Ponta de São Lourenço.',
-        uk: 'Prainha do Caniçal — невеликий пляж на східному боці Мадейри, біля дороги до Ponta de São Lourenço.',
-      },
-      history: {
-        en: 'Its sheltered bay provides a contrast to the more exposed cliffs and hiking routes nearby.',
-        uk: 'Його захищена бухта різко контрастує з більш відкритими скелями та пішохідними маршрутами поблизу.',
-      },
-      highlights: {
-        en: [
-          'A compact natural beach on the east coast',
-          'Convenient stop before or after São Lourenço',
-          'Clear coastal views in suitable weather',
-        ],
-        uk: [
-          'Компактний природний пляж на східному узбережжі',
-          'Зручна зупинка до або після маршруту Сан-Лоренсу',
-          'Чисті прибережні види за сприятливої погоди',
-        ],
-      },
-      practicalTip: {
-        en: 'Combine it with the São Lourenço trail, but leave enough time to return before sunset.',
-        uk: 'Поєднайте його з маршрутом Сан-Лоренсу, але залиште достатньо часу, щоб повернутися до заходу сонця.',
-      },
-    },
+  intro: {
+    en: 'Prainha do Caniçal is a small natural-sand beach on Madeira’s dry east coast, between Caniçal and Ponta de São Lourenço. It is one of the island’s rare permanent natural sandy beaches, standing out from Madeira’s usual pebble and volcanic-rock shores. Its coppery, dark sand, clear Atlantic water and dry yellow-brown cliffs create a landscape that feels very different from the green central mountains.',
+    uk: 'Prainha do Caniçal — невеликий пляж із природним піском на сухому східному узбережжі Мадейри, між Caniçal та Ponta de São Lourenço. Це один із рідкісних постійних природних піщаних пляжів острова, що вирізняється на тлі типових для Мадейри галькових і вулканічно-кам’янистих берегів. Мідно-темний пісок, прозора атлантична вода та сухі жовто-коричневі скелі створюють ландшафт, зовсім не схожий на зелені центральні гори.',
+  },
+  history: {
+    en: 'Prainha do Caniçal does not have a single construction or opening date because the beach is a natural geological feature, not an artificial beach. Madeira was formed by volcanic activity over millions of years, and erosion by rain, wind and the Atlantic gradually shaped this small sheltered bay. The beach’s dark, copper-coloured sand comes from volcanic material broken down by the sea. Nearby are the Dunas da Piedade, fossil-rich calcareous dunes of recognised geomorphological interest. These formations help explain why this short stretch of coast is scientifically unusual: volcanic material, sedimentary deposits and a dry eastern climate meet in one small area. The beach later received practical visitor facilities, including access steps, parking, changing rooms, showers and seasonal food service, but the bay itself remains a natural beach rather than a built attraction.',
+    uk: 'Prainha do Caniçal не має однієї дати будівництва чи відкриття, оскільки це природний геологічний об’єкт, а не штучний пляж. Мадейра сформувалася внаслідок вулканічної активності протягом мільйонів років, а дощ, вітер і Атлантичний океан поступово створили цю невелику захищену бухту. Темний пісок із мідним відтінком має вулканічне походження: море подрібнювало вулканічнІ породи на дрІбнІ частинки. Поруч розташованІ Dunas da Piedade — вапняковІ дюни з викопними рештками, що мають визнану геоморфологІчну цІннІсть. ЦІ утворення пояснюють, чому цей короткий вІдрIзок узбережжя геологIчно незвичайний: тут в одному мIсцI поєднуються вулканIчний матерIал, осадовI вIдклади та сухий схIдний клIмат. ПІзнІше на пляжI облаштували зручностI для вIдвIдувачIв — сходи для спуску, паркування, роздягальнI, душI та сезоннI заклади з їжею, але сама бухта залишається природним пляжем, а не створеним людиною атракцІєю.',
+  },
+  highlights: {
+    en: [
+      'One of Madeira’s few permanent natural-sand beaches',
+      'Coppery, dark volcanic sand rather than imported sand or pebbles',
+      'A small sheltered bay on the dry east coast, near Ponta de São Lourenço',
+      'Dunas da Piedade nearby: fossil-rich calcareous dunes with geological interest',
+      'A landscape of yellow, brown and orange cliffs that contrasts with Madeira’s greener areas',
+      'Clear water that can be attractive for swimming and snorkelling when the sea is calm',
+      'Parking above the bay, steps down to the beach, toilets, showers and seasonal food service',
+      'A good stop before or after visiting Ponta de São Lourenço or Caniçal',
+    ],
+    uk: [
+      'Один із небагатьох постійних природних піщаних пляжів Мадейри',
+      'Мідно-темний вулканічний пісок, а не привезений пісок чи галька',
+      'Невелика захищена бухта на сухому східному узбережжі, поруч із Ponta de São Lourenço',
+      'Поруч Dunas da Piedade — вапнякові дюни з викопними рештками та геологічною цінністю',
+      'Ландшафт із жовтими, коричневими й помаранчевими скелями, що контрастує з більш зеленими районами Мадейри',
+      'Прозора вода, придатна для плавання та снорклінгу, коли море спокійне',
+      'Паркування над бухтою, сходи до пляжу, туалети, душі та сезонні заклади з їжею',
+      'Гарна зупинка до або після відвідування Ponta de São Lourenço чи Caniçal',
+    ],
+  },
+  practicalTip: {
+    en: 'The beach is small, so arrive early on warm weekends. The path down includes steps, and the shoreline can have waves or a strong current when the Atlantic is rough. Bring sun protection because the eastern landscape has little natural shade, and always check sea conditions before entering the water.',
+    uk: 'Пляж невеликий, тому в теплі вихідні приїжджайте раніше. Спуск включає сходи, а біля берега можуть бути хвилі або сильна течія, коли Атлантика неспокійна. Візьміть сонцезахист, адже на сухому східному узбережжі мало природної тіні, і завжди перевіряйте стан моря перед купанням.',
+  },
+},
   },
   {
     slug: 'fanal-forest',
@@ -788,31 +882,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Fanal Forest Madeira',
     article: {
-      intro: {
-        en: 'Fanal Forest is a high plateau landscape in north-west Madeira, known for old laurel trees that often appear through mist and low cloud.',
-        uk: 'Ліс Fanal — це високогірний плато-ландшафт на північному заході Мадейри, відомий старими лавровими деревами, які часто виринають із туману та низьких хмар.',
-      },
-      history: {
-        en: 'The area forms part of Madeira’s Laurissilva landscape, a remnant of ancient subtropical forest that once covered much wider areas of southern Europe.',
-        uk: 'Ця територія є частиною лаврових лісів Лауріссілва Мадейри — залишку стародавнього субтропічного лісу, який колись покривав значно більші території Південної Європи.',
-      },
-      highlights: {
-        en: [
-          'Twisted, ancient laurel trees',
-          'Frequent mist that creates a distinctive atmosphere',
-          'A striking contrast with Madeira’s coast and high ridges',
-        ],
-        uk: [
-          'Покручені стародавні лаврові дерева',
-          'Частий туман, що створює особливу атмосферу',
-          'Яскравий контраст із узбережжям та високими хребтами Мадейри',
-        ],
-      },
-      practicalTip: {
-        en: 'Fog is common and is part of the experience, but drive slowly and bring a waterproof layer.',
-        uk: 'Туман тут звичний і є частиною атмосфери місця, але їдьте повільно та візьміть водонепроникний верхній шар одягу.',
-      },
-    },
+  intro: {
+    en: 'Fanal Forest is one of Madeira’s most distinctive natural places: a high, misty plateau with twisted, ancient laurel trees growing in open grassland. It lies in the north-west of the island, near the Paul da Serra plateau and within the Laurissilva Forest, a UNESCO World Heritage Site. Fog often moves through the trees, giving Fanal its famous quiet and almost prehistoric atmosphere.',
+    uk: 'Fanal Forest — одне з найособливіших природних місць Мадейри: високогірне, часто туманне плато з викривленими прадавніми лавровими деревами, що ростуть серед відкритих лугів. Воно розташоване на північному заході острова, біля плато Paul da Serra, у межах Laurissilva Forest — об’єкта Світової спадщини UNESCO. Туман часто огортає дерева, створюючи відому тиху й майже доісторичну атмосферу Fanal.',
+  },
+  history: {
+    en: 'Fanal is not a planted park or an artificial forest. It is a surviving part of Madeira’s native Laurissilva, a humid subtropical laurel forest whose origins date back around 20 million years to the Tertiary period. Before Portuguese settlement in the 15th century, Laurissilva covered much of Madeira. Large areas were later cleared for timber, charcoal, farming and sugar-cane cultivation, but difficult mountain terrain helped some original forest survive. Today Laurissilva covers around 15,000 hectares, roughly 20 percent of Madeira, mainly in the higher and wetter northern areas. UNESCO listed Laurissilva of Madeira as a World Heritage Site in 1999 because it is the largest surviving area of this type of primary laurel forest. Fanal is especially known for its centuries-old Til trees, scientifically called Ocotea foetens. Their low, twisted branches reflect years of exposure to wind, mist and wet soil. Exact ages are not known for each tree, but some trees in the protected Laurissilva are thought to be more than 800 years old, and Fanal’s oldest Til trees pre-date the Portuguese settlement of Madeira.',
+    uk: 'Fanal — не посаджений парк і не штучний ліс. Це збережена частина корінного Laurissilva Madeira — вологого субтропічного лаврового лісу, походження якого сягає приблизно 20 мільйонів років, до третинного періоду. До португальського заселення у XV столітті Laurissilva покривав більшу частину Мадейри. Пізніше великі площі вирубували заради деревини, деревного вугілля, сільського господарства та вирощування цукрової тростини, але складний гірський рельєф допоміг зберегти частину первісного лісу. Сьогодні Laurissilva займає близько 15 000 гектарів, тобто приблизно 20% Madeira, переважно у вищих і вологіших районах півночі. UNESCO включила Laurissilva of Madeira до списку Світової спадщини у 1999 році, оскільки це найбільша збережена територія такого типу первинного лаврового лісу. Fanal особливо відомий віковими деревами Til, наукова назва яких — Ocotea foetens. Їхні низькі викривлені гілки — результат багатьох років дії вітру, туману та вологого ґрунту. Точний вік кожного дерева невідомий, але деяким деревам у межах охоронюваного Laurissilva, імовірно, понад 800 років, а найстаріші Til у Fanal росли ще до португальського заселення Мадейри.',
+  },
+  highlights: {
+    en: [
+      'Part of the Laurissilva Forest, a UNESCO World Heritage Site since 1999',
+      'A relict subtropical laurel forest ecosystem with origins around 20 million years old',
+      'Centuries-old Til trees, Ocotea foetens, with wind-shaped trunks and low twisting branches',
+      'Some old Laurissilva trees may be more than 800 years old; the exact age of individual Fanal trees is not known',
+      'A landscape shaped by frequent fog, high humidity, wind and open mountain pasture',
+      'Laurissilva still covers around 15,000 hectares, about 20 percent of Madeira',
+      'One of the world’s best-preserved remaining examples of laurel forest, a vegetation type now limited mainly to Madeira, the Azores and the Canary Islands',
+      'Easy access to the open forest area, plus nearby walking routes such as PR13 – Vereda do Fanal and PR14 – Levada dos Cedros',
+    ],
+    uk: [
+      'Частина Laurissilva Forest, об’єкта Світової спадщини UNESCO з 1999 року',
+      'Реліктова екосистема субтропічного лаврового лісу, походження якої сягає приблизно 20 мільйонів років',
+      'Вікові дерева Til, Ocotea foetens, зі стовбурами, сформованими вітром, і низькими викривленими гілками',
+      'Деяким старим деревам Laurissilva може бути понад 800 років; точний вік окремих дерев Fanal невідомий',
+      'Ландшафт, сформований частими туманами, високою вологістю, вітром і відкритими гірськими пасовищами',
+      'Laurissilva і досі займає близько 15 000 гектарів, або приблизно 20% Madeira',
+      'Один із найкраще збережених прикладів лаврового лісу у світі — типу рослинності, що нині обмежений переважно Madeira, Azores та Canary Islands',
+      'Легкий доступ до відкритої лісової зони, а також близькі маршрути PR13 – Vereda do Fanal і PR14 – Levada dos Cedros',
+    ],
+  },
+  practicalTip: {
+    en: 'Visit when fog is present if you want Fanal’s most atmospheric look, but expect cold wind, wet grass and low visibility. Bring waterproof clothing, warm layers and shoes that can handle mud. Stay on established paths, do not climb or hang from the ancient trees, and avoid drone use or loud behaviour in this protected habitat.',
+    uk: 'Відвідуйте Fanal у туманну погоду, якщо хочете побачити його найатмосфернішим, але будьте готові до холодного вітру, мокрої трави та низької видимості. Візьміть водонепроникний одяг, теплі шари та взуття, придатне для багнюки. Тримайтеся облаштованих стежок, не залазьте на вікові дерева й не висіть на їхніх гілках, а також уникайте дронів і гучної поведінки в цьому охоронюваному середовищі.',
+  },
+},
   },
   {
     slug: 'praia-do-porto-do-seixal',
@@ -840,31 +944,41 @@ export const locations: Location[] = [
     },
     mapQuery: 'Praia do Porto do Seixal Madeira',
     article: {
-      intro: {
-        en: 'Praia do Porto do Seixal is a scenic north-coast beach framed by steep green mountains.',
-        uk: 'Пляж Porto do Seixal — мальовничий пляж північного узбережжя, оточений стрімкими зеленими горами.',
-      },
-      history: {
-        en: 'The beach is part of Seixal’s volcanic coastline, where dark sand and rocks contrast strongly with the surrounding vegetation.',
-        uk: 'Пляж є частиною вулканічного узбережжя Seixal, де темний пісок і скелі яскраво контрастують із навколишньою рослинністю.',
-      },
-      highlights: {
-        en: [
-          'Dark volcanic sand and dramatic green surroundings',
-          'North-coast scenery and nearby waterfalls',
-          'A photogenic stop on a west or north-coast drive',
-        ],
-        uk: [
-          'Темний вулканічний пісок і вражаючі зелені краєвиди',
-          'Пейзажі північного узбережжя та водоспади поруч',
-          'Фотогенічна зупинка під час поїздки західним або північним узбережжям',
-        ],
-      },
-      practicalTip: {
-        en: 'Sea conditions can change quickly on the north coast; follow local guidance before entering the water.',
-        uk: 'Умови моря на північному узбережжі можуть швидко змінюватися; перед заходом у воду дотримуйтеся місцевих рекомендацій.',
-      },
-    },
+  intro: {
+    en: 'Praia do Porto do Seixal, also known as Seixal Beach or Praia do Cais do Seixal, is one of Madeira’s most striking natural beaches. It sits on the north coast beneath steep green mountains and is known for fine black sand, clear Atlantic water and a small waterfall that often runs down the cliffs behind the beach.',
+    uk: 'Praia do Porto do Seixal, також відомий як Seixal Beach або Praia do Cais do Seixal, — один із найефектніших природних пляжів Madeira. Він розташований на північному узбережжі під крутими зеленими горами та відомий дрібним чорним піском, прозорою атлантичною водою й невеликим водоспадом, який часто спускається зі скель позаду пляжу.',
+  },
+  history: {
+    en: 'The black sand at Praia do Porto do Seixal is a direct result of Madeira’s volcanic origin. The island was created by volcanic eruptions over millions of years, leaving basaltic rock along much of the coast. Rain, landslides, waves and ocean currents gradually break basalt into small grains; because basalt is rich in dark minerals, the sand appears black. The beach itself is natural, but the area beside the Port of Seixal has been improved over recent decades with access, a promenade, parking and basic visitor facilities. This improved access, together with the opening of modern north-coast roads and the rise of travel photography and social media in the 2010s and 2020s, made Seixal far more visible to visitors. There is no single official date when the beach “became popular”: it has long been used by local residents, while its wider international popularity grew gradually as the north coast became easier to reach and images of its black sand, waterfalls and green cliffs spread online.',
+    uk: 'Чорний пісок Praia do Porto do Seixal — прямий наслідок вулканічного походження Madeira. Острів сформувався внаслідок вулканічних вивержень протягом мільйонів років, залишивши базальтові породи вздовж значної частини узбережжя. Дощі, зсуви, хвилі й океанські течії поступово руйнують базальт на дрібні зерна; оскільки базальт багатий на темні мінерали, пісок виглядає чорним. Сам пляж природний, але територію поруч із Port of Seixal протягом останніх десятиліть облаштували: з’явилися зручний доступ, набережна, паркування та базові зручності для відвідувачів. Краща доступність, відкриття сучасних доріг північного узбережжя, розвиток туристичної фотографії та соціальних мереж у 2010–2020-х роках зробили Seixal значно помітнішим для гостей острова. Немає однієї офіційної дати, коли пляж «став популярним»: його давно використовують місцеві жителі, а широка міжнародна популярність поступово зросла разом із легшим доступом до північного узбережжя та поширенням в інтернеті фото чорного піску, водоспадів і зелених скель.',
+  },
+  highlights: {
+    en: [
+      'A natural beach of fine black sand formed from eroded basaltic volcanic rock',
+      'One of the most photogenic contrasts on Madeira: dark sand, turquoise water and steep green mountains',
+      'A small waterfall can often be seen on the cliffs behind the beach after rain',
+      'Also known as Seixal Beach and Praia do Cais do Seixal',
+      'Located beside Port of Seixal, with access to the village promenade and nearby natural swimming pools',
+      'The village of Seixal grew around farming, fishing and a small coastal harbour, while the fertile north-coast slopes support vineyards, vegetables and fruit',
+      'The northern location receives more rain than the south coast, which helps create the dense green landscape around the beach',
+      'The beach’s wider popularity grew gradually in the 2010s and 2020s as north-coast access improved and images spread through travel media and social platforms',
+    ],
+    uk: [
+      'Природний пляж із дрібним чорним піском, утвореним із зруйнованих базальтових вулканічних порід',
+      'Один із найфотогенічніших контрастів Madeira: темний пісок, бірюзова вода та круті зелені гори',
+      'Після дощу на скелях позаду пляжу часто можна побачити невеликий водоспад',
+      'Також відомий як Seixal Beach і Praia do Cais do Seixal',
+      'Розташований поруч із Port of Seixal, зі зручним виходом до набережної селища та близьких природних басейнів',
+      'Селище Seixal розвивалося завдяки сільському господарству, рибальству та невеликій прибережній гавані, а на родючих схилах північного узбережжя вирощують виноград, овочі та фрукти',
+      'Північне розташування приносить більше опадів, ніж південне узбережжя, що допомагає створювати густий зелений ландшафт навколо пляжу',
+      'Широка популярність пляжу поступово зросла у 2010–2020-х роках завдяки покращенню доступу до північного узбережжя та поширенню зображень у туристичних медіа й соціальних мережах',
+    ],
+  },
+  practicalTip: {
+    en: 'Visit early in the day, especially in summer, because parking near the beach is limited. The north coast can be cooler and cloudier than Funchal, and the Atlantic can change quickly. Check the sea conditions before swimming, do not enter rough water, and remember that the dark sand becomes very hot in strong sun.',
+    uk: 'Приїжджайте раніше, особливо влітку, оскільки паркування біля пляжу обмежене. Північне узбережжя може бути прохолоднішим і хмарнішим, ніж Funchal, а стан Атлантики швидко змінюється. Перевіряйте умови моря перед купанням, не заходьте у воду під час сильних хвиль і пам’ятайте, що темний пісок сильно нагрівається на яскравому сонці.',
+  },
+},
   },
   {
     slug: 'porto-moniz-natural-pools',
@@ -892,31 +1006,43 @@ export const locations: Location[] = [
     },
     mapQuery: 'Porto Moniz Natural Swimming Pools Madeira',
     article: {
-      intro: {
-        en: 'Porto Moniz Natural Swimming Pools are seawater pools formed among black volcanic rocks on Madeira’s north-west coast.',
-        uk: 'Природні басейни Porto Moniz — це басейни з морською водою, сформовані серед чорних вулканічних скель на північно-західному узбережжі Мадейри.',
-      },
-      history: {
-        en: 'The pools are shaped by volcanic geology and receive fresh Atlantic water through natural openings in the rock.',
-        uk: 'Басейни сформовані вулканічною геологією та отримують свіжу воду Атлантики через природні отвори в скелях.',
-      },
-      highlights: {
-        en: [
-          'Swimming areas set within volcanic rock formations',
-          'Constantly renewed Atlantic seawater',
-          'A memorable stop on a north-west Madeira road trip',
-        ],
-        uk: [
-          'Зони для плавання серед вулканічних скель',
-          'Постійно оновлювана атлантична морська вода',
-          'Яскрава зупинка під час подорожі північним заходом Мадейри',
-        ],
-      },
-      practicalTip: {
-        en: 'Check opening times, local sea conditions and wind before travelling; the coast can be rough outside calm periods.',
-        uk: 'Перед поїздкою перевірте години роботи, місцеві умови моря та вітер: узбережжя може бути неспокійним поза періодами штилю.',
-      },
-    },
+  intro: {
+    en: 'Porto Moniz Natural Pools are Madeira’s most famous lava pools. On the rugged north-west coast, black basalt walls surround clear Atlantic seawater, creating a dramatic place to swim beside the open ocean. The pools are the defining landmark of Porto Moniz and one of the island’s most popular stops.',
+    uk: 'Porto Moniz Natural Pools — найвідоміші лавові басейни Мадейри. На суворому північно-західному узбережжі чорні базальтові стіни оточують прозору атлантичну воду, створюючи ефектне місце для купання поруч із відкритим океаном. Басейни є головною візитівкою Porto Moniz та однією з найпопулярніших локацій острова.',
+  },
+  history: {
+    en: 'Porto Moniz Natural Pools were shaped over thousands of years by Madeira’s volcanic landscape and the Atlantic Ocean. When lava reached the coast, it cooled into hard basalt. Waves, salt water and erosion then carved hollows, channels and uneven rock walls, creating pools that naturally fill and refresh with seawater. Local residents used this volcanic shoreline long before Porto Moniz became a well-known visitor destination. During the twentieth century, improved roads made the isolated north-west easier to reach, and the town gradually developed bathing infrastructure around part of the pools. Today, the managed complex includes changing rooms, showers, a solarium, a children’s pool, a playground, a bar, first-aid facilities, parking and access for visitors with reduced mobility. Porto Moniz itself was one of Madeira’s early northern settlements. Its parish was established in 1574, and it became a municipality on 31 October 1835 during the reign of Queen Maria II. For generations, local life depended on livestock, grain, timber, vineyards, potatoes and fishing. Today, tourism, hospitality and services are important alongside agriculture and fishing, while the lava pools remain the town’s best-known landmark.',
+    uk: 'Porto Moniz Natural Pools формувалися протягом тисячоліть під впливом вулканічного ландшафту Мадейри та Атлантичного океану. Коли лава досягала узбережжя, вона охолоджувалася й перетворювалася на твердий базальт. Хвилі, солона вода та ерозія поступово створили заглиблення, канали й нерівні кам’яні краї, утворивши басейни, які наповнюються та оновлюються морською водою. Місцеві жителі користувалися цим вулканічним узбережжям задовго до того, як Porto Moniz став відомою туристичною локацією. Протягом XX століття покращення доріг зробило ізольований північний захід доступнішим, а містечко поступово розвинуло інфраструктуру для купання навколо частини басейнів. Сьогодні облаштований комплекс має роздягальні, душі, солярій, дитячий басейн, дитячий майданчик, бар, пункт першої допомоги, паркування та доступ для відвідувачів з обмеженою мобільністю. Сам Porto Moniz був одним із ранніх поселень півночі Мадейри. Його парафію заснували у 1574 році, а 31 жовтня 1835 року він став муніципалітетом за правління Королеви Марíї II. Протягом поколінь мíсцеве життя залежало вíд тваринництва, зернових, деревини, виноградникív, картоплí та рибальства. Сьогоднí поряд із с³льським господарством і рибальством важливими є туризм, гостинн³сть та сфера послуг, а лавов³ басейни залишаються найв³дом³шою в³зит³вкою м³стечка.',
+  },
+  highlights: {
+    en: [
+      'Lava pools shaped over thousands of years by Atlantic waves, salt water and erosion',
+      'Clear seawater enters from the ocean and is constantly renewed',
+      'Black basalt walls, lava channels and Atlantic waves surrounding the swimming area',
+      'A managed bathing complex with a solarium, changing rooms, showers, a children’s pool, playground, bar, first-aid point and parking',
+      'Accessibility facilities for visitors with reduced mobility',
+      'Piscinas Naturais Velhas nearby: a more rugged and less formal lava-pool experience',
+      'Ilhéu Mole and the open Atlantic create a dramatic setting beside the pools',
+      'The pools are the best-known attraction on the north-west coast of Madeira',
+      'Conditions depend on the sea: strong north-coast swell can affect access and swimming safety',
+    ],
+    uk: [
+      'Лавові басейни, сформовані протягом тисячоліть атлантичними хвилями, солоною водою та ерозією',
+      'Прозора морська вода надходить з океану та постійно оновлюється',
+      'Чорні базальтові стіни, лавові канали й атлантичні хвилі навколо зони для купання',
+      'Облаштований комплекс із солярієм, роздягальнями, душами, дитячим басейном, дитячим майданчиком, баром, пунктом першої допомоги та паркуванням',
+      'Зручності для відвідувачів з обмеженою мобільністю',
+      'Поруч Piscinas Naturais Velhas — більш дикий і менш облаштований формат лавових басейнів',
+      'Ilhéu Mole та відкритий Атлантичний океан створюють драматичний пейзаж біля басейнів',
+      'Басейни є найвідомішою пам’яткою північно-західного узбережжя Мадейри',
+      'Умови залежать від моря: сильне хвилювання північного узбережжя може впливати на доступ і безпеку купання',
+    ],
+  },
+  practicalTip: {
+    en: 'Visit early in the day in summer, when the pools are quieter and parking is easier. Bring swimwear, a towel, footwear for wet rock and sun protection, but also check the weather: Porto Moniz is often cooler and wetter than Funchal. Follow lifeguard instructions and closure notices, as strong north-coast waves can restrict access or make swimming unsafe.',
+    uk: 'Улітку приїжджайте раніше, коли в басейнах менше людей і легше знайти паркування. Візьміть купальний одяг, рушник, взуття для мокрих каменів і сонцезахист, але також перевірте погоду: у Porto Moniz часто прохолодніше та вологіше, ніж у Funchal. Дотримуйтеся вказівок рятувальників і повідомлень про закриття, адже сильні хвилі північного узбережжя можуть обмежити доступ або зробити купання небезпечним.',
+  },
+},
   },
 ];
 

@@ -90,7 +90,7 @@ export const enMessages = {
     highClouds: 'High clouds',
     rainChance: 'Rain chance',
     windAtSunrise: 'Wind at sunrise',
-    openCamera: 'Open camera',
+    openCamera: 'Open live camera',
     openWindy: 'Open in Windy',
     guidance:
       'Forecast guidance only. Mountain weather and cloud cover can change quickly; check the live Pico do Arieiro camera before leaving.',
