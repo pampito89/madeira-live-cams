@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
             <div className="aspect-video overflow-hidden rounded-lg bg-slate-900">
               <iframe
                 className="h-full w-full"
-                src="https://www.youtube.com/embed/0iDQDwx21Oo?autoplay=0&mute=1"
+                src="https://www.youtube.com/embed/8Drrabk3h6M?autoplay=1&mute=1"
                 title={messages.home.airportCameraTitle}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
