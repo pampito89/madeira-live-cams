@@ -27,26 +27,6 @@ const PICO_DO_ARIEIRO = {
     'https://www.netmadeira.com/webcams-madeira/pico-do-arieiro',
 };
 
-function windDirectionLabel(degrees: number, locale: 'en' | 'uk') {
-  const directionIndex = Math.round(degrees / 45) % 8;
-
-  const directions = {
-    en: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
-    uk: [
-      'Північний',
-      'Північно-східний',
-      'Східний',
-      'Південно-східний',
-      'Південний',
-      'Південно-західний',
-      'Західний',
-      'Північно-західний',
-    ],
-  };
-
-  return directions[locale][directionIndex];
-}
-
 function formatDate(date: string, locale: 'en' | 'uk') {
   return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
     weekday: 'short',
@@ -112,6 +92,9 @@ export default function WeatherGuidePage() {
     error: null,
     days: [],
   });
+
+  const cameraLabel = locale === 'uk' ? 'Онлайн камера' : 'Live camera';
+  const windUnit = locale === 'uk' ? 'км/г' : 'km/h';
 
   function sunriseRating(day: SunriseDay) {
     const clearUpperSky = day.midClouds === 0 && day.highClouds === 0;
@@ -268,129 +251,147 @@ export default function WeatherGuidePage() {
           </p>
         </section>
 
-        <section className="rounded-2xl border border-moss/60 bg-white p-4 shadow-sm sm:p-6">
+        <section className="rounded-2xl border border-moss/60 bg-white p-3 shadow-sm sm:p-4">
           {forecast.loading && (
-            <div className="rounded-xl border border-moss/40 bg-panel p-5 text-sm text-slate-600">
+            <div className="rounded-xl border border-moss/40 bg-panel p-4 text-sm text-slate-600">
               {messages.weatherGuide.loading}
             </div>
           )}
 
           {forecast.error && (
-            <div className="rounded-xl border border-lava/40 bg-lava/10 p-5 text-sm text-[#7A3021]">
+            <div className="rounded-xl border border-lava/40 bg-lava/10 p-4 text-sm text-[#7A3021]">
               {forecast.error} {messages.weatherGuide.errorRetry}
             </div>
           )}
 
           {!forecast.loading && !forecast.error && (
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-2.5 lg:grid-cols-2">
               {forecast.days.map((day) => {
                 const rating = sunriseRating(day);
 
                 return (
                   <article
                     key={day.date}
-                    className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-moss hover:shadow-md"
+                    className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-moss hover:shadow-md"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="font-semibold text-navy">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <h2 className="text-sm font-semibold text-navy">
                           {formatDate(day.date, locale)}
                         </h2>
 
-                        <p className="mt-1 text-sm text-slate-500">
-                          {messages.weatherGuide.sunrise}:{' '}
-                          {formatSunrise(day.sunrise, locale)} ·{' '}
-                          {messages.weatherGuide.conditionsAtSunrise}
+                        <p className="text-xs text-slate-500">
+                          ☀ {formatSunrise(day.sunrise, locale)}
                         </p>
                       </div>
 
                       <div
-                        className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${rating.className}`}
+                        className={`flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${rating.className}`}
                         aria-label={`${rating.title}: ${rating.description}`}
                         title={`${rating.title}: ${rating.description}`}
                       >
-                        <span aria-hidden="true" className="text-sm">
-                          {rating.icon}
-                        </span>
-
+                        <span aria-hidden="true">{rating.icon}</span>
                         <span>{rating.title}</span>
                       </div>
                     </div>
 
-                    <p className="mt-2 text-sm leading-5 text-slate-600">
-                      {rating.description}
-                    </p>
-
-                    <div className="mt-3 grid grid-cols-2 gap-1.5 text-sm">
-                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
-                        <p className="text-[11px] leading-4 text-slate-500">
-                          {messages.weatherGuide.lowClouds}
+                    <div className="mt-2 grid grid-cols-3 overflow-hidden rounded-lg border border-moss/30 bg-panel text-center">
+                      <div
+                        className="border-r border-moss/30 px-1.5 py-1.5"
+                        title={messages.weatherGuide.lowClouds}
+                      >
+                        <p className="text-sm leading-4" aria-hidden="true">
+                          ☁️⬇️
                         </p>
 
-                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
+                        <p className="mt-0.5 text-sm font-semibold leading-4 text-navy">
                           {day.lowClouds}%
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
-                        <p className="text-[11px] leading-4 text-slate-500">
-                          {messages.weatherGuide.midClouds}
+                      <div
+                        className="border-r border-moss/30 px-1.5 py-1.5"
+                        title={messages.weatherGuide.midClouds}
+                      >
+                        <p className="text-sm leading-4" aria-hidden="true">
+                          ☁️
                         </p>
 
-                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
+                        <p className="mt-0.5 text-sm font-semibold leading-4 text-navy">
                           {day.midClouds}%
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
-                        <p className="text-[11px] leading-4 text-slate-500">
-                          {messages.weatherGuide.highClouds}
+                      <div
+                        className="px-1.5 py-1.5"
+                        title={messages.weatherGuide.highClouds}
+                      >
+                        <p className="text-sm leading-4" aria-hidden="true">
+                          ☁️⬆️
                         </p>
 
-                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
+                        <p className="mt-0.5 text-sm font-semibold leading-4 text-navy">
                           {day.highClouds}%
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg border border-moss/40 bg-panel px-3 py-2">
-                        <p className="text-[11px] leading-4 text-slate-500">
-                          {messages.weatherGuide.rainChance}
-                        </p>
-
-                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
-                          {day.rainChance}%
-                        </p>
-                      </div>
-
-                      <div className="col-span-2 rounded-lg border border-moss/40 bg-panel px-3 py-2">
-                        <p className="text-[11px] leading-4 text-slate-500">
-                          {messages.weatherGuide.windAtSunrise}
-                        </p>
-
-                        <p className="mt-0.5 text-base font-semibold leading-5 text-navy">
-                          {day.windSpeed} km/h ·{' '}
-                          {windDirectionLabel(day.windDirection, locale)}
                         </p>
                       </div>
                     </div>
 
-                    <div className="mt-4 flex gap-2">
+                    <div className="mt-1.5 grid grid-cols-2 overflow-hidden rounded-lg border border-moss/30 bg-panel">
+                      <div
+                        className="flex items-center justify-center gap-1 border-r border-moss/30 px-2 py-1.5"
+                        title={messages.weatherGuide.rainChance}
+                      >
+                        <span className="text-sm leading-4" aria-hidden="true">
+                          🌧️
+                        </span>
+
+                        <span className="text-sm font-semibold leading-4 text-navy">
+                          {day.rainChance}%
+                        </span>
+                      </div>
+
+                      <div
+                        className="flex items-center justify-center gap-1 px-2 py-1.5"
+                        title={messages.weatherGuide.windAtSunrise}
+                      >
+                        <span className="text-sm leading-4" aria-hidden="true">
+                          💨
+                        </span>
+
+                        <span className="text-sm font-semibold leading-4 text-navy">
+                          {day.windSpeed} {windUnit}
+                        </span>
+
+                        <span
+                          className="inline-flex h-4 w-4 items-center justify-center text-base font-bold leading-none text-ocean"
+                          style={{
+                            transform: `rotate(${day.windDirection}deg)`,
+                          }}
+                          aria-label={`${day.windDirection}°`}
+                          title={`${day.windDirection}°`}
+                        >
+                          ↑
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="mt-2 flex gap-1.5">
                       <a
                         href={PICO_DO_ARIEIRO.cameraSourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex flex-1 items-center justify-center rounded-lg border border-ocean bg-white px-3 py-2.5 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
+                        className="inline-flex flex-1 items-center justify-center rounded-md border border-ocean bg-white px-2 py-1.5 text-xs font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
                       >
-                        {messages.weatherGuide.openCamera}
+                        {cameraLabel}
                       </a>
 
                       <a
                         href={windyCloudUrl(day.sunrise)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex flex-1 items-center justify-center rounded-lg bg-ocean px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2"
+                        className="inline-flex flex-1 items-center justify-center rounded-md bg-ocean px-2 py-1.5 text-xs font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2"
                       >
-                        {messages.weatherGuide.openWindy}
+                        Windy
                       </a>
                     </div>
                   </article>
@@ -399,7 +400,7 @@ export default function WeatherGuidePage() {
             </div>
           )}
 
-          <p className="mt-5 rounded-lg bg-mist px-4 py-3 text-xs leading-5 text-slate-600">
+          <p className="mt-4 rounded-lg bg-mist px-3 py-2 text-xs leading-5 text-slate-600">
             {messages.weatherGuide.guidance}
           </p>
         </section>

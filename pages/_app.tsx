@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+// @ts-ignore
 import '../styles/globals.css';
 
 const SITE_URL = 'https://madeiralivecams.com';
