@@ -102,8 +102,7 @@ export default function LocationPage({ location }: LocationPageProps) {
     ? `${navigationDestination.latitude},${navigationDestination.longitude}`
     : displayLocation.mapQuery;
 
-  const pageUrl =
-    typeof window !== 'undefined' ? window.location.href : canonicalUrl;
+  const pageUrl = canonicalUrl;
 
   const locationText =
     locale === 'uk'
@@ -188,7 +187,10 @@ export default function LocationPage({ location }: LocationPageProps) {
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="Madeira Live Cams" />
-        <meta property="og:locale" content={locale === 'uk' ? 'uk_UA' : 'en_GB'} />
+        <meta
+          property="og:locale"
+          content={locale === 'uk' ? 'uk_UA' : 'en_GB'}
+        />
 
         <meta property="og:image" content={shareImageUrl} />
         <meta property="og:image:secure_url" content={shareImageUrl} />
