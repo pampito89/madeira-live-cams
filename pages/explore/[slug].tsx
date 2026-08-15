@@ -91,6 +91,10 @@ export default function LocationPage({ location }: LocationPageProps) {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
 
+  const canonicalUrl = `https://madeiralivecams.com/${locale}/explore/${displayLocation.slug}`;
+
+  const shareImageUrl = `https://madeiralivecams.com${displayLocation.image}`;
+
   const navigationDestination =
     navigationDestinations[displayLocation.slug];
 
@@ -99,9 +103,7 @@ export default function LocationPage({ location }: LocationPageProps) {
     : displayLocation.mapQuery;
 
   const pageUrl =
-    typeof window !== 'undefined'
-      ? window.location.href
-      : `https://madeiralivecams.com/explore/${displayLocation.slug}`;
+    typeof window !== 'undefined' ? window.location.href : canonicalUrl;
 
   const locationText =
     locale === 'uk'
@@ -175,10 +177,7 @@ export default function LocationPage({ location }: LocationPageProps) {
 
         <meta name="description" content={displayLocation.summary} />
 
-        <link
-          rel="canonical"
-          href={`https://madeiralivecams.com/explore/${displayLocation.slug}`}
-        />
+        <link rel="canonical" href={canonicalUrl} />
 
         <meta
           property="og:title"
@@ -187,6 +186,22 @@ export default function LocationPage({ location }: LocationPageProps) {
 
         <meta property="og:description" content={displayLocation.summary} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="Madeira Live Cams" />
+        <meta property="og:locale" content={locale === 'uk' ? 'uk_UA' : 'en_GB'} />
+
+        <meta property="og:image" content={shareImageUrl} />
+        <meta property="og:image:secure_url" content={shareImageUrl} />
+        <meta property="og:image:alt" content={displayLocation.imageAlt} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={`${displayLocation.name} | Madeira Live Cams`}
+        />
+        <meta name="twitter:description" content={displayLocation.summary} />
+        <meta name="twitter:image" content={shareImageUrl} />
+        <meta name="twitter:image:alt" content={displayLocation.imageAlt} />
       </Head>
 
       <main className="page-shell">
