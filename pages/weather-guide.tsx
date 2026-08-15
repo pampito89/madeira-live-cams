@@ -96,6 +96,29 @@ export default function WeatherGuidePage() {
   const cameraLabel = locale === 'uk' ? 'Онлайн камера' : 'Live camera';
   const windUnit = locale === 'uk' ? 'км/г' : 'km/h';
 
+  const legend =
+    locale === 'uk'
+      ? {
+          title: 'Позначення у прогнозі',
+          sunrise: 'час сходу сонця',
+          lowClouds: 'нижні хмари',
+          midClouds: 'середні хмари',
+          highClouds: 'високі хмари',
+          rain: 'імовірність дощу',
+          wind: 'швидкість і напрямок вітру',
+          arrow: 'синя стрілка показує напрямок вітру',
+        }
+      : {
+          title: 'Forecast symbols',
+          sunrise: 'sunrise time',
+          lowClouds: 'low clouds',
+          midClouds: 'mid-level clouds',
+          highClouds: 'high clouds',
+          rain: 'rain probability',
+          wind: 'wind speed and direction',
+          arrow: 'the blue arrow shows wind direction',
+        };
+
   function sunriseRating(day: SunriseDay) {
     const clearUpperSky = day.midClouds === 0 && day.highClouds === 0;
     const lowCloudsAreGood = day.lowClouds <= 70;
@@ -178,7 +201,9 @@ export default function WeatherGuidePage() {
               rainChance: Math.round(
                 data.hourly.precipitation_probability[safeIndex] ?? 0,
               ),
-              windSpeed: Math.round(data.hourly.wind_speed_10m[safeIndex] ?? 0),
+              windSpeed: Math.round(
+                data.hourly.wind_speed_10m[safeIndex] ?? 0,
+              ),
               windDirection: Math.round(
                 data.hourly.wind_direction_10m[safeIndex] ?? 0,
               ),
@@ -237,16 +262,37 @@ export default function WeatherGuidePage() {
       </Head>
 
       <main className="page-shell">
-        <section className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-forest via-ocean to-leaf px-5 py-7 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-9">
+        <section className="relative isolate mb-6 overflow-hidden rounded-2xl bg-forest px-5 py-7 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-9">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-20 bg-cover bg-center md:hidden"
+            style={{
+              backgroundImage: "url('/images/pico-radar-mobile.png')",
+            }}
+          />
+
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-20 hidden bg-cover bg-center md:block"
+            style={{
+              backgroundImage: "url('/images/pico-radar-desktop.png')",
+            }}
+          />
+
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 bg-gradient-to-br from-[#092b22]/95 via-[#0b3d31]/82 to-[#11223b]/78"
+          />
+
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-moss">
             {messages.weatherGuide.eyebrow}
           </p>
 
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
             {messages.weatherGuide.title}
           </h1>
 
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/85 sm:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/90 sm:text-base">
             {messages.weatherGuide.intro}
           </p>
         </section>
@@ -281,7 +327,7 @@ export default function WeatherGuidePage() {
                         </h2>
 
                         <p className="text-xs text-slate-500">
-                          ☀ {formatSunrise(day.sunrise, locale)}
+                          ☀️ {formatSunrise(day.sunrise, locale)}
                         </p>
                       </div>
 
@@ -400,9 +446,45 @@ export default function WeatherGuidePage() {
             </div>
           )}
 
-          <p className="mt-4 rounded-lg bg-mist px-3 py-2 text-xs leading-5 text-slate-600">
-            {messages.weatherGuide.guidance}
-          </p>
+          <section className="mt-4 rounded-lg border border-moss/30 bg-mist px-3 py-3 text-xs leading-5 text-slate-600">
+            <h2 className="text-sm font-semibold text-navy">{legend.title}</h2>
+
+            <div className="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-2">
+              <p>
+                <span aria-hidden="true">☀️</span> — {legend.sunrise}
+              </p>
+
+              <p>
+                <span aria-hidden="true">☁️⬇️</span> — {legend.lowClouds}
+              </p>
+
+              <p>
+                <span aria-hidden="true">☁️</span> — {legend.midClouds}
+              </p>
+
+              <p>
+                <span aria-hidden="true">☁️⬆️</span> — {legend.highClouds}
+              </p>
+
+              <p>
+                <span aria-hidden="true">🌧️</span> — {legend.rain}
+              </p>
+
+              <p>
+                <span aria-hidden="true">💨</span> — {legend.wind}
+              </p>
+            </div>
+
+            <p className="mt-2 text-slate-500">
+              <span
+                className="mr-1 inline-flex h-4 w-4 items-center justify-center text-base font-bold leading-none text-ocean"
+                aria-hidden="true"
+              >
+                ↑
+              </span>
+              {legend.arrow}
+            </p>
+          </section>
         </section>
       </main>
     </Layout>
