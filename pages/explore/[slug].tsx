@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -15,15 +16,155 @@ type LocationPageProps = {
   location: Location;
 };
 
-function mapUrl(query: string) {
+type NavigationDestination = {
+  latitude: number;
+  longitude: number;
+};
+
+const navigationDestinations: Record<string, NavigationDestination> = {
+  'cristo-rei': {
+    latitude: 32.6395228,
+    longitude: -16.8516118,
+  },
+  'monte-palace-tropical-garden': {
+    latitude: 32.6748547,
+    longitude: -16.9005373,
+  },
+  funchal: {
+    latitude: 32.6476583,
+    longitude: -16.9033456,
+  },
+  'mercado-dos-lavradores': {
+    latitude: 32.6476583,
+    longitude: -16.9033456,
+  },
+  'pico-ruivo': {
+    latitude: 32.7649509,
+    longitude: -16.9208276,
+  },
+  'levada-nova-levada-do-moinho': {
+    latitude: 32.6896838,
+    longitude: -17.0916296,
+  },
+  'calheta-beach': {
+    latitude: 32.717068,
+    longitude: -17.169304,
+  },
+  'praia-do-porto-do-seixal': {
+    latitude: 32.8227967,
+    longitude: -17.1023316,
+  },
+  'porto-moniz-natural-pools': {
+    latitude: 32.866443,
+    longitude: -17.1684326,
+  },
+};
+
+function googleMapsLocationUrl(query: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     query,
   )}`;
 }
 
+function googleMapsDirectionsUrl(destination: string) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+    destination,
+  )}&travelmode=driving`;
+}
+
+function wazeNavigationUrl(destination: string, usesCoordinates: boolean) {
+  if (usesCoordinates) {
+    return `https://www.waze.com/ul?ll=${encodeURIComponent(
+      destination,
+    )}&navigate=yes`;
+  }
+
+  return `https://www.waze.com/ul?q=${encodeURIComponent(
+    destination,
+  )}&navigate=yes`;
+}
+
 export default function LocationPage({ location }: LocationPageProps) {
   const { locale, messages } = useMessages();
   const displayLocation = getLocalizedLocation(location, locale);
+
+  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
+
+  const navigationDestination =
+    navigationDestinations[displayLocation.slug];
+
+  const navigationQuery = navigationDestination
+    ? `${navigationDestination.latitude},${navigationDestination.longitude}`
+    : displayLocation.mapQuery;
+
+  const pageUrl =
+    typeof window !== 'undefined'
+      ? window.location.href
+      : `https://madeiralivecams.com/explore/${displayLocation.slug}`;
+
+  const locationText =
+    locale === 'uk'
+      ? {
+          route: 'Маршрут',
+          share: 'Поділитися',
+          copied: 'Скопійовано',
+          closeRoute: 'Закрити вибір маршруту',
+          close: 'Закрити',
+          map: '📍 Відкрити точку на карті',
+          shareText: `Подивіться ${displayLocation.name} на Madeira Live Cams`,
+        }
+      : {
+          route: 'Route',
+          share: 'Share',
+          copied: 'Copied',
+          closeRoute: 'Close route options',
+          close: 'Close',
+          map: '📍 View location on map',
+          shareText: `See ${displayLocation.name} on Madeira Live Cams`,
+        };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: `${displayLocation.name} | Madeira Live Cams`,
+      text: locationText.shareText,
+      url: pageUrl,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await navigator.clipboard.writeText(pageUrl);
+      setShareStatus('copied');
+
+      window.setTimeout(() => {
+        setShareStatus('idle');
+      }, 2000);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(pageUrl);
+        setShareStatus('copied');
+
+        window.setTimeout(() => {
+          setShareStatus('idle');
+        }, 2000);
+      } catch {
+        window.prompt(
+          locale === 'uk'
+            ? 'Скопіюйте це посилання:'
+            : 'Copy this link:',
+          pageUrl,
+        );
+      }
+    }
+  };
 
   return (
     <Layout>
@@ -51,6 +192,7 @@ export default function LocationPage({ location }: LocationPageProps) {
       <main className="page-shell">
         <Link
           href="/cameras"
+          locale={locale}
           className="inline-flex text-sm font-medium text-ocean hover:underline"
         >
           {messages.location.back}
@@ -73,9 +215,84 @@ export default function LocationPage({ location }: LocationPageProps) {
               {displayLocation.category} · {displayLocation.area}
             </p>
 
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
-              {displayLocation.name}
-            </h1>
+            <div className="mt-2">
+              <h1 className="text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+                {displayLocation.name}
+              </h1>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setIsNavigationOpen((current) => !current)
+                    }
+                    aria-label={locationText.route}
+                    aria-expanded={isNavigationOpen}
+                    title={locationText.route}
+                    className="inline-flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-ocean px-3 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
+                  >
+                    <span aria-hidden="true">🗺️</span>
+                    <span>{locationText.route}</span>
+                  </button>
+
+                  {isNavigationOpen && (
+                    <div className="absolute left-0 top-12 z-20 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+                      <a
+                        href={googleMapsDirectionsUrl(navigationQuery)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsNavigationOpen(false)}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-navy transition hover:bg-panel hover:text-ocean"
+                      >
+                        <span aria-hidden="true">🗺️</span>
+                        Google Maps
+                      </a>
+
+                      <a
+                        href={wazeNavigationUrl(
+                          navigationQuery,
+                          Boolean(navigationDestination),
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsNavigationOpen(false)}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-navy transition hover:bg-panel hover:text-ocean"
+                      >
+                        <span aria-hidden="true">🚗</span>
+                        Waze
+                      </a>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsNavigationOpen(false)}
+                        aria-label={locationText.closeRoute}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-navy"
+                      >
+                        <span aria-hidden="true">×</span>
+                        {locationText.close}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  aria-label={locationText.share}
+                  title={locationText.share}
+                  className="inline-flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-ocean bg-white px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
+                >
+                  <span aria-hidden="true">↗</span>
+
+                  <span>
+                    {shareStatus === 'copied'
+                      ? locationText.copied
+                      : locationText.share}
+                  </span>
+                </button>
+              </div>
+            </div>
 
             <p className="mt-5 text-base leading-7 text-slate-700">
               {displayLocation.article.intro}
@@ -102,6 +319,7 @@ export default function LocationPage({ location }: LocationPageProps) {
                     <span className="font-bold text-ocean" aria-hidden="true">
                       •
                     </span>
+
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -119,12 +337,12 @@ export default function LocationPage({ location }: LocationPageProps) {
             </section>
 
             <a
-              href={mapUrl(displayLocation.mapQuery)}
+              href={googleMapsLocationUrl(displayLocation.mapQuery)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-ocean px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-lg border border-ocean bg-white px-4 py-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2 sm:w-auto"
             >
-              {messages.location.openMaps}
+              {locationText.map}
             </a>
           </div>
         </article>
