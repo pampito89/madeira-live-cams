@@ -19,46 +19,14 @@ type WeatherByLocation = Record<string, CurrentWeather>;
 
 function getWeatherDetails(code: number, locale: 'en' | 'uk') {
   const weather = {
-    clear: {
-      icon: '☀️',
-      en: 'Clear',
-      uk: 'Сонячно',
-    },
-    partlyCloudy: {
-      icon: '🌤️',
-      en: 'Partly cloudy',
-      uk: 'Мінлива хмарність',
-    },
-    cloudy: {
-      icon: '☁️',
-      en: 'Cloudy',
-      uk: 'Хмарно',
-    },
-    fog: {
-      icon: '🌫️',
-      en: 'Fog',
-      uk: 'Туман',
-    },
-    drizzle: {
-      icon: '🌦️',
-      en: 'Light rain',
-      uk: 'Невеликий дощ',
-    },
-    rain: {
-      icon: '🌧️',
-      en: 'Rain',
-      uk: 'Дощ',
-    },
-    snow: {
-      icon: '❄️',
-      en: 'Snow',
-      uk: 'Сніг',
-    },
-    storm: {
-      icon: '⛈️',
-      en: 'Thunderstorm',
-      uk: 'Гроза',
-    },
+    clear: { icon: '☀️', en: 'Clear', uk: 'Сонячно' },
+    partlyCloudy: { icon: '🌤️', en: 'Partly cloudy', uk: 'Мінлива хмарність' },
+    cloudy: { icon: '☁️', en: 'Cloudy', uk: 'Хмарно' },
+    fog: { icon: '🌫️', en: 'Fog', uk: 'Туман' },
+    drizzle: { icon: '🌦️', en: 'Light rain', uk: 'Невеликий дощ' },
+    rain: { icon: '🌧️', en: 'Rain', uk: 'Дощ' },
+    snow: { icon: '❄️', en: 'Snow', uk: 'Сніг' },
+    storm: { icon: '⛈️', en: 'Thunderstorm', uk: 'Гроза' },
   };
 
   let condition = weather.cloudy;
@@ -116,7 +84,6 @@ function getWindDirection(degrees: number, locale: 'en' | 'uk') {
 
 function getWindArrow(degrees: number) {
   const arrows = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
-
   return arrows[Math.round(degrees / 45) % 8];
 }
 
@@ -127,77 +94,97 @@ function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
     return '';
   }
 
-  return new Intl.DateTimeFormat(
-    locale === 'uk' ? 'uk-UA' : 'en-GB',
-    {
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'Atlantic/Madeira',
-    },
-  ).format(date);
+  return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Atlantic/Madeira',
+  }).format(date);
 }
 
 export default function CamerasPage() {
   const { locale, messages } = useMessages();
   const [activeFilter, setActiveFilter] = useState('All');
-  const [weatherByLocation, setWeatherByLocation] =
-    useState<WeatherByLocation>({});
+  const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
 
   useEffect(() => {
-    const weatherLocations = locations.filter(
-      (location) => locationCoordinates[location.slug],
-    );
-
-    const latitude = weatherLocations
-      .map((location) => locationCoordinates[location.slug].latitude)
-      .join(',');
-
-    const longitude = weatherLocations
-      .map((location) => locationCoordinates[location.slug].longitude)
-      .join(',');
+    let cancelled = false;
 
     async function loadWeather() {
-      try {
-        const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&timezone=Europe%2FLisbon`,
-        );
+      const weatherLocations = locations.filter(
+        (location) => locationCoordinates[location.slug],
+      );
 
-        if (!response.ok) {
-          return;
-        }
+      const weatherEntries = await Promise.all(
+        weatherLocations.map(async (location) => {
+          const coordinates = locationCoordinates[location.slug];
+          const params = new URLSearchParams({
+            latitude: coordinates.latitude.toString(),
+            longitude: coordinates.longitude.toString(),
+            current: 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m',
+            wind_speed_unit: 'kmh',
+            timezone: 'Europe/Lisbon',
+          });
 
-        const data = await response.json();
-        const results = Array.isArray(data) ? data : [data];
-        const nextWeather: WeatherByLocation = {};
+          try {
+            const response = await fetch(
+              `https://api.open-meteo.com/v1/forecast?${params.toString()}`,
+            );
 
-        results.forEach((result, index) => {
-          const location = weatherLocations[index];
-          const current = result.current;
+            if (!response.ok) {
+              return null;
+            }
 
-          if (!location || !current) {
-            return;
+            const data = await response.json();
+            const current = data.current;
+
+            if (!current) {
+              return null;
+            }
+
+            return [
+              location.slug,
+              {
+                temperature: Math.round(current.temperature_2m),
+                weatherCode: current.weather_code,
+                windSpeed: Math.round(current.wind_speed_10m),
+                windDirection: current.wind_direction_10m,
+                time: current.time,
+              },
+            ] as const;
+          } catch {
+            return null;
           }
+        }),
+      );
 
-          nextWeather[location.slug] = {
-            temperature: Math.round(current.temperature_2m),
-            weatherCode: current.weather_code,
-            windSpeed: Math.round(current.wind_speed_10m),
-            windDirection: current.wind_direction_10m,
-            time: current.time,
-          };
-        });
-
-        setWeatherByLocation(nextWeather);
-      } catch {
-        setWeatherByLocation({});
+      if (cancelled) {
+        return;
       }
+
+      const nextWeather: WeatherByLocation = {};
+
+      weatherEntries.forEach((entry) => {
+        if (entry) {
+          nextWeather[entry[0]] = entry[1];
+        }
+      });
+
+      setWeatherByLocation(nextWeather);
     }
 
     loadWeather();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
+    {
+      value: 'Lab Travel',
+      label: 'Lab Travel',
+    },
     {
       value: 'Viewpoints',
       label: messages.exploreList.filters.viewpoints,
@@ -234,12 +221,10 @@ export default function CamerasPage() {
     <Layout>
       <Head>
         <title>{messages.exploreList.pageTitle}</title>
-
         <meta
           name="description"
           content={messages.exploreList.pageDescription}
         />
-
         <link rel="canonical" href="https://madeiralivecams.com/cameras" />
       </Head>
 
@@ -248,11 +233,9 @@ export default function CamerasPage() {
           <p className="text-sm font-medium text-ocean">
             {messages.exploreList.eyebrow}
           </p>
-
           <h1 className="mt-1 text-2xl font-semibold text-navy sm:text-3xl">
             {messages.exploreList.title}
           </h1>
-
           <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
             {messages.exploreList.intro}
           </p>
@@ -315,19 +298,15 @@ export default function CamerasPage() {
                   <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
                     {displayLocation.category}
                   </p>
-
                   <h2 className="mt-1 text-lg font-semibold text-navy">
                     {displayLocation.name}
                   </h2>
-
                   <p className="mt-1 text-sm font-medium text-slate-500">
                     {displayLocation.area}
                   </p>
-
                   <p className="mt-3 text-sm leading-6 text-slate-600">
                     {displayLocation.summary}
                   </p>
-
                   <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
                     {messages.exploreList.readGuide}
                   </span>
@@ -351,11 +330,7 @@ export default function CamerasPage() {
                         <span aria-hidden="true">{weatherDetails.icon}</span>
                         <span>{weather.temperature}°C</span>
                       </p>
-
-                      <p className="mt-1 leading-4">
-                        {weatherDetails.label}
-                      </p>
-
+                      <p className="mt-1 leading-4">{weatherDetails.label}</p>
                       <p
                         className="mt-1 leading-4"
                         title={`${getWindDirection(
@@ -365,12 +340,15 @@ export default function CamerasPage() {
                           locale === 'uk' ? 'км/год' : 'km/h'
                         }`}
                       >
-                        <span className="font-semibold text-ocean" aria-hidden="true">
+                        <span
+                          className="font-semibold text-ocean"
+                          aria-hidden="true"
+                        >
                           {getWindArrow(weather.windDirection)}
                         </span>{' '}
-                        {weather.windSpeed} {locale === 'uk' ? 'км/год' : 'km/h'}
+                        {weather.windSpeed}{' '}
+                        {locale === 'uk' ? 'км/год' : 'km/h'}
                       </p>
-
                       <p className="mt-1 text-[10px] leading-3 text-slate-400">
                         {locale === 'uk' ? 'Оновлено' : 'Updated'}{' '}
                         {formatUpdatedTime(weather.time, locale)}
