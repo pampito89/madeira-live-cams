@@ -18,5 +18,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
   'prainha-do-canical': { latitude: 32.7378, longitude: -16.7132 },
   'fanal-forest': { latitude: 32.8108, longitude: -17.1427 },
   'praia-do-porto-do-seixal': { latitude: 32.8219, longitude: -17.1098 },
-  'porto-moniz-natural-pools': { latitude: 32.8662, longitude: -17.1664 },
+  'porto-moniz-natural-pools': { latitude: 32.8662, longitude: -17.1664 },  'ponta-do-pargo-lighthouse': { latitude: 32.814138, longitude: -17.262885 },
+
 };

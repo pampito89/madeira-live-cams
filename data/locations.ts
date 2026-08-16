@@ -1044,6 +1044,66 @@ export const locations: Location[] = [
   },
 },
   },
+  {
+    slug: 'ponta-do-pargo-lighthouse',
+    name: {
+      en: 'Ponta do Pargo Lighthouse Viewpoint',
+      uk: 'Оглядовий майданчик маяка Ponta do Pargo',
+    },
+    area: {
+      en: 'Ponta do Pargo, Calheta',
+      uk: 'Ponta do Pargo, Calheta',
+    },
+    category: {
+      en: 'Viewpoint',
+      uk: 'Оглядовий майданчик',
+    },
+    tags: ['Viewpoints'],
+    summary: {
+      en: 'A dramatic cliff-top viewpoint at Madeira’s western end, beside the historic Ponta do Pargo Lighthouse and open Atlantic Ocean.',
+      uk: 'Вражаючий оглядовий майданчик на західному краю Мадейри, поруч з історичним маяком Ponta do Pargo та відкритою Атлантикою.',
+    },
+    image: '/images/explore/ponta-do-pargo.jpg',
+    imageAlt: {
+      en: 'Ponta do Pargo Lighthouse above the cliffs and Atlantic Ocean in Madeira',
+      uk: 'Маяк Ponta do Pargo над скелями та Атлантичним океаном на Мадейрі',
+    },
+    mapQuery: 'Miradouro do Farol da Ponta do Pargo Madeira',
+    article: {
+      intro: {
+        en: 'The Ponta do Pargo Lighthouse Viewpoint stands at Ponta da Vigia, on Madeira’s far western edge. Set high above the Atlantic, it combines a historic lighthouse, sheer coastal cliffs and wide ocean views in one of the island’s most exposed and memorable settings.',
+        uk: 'Оглядовий майданчик маяка Ponta do Pargo розташований у Ponta da Vigia, на крайньому заході Мадейри. Високо над Атлантикою тут поєднуються історичний маяк, стрімкі прибережні скелі та широкі океанські панорами — одне з найвідкритіших і найвиразніших місць острова.',
+      },
+      history: {
+        en: 'The lighthouse was built to improve navigation around Madeira’s dangerous western coast and began operating in June 1922. Its white building and red lantern remain a defining landmark of Ponta da Vigia. The lighthouse tower is about 14 metres high, while its position on the cliff gives the light a much greater elevation above sea level. Over the decades, the site has remained both a working maritime landmark and a popular place to understand the scale of Madeira’s Atlantic coastline.',
+        uk: 'Маяк збудували для покращення навігації біля небезпечного західного узбережжя Мадейри, а в роботу він увійшов у червні 1922 року. Біла будівля з червоним ліхтарем і сьогодні є головною візитівкою Ponta da Vigia. Висота вежі становить приблизно 14 метрів, а розташування на скелі піднімає її світло значно вище над рівнем моря. Протягом десятиліть це місце залишалося і діючим морським орієнтиром, і популярною точкою, звідки можна відчути масштаб атлантичного узбережжя Мадейри.',
+      },
+      highlights: {
+        en: [
+          'One of Madeira’s westernmost viewpoints, at Ponta da Vigia near Ponta do Pargo',
+          'The historic Ponta do Pargo Lighthouse, operating since June 1922',
+          'A white lighthouse building with a distinctive red lantern above the cliffs',
+          'Open Atlantic panoramas and long views along Madeira’s rugged west coast',
+          'High, exposed cliffs that show the dramatic meeting of land and ocean',
+          'A peaceful stop for photography, sunsets and changing Atlantic weather',
+          'Easy road access from Ponta do Pargo, with the viewpoint beside the lighthouse',
+        ],
+        uk: [
+          'Один із найзахідніших оглядових майданчиків Мадейри — у Ponta da Vigia поблизу Ponta do Pargo',
+          'Історичний маяк Ponta do Pargo, що працює з червня 1922 року',
+          'Біла будівля маяка з характерним червоним ліхтарем над скелями',
+          'Відкриті панорами Атлантики та далекі види вздовж суворого західного узбережжя Мадейри',
+          'Високі відкриті скелі, що яскраво показують зустріч суші й океану',
+          'Тиха зупинка для фотографій, заходу сонця та спостереження за мінливою атлантичною погодою',
+          'Зручний автомобільний доступ із Ponta do Pargo; оглядова точка розташована поруч із маяком',
+        ],
+      },
+      practicalTip: {
+        en: 'The clifftop is exposed to strong wind and weather can change quickly, so bring a warm layer even on a sunny day. Stay behind barriers and well away from cliff edges. Visit late in the afternoon for softer light, but allow time to return before dark because the west coast is a long drive from Funchal.',
+        uk: 'Вершина скелі відкрита для сильного вітру, а погода може швидко змінюватися, тому навіть у сонячний день візьміть теплий верхній шар одягу. Не заходьте за огородження та не наближайтеся до країв скель. Для м’якшого світла приїжджайте наприкінці дня, але залиште час на повернення до темряви: західне узбережжя розташоване далеко від Funchal.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {
