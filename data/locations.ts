@@ -1104,6 +1104,66 @@ export const locations: Location[] = [
       },
     },
   },
+  {
+    slug: 'pr9-levada-do-caldeirao-verde',
+    name: {
+      en: 'PR9 Levada do Caldeirão Verde',
+      uk: 'PR9 Левада Caldeirão Verde',
+    },
+    area: {
+      en: 'Queimadas, Santana',
+      uk: 'Queimadas, Santana',
+    },
+    category: {
+      en: 'Levada walk',
+      uk: 'Прогулянка левадою',
+    },
+    tags: ['Levada walks', 'Hiking'],
+    summary: {
+      en: 'A long, spectacular levada walk from Queimadas through Laurissilva forest, waterfalls and tunnels to Caldeirão Verde.',
+      uk: 'Довгий і вражаючий маршрут левадою з Queimadas через лавровий ліс, водоспади й тунелі до Caldeirão Verde.',
+    },
+    image: '/images/explore/pr9.jpg',
+    imageAlt: {
+      en: 'Levada path and traditional Queimadas house on PR9 Levada do Caldeirão Verde, Madeira',
+      uk: 'Стежка левадою та традиційний будинок у Queimadas на маршруті PR9 Levada do Caldeirão Verde, Мадейра',
+    },
+    mapQuery: 'PR9 Levada do Caldeirão Verde Queimadas Madeira',
+    article: {
+      intro: {
+        en: 'PR9 – Levada do Caldeirão Verde is one of Madeira’s classic levada walks. Starting in the Queimadas Forest Park near Santana, the trail follows a narrow irrigation channel through lush Laurissilva forest, across high valleys and through dark tunnels before reaching the waterfall-filled amphitheatre of Caldeirão Verde.',
+        uk: 'PR9 – Levada do Caldeirão Verde — один із класичних маршрутів левадами на Мадейрі. Стежка починається в лісовому парку Queimadas біля Santana, веде вузьким зрошувальним каналом через пишний лавровий ліс Laurissilva, високі долини й темні тунелі та завершується біля водоспадного амфітеатру Caldeirão Verde.',
+      },
+      history: {
+        en: 'Like Madeira’s other levadas, this route follows part of the island’s historic water-management network. Levada channels were built to carry water from the wetter mountains to farms and settlements in drier areas. The path became a walking route because maintenance workers needed access along the channel. Today PR9 gives visitors a close view of the Laurissilva forest, a UNESCO World Heritage landscape, while showing the difficult engineering required to bring mountain water across steep terrain. The official PR9 route is 8.7 km each way from Queimadas, with the option to continue between Caldeirão Verde and Caldeirão do Inferno only when that section is officially open.',
+        uk: 'Як і інші левади Мадейри, цей маршрут проходить уздовж частини історичної системи управління водою острова. Канали будували, щоб переносити воду з вологіших гір до ферм і поселень у сухіших районах. Стежка стала пішим маршрутом тому, що працівникам був потрібен доступ для обслуговування каналу. Сьогодні PR9 дає можливість побачити ліс Laurissilva — ландшафт Світової спадщини UNESCO — і водночас відчути складність інженерних робіт, необхідних для подачі гірської води через крутий рельєф. Офіційний маршрут PR9 має 8,7 км в один бік від Queimadas; продовжувати шлях між Caldeirão Verde та Caldeirão do Inferno можна лише тоді, коли ця ділянка офіційно відкрита.',
+      },
+      highlights: {
+        en: [
+          'Official PR9 route: 8.7 km each way, starting at Queimadas Forest Park near Santana',
+          'A moderate full-day walk through Madeira’s Laurissilva Forest, a UNESCO World Heritage landscape',
+          'The traditional thatched-roof Casa de Abrigo das Queimadas near the start of the route',
+          'Four dark tunnels on the way to Caldeirão Verde, where a torch or headlamp is essential',
+          'Narrow levada paths, waterfalls, green valleys and views into the São Jorge area',
+          'Caldeirão Verde: a dramatic waterfall and lagoon enclosed by high, moss-covered cliffs',
+          'A possible continuation towards Caldeirão do Inferno, subject to the official trail status',
+        ],
+        uk: [
+          'Офіційний маршрут PR9: 8,7 км в один бік, початок у лісовому парку Queimadas біля Santana',
+          'Маршрут середньої складності на цілий день через Laurissilva Forest — ландшафт Світової спадщини UNESCO',
+          'Традиційний будинок Casa de Abrigo das Queimadas із солом’яним дахом біля початку маршруту',
+          'Чотири темні тунелі на шляху до Caldeirão Verde, тому ліхтарик або налобний ліхтар обов’язкові',
+          'Вузькі стежки вздовж левади, водоспади, зелені долини та види в напрямку São Jorge',
+          'Caldeirão Verde: вражаючий водоспад і лагуна, оточені високими вкритими мохом скелями',
+          'Можливе продовження до Caldeirão do Inferno — лише відповідно до офіційного статусу стежки',
+        ],
+      },
+      practicalTip: {
+        en: 'Check the official PR9 status before travelling: rain, rockfall or maintenance can close sections of the route. Take a torch or headlamp for the tunnels, shoes with good grip, waterproof layers, water and food. The walk is long despite the gentle levada gradient, so start early and do not enter any closed section, including the continuation towards Caldeirão do Inferno.',
+        uk: 'Перед поїздкою перевірте офіційний статус PR9: дощ, каменепади або технічні роботи можуть закривати частини маршруту. Для тунелів візьміть ліхтарик або налобний ліхтар, взуття з хорошим зчепленням, водонепроникний одяг, воду та їжу. Попри плавний нахил левади, маршрут довгий, тому вирушайте рано й не заходьте на закриті ділянки, зокрема на продовження в бік Caldeirão do Inferno.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {
