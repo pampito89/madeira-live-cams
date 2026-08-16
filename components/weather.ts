@@ -1,4 +1,3 @@
-
 export type WeatherSnapshot = {
   temperature?: number;
   apparentTemperature?: number;
@@ -8,24 +7,44 @@ export type WeatherSnapshot = {
   weatherCode?: number;
 };
 
-export async function fetchWeatherSnapshot(lat: number, lon: number): Promise<WeatherSnapshot | null> {
+export async function fetchWeatherSnapshot(
+  lat: number,
+  lon: number,
+): Promise<WeatherSnapshot | null> {
   try {
     const params = new URLSearchParams({
       latitude: lat.toString(),
       longitude: lon.toString(),
-      current_weather: 'true',
+      current:
+        'temperature_2m,apparent_temperature,wind_speed_10m,cloud_cover,precipitation,weather_code',
+      wind_speed_unit: 'kmh',
+      timezone: 'auto',
     });
-    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data.current_weather) return null;
-    const cw = data.current_weather;
+
+    const response = await fetch(
+      `https://api.open-meteo.com/v1/forecast?${params.toString()}`,
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    const current = data.current;
+
+    if (!current) {
+      return null;
+    }
+
     return {
-      temperature: cw.temperature,
-      windSpeed: cw.windspeed,
-      weatherCode: cw.weathercode,
+      temperature: current.temperature_2m,
+      apparentTemperature: current.apparent_temperature,
+      windSpeed: current.wind_speed_10m,
+      cloudCover: current.cloud_cover,
+      precipitation: current.precipitation,
+      weatherCode: current.weather_code,
     };
-  } catch (e) {
+  } catch {
     return null;
   }
 }

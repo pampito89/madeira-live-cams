@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/ejxHjW1oQW6Xda-iGAKYS/_buildManifest.js",
-    "static/ejxHjW1oQW6Xda-iGAKYS/_ssgManifest.js"
+    "static/jA_moqp8iot1PFDWh6iHi/_buildManifest.js",
+    "static/jA_moqp8iot1PFDWh6iHi/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -22,7 +22,7 @@
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
       "static/chunks/framework-2c16ac744b6cdea6.js",
       "static/chunks/main-dee1b07a6bc2efe8.js",
-      "static/css/8d352b52c4d062ac.css",
+      "static/css/f49c3f9ca3d38a01.css",
       "static/chunks/pages/_app-9d5a26df7938526f.js"
     ],
     "/_error": [
@@ -74,6 +74,14 @@
       "static/chunks/664-9a73485d4c9697a2.js",
       "static/chunks/862-78ebee5205e75b2e.js",
       "static/chunks/pages/parties-49f8fffab59fd96e.js"
+    ],
+    "/privacy": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-2c16ac744b6cdea6.js",
+      "static/chunks/main-dee1b07a6bc2efe8.js",
+      "static/chunks/664-9a73485d4c9697a2.js",
+      "static/chunks/862-78ebee5205e75b2e.js",
+      "static/chunks/pages/privacy-e8737b39dea32535.js"
     ],
     "/weather-guide": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
