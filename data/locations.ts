@@ -144,7 +144,7 @@ export const locations: Location[] = [
       en: 'Viewpoint',
       uk: 'Оглядовий майданчик',
     },
-    tags: ['Viewpoints'],
+    tags: ['Viewpoints', 'Lab Travel'],
     summary: {
       en: 'A clifftop viewpoint above Garajau with wide Atlantic views and the Cristo Rei statue.',
       uk: 'Оглядовий майданчик над Garajau з широкими видами на Атлантику та статуєю Cristo Rei.',
@@ -202,7 +202,7 @@ export const locations: Location[] = [
       en: 'Garden & culture',
       uk: 'Сад і культура',
     },
-    tags: ['City & culture'],
+    tags: ['City & culture', 'Lab Travel'],
     summary: {
       en: 'A hillside garden above Funchal where tropical plants, water features, Portuguese tiles and art collections meet.',
       uk: 'Сад на схилі над Funchal, де поєднуються тропічні рослини, водойми, португальські кахлі та мистецькі колекції.',
@@ -262,7 +262,7 @@ export const locations: Location[] = [
       en: 'City',
       uk: 'Місто',
     },
-    tags: ['City & culture'],
+    tags: ['City & culture', 'Lab Travel'],
     summary: {
       en: 'Madeira’s capital, with a harbour, old town, restaurants, museums and coastal promenades.',
       uk: 'Столиця Мадейри з гаванню, старим містом, ресторанами, музеями та прибережними набережними.',
@@ -322,7 +322,7 @@ export const locations: Location[] = [
       en: 'Market',
       uk: 'Ринок',
     },
-    tags: ['City & culture'],
+    tags: ['City & culture', 'Lab Travel'],
     summary: {
       en: 'Funchal’s traditional market for fruit, flowers, local produce and fresh fish.',
       uk: 'Традиційний ринок Funchal з фруктами, квітами, місцевими продуктами та свіжою рибою.',
@@ -382,7 +382,7 @@ export const locations: Location[] = [
       en: 'Sunrise & hiking',
       uk: 'Світанок і хайкінг',
     },
-    tags: ['Hiking', 'Viewpoints'],
+    tags: ['Hiking', 'Viewpoints', 'Lab Travel'],
     summary: {
       en: 'A high mountain viewpoint popular for sunrise, cloud inversions and the route towards Pico Ruivo.',
       uk: 'Високогірний оглядовий майданчик, популярний для зустрічі світанку, спостереження за хмарами та маршрутів у бік Pico Ruivo.',
@@ -506,7 +506,7 @@ export const locations: Location[] = [
       en: 'Coast',
       uk: 'Узбережжя',
     },
-    tags: ['Beaches'],
+    tags: ['Beaches', 'Lab Travel'],
     summary: {
       en: 'A quiet coastal estate below towering cliffs, reached by cable car or boat.',
       uk: 'Тихий прибережний маєток під високими скелями, куди можна дістатися канатною дорогою або човном.',
@@ -568,7 +568,7 @@ export const locations: Location[] = [
       en: 'Viewpoint',
       uk: 'Оглядовий майданчик',
     },
-    tags: ['Viewpoints'],
+    tags: ['Viewpoints', 'Lab Travel'],
     summary: {
       en: 'A glass-floored platform above the south coast with views over cliffs, ocean and farmland.',
       uk: 'Платформа зі скляною підлогою над південним узбережжям із видами на скелі, океан і сільськогосподарські тераси.',
@@ -620,7 +620,7 @@ export const locations: Location[] = [
       en: 'Levada walk',
       uk: 'Прогулянка левадою',
     },
-    tags: ['Levada walks', 'Hiking'],
+    tags: ['Levada walks', 'Hiking', 'Lab Travel'],
     summary: {
       en: 'A scenic levada walk through valleys, tunnels, waterfalls and cultivated terraces.',
       uk: 'Мальовнича прогулянка левадами через долини, тунелі, водоспади та оброблені тераси.',
@@ -682,7 +682,7 @@ export const locations: Location[] = [
       en: 'Beach',
       uk: 'Пляж',
     },
-    tags: ['Beaches'],
+    tags: ['Beaches', 'Lab Travel'],
     summary: {
       en: 'A sheltered sandy beach with calmer water, cafés and a marina nearby.',
       uk: 'Захищений піщаний пляж зі спокійнішою водою, кафе та марина поруч.',
@@ -744,7 +744,7 @@ export const locations: Location[] = [
       en: 'Hiking',
       uk: 'Хайкінг',
     },
-    tags: ['Hiking'],
+    tags: ['Hiking', 'Lab Travel'],
     summary: {
       en: 'A coastal trail across Madeira’s dry eastern peninsula with dramatic cliffs and ocean views.',
       uk: 'Прибережна стежка сухим східним півостровом Мадейри з вражаючими скелями та видами на океан.',
@@ -808,7 +808,7 @@ export const locations: Location[] = [
       en: 'Beach',
       uk: 'Пляж',
     },
-    tags: ['Beaches'],
+    tags: ['Beaches', 'Lab Travel'],
     summary: {
       en: 'A small natural beach on Madeira’s east coast, close to the São Lourenço peninsula.',
       uk: 'Невеликий природний пляж на східному узбережжі Мадейри, неподалік від півострова Сан-Лоренсу.',
@@ -870,7 +870,7 @@ export const locations: Location[] = [
       en: 'Nature',
       uk: 'Природа',
     },
-    tags: ['Hiking'],
+    tags: ['Hiking', 'Lab Travel'],
     summary: {
       en: 'An ancient laurel forest known for its twisted trees, mist and atmospheric walks.',
       uk: 'Стародавній лавровий ліс, відомий своїми покрученими деревами, туманами та атмосферними прогулянками.',
@@ -932,7 +932,7 @@ export const locations: Location[] = [
       en: 'Beach',
       uk: 'Пляж',
     },
-    tags: ['Beaches'],
+    tags: ['Beaches', 'Lab Travel'],
     summary: {
       en: 'A black-sand beach on the north coast, surrounded by green mountains and waterfalls.',
       uk: 'Пляж із чорним піском на північному узбережжі, оточений зеленими горами та водоспадами.',
@@ -994,7 +994,7 @@ export const locations: Location[] = [
       en: 'Natural pools',
       uk: 'Природні басейни',
     },
-    tags: ['Beaches'],
+    tags: ['Beaches', 'Lab Travel'],
     summary: {
       en: 'Volcanic rock pools continuously refreshed by Atlantic seawater on Madeira’s north-west coast.',
       uk: 'Басейни серед вулканічних скель на північно-західному узбережжі Мадейри, які постійно оновлюються водою Атлантики.',
