@@ -20,5 +20,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
   'praia-do-porto-do-seixal': { latitude: 32.8219, longitude: -17.1098 },
   'porto-moniz-natural-pools': { latitude: 32.8662, longitude: -17.1664 },  'ponta-do-pargo-lighthouse': { latitude: 32.814138, longitude: -17.262885 },
   'pr9-levada-do-caldeirao-verde': { latitude: 32.7804, longitude: -16.9056 },
+  'pico-grande': { latitude: 32.7396, longitude: -16.9689 },
 
 };

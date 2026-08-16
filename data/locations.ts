@@ -1164,6 +1164,66 @@ export const locations: Location[] = [
       },
     },
   },
+  {
+    slug: 'pico-grande',
+    name: {
+      en: 'Pico Grande',
+      uk: 'Pico Grande',
+    },
+    area: {
+      en: 'Central mountains, Câmara de Lobos',
+      uk: 'Центральні гори, Câmara de Lobos',
+    },
+    category: {
+      en: 'Hiking',
+      uk: 'Хайкінг',
+    },
+    tags: ['Hiking'],
+    summary: {
+      en: 'A challenging mountain hike to a dramatic 1,654-metre summit with wide views over Madeira’s central massif and Curral das Freiras.',
+      uk: 'Складний гірський маршрут до ефектної вершини заввишки 1 654 метри з широкими видами на центральний масив Мадейри та Curral das Freiras.',
+    },
+    image: '/images/explore/pico-grande.jpg',
+    imageAlt: {
+      en: 'Rocky summit landscape of Pico Grande in Madeira',
+      uk: 'Скелястий гірський пейзаж Pico Grande на Мадейрі',
+    },
+    mapQuery: 'Pico Grande Madeira',
+    article: {
+      intro: {
+        en: 'Pico Grande is one of Madeira’s most striking central-mountain summits. Rising to about 1,654 metres, it stands above the deep valleys around Curral das Freiras and offers a rugged high-mountain experience with volcanic rock, steep slopes and broad views across the island’s interior.',
+        uk: 'Pico Grande — одна з найвиразніших вершин центральних гір Мадейри. Вона піднімається приблизно на 1 654 метри над глибокими долинами навколо Curral das Freiras і пропонує справжній високогірний досвід: вулканічні скелі, круті схили та широкі види на внутрішню частину острова.',
+      },
+      history: {
+        en: 'Pico Grande is reached by mountain paths that connect with the historic Caminho Real da Encumeada, known as PR12. These old mountain routes were used long before modern roads provided easier links between communities. Today, hikers commonly approach the summit from the Boca da Corrida area, following part of PR12 before taking the steeper path towards Pico Grande. The mountain sits within Madeira’s central massif, where volcanic geology, steep relief and changing weather have shaped both the landscape and the character of the walk.',
+        uk: 'До Pico Grande ведуть гірські стежки, пов’язані з історичним Caminho Real da Encumeada, відомим як PR12. Ці старі гірські шляхи використовували задовго до появи сучасних доріг, які полегшили сполучення між поселеннями. Сьогодні туристи часто підходять до вершини з району Boca da Corrida: спочатку йдуть частиною PR12, а потім повертають на крутішу стежку до Pico Grande. Гора лежить у центральному масиві Мадейри, де вулканічна геологія, різкий рельєф і мінлива погода сформували і ландшафт, і характер маршруту.',
+      },
+      highlights: {
+        en: [
+          'A 1,654-metre summit in Madeira’s central mountain massif',
+          'A popular approach from Boca da Corrida using part of the PR12 Caminho Real da Encumeada',
+          'Views over Curral das Freiras, surrounding valleys and the rugged central ridges',
+          'A final steep, rocky ascent that makes the summit feel more adventurous than many levada walks',
+          'Volcanic rock formations, exposed slopes and changing mountain light',
+          'A rewarding destination for experienced hikers with good fitness and mountain confidence',
+          'A dramatic place for clear-day panoramas, sunset light and mountain photography',
+        ],
+        uk: [
+          'Вершина заввишки 1 654 метри в центральному гірському масиві Мадейри',
+          'Популярний підхід із Boca da Corrida частиною PR12 Caminho Real da Encumeada',
+          'Види на Curral das Freiras, навколишні долини та суворі центральні хребти',
+          'Крутий і скелястий фінальний підйом, який робить вершину більш пригодницькою, ніж більшість прогулянок левадами',
+          'Вулканічні скельні утворення, відкриті схили та мінливе гірське світло',
+          'Вартий маршрут для досвідчених туристів із доброю фізичною підготовкою та впевненістю в горах',
+          'Ефектне місце для панорам у ясний день, світла на заході сонця та гірської фотографії',
+        ],
+      },
+      practicalTip: {
+        en: 'Check the official status of PR12 and the mountain forecast before setting out, as access can change after rain, rockfall or maintenance. Use hiking boots with good grip, carry water, food, warm and waterproof layers, and start early. The final climb is steep and exposed in places, so do not attempt it in poor visibility, strong wind or without sufficient mountain experience.',
+        uk: 'Перед виходом перевірте офіційний статус PR12 і гірський прогноз, адже доступ може змінюватися після дощу, каменепадів або технічних робіт. Взувайте трекінгове взуття з хорошим зчепленням, беріть воду, їжу, теплий і водонепроникний одяг та вирушайте рано. Фінальний підйом крутий і подекуди відкритий, тому не плануйте його за поганої видимості, сильного вітру або без достатнього гірського досвіду.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {
