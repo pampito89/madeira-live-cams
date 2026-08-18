@@ -66,6 +66,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return router.pathname === href || router.pathname.startsWith(`${href}/`);
   };
 
+  const privacyLabel =
+    locale === 'uk' ? 'Політика конфіденційності' : 'Privacy Policy';
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -143,7 +146,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           }`}
         >
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-            <p className="text-sm font-semibold text-navy">Madeira Live Cams</p>
+            <p className="text-sm font-semibold text-navy">
+              Madeira Live Cams
+            </p>
 
             <button
               type="button"
@@ -231,16 +236,32 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <main className="flex-1 bg-panel">{children}</main>
 
       <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 text-xs text-slate-500">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs text-slate-500">
           <p>
-            Webcam streams belong to their respective owners (e.g., Portal
-            NetMadeira, Madeira-Web). Madeira Live Cams does not host, record,
-            or redistribute streams.
+            {locale === 'uk'
+              ? 'Трансляції вебкамер належать їхнім відповідним власникам, зокрема Portal NetMadeira та Madeira-Web. Madeira Live Cams не розміщує, не записує і не поширює трансляції.'
+              : 'Webcam streams belong to their respective owners, including Portal NetMadeira and Madeira-Web. Madeira Live Cams does not host, record, or redistribute streams.'}
           </p>
 
-          <p>Weather data provided by Open-Meteo where available.</p>
+          <p>
+            {locale === 'uk'
+              ? 'Дані про погоду надаються Open-Meteo, коли вони доступні.'
+              : 'Weather data provided by Open-Meteo where available.'}
+          </p>
 
-          <p>© {new Date().getFullYear()} Madeira Live Cams.</p>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>© {new Date().getFullYear()} Madeira Live Cams.</span>
+
+            <span aria-hidden="true">·</span>
+
+            <Link
+              href="/privacy"
+              locale={locale}
+              className="font-medium text-ocean transition hover:underline"
+            >
+              {privacyLabel}
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
