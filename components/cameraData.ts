@@ -202,7 +202,8 @@ export const cameras: Camera[] = [
     category: ['Mountains'],
     latitude: 32.713,
     longitude: -16.949,
-    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/eira-do-serrado',
+    sourceUrl:
+      'https://www.netmadeira.com/webcams-madeira/eira-do-serrado',
   },
   {
     id: 'ponta-do-sol',
@@ -233,7 +234,8 @@ export const cameras: Camera[] = [
     category: ['Mountains'],
     latitude: 32.773,
     longitude: -16.93,
-    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/achada-do-teixeira',
+    sourceUrl:
+      'https://www.netmadeira.com/webcams-madeira/achada-do-teixeira',
   },
   {
     id: 'camara-de-lobos',
@@ -248,7 +250,40 @@ export const cameras: Camera[] = [
     category: ['Towns', 'South Coast'],
     latitude: 32.633,
     longitude: -16.972,
-    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
+    sourceUrl:
+      'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
     youtubeId: 'dlyn0fJBBWk',
+  },
+  {
+    id: 'ponta-delgada',
+    name: {
+      en: 'Ponta Delgada',
+      uk: 'Понта-Делгада',
+    },
+    region: {
+      en: 'North Coast',
+      uk: 'Північне узбережжя',
+    },
+    category: ['Towns', 'North Coast', 'Beaches'],
+    latitude: 32.828,
+    longitude: -16.987,
+    sourceUrl:
+      'https://www.netmadeira.com/webcams-madeira/ponta-delgada',
+  },
+  {
+    id: 'cristo-rei',
+    name: {
+      en: 'Cristo Rei, Garajau',
+      uk: 'Крішту-Рей, Гаражау',
+    },
+    region: {
+      en: 'East Coast',
+      uk: 'Східне узбережжя',
+    },
+    category: ['East Coast', 'Beaches'],
+    latitude: 32.638,
+    longitude: -16.851,
+    sourceUrl:
+      'https://worldcam.eu/webcams/europe/portugal/4920-garajau-cristo-rei',
   },
 ];
