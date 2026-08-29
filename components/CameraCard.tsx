@@ -28,7 +28,7 @@ const CameraCard: React.FC<Props> = ({ camera }) => {
         ) : (
           <div className="relative flex h-full flex-col items-center justify-center gap-3 overflow-hidden p-4 text-center">
             <img
-              src="/images/cameras/madeira-camera-2.jpg"
+              src="/images/cameras/madeira-camera-2.png"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover"
