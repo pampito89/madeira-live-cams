@@ -302,4 +302,20 @@ export const cameras: Camera[] = [
     sourceUrl: 'https://www.youtube.com/watch?v=a9DiMHIpnWA',
     youtubeId: 'a9DiMHIpnWA',
   },
+  {
+    id: 'machico-beach',
+    name: {
+      en: 'Machico Beach',
+      uk: 'Пляж Machico',
+    },
+    region: {
+      en: 'East Coast',
+      uk: 'Східне узбережжя',
+    },
+    category: ['Beaches', 'East Coast'],
+    latitude: 32.7224,
+    longitude: -16.7648,
+    sourceUrl: 'https://www.youtube.com/watch?v=MhOuCDXuP_0',
+    youtubeId: 'MhOuCDXuP_0',
+  },
 ];
