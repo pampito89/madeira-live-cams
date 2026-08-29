@@ -139,7 +139,7 @@ export const cameras: Camera[] = [
     latitude: 32.738,
     longitude: -16.737,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/canical',
-    youtubeId: 'eTzl0qcPTF8',
+    youtubeId: 'H4ODWatYyb8',
   },
   {
     id: 'seixal',
@@ -171,7 +171,7 @@ export const cameras: Camera[] = [
     latitude: 32.867,
     longitude: -17.166,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/porto-moniz',
-    youtubeId: 'K07hd6RP8cw',
+    youtubeId: 'BU7RSKpFCPA',
   },
   {
     id: 'funchal-pontinha',
@@ -252,7 +252,7 @@ export const cameras: Camera[] = [
     longitude: -16.972,
     sourceUrl:
       'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
-    youtubeId: 'dlyn0fJBBWk',
+    youtubeId: 'fnAFU7au4VQ',
   },
   {
     id: 'ponta-delgada',
