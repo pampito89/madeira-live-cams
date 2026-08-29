@@ -171,7 +171,7 @@ export const cameras: Camera[] = [
     latitude: 32.867,
     longitude: -17.166,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/porto-moniz',
-    youtubeId: 'BU7RSKpFCPA',
+    youtubeId: 'QcMxxAIo8CI',
   },
   {
     id: 'funchal-pontinha',
