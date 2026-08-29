@@ -47,6 +47,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       icon: '☀',
     },
     {
+      href: '/parties',
+      label: locale === 'uk' ? 'Вечірки' : 'Parties',
+      icon: '🎉',
+    },
+    {
       href: '/about',
       label: messages.nav.about,
       icon: 'ⓘ',
