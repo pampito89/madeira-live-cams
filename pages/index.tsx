@@ -15,11 +15,10 @@ const cameraFilters: Array<{
   { value: 'Mountains', en: 'Mountains', uk: 'Гори' },
   { value: 'Beaches', en: 'Beaches', uk: 'Пляжі' },
   { value: 'Towns', en: 'Towns', uk: 'Міста' },
-  { value: 'North Coast', en: 'North Coast', uk: 'Північне узбережжя' },
-  { value: 'South Coast', en: 'South Coast', uk: 'Південне узбережжя' },
-  { value: 'East Coast', en: 'East Coast', uk: 'Східне узбережжя' },
-  { value: 'West Coast', en: 'West Coast', uk: 'Західне узбережжя' },
-  { value: 'Sunrise spots', en: 'Sunrise spots', uk: 'Місця для світанку' },
+  { value: 'North Coast', en: 'North', uk: 'Північ' },
+  { value: 'South Coast', en: 'South', uk: 'Південь' },
+  { value: 'East Coast', en: 'East', uk: 'Схід' },
+  { value: 'Sunrise spots', en: 'Sunrise', uk: 'Схід сонця' },
 ];
 
 const HomePage: React.FC = () => {

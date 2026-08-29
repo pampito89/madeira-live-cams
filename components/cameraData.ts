@@ -53,24 +53,24 @@ const categoryLabels: Record<CameraCategory, LocalizedText> = {
     uk: 'Міста',
   },
   'North Coast': {
-    en: 'North Coast',
-    uk: 'Північне узбережжя',
+    en: 'North',
+    uk: 'Північ',
   },
   'South Coast': {
-    en: 'South Coast',
-    uk: 'Південне узбережжя',
+    en: 'South',
+    uk: 'Південь',
   },
   'East Coast': {
-    en: 'East Coast',
-    uk: 'Східне узбережжя',
+    en: 'East',
+    uk: 'Схід',
   },
   'West Coast': {
-    en: 'West Coast',
-    uk: 'Західне узбережжя',
+    en: 'West',
+    uk: 'Захід',
   },
   'Sunrise spots': {
-    en: 'Sunrise spots',
-    uk: 'Місця для світанку',
+    en: 'Sunrise',
+    uk: 'Схід сонця',
   },
 };
 
