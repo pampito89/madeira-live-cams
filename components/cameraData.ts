@@ -286,4 +286,20 @@ export const cameras: Camera[] = [
     sourceUrl:
       'https://worldcam.eu/webcams/europe/portugal/4920-garajau-cristo-rei',
   },
+  {
+    id: 'seixal-beach',
+    name: {
+      en: 'Seixal Beach',
+      uk: 'Пляж Seixal',
+    },
+    region: {
+      en: 'North Coast',
+      uk: 'Північне узбережжя',
+    },
+    category: ['Beaches', 'North Coast'],
+    latitude: 32.821,
+    longitude: -17.107,
+    sourceUrl: 'https://www.youtube.com/watch?v=a9DiMHIpnWA',
+    youtubeId: 'a9DiMHIpnWA',
+  },
 ];
