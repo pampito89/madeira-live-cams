@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Layout from '../components/Layout';
 import {
   cameras,
-  getLocalizedCamera,
+  type CameraCategory,
 } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 
+const cameraFilters: Array<{
+  value: CameraCategory;
+  en: string;
+  uk: string;
+}> = [
+  { value: 'Mountains', en: 'Mountains', uk: 'Гори' },
+  { value: 'Beaches', en: 'Beaches', uk: 'Пляжі' },
+  { value: 'Towns', en: 'Towns', uk: 'Міста' },
+  { value: 'North Coast', en: 'North Coast', uk: 'Північне узбережжя' },
+  { value: 'South Coast', en: 'South Coast', uk: 'Південне узбережжя' },
+  { value: 'East Coast', en: 'East Coast', uk: 'Східне узбережжя' },
+  { value: 'West Coast', en: 'West Coast', uk: 'Західне узбережжя' },
+  { value: 'Sunrise spots', en: 'Sunrise spots', uk: 'Місця для світанку' },
+];
+
 const HomePage: React.FC = () => {
   const { locale, messages } = useMessages();
-  const [query] = useState('');
+  const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>(
+    'All',
+  );
   const [flightNumber, setFlightNumber] = useState('');
 
   const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +37,9 @@ const HomePage: React.FC = () => {
       .replace(/\s+/g, '')
       .toUpperCase();
 
-    if (!cleanFlightNumber) return;
+    if (!cleanFlightNumber) {
+      return;
+    }
 
     window.open(
       `https://www.flightradar24.com/${cleanFlightNumber.toLowerCase()}`,
@@ -29,18 +48,13 @@ const HomePage: React.FC = () => {
     );
   };
 
-  const filtered = cameras.filter((camera) => {
-  const displayCamera = getLocalizedCamera(camera, locale);
-  const searchQuery = query.toLowerCase();
+  const filtered = useMemo(() => {
+    if (activeFilter === 'All') {
+      return cameras;
+    }
 
-  return (
-    displayCamera.name.toLowerCase().includes(searchQuery) ||
-    displayCamera.region.toLowerCase().includes(searchQuery) ||
-    displayCamera.category.some((category) =>
-      category.toLowerCase().includes(searchQuery),
-    )
-  );
-});
+    return cameras.filter((camera) => camera.category.includes(activeFilter));
+  }, [activeFilter]);
 
   return (
     <Layout>
@@ -111,9 +125,49 @@ const HomePage: React.FC = () => {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="text-lg font-semibold text-navy">
-            {messages.home.allCameras}
-          </h2>
+          <div>
+            <h2 className="text-lg font-semibold text-navy">
+              {messages.home.allCameras}
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              {locale === 'uk'
+                ? `Показано ${filtered.length} з ${cameras.length} камер`
+                : `Showing ${filtered.length} of ${cameras.length} cameras`}
+            </p>
+          </div>
+
+          <div
+            className="flex gap-2 overflow-x-auto pb-2"
+            aria-label={locale === 'uk' ? 'Фільтри камер' : 'Camera filters'}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveFilter('All')}
+              className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
+                activeFilter === 'All'
+                  ? 'border-ocean bg-ocean text-white'
+                  : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
+              }`}
+            >
+              {locale === 'uk' ? 'Усі' : 'All'}
+            </button>
+
+            {cameraFilters.map((filter) => (
+              <button
+                key={filter.value}
+                type="button"
+                onClick={() => setActiveFilter(filter.value)}
+                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
+                  activeFilter === filter.value
+                    ? 'border-ocean bg-ocean text-white'
+                    : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
+                }`}
+              >
+                {filter[locale]}
+              </button>
+            ))}
+          </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             {filtered.map((camera) => (
