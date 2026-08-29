@@ -264,7 +264,7 @@ export const cameras: Camera[] = [
       en: 'North Coast',
       uk: 'Північне узбережжя',
     },
-    category: ['Towns', 'North Coast', 'Beaches'],
+    category: ['Towns', 'North Coast'],
     latitude: 32.828,
     longitude: -16.987,
     sourceUrl:
@@ -280,7 +280,7 @@ export const cameras: Camera[] = [
       en: 'East Coast',
       uk: 'Східне узбережжя',
     },
-    category: ['East Coast', 'Beaches'],
+    category: ['East Coast'],
     latitude: 32.638,
     longitude: -16.851,
     sourceUrl:
