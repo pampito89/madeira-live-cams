@@ -42,4 +42,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
   'pr5-vereda-das-funduras': { latitude: 32.7287, longitude: -16.8336 },
   'pr17-pinaculo-folhadal': { latitude: 32.7466, longitude: -17.0551 },
   'levada-do-furado': { latitude: 32.7408, longitude: -16.8767 },
+  'santana-typical-houses': { latitude: 32.8054, longitude: -16.8828 },
+  'anjos-waterfall': { latitude: 32.6876, longitude: -17.1156 },
 };

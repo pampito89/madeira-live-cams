@@ -1624,6 +1624,70 @@ export const locations: Location[] = [
       practicalTip: { en: 'This is a long one-way-style walk unless transport is arranged. Check access, carry a torch, water and a waterproof layer.', uk: 'Це довгий маршрут в один бік, якщо не організувати транспорт. Перевірте доступ, візьміть ліхтарик, воду й водонепроникний одяг.' },
     },
   },
+  {
+    slug: 'santana-typical-houses',
+    name: { en: 'Traditional Santana Houses', uk: 'Традиційні будиночки Santana' },
+    area: { en: 'Santana, North Coast', uk: 'Santana, Північне узбережжя' },
+    category: { en: 'Culture & heritage', uk: 'Культура й спадщина' },
+    tags: ['City & culture', 'North coast', 'Lab Travel'],
+    summary: {
+      en: 'Madeira’s iconic triangular thatched houses in Santana, with colourful façades, gardens and local craft displays.',
+      uk: 'Знакові трикутні будиночки Мадейри із солом’яними дахами в Santana, з кольоровими фасадами, садами та місцевими ремісничими виробами.',
+    },
+    image: '/images/explore/santana-houses.jpg',
+    imageAlt: { en: 'Traditional triangular thatched houses in Santana, Madeira', uk: 'Традиційні трикутні будиночки з солом’яними дахами в Santana, Мадейра' },
+    mapQuery: 'Casas Típicas de Santana Madeira',
+    article: {
+      intro: {
+        en: 'The Traditional Santana Houses, known locally as Casas de Santana, are one of Madeira’s best-known cultural symbols. Their steep triangular shape, thick thatched roofs and colourful painted details make them an immediately recognisable part of the island’s heritage.',
+        uk: 'Традиційні будиночки Santana, відомі як Casas de Santana, — один із найвідоміших культурних символів Мадейри. Їхня крута трикутна форма, товсті солом’яні дахи та кольорові деталі фасадів роблять їх одразу впізнаваною частиною спадщини острова.',
+      },
+      history: {
+        en: 'These small rural houses were designed for Madeira’s wet north-coast climate. The steep roof helped rain run off quickly, while locally available wood and thatch provided practical shelter. The preserved and reconstructed houses in the Núcleo de Casas Típicas de Santana show how this traditional architecture looked and functioned.',
+        uk: 'Ці невеликі сільські будинки створили для вологого клімату північного узбережжя Мадейри. Крутий дах допомагав дощу швидко стікати, а доступні на місці дерево й солома забезпечували практичне укриття. Збережені та відтворені будиночки в Núcleo de Casas Típicas de Santana показують, як виглядала й функціонувала ця традиційна архітектура.',
+      },
+      highlights: {
+        en: ['One of Madeira’s best-known cultural landmarks', 'Triangular houses with steep thatched roofs', 'Núcleo de Casas Típicas de Santana in the town centre', 'Gardens, local products and Madeiran crafts nearby'],
+        uk: ['Одна з найвідоміших культурних пам’яток Мадейри', 'Трикутні будиночки з крутими солом’яними дахами', 'Núcleo de Casas Típicas de Santana у центрі містечка', 'Поруч сади, місцеві продукти та ремісничі вироби Мадейри'],
+      },
+      practicalTip: {
+        en: 'Visit during the day for the best photographs and combine the houses with Santana town, Queimadas or nearby north-coast viewpoints. Respect any restricted areas and houses used as shops or exhibitions.',
+        uk: 'Відвідуйте вдень для найкращих фотографій і поєднайте будиночки з Santana, Queimadas або близькими оглядовими майданчиками північного узбережжя. Поважайте обмежені зони та будинки, які використовують як магазини чи виставкові простори.',
+      },
+    },
+  },
+  {
+    slug: 'anjos-waterfall',
+    name: { en: 'Anjos Waterfall', uk: 'Водоспад Anjos' },
+    area: { en: 'Anjos, Ponta do Sol', uk: 'Anjos, Ponta do Sol' },
+    category: { en: 'Waterfall', uk: 'Водоспад' },
+    tags: ['Waterfalls', 'South coast'],
+    summary: {
+      en: 'A famous waterfall on Madeira’s old ER101 coastal road near Ponta do Sol. The site is officially closed and must not be entered.',
+      uk: 'Відомий водоспад на старій прибережній дорозі ER101 біля Ponta do Sol. Об’єкт офіційно закритий, і заходити на нього не можна.',
+    },
+    image: '/images/explore/anjos-waterfall.jpg',
+    imageAlt: { en: 'Anjos Waterfall beside the old coastal road in Madeira', uk: 'Водоспад Anjos біля старої прибережної дороги на Мадейрі' },
+    mapQuery: 'Cascata dos Anjos Ponta do Sol Madeira',
+    article: {
+      intro: {
+        en: 'Anjos Waterfall, also called Cascata dos Anjos, descends down a coastal cliff beside Madeira’s former ER101 road near Ponta do Sol. It became widely known through photographs and social media, but the road and waterfall area are officially closed for safety reasons.',
+        uk: 'Водоспад Anjos, також відомий як Cascata dos Anjos, спускається прибережною скелею поруч із колишньою дорогою ER101 біля Ponta do Sol. Він став широко відомим завдяки фотографіям і соціальним мережам, але дорога та зона водоспаду офіційно закриті з міркувань безпеки.',
+      },
+      history: {
+        en: 'The waterfall is part of Madeira’s steep south-coast landscape, where rainwater runs down volcanic cliffs towards the Atlantic. The old ER101 road once passed beneath the falling water, but it is exposed to landslides and the wet surface can be extremely slippery. Authorities have closed access because the area does not meet safe visiting conditions.',
+        uk: 'Водоспад є частиною крутого південного узбережжя Мадейри, де дощова вода стікає вулканічними скелями до Атлантики. Стара дорога ER101 колись проходила під потоком води, але вона вразлива до зсувів, а мокра поверхня може бути надзвичайно слизькою. Влада закрила доступ, оскільки місце не відповідає безпечним умовам для відвідування.',
+      },
+      highlights: {
+        en: ['A well-known south-west-coast waterfall near Ponta do Sol', 'Water descending down a volcanic cliff beside the former ER101 road', 'The location is officially closed because of landslide and slipping risks', 'View only from legal and safe public areas; never cross barriers'],
+        uk: ['Відомий водоспад на південно-західному узбережжі біля Ponta do Sol', 'Вода, що спускається вулканічною скелею поруч із колишньою дорогою ER101', 'Локація офіційно закрита через ризики зсувів і слизької поверхні', 'Дивіться лише з законних і безпечних публічних місць; ніколи не перетинайте огородження'],
+      },
+      practicalTip: {
+        en: 'Do not enter the waterfall road or cross signs, barriers or fencing. Check official local notices before travelling. This article is informational and does not recommend visiting the closed site.',
+        uk: 'Не заходьте на дорогу біля водоспаду та не перетинайте знаки, бар’єри чи огорожі. Перед поїздкою перевіряйте офіційні місцеві повідомлення. Ця стаття має інформаційний характер і не рекомендує відвідувати закриту локацію.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {
