@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +6,10 @@ import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
 import { locationCoordinates } from '../lib/locationWeather';
 import { useMessages } from '../lib/i18n/useMessages';
+import {
+  consumeLocationListViewForBackNavigation,
+  saveLocationListView,
+} from '../lib/locationListNavigationMemory';
 
 type CurrentWeather = {
   temperature: number;
@@ -101,47 +105,9 @@ function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
   }).format(date);
 }
 
-type LocationListView = {
-  activeFilter: string;
-  scrollY: number;
-};
-
-function getLocationListView(): LocationListView | null {
-  if (typeof window === 'undefined') return null;
-
-  const navigation = performance.getEntriesByType('navigation')[0] as
-    | PerformanceNavigationTiming
-    | undefined;
-
-  if (navigation?.type === 'reload') {
-    const { locationListView, ...historyState } = window.history.state ?? {};
-    window.history.replaceState(historyState, '', window.location.href);
-    return null;
-  }
-
-  const savedView = window.history.state?.locationListView;
-
-  if (!savedView || typeof savedView.activeFilter !== 'string' || typeof savedView.scrollY !== 'number') {
-    return null;
-  }
-
-  return savedView as LocationListView;
-}
-
-function saveLocationListView(activeFilter: string, scrollY: number) {
-  window.history.replaceState(
-    { ...(window.history.state ?? {}), locationListView: { activeFilter, scrollY } },
-    '',
-    window.location.href,
-  );
-}
-
 export default function CamerasPage() {
   const { locale, messages } = useMessages();
-  const initialLocationListView = useRef(getLocationListView());
-  const [activeFilter, setActiveFilter] = useState(
-    () => initialLocationListView.current?.activeFilter ?? 'All',
-  );
+  const [activeFilter, setActiveFilter] = useState('All');
   const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
 
   const handleFilterChange = (filter: string) => {
@@ -227,8 +193,11 @@ export default function CamerasPage() {
   }, []);
 
   useEffect(() => {
-    const savedView = initialLocationListView.current;
+    const savedView = consumeLocationListViewForBackNavigation();
+
     if (!savedView) return;
+
+    setActiveFilter(savedView.activeFilter);
 
     const timer = window.setTimeout(() => {
       window.scrollTo({ top: savedView.scrollY, behavior: 'auto' });

@@ -222,7 +222,7 @@ export default function LocationPage({ location }: LocationPageProps) {
           onClick={handleBack}
           className="inline-flex text-sm font-medium text-ocean hover:underline"
         >
-          {messages.location.back}
+          {locale === 'uk' ? 'Назад' : 'Back'}
         </button>
 
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
