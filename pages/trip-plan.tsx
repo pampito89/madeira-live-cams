@@ -263,7 +263,7 @@ export default function TripPlanPage() {
       if (stop.type === 'villa') {
         lines.push(
           `🏡 ${stop.arrivalTime}–${endTime} — ${selectedVilla.name}.`,
-          `https://madeiralivecams.com/stays/${selectedVilla.slug}`,
+          `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`,
           '',
         );
         return;
@@ -275,7 +275,7 @@ export default function TripPlanPage() {
         if (airport) {
           lines.push(
             `✈️ ${stop.arrivalTime}–${endTime} — ${airport.name}.`,
-            `https://madeiralivecams.com/explore/${airport.slug}`,
+            `https://madeiralivecams.com/${locale}/explore/${airport.slug}`,
             '',
           );
         }
@@ -287,7 +287,7 @@ export default function TripPlanPage() {
       if (!location) return;
 
       const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍';
-      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, `https://madeiralivecams.com/explore/${location.slug}`, '');
+      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, '');
     });
 
     if (endsAtAirport) {
@@ -299,7 +299,7 @@ export default function TripPlanPage() {
     } else {
       lines.push(
         `🏡 ${text.return} ${selectedVilla.name}.`,
-        `https://madeiralivecams.com/stays/${selectedVilla.slug}`,
+        `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`,
       );
     }
     return lines.join('\n');
