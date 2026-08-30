@@ -91,14 +91,7 @@ export default function LocationPage({ location }: LocationPageProps) {
 
   const handleBack = () => {
     if (router.query.returnTo === 'cameras') {
-      router.push({
-        pathname: '/cameras',
-        query: {
-          returnTo: 'cameras',
-          returnFilter: router.query.returnFilter,
-          returnScroll: router.query.returnScroll,
-        },
-      });
+      router.push('/cameras?restore=1');
       return;
     }
 

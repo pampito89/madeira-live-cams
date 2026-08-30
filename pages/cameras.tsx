@@ -118,13 +118,17 @@ export default function CamerasPage() {
   ) => {
     event.preventDefault();
 
+    window.sessionStorage.setItem(
+      'madeira-location-list-view',
+      JSON.stringify({
+        activeFilter,
+        scrollY: Math.round(window.scrollY),
+      }),
+    );
+
     router.push({
       pathname: "/explore/" + slug,
-      query: {
-        returnTo: 'cameras',
-        returnFilter: activeFilter,
-        returnScroll: Math.round(window.scrollY).toString(),
-      },
+      query: { returnTo: 'cameras' },
     });
   };
 
@@ -202,22 +206,46 @@ export default function CamerasPage() {
   }, []);
 
   useEffect(() => {
-    if (!router.isReady || router.query.returnTo !== 'cameras') return;
+    if (!router.isReady) return;
 
-    const filter = router.query.returnFilter;
-    const scroll = Number(router.query.returnScroll);
-
-    if (typeof filter === 'string') {
-      setActiveFilter(filter);
+    if (router.query.restore !== '1') {
+      window.sessionStorage.removeItem('madeira-location-list-view');
+      return;
     }
 
-    const timer = window.setTimeout(() => {
-      window.scrollTo({ top: Number.isFinite(scroll) ? scroll : 0, behavior: 'auto' });
-      router.replace('/cameras', undefined, { shallow: true, scroll: false });
-    }, 0);
+    const rawView = window.sessionStorage.getItem('madeira-location-list-view');
+    window.sessionStorage.removeItem('madeira-location-list-view');
 
-    return () => window.clearTimeout(timer);
-  }, [router.isReady, router.query.returnTo, router.query.returnFilter, router.query.returnScroll]);
+    if (!rawView) {
+      router.replace('/cameras', undefined, { shallow: true, scroll: false });
+      return;
+    }
+
+    try {
+      const savedView = JSON.parse(rawView) as {
+        activeFilter?: unknown;
+        scrollY?: unknown;
+      };
+
+      if (typeof savedView.activeFilter === 'string') {
+        setActiveFilter(savedView.activeFilter);
+      }
+
+      const scrollY =
+        typeof savedView.scrollY === 'number' && Number.isFinite(savedView.scrollY)
+          ? savedView.scrollY
+          : 0;
+
+      const timer = window.setTimeout(() => {
+        window.scrollTo({ top: scrollY, behavior: 'auto' });
+        router.replace('/cameras', undefined, { shallow: true, scroll: false });
+      }, 0);
+
+      return () => window.clearTimeout(timer);
+    } catch {
+      router.replace('/cameras', undefined, { shallow: true, scroll: false });
+    }
+  }, [router.isReady, router.query.restore]);
 
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
