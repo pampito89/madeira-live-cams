@@ -16,6 +16,29 @@ type PlanStop = {
 const villas = stays;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
 
+const standardLocationDurations: Record<string, number> = {
+  'pico-do-arieiro': 150,
+  'fanal-forest': 120,
+  'praia-do-porto-do-seixal': 120,
+  'machico-beach': 150,
+  'faja-dos-padres': 240,
+  'calheta-beach': 180,
+  'prainha-do-canical': 180,
+  'porto-moniz-natural-pools': 150,
+  'ribeira-da-janela': 30,
+  funchal: 90,
+  'mercado-dos-lavradores': 30,
+  'cristo-rei': 45,
+  'pico-do-facho': 30,
+  'cabo-girao-skywalk': 30,
+  'anjos-waterfall': 30,
+  'miradouro-do-guindaste': 30,
+  'levada-nova-levada-do-moinho': 150,
+  'monte-palace-tropical-garden': 120,
+  'santana-typical-houses': 15,
+  'ponta-de-sao-lourenco': 180,
+};
+
 function todayValue() {
   const date = new Date();
   const offset = date.getTimezoneOffset();
@@ -184,7 +207,9 @@ export default function TripPlanPage() {
         type: 'location',
         slug: selectedSlug,
         arrivalTime: getNextArrivalTime(),
-        durationMinutes: isMadeiraAirport ? 15 : 90,
+        durationMinutes: isMadeiraAirport
+          ? 15
+          : standardLocationDurations[selectedSlug] ?? 90,
       },
     ]);
     setSelectedSlug('');
@@ -252,7 +277,7 @@ export default function TripPlanPage() {
       stops[stops.length - 1]?.type === 'location' &&
       stops[stops.length - 1]?.slug === 'madeira-international-airport';
 
-    stops.forEach((stop) => {
+    stops.forEach((stop, index) => {
       const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
 
       if (stop.type === 'restaurant') {
@@ -287,7 +312,17 @@ export default function TripPlanPage() {
       if (!location) return;
 
       const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍';
-      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, '');
+      const sunriseSuffix =
+        index === 0 && location.slug === 'pico-do-arieiro'
+          ? locale === 'uk'
+            ? ' Зустрічаємо схід сонця + прогулянка по маршруту PR1 – Vereda do Areeiro до Miradouro da Pedra Rija.'
+            : ' Sunrise viewing plus a walk on PR1 – Vereda do Areeiro to Miradouro da Pedra Rija.'
+          : '';
+      lines.push(
+        `${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.${sunriseSuffix}`,
+        `https://madeiralivecams.com/${locale}/explore/${location.slug}`,
+        '',
+      );
     });
 
     if (endsAtAirport) {
