@@ -172,6 +172,11 @@ export default function TripPlanPage() {
   const addLocation = () => {
     if (!selectedSlug) return;
 
+    const selectedLocation = locations.find(
+      (location) => location.slug === selectedSlug,
+    );
+    const isMadeiraAirport = selectedLocation?.tags.includes('Airport');
+
     setStops((current) => [
       ...current,
       {
@@ -179,7 +184,7 @@ export default function TripPlanPage() {
         type: 'location',
         slug: selectedSlug,
         arrivalTime: getNextArrivalTime(),
-        durationMinutes: 90,
+        durationMinutes: isMadeiraAirport ? 15 : 90,
       },
     ]);
     setSelectedSlug('');
@@ -243,6 +248,10 @@ export default function TripPlanPage() {
       : `Programme for ${englishWeekday}, ${formattedDate}`;
     const lines = [heading, '', `${"🚌"} ${departureTime} — ${text.departureFrom} ${selectedVilla.name}.`, ''];
 
+    const endsAtAirport =
+      stops[stops.length - 1]?.type === 'location' &&
+      stops[stops.length - 1]?.slug === 'madeira-international-airport';
+
     stops.forEach((stop) => {
       const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
 
@@ -260,6 +269,20 @@ export default function TripPlanPage() {
         return;
       }
 
+      if (stop.type === 'location' && stop.slug === 'madeira-international-airport') {
+        const airport = locationBySlug.get(stop.slug);
+
+        if (airport) {
+          lines.push(
+            `✈️ ${stop.arrivalTime}–${endTime} — ${airport.name}.`,
+            `https://madeiralivecams.com/explore/${airport.slug}`,
+            '',
+          );
+        }
+
+        return;
+      }
+
       const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
       if (!location) return;
 
@@ -267,7 +290,18 @@ export default function TripPlanPage() {
       lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, `https://madeiralivecams.com/explore/${location.slug}`, '');
     });
 
-    lines.push(`🏡 ${text.return} ${selectedVilla.name}.`, `https://madeiralivecams.com/stays/${selectedVilla.slug}`);
+    if (endsAtAirport) {
+      lines.push(
+        locale === 'uk'
+          ? '😭 На цьому програма туру завершена.'
+          : '😭 The tour programme ends here.',
+      );
+    } else {
+      lines.push(
+        `🏡 ${text.return} ${selectedVilla.name}.`,
+        `https://madeiralivecams.com/stays/${selectedVilla.slug}`,
+      );
+    }
     return lines.join('\n');
   }, [date, departureTime, locale, locationBySlug, stops, text.departureFrom, text.lunch, text.return, selectedVilla]);
 
