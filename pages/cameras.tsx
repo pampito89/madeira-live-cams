@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,10 +7,6 @@ import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
 import { locationCoordinates } from '../lib/locationWeather';
 import { useMessages } from '../lib/i18n/useMessages';
-import {
-  consumeLocationListViewForBackNavigation,
-  saveLocationListView,
-} from '../lib/locationListNavigationMemory';
 
 type CurrentWeather = {
   temperature: number;
@@ -107,16 +104,28 @@ function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
 
 export default function CamerasPage() {
   const { locale, messages } = useMessages();
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState('All');
   const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
 
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-    saveLocationListView(filter, window.scrollY);
   };
 
-  const saveCurrentLocationListView = () => {
-    saveLocationListView(activeFilter, window.scrollY);
+  const handleLocationOpen = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    slug: string,
+  ) => {
+    event.preventDefault();
+
+    router.push({
+      pathname: "/explore/" + slug,
+      query: {
+        returnTo: 'cameras',
+        returnFilter: activeFilter,
+        returnScroll: Math.round(window.scrollY).toString(),
+      },
+    });
   };
 
   useEffect(() => {
@@ -193,38 +202,22 @@ export default function CamerasPage() {
   }, []);
 
   useEffect(() => {
-    const savedView = consumeLocationListViewForBackNavigation();
+    if (!router.isReady || router.query.returnTo !== 'cameras') return;
 
-    if (!savedView) return;
+    const filter = router.query.returnFilter;
+    const scroll = Number(router.query.returnScroll);
 
-    setActiveFilter(savedView.activeFilter);
+    if (typeof filter === 'string') {
+      setActiveFilter(filter);
+    }
 
     const timer = window.setTimeout(() => {
-      window.scrollTo({ top: savedView.scrollY, behavior: 'auto' });
+      window.scrollTo({ top: Number.isFinite(scroll) ? scroll : 0, behavior: 'auto' });
+      router.replace('/cameras', undefined, { shallow: true, scroll: false });
     }, 0);
 
     return () => window.clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    let animationFrame: number | null = null;
-
-    const handleScroll = () => {
-      if (animationFrame !== null) return;
-
-      animationFrame = window.requestAnimationFrame(() => {
-        saveCurrentLocationListView();
-        animationFrame = null;
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
-    };
-  }, [activeFilter]);
+  }, [router.isReady, router.query.returnTo, router.query.returnFilter, router.query.returnScroll]);
 
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
@@ -343,7 +336,7 @@ export default function CamerasPage() {
               <Link
                 key={displayLocation.slug}
                 href={`/explore/${displayLocation.slug}`}
-                onClick={saveCurrentLocationListView}
+                onClick={(event) => handleLocationOpen(event, displayLocation.slug)}
                 className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
               >
                 <div className="min-w-0 flex-1">

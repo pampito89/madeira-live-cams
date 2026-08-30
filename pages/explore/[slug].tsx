@@ -90,6 +90,18 @@ export default function LocationPage({ location }: LocationPageProps) {
   const displayLocation = getLocalizedLocation(location, locale);
 
   const handleBack = () => {
+    if (router.query.returnTo === 'cameras') {
+      router.push({
+        pathname: '/cameras',
+        query: {
+          returnTo: 'cameras',
+          returnFilter: router.query.returnFilter,
+          returnScroll: router.query.returnScroll,
+        },
+      });
+      return;
+    }
+
     if (window.history.length > 1) {
       router.back();
       return;
@@ -220,9 +232,10 @@ export default function LocationPage({ location }: LocationPageProps) {
         <button
           type="button"
           onClick={handleBack}
-          className="inline-flex text-sm font-medium text-ocean hover:underline"
+          className="inline-flex items-center gap-2 rounded-full border border-ocean/30 bg-white px-3 py-1.5 text-sm font-semibold text-ocean shadow-sm transition hover:-translate-x-0.5 hover:border-ocean hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
         >
-          {locale === 'uk' ? 'Назад' : 'Back'}
+          <span aria-hidden="true">←</span>
+          <span>{locale === 'uk' ? 'Назад' : 'Back'}</span>
         </button>
 
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
