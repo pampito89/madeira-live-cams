@@ -1800,6 +1800,62 @@ export const locations: Location[] = [
       },
     },
   },
+  {
+    slug: 'ribeira-da-janela',
+    name: {
+      en: 'Ribeira da Janela Islets',
+      uk: 'Скелі Ribeira da Janela',
+    },
+    area: {
+      en: 'Ribeira da Janela, Porto Moniz',
+      uk: 'Ribeira da Janela, Porto Moniz',
+    },
+    category: {
+      en: 'Coastal viewpoint',
+      uk: 'Прибережний оглядовий майданчик',
+    },
+    tags: ['Viewpoints', 'Lab Travel'],
+    summary: {
+      en: 'A dramatic north-coast stop near Porto Moniz, known for volcanic sea stacks and the natural window-shaped opening that gave Ribeira da Janela its name.',
+      uk: 'Ефектна зупинка на північному узбережжі біля Porto Moniz, відома вулканічними скелями в океані та природним отвором у формі вікна, від якого Ribeira da Janela отримала свою назву.',
+    },
+    image: '/images/explore/ribeira-da-janela.jpg',
+    imageAlt: {
+      en: 'Volcanic sea stacks at Ribeira da Janela on Madeira’s north coast',
+      uk: 'Вулканічні скелі в океані біля Ribeira da Janela на північному узбережжі Мадейри',
+    },
+    mapQuery: 'Ribeira da Janela Islets Madeira',
+    article: {
+      intro: {
+        en: 'Ribeira da Janela is one of Madeira’s most distinctive north-coast landscapes. Near the mouth of the stream, dark volcanic sea stacks rise from the Atlantic beneath steep green cliffs, creating a dramatic coastal scene close to Porto Moniz.',
+        uk: 'Ribeira da Janela — один із найвиразніших пейзажів північного узбережжя Мадейри. Біля гирла річки темні вулканічні скелі піднімаються з Атлантики під крутими зеленими схилами, створюючи драматичну прибережну картину неподалік від Porto Moniz.',
+      },
+      history: {
+        en: 'The place takes its name from the Ribeira da Janela stream, which flows from Madeira’s interior to the Atlantic. Its name, meaning “Window Stream”, refers to a natural opening near the top of one of the offshore rock formations. The islets are resilient volcanic rock shaped over a very long time by Atlantic waves, wind, rain and erosion. Their unusual forms became a defining landmark of the parish and one of the most photographed natural scenes on Madeira’s north-west coast.',
+        uk: 'Місце отримало назву від річки Ribeira da Janela, яка тече з внутрішньої частини Мадейри до Атлантики. Її назва означає «річка-вікно» і пов’язана з природним отвором біля вершини однієї з прибережних скель. Острівці складаються зі стійких вулканічних порід, які протягом дуже тривалого часу формували атлантичні хвилі, вітер, дощ та ерозія. Їхня незвичайна форма стала головною візитівкою парафії та одним із найфотографованіших природних пейзажів північно-західного узбережжя Мадейри.',
+      },
+      highlights: {
+        en: [
+          'Distinctive volcanic sea stacks just offshore',
+          'A natural window-shaped opening in one of the rocks',
+          'Wide views along Madeira’s green and rugged north coast',
+          'A small coastal area near the mouth of Ribeira da Janela',
+          'A memorable photography stop close to Porto Moniz and Seixal',
+        ],
+        uk: [
+          'Виразні вулканічні скелі неподалік від берега',
+          'Природний отвір у формі вікна в одній зі скель',
+          'Широкі види вздовж зеленого й суворого північного узбережжя Мадейри',
+          'Невелика прибережна зона біля гирла Ribeira da Janela',
+          'Яскрава зупинка для фотографій поблизу Porto Moniz і Seixal',
+        ],
+      },
+      practicalTip: {
+        en: 'Use the designated parking area near the coast and take care on wet rocks, steps and uneven ground. The north coast can be windy and the Atlantic can be rough, so do not climb on the sea stacks or enter the water in unsafe conditions. Visit in clear weather for the best views and photographs.',
+        uk: 'Користуйтеся призначеним паркуванням біля узбережжя та будьте обережні на мокрих каменях, сходах і нерівній поверхні. На північному узбережжі може бути вітряно, а Атлантика — неспокійною, тому не залазьте на скелі в морі та не заходьте у воду за небезпечних умов. Приїжджайте в ясну погоду для найкращих видів і фотографій.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {

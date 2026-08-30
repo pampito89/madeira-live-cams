@@ -46,4 +46,5 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
   'anjos-waterfall': { latitude: 32.6876, longitude: -17.1156 },
   'machico-beach': { latitude: 32.7177, longitude: -16.7641 },
   'pico-do-facho': { latitude: 32.7286, longitude: -16.7588 },
+  'ribeira-da-janela': { latitude: 32.8466, longitude: -17.1592 },
 };
