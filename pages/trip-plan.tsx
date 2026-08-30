@@ -7,7 +7,7 @@ import { stays } from '../data/stays';
 
 type PlanStop = {
   id: string;
-  type: 'location' | 'restaurant';
+  type: 'location' | 'restaurant' | 'villa';
   slug?: string;
   arrivalTime: string;
   durationMinutes: number;
@@ -50,7 +50,7 @@ export default function TripPlanPage() {
   const [date, setDate] = useState(todayValue);
   const [villa, setVilla] = useState(villas[0].slug);
   const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
-  const [departureTime, setDepartureTime] = useState('08:30');
+  const [departureTime, setDepartureTime] = useState('09:00');
   const [stops, setStops] = useState<PlanStop[]>([]);
   const [selectedSlug, setSelectedSlug] = useState('');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
@@ -69,6 +69,7 @@ export default function TripPlanPage() {
           chooseLocation: 'Оберіть локацію',
           addLocation: 'Додати локацію',
           addRestaurant: 'Додати ресторан',
+          addVilla: 'Додати повернення на віллу',
           selectedStops: 'Маршрут дня',
           noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.',
           arrival: 'Прибуття',
@@ -77,6 +78,7 @@ export default function TripPlanPage() {
           down: 'Нижче',
           remove: 'Видалити',
           restaurant: 'Ресторан',
+          villaStop: 'Повернення на віллу',
           output: 'Готова програма',
           copy: 'Копіювати програму',
           copied: 'Скопійовано',
@@ -98,6 +100,7 @@ export default function TripPlanPage() {
           chooseLocation: 'Choose a location',
           addLocation: 'Add location',
           addRestaurant: 'Add restaurant',
+          addVilla: 'Add villa return',
           selectedStops: 'Day route',
           noStops: 'Add your first location or restaurant to build the route.',
           arrival: 'Arrival',
@@ -106,6 +109,7 @@ export default function TripPlanPage() {
           down: 'Move down',
           remove: 'Remove',
           restaurant: 'Restaurant',
+          villaStop: 'Villa return',
           output: 'Ready programme',
           copy: 'Copy programme',
           copied: 'Copied',
@@ -158,6 +162,18 @@ export default function TripPlanPage() {
     ]);
   };
 
+  const addVillaStop = () => {
+    setStops((current) => [
+      ...current,
+      {
+        id: `villa-${Date.now()}`,
+        type: 'villa',
+        arrivalTime: '16:00',
+        durationMinutes: 30,
+      },
+    ]);
+  };
+
   const updateStop = (id: string, updates: Partial<PlanStop>) => {
     setStops((current) => current.map((stop) => (stop.id === id ? { ...stop, ...updates } : stop)));
   };
@@ -180,13 +196,16 @@ export default function TripPlanPage() {
   const programme = useMemo(() => {
     if (stops.length === 0) return '';
 
+    const selectedDate = new Date(`${date}T12:00:00`);
     const formattedDate = new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
-      weekday: 'long',
       day: 'numeric',
       month: 'long',
-    }).format(new Date(`${date}T12:00:00`));
-
-    const heading = locale === 'uk' ? `## Програма на ${formattedDate}` : `## Programme for ${formattedDate}`;
+    }).format(selectedDate);
+    const ukrainianWeekdays = ['неділю', 'понеділок', 'вівторок', 'середу', 'четвер', 'п’ятницю', 'суботу'];
+    const englishWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(selectedDate);
+    const heading = locale === 'uk'
+      ? `Програма на ${ukrainianWeekdays[selectedDate.getDay()]}, ${formattedDate}`
+      : `Programme for ${englishWeekday}, ${formattedDate}`;
     const lines = [heading, '', `${"🚌"} ${departureTime} — ${text.departureFrom} ${selectedVilla.name}.`, ''];
 
     stops.forEach((stop) => {
@@ -194,6 +213,15 @@ export default function TripPlanPage() {
 
       if (stop.type === 'restaurant') {
         lines.push(`🍽️ ${stop.arrivalTime}–${endTime} — ${text.lunch}.`, '');
+        return;
+      }
+
+      if (stop.type === 'villa') {
+        lines.push(
+          `🏡 ${stop.arrivalTime}–${endTime} — ${selectedVilla.name}.`,
+          `https://madeiralivecams.com/stays/${selectedVilla.slug}`,
+          '',
+        );
         return;
       }
 
@@ -264,6 +292,9 @@ export default function TripPlanPage() {
               <button type="button" onClick={addRestaurant} className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white sm:self-end">
                 + {text.addRestaurant}
               </button>
+              <button type="button" onClick={addVillaStop} className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-navy transition hover:border-ocean hover:text-ocean sm:self-end">
+                + {text.addVilla}
+              </button>
             </div>
           </div>
 
@@ -279,8 +310,8 @@ export default function TripPlanPage() {
               <div className="mt-3 space-y-3">
                 {stops.map((stop, index) => {
                   const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
-                  const name = stop.type === 'restaurant' ? text.restaurant : location?.name ?? '';
-                  const icon = stop.type === 'restaurant' ? '🍽️' : location?.tags.includes('Beaches') ? '🏖️' : location?.tags.includes('Hiking') ? '🌿' : '📍';
+                  const name = stop.type === 'restaurant' ? text.restaurant : stop.type === 'villa' ? selectedVilla.name : location?.name ?? '';
+                  const icon = stop.type === 'restaurant' ? '🍽️' : stop.type === 'villa' ? '🏡' : location?.tags.includes('Beaches') ? '🏖️' : location?.tags.includes('Hiking') ? '🌿' : '📍';
 
                   return (
                     <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
