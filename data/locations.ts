@@ -1688,6 +1688,118 @@ export const locations: Location[] = [
       },
     },
   },
+  {
+    slug: 'machico-beach',
+    name: {
+      en: 'Machico Beach',
+      uk: 'Пляж Machico',
+    },
+    area: {
+      en: 'Machico Bay',
+      uk: 'Затока Machico',
+    },
+    category: {
+      en: 'Beach',
+      uk: 'Пляж',
+    },
+    tags: ['Beaches', 'Lab Travel'],
+    summary: {
+      en: 'A sheltered golden-sand beach in Machico Bay, with calm-water swimming, a promenade and services close to the town centre.',
+      uk: 'Захищений пляж із золотистим піском у затоці Machico, зі спокійнішою водою для купання, набережною та сервісом поруч із центром міста.',
+    },
+    image: '/images/explore/machico-beach.jpg',
+    imageAlt: {
+      en: 'Golden sand and calm water at Machico Beach in Madeira',
+      uk: 'Золотистий пісок і спокійна вода на пляжі Machico, Мадейра',
+    },
+    mapQuery: '32.717709,-16.764091',
+    article: {
+      intro: {
+        en: 'Machico Beach, also known as Praia da Banda Além, is a sheltered beach in Machico Bay on Madeira’s east coast. Its golden sand, breakwaters and central location make it one of the island’s most convenient places for a beach stop and a swim.',
+        uk: 'Пляж Machico, також відомий як Praia da Banda Além, — захищений пляж у затоці Machico на східному узбережжі Мадейри. Золотистий пісок, хвилерізи та центральне розташування роблять його одним із найзручніших місць на острові для пляжної зупинки та купання.',
+      },
+      history: {
+        en: 'Machico Bay has an important place in Madeira’s history because it is associated with the arrival of Portuguese navigators in 1419. The modern beach was created as part of Machico’s waterfront development, using imported golden sand and protective breakwaters to provide a calmer bathing area than many open Atlantic beaches.',
+        uk: 'Затока Machico посідає важливе місце в історії Мадейри, адже її пов’язують із прибуттям португальських мореплавців у 1419 році. Сучасний пляж створили як частину розвитку набережної Machico: використали привезений золотистий пісок і захисні хвилерізи, щоб забезпечити спокійнішу зону для купання, ніж на багатьох відкритих атлантичних пляжах.',
+      },
+      highlights: {
+        en: [
+          'Golden-sand beach in the sheltered Machico Bay',
+          'Breakwaters that usually create calmer water for swimming',
+          'Promenade, cafés, restaurants and town facilities nearby',
+          'A practical stop close to Machico centre and the east coast',
+          'Public parking destination set to the parking area beside the beach',
+        ],
+        uk: [
+          'Пляж із золотистим піском у захищеній затоці Machico',
+          'Хвилерізи, які зазвичай створюють спокійнішу воду для купання',
+          'Набережна, кафе, ресторани та міська інфраструктура поруч',
+          'Зручна зупинка близько до центру Machico та східного узбережжя',
+          'Навігація веде до громадського паркування поруч із пляжем',
+        ],
+      },
+      practicalTip: {
+        en: 'Use the mapped Public Parking destination beside the beach. Check flags and sea conditions before swimming, especially when swell is forecast. In warm weekends and holidays, arrive earlier for easier parking and more space on the sand.',
+        uk: 'Користуйтеся вказаною на карті точкою Public Parking поруч із пляжем. Перед купанням перевіряйте прапори та стан моря, особливо коли прогнозують хвилювання. У теплі вихідні та свята приїжджайте раніше, щоб легше знайти паркування й мати більше місця на піску.',
+      },
+    },
+  },
+  {
+    slug: 'pico-do-facho',
+    name: {
+      en: 'Pico do Facho Viewpoint',
+      uk: 'Оглядовий майданчик Pico do Facho',
+    },
+    area: {
+      en: 'Machico',
+      uk: 'Machico',
+    },
+    category: {
+      en: 'Viewpoint',
+      uk: 'Оглядовий майданчик',
+    },
+    tags: ['Viewpoints', 'Lab Travel'],
+    summary: {
+      en: 'A high viewpoint above Machico with wide views over the bay, the central mountains and Ponta de São Lourenço.',
+      uk: 'Високий оглядовий майданчик над Machico з широкими видами на затоку, центральні гори та Ponta de São Lourenço.',
+    },
+    image: '/images/explore/pico-do-facho.jpg',
+    imageAlt: {
+      en: 'View over Machico Bay from Pico do Facho in Madeira',
+      uk: 'Вид на затоку Machico з Pico do Facho на Мадейрі',
+    },
+    mapQuery: 'Miradouro do Pico do Facho Madeira',
+    article: {
+      intro: {
+        en: 'Pico do Facho is one of the best viewpoints above Machico on Madeira’s east coast. From the summit area, the view stretches across Machico Bay, the mountains of the island’s interior and towards Ponta de São Lourenço.',
+        uk: 'Pico do Facho — один із найкращих оглядових майданчиків над Machico на східному узбережжі Мадейри. Із вершини відкривається вид на затоку Machico, гори внутрішньої частини острова та в напрямку Ponta de São Lourenço.',
+      },
+      history: {
+        en: 'The name Facho refers to a beacon or signal fire. Elevated points such as this were historically useful for watching the coast and signalling approaching ships. Today, the road and short final approach make Pico do Facho a popular stop for visitors who want a high viewpoint without a long mountain hike.',
+        uk: 'Назва Facho означає сигнальний вогонь або маяк. Такі височини історично були корисними для спостереження за узбережжям і подачі сигналів про кораблі, що наближалися. Сьогодні дорога та короткий фінальний підхід роблять Pico do Facho популярною зупинкою для тих, хто хоче побачити високогірну панораму без довгого гірського походу.',
+      },
+      highlights: {
+        en: [
+          'Panorama over Machico Bay and its beaches',
+          'Views towards the central mountains and Ponta de São Lourenço',
+          'A high east-coast perspective above Machico',
+          'A good place to watch changing light, aircraft approaches and coastal scenery',
+          'Easy access by a narrow mountain road followed by a short walk',
+        ],
+        uk: [
+          'Панорама затоки Machico та її пляжів',
+          'Види в бік центральних гір і Ponta de São Lourenço',
+          'Висока перспектива на східне узбережжя над Machico',
+          'Гарне місце для спостереження за мінливим світлом, підходами літаків і прибережним пейзажем',
+          'Легкий доступ вузькою гірською дорогою та коротка прогулянка наприкінці',
+        ],
+      },
+      practicalTip: {
+        en: 'Drive carefully because the final road is narrow and winding, and use only safe parking spaces. The viewpoint can be windy and exposed, so take a light layer. Visit in clear weather for the widest views over Machico and the east coast.',
+        uk: 'Їдьте обережно, адже фінальна дорога вузька й звивиста, та користуйтеся лише безпечними місцями для паркування. Майданчик може бути вітряним і відкритим, тому візьміть легкий верхній шар одягу. Приїжджайте в ясну погоду для найширших видів на Machico та східне узбережжя.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {

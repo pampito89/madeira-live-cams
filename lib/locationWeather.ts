@@ -44,4 +44,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
   'levada-do-furado': { latitude: 32.7408, longitude: -16.8767 },
   'santana-typical-houses': { latitude: 32.8054, longitude: -16.8828 },
   'anjos-waterfall': { latitude: 32.6876, longitude: -17.1156 },
+  'machico-beach': { latitude: 32.7177, longitude: -16.7641 },
+  'pico-do-facho': { latitude: 32.7286, longitude: -16.7588 },
 };
