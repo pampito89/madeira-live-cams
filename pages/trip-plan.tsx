@@ -17,7 +17,7 @@ const villas = stays;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
 
 const standardLocationDurations: Record<string, number> = {
-  'pico-do-arieiro': 150,
+  'pico-do-arieiro': 180,
   'fanal-forest': 120,
   'praia-do-porto-do-seixal': 120,
   'machico-beach': 150,
