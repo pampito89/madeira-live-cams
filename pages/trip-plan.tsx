@@ -1,0 +1,329 @@
+import { useMemo, useState } from 'react';
+import Head from 'next/head';
+import Layout from '../components/Layout';
+import { getLocalizedLocation, locations } from '../data/locations';
+import { useMessages } from '../lib/i18n/useMessages';
+
+type PlanStop = {
+  id: string;
+  type: 'location' | 'restaurant';
+  slug?: string;
+  arrivalTime: string;
+  durationMinutes: number;
+};
+
+const villas = ['Вілла 1', 'Вілла 2', 'Вілла 3', 'Вілла 4'];
+const durationOptions = [30, 45, 60, 90, 120, 150, 180, 240];
+
+function todayValue() {
+  const date = new Date();
+  const offset = date.getTimezoneOffset();
+  return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10);
+}
+
+function addMinutes(time: string, minutes: number) {
+  const [hours, mins] = time.split(':').map(Number);
+  const total = hours * 60 + mins + minutes;
+  const nextHours = Math.floor((total % 1440) / 60).toString().padStart(2, '0');
+  const nextMinutes = (total % 60).toString().padStart(2, '0');
+  return `${nextHours}:${nextMinutes}`;
+}
+
+function durationLabel(minutes: number, locale: 'en' | 'uk') {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (locale === 'uk') {
+    if (hours === 0) return `${remainingMinutes} хв`;
+    if (remainingMinutes === 0) return `${hours} год`;
+    return `${hours} год ${remainingMinutes} хв`;
+  }
+
+  if (hours === 0) return `${remainingMinutes} min`;
+  if (remainingMinutes === 0) return `${hours} hr`;
+  return `${hours} hr ${remainingMinutes} min`;
+}
+
+export default function TripPlanPage() {
+  const { locale } = useMessages();
+  const [date, setDate] = useState(todayValue);
+  const [villa, setVilla] = useState(villas[0]);
+  const [departureTime, setDepartureTime] = useState('08:30');
+  const [stops, setStops] = useState<PlanStop[]>([]);
+  const [selectedSlug, setSelectedSlug] = useState('');
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
+
+  const text =
+    locale === 'uk'
+      ? {
+          title: 'План подорожі',
+          intro: 'Створіть просту програму дня: оберіть віллу, додайте локації, ресторан і час для кожної зупинки.',
+          dayDetails: 'Деталі дня',
+          date: 'Дата',
+          startVilla: 'Стартова вілла',
+          departure: 'Час виїзду',
+          addStop: 'Додати точку',
+          location: 'Локація Lab Travel',
+          chooseLocation: 'Оберіть локацію',
+          addLocation: 'Додати локацію',
+          addRestaurant: 'Додати ресторан',
+          selectedStops: 'Маршрут дня',
+          noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.',
+          arrival: 'Прибуття',
+          duration: 'Тривалість',
+          up: 'Вище',
+          down: 'Нижче',
+          remove: 'Видалити',
+          restaurant: 'Ресторан',
+          output: 'Готова програма',
+          copy: 'Копіювати програму',
+          copied: 'Скопійовано',
+          clear: 'Очистити маршрут',
+          return: 'Повернення до',
+          departureFrom: 'виїзд з',
+          lunch: 'обід у ресторані',
+          defaultProgram: 'Додайте точки маршруту — тут з’явиться готова програма для копіювання.',
+        }
+      : {
+          title: 'Trip plan',
+          intro: 'Create a simple day itinerary: choose a villa, add locations, a restaurant stop and timing for each point.',
+          dayDetails: 'Day details',
+          date: 'Date',
+          startVilla: 'Starting villa',
+          departure: 'Departure time',
+          addStop: 'Add a stop',
+          location: 'Lab Travel location',
+          chooseLocation: 'Choose a location',
+          addLocation: 'Add location',
+          addRestaurant: 'Add restaurant',
+          selectedStops: 'Day route',
+          noStops: 'Add your first location or restaurant to build the route.',
+          arrival: 'Arrival',
+          duration: 'Duration',
+          up: 'Move up',
+          down: 'Move down',
+          remove: 'Remove',
+          restaurant: 'Restaurant',
+          output: 'Ready programme',
+          copy: 'Copy programme',
+          copied: 'Copied',
+          clear: 'Clear route',
+          return: 'Return to',
+          departureFrom: 'departure from',
+          lunch: 'lunch at a restaurant',
+          defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.',
+        };
+
+  const labTravelLocations = useMemo(
+    () =>
+      locations
+        .filter((location) => location.tags.includes('Lab Travel'))
+        .map((location) => getLocalizedLocation(location, locale))
+        .sort((a, b) => a.name.localeCompare(b.name, locale)),
+    [locale],
+  );
+
+  const locationBySlug = useMemo(
+    () => new Map(labTravelLocations.map((location) => [location.slug, location])),
+    [labTravelLocations],
+  );
+
+  const addLocation = () => {
+    if (!selectedSlug) return;
+
+    setStops((current) => [
+      ...current,
+      {
+        id: `${selectedSlug}-${Date.now()}`,
+        type: 'location',
+        slug: selectedSlug,
+        arrivalTime: '10:00',
+        durationMinutes: 90,
+      },
+    ]);
+    setSelectedSlug('');
+  };
+
+  const addRestaurant = () => {
+    setStops((current) => [
+      ...current,
+      {
+        id: `restaurant-${Date.now()}`,
+        type: 'restaurant',
+        arrivalTime: '13:00',
+        durationMinutes: 90,
+      },
+    ]);
+  };
+
+  const updateStop = (id: string, updates: Partial<PlanStop>) => {
+    setStops((current) => current.map((stop) => (stop.id === id ? { ...stop, ...updates } : stop)));
+  };
+
+  const moveStop = (index: number, direction: -1 | 1) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= stops.length) return;
+
+    setStops((current) => {
+      const next = [...current];
+      [next[index], next[targetIndex]] = [next[targetIndex], next[index]];
+      return next;
+    });
+  };
+
+  const removeStop = (id: string) => {
+    setStops((current) => current.filter((stop) => stop.id !== id));
+  };
+
+  const programme = useMemo(() => {
+    if (stops.length === 0) return '';
+
+    const formattedDate = new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    }).format(new Date(`${date}T12:00:00`));
+
+    const heading = locale === 'uk' ? `## Програма на ${formattedDate}` : `## Programme for ${formattedDate}`;
+    const lines = [heading, '', `🚌 ${departureTime} — ${text.departureFrom} ${villa}.`, ''];
+
+    stops.forEach((stop) => {
+      const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
+
+      if (stop.type === 'restaurant') {
+        lines.push(`🍽️ ${stop.arrivalTime}–${endTime} — ${text.lunch}.`, '');
+        return;
+      }
+
+      const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
+      if (!location) return;
+
+      const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍';
+      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, '');
+    });
+
+    lines.push(`🏡 ${text.return} ${villa}.`);
+    return lines.join('\n');
+  }, [date, departureTime, locale, locationBySlug, stops, text.departureFrom, text.lunch, text.return, villa]);
+
+  const copyProgramme = async () => {
+    if (!programme) return;
+    await navigator.clipboard.writeText(programme);
+    setCopyStatus('copied');
+    window.setTimeout(() => setCopyStatus('idle'), 2000);
+  };
+
+  return (
+    <Layout>
+      <Head>
+        <title>{text.title} | Madeira Live Cams</title>
+        <meta name="description" content={text.intro} />
+      </Head>
+
+      <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
+        <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8">
+          <p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">{text.title}</h1>
+          <p className="mt-3 max-w-2xl leading-7 text-slate-600">{text.intro}</p>
+
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5">
+            <h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
+                {text.date}
+                <input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" />
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
+                {text.startVilla}
+                <select value={villa} onChange={(event) => setVilla(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
+                  {villas.map((item) => <option key={item}>{item}</option>)}
+                </select>
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
+                {text.departure}
+                <input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" />
+              </label>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5">
+            <h2 className="text-lg font-bold text-navy">{text.addStop}</h2>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <label className="flex min-w-0 flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">
+                {text.location}
+                <select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
+                  <option value="">{text.chooseLocation}</option>
+                  {labTravelLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}
+                </select>
+              </label>
+              <button type="button" onClick={addLocation} disabled={!selectedSlug} className="min-h-11 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end">
+                + {text.addLocation}
+              </button>
+              <button type="button" onClick={addRestaurant} className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white sm:self-end">
+                + {text.addRestaurant}
+              </button>
+            </div>
+          </div>
+
+          <section className="mt-6">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>
+              {stops.length > 0 && <button type="button" onClick={() => setStops([])} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}
+            </div>
+
+            {stops.length === 0 ? (
+              <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p>
+            ) : (
+              <div className="mt-3 space-y-3">
+                {stops.map((stop, index) => {
+                  const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
+                  const name = stop.type === 'restaurant' ? text.restaurant : location?.name ?? '';
+                  const icon = stop.type === 'restaurant' ? '🍽️' : location?.tags.includes('Beaches') ? '🏖️' : location?.tags.includes('Hiking') ? '🌿' : '📍';
+
+                  return (
+                    <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                      <div className="flex items-start gap-3">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-bold text-navy">{icon} {name}</p>
+                          <p className="mt-1 text-xs text-slate-500">{durationLabel(stop.durationMinutes, locale)}</p>
+                        </div>
+                        <button type="button" onClick={() => removeStop(stop.id)} aria-label={text.remove} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600">×</button>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-3">
+                        <label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">
+                          {text.arrival}
+                          <input type="time" value={stop.arrivalTime} onChange={(event) => updateStop(stop.id, { arrivalTime: event.target.value })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none" />
+                        </label>
+                        <label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">
+                          {text.duration}
+                          <select value={stop.durationMinutes} onChange={(event) => updateStop(stop.id, { durationMinutes: Number(event.target.value) })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none">
+                            {durationOptions.map((minutes) => <option key={minutes} value={minutes}>{durationLabel(minutes, locale)}</option>)}
+                          </select>
+                        </label>
+                      </div>
+                      <div className="mt-3 flex gap-2">
+                        <button type="button" onClick={() => moveStop(index, -1)} disabled={index === 0} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↑ {text.up}</button>
+                        <button type="button" onClick={() => moveStop(index, 1)} disabled={index === stops.length - 1} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↓ {text.down}</button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-xl font-bold text-navy">{text.output}</h2>
+              <button type="button" onClick={copyProgramme} disabled={!programme} className="min-h-10 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40">
+                {copyStatus === 'copied' ? `✓ ${text.copied}` : text.copy}
+              </button>
+            </div>
+            <textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" />
+          </section>
+        </section>
+      </main>
+    </Layout>
+  );
+}
