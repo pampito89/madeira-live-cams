@@ -14,7 +14,7 @@ type PlanStop = {
 };
 
 const villas = stays;
-const durationOptions = [30, 45, 60, 90, 120, 150, 180, 240];
+const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
 
 function todayValue() {
   const date = new Date();
@@ -134,6 +134,19 @@ export default function TripPlanPage() {
     [labTravelLocations],
   );
 
+  const getNextArrivalTime = () => {
+    const previousStop = stops[stops.length - 1];
+
+    if (!previousStop) {
+      return addMinutes(departureTime, 30);
+    }
+
+    return addMinutes(
+      previousStop.arrivalTime,
+      previousStop.durationMinutes + 30,
+    );
+  };
+
   const addLocation = () => {
     if (!selectedSlug) return;
 
@@ -143,7 +156,7 @@ export default function TripPlanPage() {
         id: `${selectedSlug}-${Date.now()}`,
         type: 'location',
         slug: selectedSlug,
-        arrivalTime: '10:00',
+        arrivalTime: getNextArrivalTime(),
         durationMinutes: 90,
       },
     ]);
@@ -156,7 +169,7 @@ export default function TripPlanPage() {
       {
         id: `restaurant-${Date.now()}`,
         type: 'restaurant',
-        arrivalTime: '13:00',
+        arrivalTime: getNextArrivalTime(),
         durationMinutes: 90,
       },
     ]);
@@ -168,7 +181,7 @@ export default function TripPlanPage() {
       {
         id: `villa-${Date.now()}`,
         type: 'villa',
-        arrivalTime: '16:00',
+        arrivalTime: getNextArrivalTime(),
         durationMinutes: 30,
       },
     ]);
