@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import {
   cameras,
@@ -23,10 +24,46 @@ const cameraFilters: Array<{
 
 const HomePage: React.FC = () => {
   const { locale, messages } = useMessages();
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>(
     'All',
   );
   const [flightNumber, setFlightNumber] = useState('');
+
+  const saveHomeCameraView = () => {
+    window.sessionStorage.setItem(
+      'madeira-home-camera-view',
+      JSON.stringify({ activeFilter, scrollY: Math.round(window.scrollY) }),
+    );
+  };
+
+  useEffect(() => {
+    if (!router.isReady || router.query.restoreCameraFilter !== '1') return;
+
+    const rawView = window.sessionStorage.getItem('madeira-home-camera-view');
+    window.sessionStorage.removeItem('madeira-home-camera-view');
+
+    if (!rawView) {
+      router.replace('/', undefined, { shallow: true, scroll: false });
+      return;
+    }
+
+    try {
+      const savedView = JSON.parse(rawView) as {
+        activeFilter?: CameraCategory | 'All';
+        scrollY?: number;
+      };
+      if (savedView.activeFilter) setActiveFilter(savedView.activeFilter);
+
+      const timer = window.setTimeout(() => {
+        window.scrollTo({ top: savedView.scrollY ?? 0, behavior: 'auto' });
+        router.replace('/', undefined, { shallow: true, scroll: false });
+      }, 0);
+      return () => window.clearTimeout(timer);
+    } catch {
+      router.replace('/', undefined, { shallow: true, scroll: false });
+    }
+  }, [router.isReady, router.query.restoreCameraFilter]);
 
   const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -170,7 +207,12 @@ const HomePage: React.FC = () => {
 
           <div className="grid gap-4 md:grid-cols-3">
             {filtered.map((camera) => (
-              <CameraCard key={camera.id} camera={camera} />
+              <CameraCard
+                key={camera.id}
+                camera={camera}
+                returnToHome
+                onDetailsOpen={saveHomeCameraView}
+              />
             ))}
           </div>
         </section>

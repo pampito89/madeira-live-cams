@@ -8,6 +8,8 @@ import {
 
 interface Props {
   camera: Camera;
+  returnToHome?: boolean;
+  onDetailsOpen?: () => void;
 }
 
 const cameraDetailsHref: Record<string, string> = {
@@ -27,11 +29,20 @@ const cameraDetailsHref: Record<string, string> = {
   'machico-beach': '/explore/machico-beach',
 };
 
-const CameraCard: React.FC<Props> = ({ camera }) => {
+const CameraCard: React.FC<Props> = ({
+  camera,
+  returnToHome = false,
+  onDetailsOpen,
+}) => {
   const { locale, messages } = useMessages();
   const displayCamera = getLocalizedCamera(camera, locale);
   const detailsHref =
     cameraDetailsHref[displayCamera.id] ?? `/cameras/${displayCamera.id}`;
+
+  const linkHref =
+    returnToHome && detailsHref.startsWith('/explore/')
+      ? { pathname: detailsHref, query: { returnTo: 'home' } }
+      : detailsHref;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -106,7 +117,8 @@ const CameraCard: React.FC<Props> = ({ camera }) => {
         <div className="mt-2 flex flex-col gap-2">
           <div className="flex gap-2">
             <Link
-              href={detailsHref}
+              href={linkHref}
+              onClick={onDetailsOpen}
               className="flex-1 rounded-lg bg-ocean px-3 py-2 text-center text-xs font-medium text-white transition hover:bg-forest"
             >
               {messages.cameraCard.watchDetails}

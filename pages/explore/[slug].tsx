@@ -90,6 +90,11 @@ export default function LocationPage({ location }: LocationPageProps) {
   const displayLocation = getLocalizedLocation(location, locale);
 
   const handleBack = () => {
+    if (router.query.returnTo === 'home') {
+      router.push('/?restoreCameraFilter=1');
+      return;
+    }
+
     if (router.query.returnTo === 'cameras') {
       router.push('/cameras?restore=1');
       return;
