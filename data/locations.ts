@@ -1661,7 +1661,7 @@ export const locations: Location[] = [
     name: { en: 'Anjos Waterfall', uk: 'Водоспад Anjos' },
     area: { en: 'Anjos, Ponta do Sol', uk: 'Anjos, Ponta do Sol' },
     category: { en: 'Waterfall', uk: 'Водоспад' },
-    tags: ['Waterfalls', 'South coast'],
+    tags: ['Waterfalls', 'Lab Travel'],
     summary: {
       en: 'A famous waterfall on Madeira’s old ER101 coastal road near Ponta do Sol. The site is officially closed and must not be entered.',
       uk: 'Відомий водоспад на старій прибережній дорозі ER101 біля Ponta do Sol. Об’єкт офіційно закритий, і заходити на нього не можна.',
