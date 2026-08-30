@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
 import { useMessages } from '../lib/i18n/useMessages';
+import { stays } from '../data/stays';
 
 type PlanStop = {
   id: string;
@@ -12,7 +13,7 @@ type PlanStop = {
   durationMinutes: number;
 };
 
-const villas = ['Вілла 1', 'Вілла 2', 'Вілла 3', 'Вілла 4'];
+const villas = stays;
 const durationOptions = [30, 45, 60, 90, 120, 150, 180, 240];
 
 function todayValue() {
@@ -47,7 +48,8 @@ function durationLabel(minutes: number, locale: 'en' | 'uk') {
 export default function TripPlanPage() {
   const { locale } = useMessages();
   const [date, setDate] = useState(todayValue);
-  const [villa, setVilla] = useState(villas[0]);
+  const [villa, setVilla] = useState(villas[0].slug);
+  const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
   const [departureTime, setDepartureTime] = useState('08:30');
   const [stops, setStops] = useState<PlanStop[]>([]);
   const [selectedSlug, setSelectedSlug] = useState('');
@@ -185,7 +187,7 @@ export default function TripPlanPage() {
     }).format(new Date(`${date}T12:00:00`));
 
     const heading = locale === 'uk' ? `## Програма на ${formattedDate}` : `## Programme for ${formattedDate}`;
-    const lines = [heading, '', `🚌 ${departureTime} — ${text.departureFrom} ${villa}.`, ''];
+    const lines = [heading, '', `${"🚌"} ${departureTime} — ${text.departureFrom} ${selectedVilla.name}.`, ''];
 
     stops.forEach((stop) => {
       const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
@@ -199,12 +201,12 @@ export default function TripPlanPage() {
       if (!location) return;
 
       const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍';
-      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, '');
+      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.`, `https://madeiralivecams.com/explore/${location.slug}`, '');
     });
 
-    lines.push(`🏡 ${text.return} ${villa}.`);
+    lines.push(`🏡 ${text.return} ${selectedVilla.name}.`, `https://madeiralivecams.com/stays/${selectedVilla.slug}`);
     return lines.join('\n');
-  }, [date, departureTime, locale, locationBySlug, stops, text.departureFrom, text.lunch, text.return, villa]);
+  }, [date, departureTime, locale, locationBySlug, stops, text.departureFrom, text.lunch, text.return, selectedVilla]);
 
   const copyProgramme = async () => {
     if (!programme) return;
@@ -236,7 +238,7 @@ export default function TripPlanPage() {
               <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.startVilla}
                 <select value={villa} onChange={(event) => setVilla(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
-                  {villas.map((item) => <option key={item}>{item}</option>)}
+                  {villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
                 </select>
               </label>
               <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
