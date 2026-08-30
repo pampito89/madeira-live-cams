@@ -53,6 +53,7 @@ export default function TripPlanPage() {
   const [departureTime, setDepartureTime] = useState('09:00');
   const [stops, setStops] = useState<PlanStop[]>([]);
   const [selectedSlug, setSelectedSlug] = useState('');
+  const [locationFilter, setLocationFilter] = useState('All');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
 
   const text =
@@ -65,7 +66,9 @@ export default function TripPlanPage() {
           startVilla: 'Стартова вілла',
           departure: 'Час виїзду',
           addStop: 'Додати точку',
-          location: 'Локація Lab Travel',
+          location: 'Локація',
+          locationFilters: 'Фільтр локацій',
+          allLocations: 'Усі',
           chooseLocation: 'Оберіть локацію',
           addLocation: 'Додати локацію',
           addRestaurant: 'Додати ресторан',
@@ -96,7 +99,9 @@ export default function TripPlanPage() {
           startVilla: 'Starting villa',
           departure: 'Departure time',
           addStop: 'Add a stop',
-          location: 'Lab Travel location',
+          location: 'Location',
+          locationFilters: 'Location filters',
+          allLocations: 'All',
           chooseLocation: 'Choose a location',
           addLocation: 'Add location',
           addRestaurant: 'Add restaurant',
@@ -120,18 +125,32 @@ export default function TripPlanPage() {
           defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.',
         };
 
-  const labTravelLocations = useMemo(
+  const locationFilters = useMemo(
+    () => [
+      'All',
+      ...Array.from(new Set(locations.flatMap((location) => location.tags))).sort(),
+    ],
+    [],
+  );
+
+  const availableLocations = useMemo(
     () =>
       locations
-        .filter((location) => location.tags.includes('Lab Travel'))
+        .filter(
+          (location) =>
+            locationFilter === 'All' || location.tags.includes(locationFilter),
+        )
         .map((location) => getLocalizedLocation(location, locale))
         .sort((a, b) => a.name.localeCompare(b.name, locale)),
-    [locale],
+    [locale, locationFilter],
   );
 
   const locationBySlug = useMemo(
-    () => new Map(labTravelLocations.map((location) => [location.slug, location])),
-    [labTravelLocations],
+    () => new Map(locations.map((location) => [
+      location.slug,
+      getLocalizedLocation(location, locale),
+    ])),
+    [locale],
   );
 
   const getNextArrivalTime = () => {
@@ -291,12 +310,35 @@ export default function TripPlanPage() {
 
           <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5">
             <h2 className="text-lg font-bold text-navy">{text.addStop}</h2>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-4">
+              <p className="text-sm font-semibold text-navy">{text.locationFilters}</p>
+              <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
+                {locationFilters.map((filter) => (
+                  <button
+                    key={filter}
+                    type="button"
+                    onClick={() => {
+                      setLocationFilter(filter);
+                      setSelectedSlug('');
+                    }}
+                    className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
+                      locationFilter === filter
+                        ? 'border-ocean bg-ocean text-white'
+                        : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
+                    }`}
+                  >
+                    {filter === 'All' ? text.allLocations : filter}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row">
               <label className="flex min-w-0 flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.location}
                 <select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
                   <option value="">{text.chooseLocation}</option>
-                  {labTravelLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}
+                  {availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}
                 </select>
               </label>
               <button type="button" onClick={addLocation} disabled={!selectedSlug} className="min-h-11 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end">
