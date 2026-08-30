@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -101,10 +101,57 @@ function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
   }).format(date);
 }
 
+type LocationListView = {
+  activeFilter: string;
+  scrollY: number;
+};
+
+function getLocationListView(): LocationListView | null {
+  if (typeof window === 'undefined') return null;
+
+  const navigation = performance.getEntriesByType('navigation')[0] as
+    | PerformanceNavigationTiming
+    | undefined;
+
+  if (navigation?.type === 'reload') {
+    const { locationListView, ...historyState } = window.history.state ?? {};
+    window.history.replaceState(historyState, '', window.location.href);
+    return null;
+  }
+
+  const savedView = window.history.state?.locationListView;
+
+  if (!savedView || typeof savedView.activeFilter !== 'string' || typeof savedView.scrollY !== 'number') {
+    return null;
+  }
+
+  return savedView as LocationListView;
+}
+
+function saveLocationListView(activeFilter: string, scrollY: number) {
+  window.history.replaceState(
+    { ...(window.history.state ?? {}), locationListView: { activeFilter, scrollY } },
+    '',
+    window.location.href,
+  );
+}
+
 export default function CamerasPage() {
   const { locale, messages } = useMessages();
-  const [activeFilter, setActiveFilter] = useState('All');
+  const initialLocationListView = useRef(getLocationListView());
+  const [activeFilter, setActiveFilter] = useState(
+    () => initialLocationListView.current?.activeFilter ?? 'All',
+  );
   const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
+
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+    saveLocationListView(filter, window.scrollY);
+  };
+
+  const saveCurrentLocationListView = () => {
+    saveLocationListView(activeFilter, window.scrollY);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -178,6 +225,37 @@ export default function CamerasPage() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    const savedView = initialLocationListView.current;
+    if (!savedView) return;
+
+    const timer = window.setTimeout(() => {
+      window.scrollTo({ top: savedView.scrollY, behavior: 'auto' });
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let animationFrame: number | null = null;
+
+    const handleScroll = () => {
+      if (animationFrame !== null) return;
+
+      animationFrame = window.requestAnimationFrame(() => {
+        saveCurrentLocationListView();
+        animationFrame = null;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+    };
+  }, [activeFilter]);
 
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
@@ -261,7 +339,7 @@ export default function CamerasPage() {
                 <button
                   key={filter.value}
                   type="button"
-                  onClick={() => setActiveFilter(filter.value)}
+                  onClick={() => handleFilterChange(filter.value)}
                   className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
                     isActive
                       ? 'border-ocean bg-ocean text-white'
@@ -296,6 +374,7 @@ export default function CamerasPage() {
               <Link
                 key={displayLocation.slug}
                 href={`/explore/${displayLocation.slug}`}
+                onClick={saveCurrentLocationListView}
                 className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
               >
                 <div className="min-w-0 flex-1">

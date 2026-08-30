@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { useMessages } from '../../lib/i18n/useMessages';
 import {
@@ -86,7 +86,17 @@ function wazeNavigationUrl(destination: string, usesCoordinates: boolean) {
 
 export default function LocationPage({ location }: LocationPageProps) {
   const { locale, messages } = useMessages();
+  const router = useRouter();
   const displayLocation = getLocalizedLocation(location, locale);
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push('/cameras');
+  };
 
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
@@ -207,13 +217,13 @@ export default function LocationPage({ location }: LocationPageProps) {
       </Head>
 
       <main className="page-shell">
-        <Link
-          href="/cameras"
-          locale={locale}
+        <button
+          type="button"
+          onClick={handleBack}
           className="inline-flex text-sm font-medium text-ocean hover:underline"
         >
           {messages.location.back}
-        </Link>
+        </button>
 
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="relative aspect-[16/9] bg-slate-100">
