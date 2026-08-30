@@ -182,14 +182,6 @@ export default function CamerasPage() {
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
     {
-      value: 'Airport',
-      label: locale === 'uk' ? 'Аеропорт' : 'Airport',
-    },
-    {
-      value: 'Lab Travel',
-      label: 'Lab Travel',
-    },
-    {
       value: 'Viewpoints',
       label: messages.exploreList.filters.viewpoints,
     },
@@ -208,6 +200,14 @@ export default function CamerasPage() {
     {
       value: 'Levada walks',
       label: messages.exploreList.filters.levadaWalks,
+    },
+    {
+      value: 'Airport',
+      label: locale === 'uk' ? 'Аеропорт' : 'Airport',
+    },
+    {
+      value: 'Lab Travel',
+      label: 'Lab Travel',
     },
   ];
 
