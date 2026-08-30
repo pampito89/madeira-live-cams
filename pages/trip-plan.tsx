@@ -234,7 +234,7 @@ export default function TripPlanPage() {
         id: `villa-${Date.now()}`,
         type: 'villa',
         arrivalTime: getNextArrivalTime(),
-        durationMinutes: 30,
+        durationMinutes: 120,
       },
     ]);
   };
