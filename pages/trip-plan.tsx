@@ -46,14 +46,14 @@ function durationLabel(minutes: number, locale: 'en' | 'uk') {
 }
 
 export default function TripPlanPage() {
-  const { locale } = useMessages();
+  const { locale, messages } = useMessages();
   const [date, setDate] = useState(todayValue);
   const [villa, setVilla] = useState(villas[0].slug);
   const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
   const [departureTime, setDepartureTime] = useState('09:00');
   const [stops, setStops] = useState<PlanStop[]>([]);
   const [selectedSlug, setSelectedSlug] = useState('');
-  const [locationFilter, setLocationFilter] = useState('All');
+  const [locationFilter, setLocationFilter] = useState('Lab Travel');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
 
   const text =
@@ -125,13 +125,16 @@ export default function TripPlanPage() {
           defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.',
         };
 
-  const locationFilters = useMemo(
-    () => [
-      'All',
-      ...Array.from(new Set(locations.flatMap((location) => location.tags))).sort(),
-    ],
-    [],
-  );
+  const locationFilters = [
+    { value: 'All', label: messages.exploreList.filters.all },
+    { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints },
+    { value: 'Hiking', label: messages.exploreList.filters.hiking },
+    { value: 'Beaches', label: messages.exploreList.filters.beaches },
+    { value: 'City & culture', label: messages.exploreList.filters.cityCulture },
+    { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks },
+    { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' },
+    { value: 'Lab Travel', label: 'Lab Travel' },
+  ];
 
   const availableLocations = useMemo(
     () =>
@@ -315,19 +318,19 @@ export default function TripPlanPage() {
               <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
                 {locationFilters.map((filter) => (
                   <button
-                    key={filter}
+                    key={filter.value}
                     type="button"
                     onClick={() => {
-                      setLocationFilter(filter);
+                      setLocationFilter(filter.value);
                       setSelectedSlug('');
                     }}
                     className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
-                      locationFilter === filter
+                      locationFilter === filter.value
                         ? 'border-ocean bg-ocean text-white'
                         : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
                     }`}
                   >
-                    {filter === 'All' ? text.allLocations : filter}
+                    {filter.label}
                   </button>
                 ))}
               </div>
