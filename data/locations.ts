@@ -1856,6 +1856,41 @@ export const locations: Location[] = [
       },
     },
   },
+  {
+    slug: 'madeira-international-airport',
+    name: { en: 'Madeira International Airport', uk: 'Міжнародний аеропорт Мадейри' },
+    area: { en: 'Santa Cruz', uk: 'Santa Cruz' },
+    category: { en: 'Airport', uk: 'Аеропорт' },
+    tags: ['Airport', 'Lab Travel'],
+    summary: {
+      en: 'Madeira’s international gateway in Santa Cruz, known for its runway built above the Atlantic Ocean and spectacular landing views.',
+      uk: 'Міжнародні повітряні ворота Мадейри в Santa Cruz, відомі злітною смугою над Атлантичним океаном і вражаючими видами під час посадки.',
+    },
+    image: '/images/explore/airport_madeira.jpg',
+    imageAlt: {
+      en: 'Aerial view of Madeira International Airport runway above the Atlantic Ocean',
+      uk: 'Вид із повітря на злітну смугу Міжнародного аеропорту Мадейри над Атлантичним океаном',
+    },
+    mapQuery: 'Madeira International Airport Cristiano Ronaldo FNC',
+    article: {
+      intro: {
+        en: 'Madeira International Airport, officially Cristiano Ronaldo Madeira International Airport and identified by the code FNC, is the main air gateway to Madeira. Located in Santa Cruz on the east side of the island, it connects Madeira with Portugal and international destinations.',
+        uk: 'Міжнародний аеропорт Мадейри, офіційно Cristiano Ronaldo Madeira International Airport із кодом FNC, — головні повітряні ворота острова. Він розташований у Santa Cruz на сході Мадейри та з’єднує острів із Португалією й міжнародними напрямками.',
+      },
+      history: {
+        en: 'The airport opened in 1964 with a much shorter runway, improving Madeira’s connection with mainland Portugal and replacing the island’s former reliance on sea travel. Its runway was later extended over the sea on a structure supported by 180 reinforced-concrete pillars. This engineering project transformed the airport’s capacity and became one of Madeira’s most recognisable modern landmarks. The airport was renamed in honour of Cristiano Ronaldo in 2017.',
+        uk: 'Аеропорт відкрили у 1964 році з набагато коротшою злітною смугою, що покращило сполучення Мадейри з материковою Португалією та зменшило залежність острова від морських подорожей. Пізніше смугу подовжили над морем на конструкції, яку підтримують 180 залізобетонних опор. Цей інженерний проєкт змінив можливості аеропорту та став однією з найвпізнаваніших сучасних пам’яток Мадейри. У 2017 році аеропорт перейменували на честь Cristiano Ronaldo.',
+      },
+      highlights: {
+        en: ['Madeira’s main international airport, with the IATA code FNC', 'A runway extended over the Atlantic on 180 concrete pillars', 'Spectacular views during aircraft arrivals and departures', 'Real-time flights, parking, transport and airline information on the official airport website', 'A practical Lab Travel arrival and departure point'],
+        uk: ['Головний міжнародний аеропорт Мадейри з кодом IATA FNC', 'Злітна смуга, подовжена над Атлантикою на 180 бетонних опорах', 'Вражаючі види під час прильотів і вильотів літаків', 'Актуальні рейси, паркування, транспорт та інформація про авіакомпанії на офіційному сайті аеропорту', 'Практична точка прибуття та відправлення в програмі Lab Travel'],
+      },
+      practicalTip: {
+        en: 'Check live departure and arrival information before travelling. Allow extra time for airport access, vehicle return and security, especially during busy holiday periods. Arrange a transfer, taxi, bus or rental-car collection in advance.',
+        uk: 'Перед поїздкою перевіряйте актуальну інформацію про вильоти та прильоти. Закладайте додатковий час на дорогу до аеропорту, повернення авто й контроль безпеки, особливо у завантажені святкові періоди. Заздалегідь організуйте трансфер, таксі, автобус або отримання орендованого авто.',
+      },
+    },
+  },
 ];
 
 export function getLocationBySlug(slug: string) {

@@ -182,6 +182,10 @@ export default function CamerasPage() {
   const filters = [
     { value: 'All', label: messages.exploreList.filters.all },
     {
+      value: 'Airport',
+      label: locale === 'uk' ? 'Аеропорт' : 'Airport',
+    },
+    {
       value: 'Lab Travel',
       label: 'Lab Travel',
     },
