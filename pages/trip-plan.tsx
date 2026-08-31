@@ -33,6 +33,16 @@ const locationCoordinates: Record<string, [number, number]> = {
 
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
+
+function minutesBetween(fromTime: string, toTime: string) {
+  const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+  const [toHours, toMinutes] = toTime.split(':').map(Number);
+
+  const fromTotal = fromHours * 60 + fromMinutes;
+  const toTotal = toHours * 60 + toMinutes;
+
+  return (toTotal - fromTotal + 1440) % 1440;
+}
 function durationLabel(minutes: number, locale: 'en' | 'uk') { const hours = Math.floor(minutes / 60); const remaining = minutes % 60; if (locale === 'uk') return hours === 0 ? `${remaining} хв` : remaining === 0 ? `${hours} год` : `${hours} год ${remaining} хв`; return hours === 0 ? `${remaining} min` : remaining === 0 ? `${hours} hr` : `${hours} hr ${remaining} min`; }
 function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk') { if (locale === 'uk') { const clothing = temperature < 12 ? 'Одягайтеся тепло і шарами: тепла кофта, вітрозахисна куртка та закрите взуття.' : temperature < 20 ? 'Одягайтеся шарами: легка кофта або вітровка буде доречною.' : 'Підійде легкий одяг, але візьміть тонку кофту або вітровку на вечір та для гір.'; return `${rain >= 30 ? 'Ймовірність дощу достатня — візьміть дощовик.' : 'Ймовірність дощу невисока, але легкий дощовик у Мадейрі все одно буде корисним.'} ${clothing}`; } const clothing = temperature < 12 ? 'Dress warmly in layers: a warm mid-layer, windproof jacket and closed shoes.' : temperature < 20 ? 'Dress in layers; a light fleece or windbreaker is recommended.' : 'Light clothing is suitable, but bring a thin layer or windbreaker for the evening and mountains.'; return `${rain >= 30 ? 'Rain is possible, so take a rain jacket.' : 'Rain risk is low, but a light rain jacket is still useful in Madeira.'} ${clothing}`; }
 
@@ -278,8 +288,66 @@ export default function TripPlanPage() {
 
   const programme = useMemo(() => {
     if (stops.length === 0) return '';
-    const selectedDate = new Date(`${date}T12:00:00`); const formattedDate = new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'long' }).format(selectedDate); const ukrainianWeekdays = ['неділю', 'понеділок', 'вівторок', 'середу', 'четвер', 'п’ятницю', 'суботу']; const englishWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(selectedDate); const heading = locale === 'uk' ? `Програма на ${ukrainianWeekdays[selectedDate.getDay()]}, ${formattedDate}` : `Programme for ${englishWeekday}, ${formattedDate}`; const lines = [heading, '', `🚌 ${departureTime} — ${text.departureFrom} ${selectedVilla.name}, ${locale === 'uk' ? 'прибуття' : 'arrival'} ~${stops[0] ? stops[0].arrivalTime : addMinutes(departureTime, 30)}.`, '']; const endsAtAirport = stops[stops.length - 1]?.type === 'location' && stops[stops.length - 1]?.slug === 'madeira-international-airport';
-    stops.forEach((stop) => { const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes); if (stop.type === 'restaurant') { lines.push(`🍽️ ${stop.arrivalTime}–${endTime} — ${mealProgrammeText(stop.arrivalTime)}.`, ''); return; } if (stop.type === 'villa') { lines.push(`🏡 ${stop.arrivalTime}–${endTime} — ${selectedVilla.name}.`, `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`, ''); return; } if (stop.type === 'location' && stop.slug === 'madeira-international-airport') { const airport = locationBySlug.get(stop.slug); if (airport) lines.push(`✈️ ${stop.arrivalTime}–${endTime} — ${airport.name}.`, `https://madeiralivecams.com/${locale}/explore/${airport.slug}`, ''); return; } const location = stop.slug ? locationBySlug.get(stop.slug) : undefined; if (!location) return; const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍'; const sunriseSuffix = stop.slug === 'pico-do-arieiro' && stop.isSunrise ? locale === 'uk' ? ' Зустрічаємо схід сонця + прогулянка по маршруту PR1 – Vereda do Areeiro до Miradouro da Pedra Rija.' : ' Sunrise viewing plus a walk on PR1 – Vereda do Areeiro to Miradouro da Pedra Rija.' : '';
+    const selectedDate = new Date(`${date}T12:00:00`); const formattedDate = new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'long' }).format(selectedDate); const ukrainianWeekdays = ['неділю', 'понеділок', 'вівторок', 'середу', 'четвер', 'п’ятницю', 'суботу']; const englishWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(selectedDate); const heading = locale === 'uk' ? `Програма на ${ukrainianWeekdays[selectedDate.getDay()]}, ${formattedDate}` : `Programme for ${englishWeekday}, ${formattedDate}`; const firstStop = stops[0];
+    const firstTravelMinutes = firstStop
+      ? minutesBetween(departureTime, firstStop.arrivalTime)
+      : 30;
+
+    const travelLine = (
+      departureAt: string,
+      departureFrom: string,
+      travelMinutes: number,
+    ) => locale === 'uk'
+      ? `\u{1F68C} ${departureAt} \u2014 \u0432\u0438\u0457\u0437\u0434 \u0437 ${departureFrom}, \u0447\u0430\u0441 \u0432 \u0434\u043e\u0440\u043e\u0437\u0456 ~${travelMinutes} \u0445\u0432.`
+      : `\u{1F68C} ${departureAt} \u2014 departure from ${departureFrom}, travel time ~${travelMinutes} min.`;
+
+    const stopName = (stop: PlanStop) => {
+      if (stop.type === 'restaurant') {
+        return text.restaurant;
+      }
+
+      if (stop.type === 'villa') {
+        return selectedVilla.name;
+      }
+
+      return stop.slug
+        ? locationBySlug.get(stop.slug)?.name ?? ''
+        : '';
+    };
+
+    const lines = [
+      heading,
+      '',
+      travelLine(departureTime, selectedVilla.name, firstTravelMinutes),
+      '',
+    ];
+
+    const endsAtAirport = stops[stops.length - 1]?.type === 'location' && stops[stops.length - 1]?.slug === 'madeira-international-airport';
+    stops.forEach((stop, index) => {
+      const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
+
+      if (index > 0) {
+        const previousStop = stops[index - 1];
+
+        const previousEndTime = addMinutes(
+          previousStop.arrivalTime,
+          previousStop.durationMinutes,
+        );
+
+        const travelMinutes = minutesBetween(
+          previousEndTime,
+          stop.arrivalTime,
+        );
+
+        lines.push(
+          travelLine(
+            previousEndTime,
+            stopName(previousStop),
+            travelMinutes,
+          ),
+          '',
+        );
+      } if (stop.type === 'restaurant') { lines.push(`🍽️ ${stop.arrivalTime}–${endTime} — ${mealProgrammeText(stop.arrivalTime)}.`, ''); return; } if (stop.type === 'villa') { lines.push(`🏡 ${stop.arrivalTime}–${endTime} — ${selectedVilla.name}.`, `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`, ''); return; } if (stop.type === 'location' && stop.slug === 'madeira-international-airport') { const airport = locationBySlug.get(stop.slug); if (airport) lines.push(`✈️ ${stop.arrivalTime}–${endTime} — ${airport.name}.`, `https://madeiralivecams.com/${locale}/explore/${airport.slug}`, ''); return; } const location = stop.slug ? locationBySlug.get(stop.slug) : undefined; if (!location) return; const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍'; const sunriseSuffix = stop.slug === 'pico-do-arieiro' && stop.isSunrise ? locale === 'uk' ? ' Зустрічаємо схід сонця + прогулянка по маршруту PR1 – Vereda do Areeiro до Miradouro da Pedra Rija.' : ' Sunrise viewing plus a walk on PR1 – Vereda do Areeiro to Miradouro da Pedra Rija.' : '';
       const cristovaoSuffix = stop.slug === 'miradouro-sao-cristovao' && (stop.hasCristovaoBar || stop.hasCristovaoRestaurant)
         ? locale === 'uk'
           ? ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'напої та перекус у барі' : ''}`
