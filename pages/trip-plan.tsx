@@ -373,7 +373,8 @@ export default function TripPlanPage() {
   {copyStatus === 'copied' ? '\u2713' : '\u{1F5FA}\uFE0F'}
 </button></div>
   </div>
-</div><div className="mt-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs leading-5 text-slate-500">
+</div><textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" />
+<div className="mt-3 border-t border-slate-200 pt-3 text-xs leading-5 text-slate-400">
   {routeUsageStatus === 'loading' && (
     <span>
       {locale === 'uk'
@@ -393,8 +394,8 @@ export default function TripPlanPage() {
   {routeUsageStatus === 'ready' && routeUsage && routeUsage.remaining > 0 && (
     <span>
       {locale === 'uk'
-        ? `Google Routes: \u0437\u0430\u043b\u0438\u0448\u0438\u043b\u043e\u0441\u044c ${routeUsage.remaining.toLocaleString()} \u0437 ${routeUsage.limit.toLocaleString()} \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0445 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c \u0446\u044c\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f. \u041e\u0434\u0438\u043d \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u043d\u043e\u043a \u043c\u043e\u0436\u0435 \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u0442\u0438 \u043a\u0456\u043b\u044c\u043a\u0430 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c.`
-        : `Google Routes: ${routeUsage.remaining.toLocaleString()} of ${routeUsage.limit.toLocaleString()} free requests remain this month. One route calculation can use multiple requests.`}
+        ? `Google Routes: \u0437\u0430\u043b\u0438\u0448\u0438\u043b\u043e\u0441\u044c ${routeUsage.remaining.toLocaleString()} \u0437 ${routeUsage.limit.toLocaleString()} \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0445 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c \u0446\u044c\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f.`
+        : `Google Routes: ${routeUsage.remaining.toLocaleString()} of ${routeUsage.limit.toLocaleString()} free requests remain this month.`}
     </span>
   )}
 
@@ -405,6 +406,6 @@ export default function TripPlanPage() {
         : 'The monthly Google Routes limit has been reached. Route calculation will be available again next month.'}
     </span>
   )}
-</div><textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" /></section>
+</div></section>
   </section></main></Layout>;
 }
