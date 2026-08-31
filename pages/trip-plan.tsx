@@ -81,7 +81,13 @@ export default function TripPlanPage() {
     return () => { cancelled = true; };
   }, [date, stops, hasBeach]);
 
-  const getNextArrivalTime = () => { const previousStop = stops[stops.length - 1]; return !previousStop ? addMinutes(departureTime, 30) : addMinutes(previousStop.arrivalTime, previousStop.durationMinutes + 30); };
+  const roundTravelMinutes = (minutes: number) => Math.ceil(minutes / 5) * 5;
+  const getNextArrivalTime = () => {
+    const previousStop = stops[stops.length - 1];
+    return !previousStop
+      ? addMinutes(departureTime, 30)
+      : addMinutes(previousStop.arrivalTime, previousStop.durationMinutes + 30);
+  };
   const addLocation = () => { if (!selectedSlug) return; const selectedLocation = locations.find((location) => location.slug === selectedSlug); setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]); setSelectedSlug(''); };
   const addRestaurant = () => setStops((current) => [...current, { id: `restaurant-${Date.now()}`, type: 'restaurant', arrivalTime: getNextArrivalTime(), durationMinutes: 90, mealType: 'lunch' }]);
   const addVillaStop = () => setStops((current) => [...current, { id: `villa-${Date.now()}`, type: 'villa', arrivalTime: getNextArrivalTime(), durationMinutes: 120 }]);
