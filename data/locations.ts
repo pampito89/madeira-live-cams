@@ -371,8 +371,8 @@ export const locations: Location[] = [
   {
     slug: 'pico-do-arieiro',
     name: {
-      en: 'Pico do Arieiro',
-      uk: 'Pico do Arieiro',
+      en: 'PR1 – Vereda do Areeiro',
+      uk: 'PR1 – Vereda do Areeiro',
     },
     area: {
       en: 'Central mountains',
@@ -433,8 +433,8 @@ export const locations: Location[] = [
   {
     slug: 'pico-ruivo',
     name: {
-      en: 'Pico Ruivo',
-      uk: 'Pico Ruivo',
+      en: 'PR1.2 – Vereda do Pico Ruivo',
+      uk: 'PR1.2 – Vereda do Pico Ruivo',
     },
     area: {
       en: 'Central mountains',
@@ -733,8 +733,8 @@ export const locations: Location[] = [
   {
     slug: 'ponta-de-sao-lourenco',
     name: {
-      en: 'Vereda da Ponta de São Lourenço',
-      uk: 'Стежка Ponta de São Lourenço',
+      en: 'PR8 – Vereda da Ponta de São Lourenço',
+      uk: 'PR8 – Vereda da Ponta de São Lourenço',
     },
     area: {
       en: 'East peninsula',
@@ -1167,8 +1167,8 @@ export const locations: Location[] = [
   {
     slug: 'pico-grande',
     name: {
-      en: 'Pico Grande',
-      uk: 'Pico Grande',
+      en: 'PR12 – Caminho Real da Encumeada (Pico Grande)',
+      uk: 'PR12 – Caminho Real da Encumeada (Pico Grande)',
     },
     area: {
       en: 'Central mountains, Câmara de Lobos',
