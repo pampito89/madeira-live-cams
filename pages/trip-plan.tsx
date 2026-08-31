@@ -11,6 +11,7 @@ type PlanStop = {
   slug?: string;
   arrivalTime: string;
   durationMinutes: number;
+  isSunrise?: boolean;
 };
 
 const villas = stays;
@@ -100,6 +101,7 @@ export default function TripPlanPage() {
           noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.',
           arrival: 'Прибуття',
           duration: 'Тривалість',
+          sunrise: 'Схід сонця',
           up: 'Вище',
           down: 'Нижче',
           remove: 'Видалити',
@@ -133,6 +135,7 @@ export default function TripPlanPage() {
           noStops: 'Add your first location or restaurant to build the route.',
           arrival: 'Arrival',
           duration: 'Duration',
+          sunrise: 'Sunrise',
           up: 'Move up',
           down: 'Move down',
           remove: 'Remove',
@@ -210,6 +213,7 @@ export default function TripPlanPage() {
         durationMinutes: isMadeiraAirport
           ? 15
           : standardLocationDurations[selectedSlug] ?? 90,
+        isSunrise: false,
       },
     ]);
     setSelectedSlug('');
@@ -240,7 +244,9 @@ export default function TripPlanPage() {
   };
 
   const updateStop = (id: string, updates: Partial<PlanStop>) => {
-    setStops((current) => current.map((stop) => (stop.id === id ? { ...stop, ...updates } : stop)));
+    setStops((current) => current.map((stop) => (
+      stop.id === id ? { ...stop, ...updates } : stop
+    )));
   };
 
   const moveStop = (index: number, direction: -1 | 1) => {
@@ -271,13 +277,18 @@ export default function TripPlanPage() {
     const heading = locale === 'uk'
       ? `Програма на ${ukrainianWeekdays[selectedDate.getDay()]}, ${formattedDate}`
       : `Programme for ${englishWeekday}, ${formattedDate}`;
-    const lines = [heading, '', `${"🚌"} ${departureTime} — ${text.departureFrom} ${selectedVilla.name}.`, ''];
+    const lines = [
+      heading,
+      '',
+      `🚌 ${departureTime} — ${text.departureFrom} ${selectedVilla.name}.`,
+      '',
+    ];
 
     const endsAtAirport =
       stops[stops.length - 1]?.type === 'location' &&
       stops[stops.length - 1]?.slug === 'madeira-international-airport';
 
-    stops.forEach((stop, index) => {
+    stops.forEach((stop) => {
       const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
 
       if (stop.type === 'restaurant') {
@@ -311,13 +322,19 @@ export default function TripPlanPage() {
       const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
       if (!location) return;
 
-      const icon = location.tags.includes('Beaches') ? '🏖️' : location.tags.includes('Hiking') ? '🌿' : '📍';
+      const icon = location.tags.includes('Beaches')
+        ? '🏖️'
+        : location.tags.includes('Hiking')
+          ? '🌿'
+          : '📍';
+
       const sunriseSuffix =
-        index === 0 && location.slug === 'pico-do-arieiro'
+        stop.slug === 'pico-do-arieiro' && stop.isSunrise
           ? locale === 'uk'
             ? ' Зустрічаємо схід сонця + прогулянка по маршруту PR1 – Vereda do Areeiro до Miradouro da Pedra Rija.'
             : ' Sunrise viewing plus a walk on PR1 – Vereda do Areeiro to Miradouro da Pedra Rija.'
           : '';
+
       lines.push(
         `${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.${sunriseSuffix}`,
         `https://madeiralivecams.com/${locale}/explore/${location.slug}`,
@@ -337,8 +354,19 @@ export default function TripPlanPage() {
         `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`,
       );
     }
+
     return lines.join('\n');
-  }, [date, departureTime, locale, locationBySlug, stops, text.departureFrom, text.lunch, text.return, selectedVilla]);
+  }, [
+    date,
+    departureTime,
+    locale,
+    locationBySlug,
+    selectedVilla,
+    stops,
+    text.departureFrom,
+    text.lunch,
+    text.return,
+  ]);
 
   const copyProgramme = async () => {
     if (!programme) return;
@@ -356,34 +384,63 @@ export default function TripPlanPage() {
 
       <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
         <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">{text.title}</h1>
-          <p className="mt-3 max-w-2xl leading-7 text-slate-600">{text.intro}</p>
+          <p className="text-sm font-semibold uppercase tracking-wider text-ocean">
+            Madeira Live Cams
+          </p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">
+            {text.title}
+          </h1>
+          <p className="mt-3 max-w-2xl leading-7 text-slate-600">
+            {text.intro}
+          </p>
 
           <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5">
             <h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2>
+
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.date}
-                <input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(event) => setDate(event.target.value)}
+                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                />
               </label>
+
               <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.startVilla}
-                <select value={villa} onChange={(event) => setVilla(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
-                  {villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
+                <select
+                  value={villa}
+                  onChange={(event) => setVilla(event.target.value)}
+                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                >
+                  {villas.map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </label>
+
               <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.departure}
-                <input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" />
+                <input
+                  type="time"
+                  value={departureTime}
+                  onChange={(event) => setDepartureTime(event.target.value)}
+                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                />
               </label>
             </div>
           </div>
 
           <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5">
             <h2 className="text-lg font-bold text-navy">{text.addStop}</h2>
+
             <div className="mt-4">
               <p className="text-sm font-semibold text-navy">{text.locationFilters}</p>
+
               <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
                 {locationFilters.map((filter) => (
                   <button
@@ -408,18 +465,42 @@ export default function TripPlanPage() {
             <div className="mt-3 flex flex-col gap-3 sm:flex-row">
               <label className="flex min-w-0 flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">
                 {text.location}
-                <select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20">
+                <select
+                  value={selectedSlug}
+                  onChange={(event) => setSelectedSlug(event.target.value)}
+                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                >
                   <option value="">{text.chooseLocation}</option>
-                  {availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}
+                  {availableLocations.map((location) => (
+                    <option key={location.slug} value={location.slug}>
+                      {location.name}
+                    </option>
+                  ))}
                 </select>
               </label>
-              <button type="button" onClick={addLocation} disabled={!selectedSlug} className="min-h-11 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end">
+
+              <button
+                type="button"
+                onClick={addLocation}
+                disabled={!selectedSlug}
+                className="min-h-11 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end"
+              >
                 + {text.addLocation}
               </button>
-              <button type="button" onClick={addRestaurant} className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white sm:self-end">
+
+              <button
+                type="button"
+                onClick={addRestaurant}
+                className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white sm:self-end"
+              >
                 + {text.addRestaurant}
               </button>
-              <button type="button" onClick={addVillaStop} className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-navy transition hover:border-ocean hover:text-ocean sm:self-end">
+
+              <button
+                type="button"
+                onClick={addVillaStop}
+                className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-navy transition hover:border-ocean hover:text-ocean sm:self-end"
+              >
                 + {text.addVilla}
               </button>
             </div>
@@ -428,43 +509,137 @@ export default function TripPlanPage() {
           <section className="mt-6">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>
-              {stops.length > 0 && <button type="button" onClick={() => setStops([])} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}
+
+              {stops.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setStops([])}
+                  className="text-sm font-semibold text-slate-500 hover:text-ocean"
+                >
+                  {text.clear}
+                </button>
+              )}
             </div>
 
             {stops.length === 0 ? (
-              <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p>
+              <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">
+                {text.noStops}
+              </p>
             ) : (
               <div className="mt-3 space-y-3">
                 {stops.map((stop, index) => {
                   const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
-                  const name = stop.type === 'restaurant' ? text.restaurant : stop.type === 'villa' ? selectedVilla.name : location?.name ?? '';
-                  const icon = stop.type === 'restaurant' ? '🍽️' : stop.type === 'villa' ? '🏡' : location?.tags.includes('Beaches') ? '🏖️' : location?.tags.includes('Hiking') ? '🌿' : '📍';
+                  const name = stop.type === 'restaurant'
+                    ? text.restaurant
+                    : stop.type === 'villa'
+                      ? selectedVilla.name
+                      : location?.name ?? '';
+                  const icon = stop.type === 'restaurant'
+                    ? '🍽️'
+                    : stop.type === 'villa'
+                      ? '🏡'
+                      : location?.tags.includes('Beaches')
+                        ? '🏖️'
+                        : location?.tags.includes('Hiking')
+                          ? '🌿'
+                          : '📍';
+
+                  const canSelectSunrise =
+                    stop.type === 'location' &&
+                    stop.slug === 'pico-do-arieiro';
 
                   return (
-                    <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <article
+                      key={stop.id}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                    >
                       <div className="flex items-start gap-3">
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span>
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">
+                          {index + 1}
+                        </span>
+
                         <div className="min-w-0 flex-1">
-                          <p className="font-bold text-navy">{icon} {name}</p>
-                          <p className="mt-1 text-xs text-slate-500">{durationLabel(stop.durationMinutes, locale)}</p>
+                          <p className="font-bold text-navy">
+                            {icon} {name}
+                          </p>
+                          <p className="mt-1 text-xs text-slate-500">
+                            {durationLabel(stop.durationMinutes, locale)}
+                          </p>
                         </div>
-                        <button type="button" onClick={() => removeStop(stop.id)} aria-label={text.remove} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600">×</button>
+
+                        <button
+                          type="button"
+                          onClick={() => removeStop(stop.id)}
+                          aria-label={text.remove}
+                          className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600"
+                        >
+                          ×
+                        </button>
                       </div>
+
                       <div className="mt-4 grid grid-cols-2 gap-3">
                         <label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">
                           {text.arrival}
-                          <input type="time" value={stop.arrivalTime} onChange={(event) => updateStop(stop.id, { arrivalTime: event.target.value })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none" />
+                          <input
+                            type="time"
+                            value={stop.arrivalTime}
+                            onChange={(event) => updateStop(stop.id, {
+                              arrivalTime: event.target.value,
+                            })}
+                            className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none"
+                          />
                         </label>
+
                         <label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">
                           {text.duration}
-                          <select value={stop.durationMinutes} onChange={(event) => updateStop(stop.id, { durationMinutes: Number(event.target.value) })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none">
-                            {durationOptions.map((minutes) => <option key={minutes} value={minutes}>{durationLabel(minutes, locale)}</option>)}
+                          <select
+                            value={stop.durationMinutes}
+                            onChange={(event) => updateStop(stop.id, {
+                              durationMinutes: Number(event.target.value),
+                            })}
+                            className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none"
+                          >
+                            {durationOptions.map((minutes) => (
+                              <option key={minutes} value={minutes}>
+                                {durationLabel(minutes, locale)}
+                              </option>
+                            ))}
                           </select>
                         </label>
                       </div>
+
+                      {canSelectSunrise && (
+                        <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-navy">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(stop.isSunrise)}
+                            onChange={(event) => updateStop(stop.id, {
+                              isSunrise: event.target.checked,
+                            })}
+                            className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"
+                          />
+                          <span>🌅 {text.sunrise}</span>
+                        </label>
+                      )}
+
                       <div className="mt-3 flex gap-2">
-                        <button type="button" onClick={() => moveStop(index, -1)} disabled={index === 0} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↑ {text.up}</button>
-                        <button type="button" onClick={() => moveStop(index, 1)} disabled={index === stops.length - 1} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↓ {text.down}</button>
+                        <button
+                          type="button"
+                          onClick={() => moveStop(index, -1)}
+                          disabled={index === 0}
+                          className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35"
+                        >
+                          ↑ {text.up}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => moveStop(index, 1)}
+                          disabled={index === stops.length - 1}
+                          className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35"
+                        >
+                          ↓ {text.down}
+                        </button>
                       </div>
                     </article>
                   );
@@ -476,11 +651,22 @@ export default function TripPlanPage() {
           <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl font-bold text-navy">{text.output}</h2>
-              <button type="button" onClick={copyProgramme} disabled={!programme} className="min-h-10 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40">
+
+              <button
+                type="button"
+                onClick={copyProgramme}
+                disabled={!programme}
+                className="min-h-10 rounded-lg bg-ocean px-4 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40"
+              >
                 {copyStatus === 'copied' ? `✓ ${text.copied}` : text.copy}
               </button>
             </div>
-            <textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" />
+
+            <textarea
+              readOnly
+              value={programme || text.defaultProgram}
+              className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none"
+            />
           </section>
         </section>
       </main>
