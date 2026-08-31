@@ -9,6 +9,12 @@ type MealType = 'breakfast' | 'lunch' | 'dinner';
 type RecommendationKey = 'weather' | 'beach' | 'levada' | 'sunrise';
 type PlanStop = { id: string; type: 'location' | 'restaurant' | 'villa'; slug?: string; arrivalTime: string; durationMinutes: number; isSunrise?: boolean; mealType?: MealType; hasCristovaoBar?: boolean; hasCristovaoRestaurant?: boolean };
 type WeatherSummary = { averageTemperature: number; rainProbability: number; picoTemperature: number | null; picoWindSpeed: number | null; picoWindGusts: number | null; waterTemperature: number | null };
+type RouteUsage = {
+  limit: number;
+  used: number;
+  remaining: number;
+  month: string;
+};
 
 const villas = stays;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
@@ -37,6 +43,8 @@ export default function TripPlanPage() {
   const [recommendations, setRecommendations] = useState<Record<RecommendationKey, boolean>>({ weather: false, beach: false, levada: false, sunrise: false });
   const [weather, setWeather] = useState<WeatherSummary | null>(null); const [weatherStatus, setWeatherStatus] = useState<'idle' | 'loading' | 'unavailable'>('idle');
   const [routeStatus, setRouteStatus] = useState<'idle' | 'loading'>('idle');
+  const [routeUsage, setRouteUsage] = useState<RouteUsage | null>(null);
+  const [routeUsageStatus, setRouteUsageStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading');
 
   const text = locale === 'uk' ? {
     title: 'План подорожі', intro: 'Створіть просту програму дня: оберіть віллу, додайте локації, ресторан і час для кожної зупинки.', dayDetails: 'Деталі дня', date: 'Дата', startVilla: 'Стартова вілла', departure: 'Час виїзду', addStop: 'Додати точку', location: 'Локація', locationFilters: 'Фільтр локацій', chooseLocation: 'Оберіть локацію', addLocation: 'Додати локацію', addRestaurant: 'Додати ресторан', addVilla: 'Додати повернення на віллу', selectedStops: 'Маршрут дня', noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.', arrival: 'Прибуття', duration: 'Тривалість', sunrise: 'Схід сонця', bar: 'Бар', restaurantOption: 'Ресторан', meal: 'Прийом їжі', breakfast: 'Сніданок', lunch: 'Обід', dinner: 'Вечеря', up: 'Вище', down: 'Нижче', remove: 'Видалити', restaurant: 'Ресторан', output: 'Готова програма', share: 'Поділитися', copied: 'Скопійовано', clear: 'Очистити маршрут', return: 'Повернення до', departureFrom: 'виїзд з', defaultProgram: 'Додайте точки маршруту — тут з’явиться готова програма для копіювання.', recommendations: 'Рекомендації на день', weather: 'Погода', beach: 'Пляж', levada: 'Левада', weatherLoading: 'Завантажуємо актуальний прогноз…', weatherUnavailable: 'Актуальний прогноз для обраної дати недоступний. Перевірте погоду перед виїздом.',
@@ -122,7 +130,12 @@ export default function TripPlanPage() {
 
 
   const calculateRoute = async () => {
-    if (!stops.length || routeStatus === 'loading') {
+    if (
+      !stops.length ||
+      routeStatus === 'loading' ||
+      !routeUsage ||
+      routeUsage.remaining <= 0
+    ) {
       return;
     }
 
@@ -159,11 +172,21 @@ export default function TripPlanPage() {
             }),
           });
 
-          if (response.ok) {
-            const data = (await response.json()) as {
-              durationMinutes: number;
-            };
+          const data = (await response.json()) as {
+            durationMinutes?: number;
+            usage?: RouteUsage;
+          };
 
+          if (data.usage) {
+            setRouteUsage(data.usage);
+          }
+
+          if (response.status === 429) {
+            await loadRouteUsage();
+            break;
+          }
+
+          if (response.ok && data.durationMinutes) {
             travelMinutes = roundTravelMinutes(data.durationMinutes);
           }
         } catch {
@@ -189,8 +212,35 @@ export default function TripPlanPage() {
       })),
     );
 
+    await loadRouteUsage();
     setRouteStatus('idle');
   };
+
+
+  const loadRouteUsage = async () => {
+    setRouteUsageStatus('loading');
+
+    try {
+      const response = await fetch('/api/route-usage');
+
+      if (!response.ok) {
+        throw new Error('Usage request failed');
+      }
+
+      const data = (await response.json()) as RouteUsage;
+
+      setRouteUsage(data);
+      setRouteUsageStatus('ready');
+    } catch {
+      setRouteUsageStatus('unavailable');
+    }
+  };
+
+
+  useEffect(() => {
+    loadRouteUsage();
+  }, []);
+
 
   const getNextArrivalTime = () => {
     const previousStop = stops[stops.length - 1];
@@ -312,7 +362,7 @@ export default function TripPlanPage() {
     <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><div>
   <h2 className="text-xl font-bold text-navy">{text.output}</h2>
   <div className="mt-3 flex items-center gap-2">
-    <div className="flex flex-wrap items-center gap-2"><button type="button" onClick={calculateRoute} disabled={stops.length === 0 || routeStatus === 'loading'} className="min-h-10 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white disabled:cursor-not-allowed disabled:opacity-50">{routeStatus === 'loading' ? (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u043e\u0432\u0443\u0454\u043c\u043e...' : 'Calculating...') : (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u0443\u0432\u0430\u0442\u0438 \u043c\u0430\u0440\u0448\u0440\u0443\u0442' : 'Calculate route')}</button><button
+    <div className="flex flex-wrap items-center gap-2"><button type="button" onClick={calculateRoute} disabled={stops.length === 0 || routeStatus === 'loading' || routeUsageStatus !== 'ready' || !routeUsage || routeUsage.remaining <= 0} className="min-h-10 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white disabled:cursor-not-allowed disabled:opacity-50">{routeStatus === 'loading' ? (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u043e\u0432\u0443\u0454\u043c\u043e...' : 'Calculating...') : (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u0443\u0432\u0430\u0442\u0438 \u043c\u0430\u0440\u0448\u0440\u0443\u0442' : 'Calculate route')}</button><button
   type="button"
   onClick={shareProgramme}
   disabled={!programme}
@@ -323,6 +373,38 @@ export default function TripPlanPage() {
   {copyStatus === 'copied' ? '\u2713' : '\u{1F5FA}\uFE0F'}
 </button></div>
   </div>
+</div><div className="mt-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs leading-5 text-slate-500">
+  {routeUsageStatus === 'loading' && (
+    <span>
+      {locale === 'uk'
+        ? '\u0417\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0443\u0454\u043c\u043e \u043b\u0456\u043c\u0456\u0442 Google Routes...'
+        : 'Loading Google Routes limit...'}
+    </span>
+  )}
+
+  {routeUsageStatus === 'unavailable' && (
+    <span>
+      {locale === 'uk'
+        ? '\u041b\u0456\u0447\u0438\u043b\u044c\u043d\u0438\u043a Google Routes \u0442\u0438\u043c\u0447\u0430\u0441\u043e\u0432\u043e \u043d\u0435\u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0438\u0439.'
+        : 'Google Routes usage counter is temporarily unavailable.'}
+    </span>
+  )}
+
+  {routeUsageStatus === 'ready' && routeUsage && routeUsage.remaining > 0 && (
+    <span>
+      {locale === 'uk'
+        ? `Google Routes: \u0437\u0430\u043b\u0438\u0448\u0438\u043b\u043e\u0441\u044c ${routeUsage.remaining.toLocaleString()} \u0437 ${routeUsage.limit.toLocaleString()} \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0445 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c \u0446\u044c\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f. \u041e\u0434\u0438\u043d \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u043d\u043e\u043a \u043c\u043e\u0436\u0435 \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u0442\u0438 \u043a\u0456\u043b\u044c\u043a\u0430 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c.`
+        : `Google Routes: ${routeUsage.remaining.toLocaleString()} of ${routeUsage.limit.toLocaleString()} free requests remain this month. One route calculation can use multiple requests.`}
+    </span>
+  )}
+
+  {routeUsageStatus === 'ready' && routeUsage && routeUsage.remaining <= 0 && (
+    <span className="font-semibold text-red-600">
+      {locale === 'uk'
+        ? '\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u043c\u0456\u0441\u044f\u0447\u043d\u0438\u0439 \u043b\u0456\u043c\u0456\u0442 Google Routes \u0432\u0438\u0447\u0435\u0440\u043f\u0430\u043d\u043e. \u041a\u043d\u043e\u043f\u043a\u0430 \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u043d\u043a\u0443 \u0431\u0443\u0434\u0435 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0430 \u043d\u0430 \u043f\u043e\u0447\u0430\u0442\u043a\u0443 \u043d\u0430\u0441\u0442\u0443\u043f\u043d\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f.'
+        : 'The monthly Google Routes limit has been reached. Route calculation will be available again next month.'}
+    </span>
+  )}
 </div><textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" /></section>
   </section></main></Layout>;
 }
