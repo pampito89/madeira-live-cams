@@ -52,7 +52,10 @@ export default function TripPlanPage() {
   const hasSunrise = stops.some((stop) => stop.slug === 'pico-do-arieiro' && stop.isSunrise);
 
   useEffect(() => {
-    const slugs = [...new Set(stops.filter((stop) => stop.type === 'location' && stop.slug).map((stop) => stop.slug as string))];
+    const slugs = stops
+      .filter((stop) => stop.type === 'location' && stop.slug)
+      .map((stop) => stop.slug as string)
+      .filter((slug, index, allSlugs) => allSlugs.indexOf(slug) === index);
     if (slugs.length === 0) { setWeather(null); setWeatherStatus('idle'); return; }
     let cancelled = false;
     const loadWeather = async () => {
