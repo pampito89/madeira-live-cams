@@ -50,7 +50,10 @@ const categoryLabels: Record<CameraCategory, LocalizedText> = {
   'Sunrise spots': { en: 'Sunrise', uk: 'Схід сонця' },
 };
 
-export function getLocalizedCamera(camera: Camera, locale: Locale): DisplayCamera {
+export function getLocalizedCamera(
+  camera: Camera,
+  locale: Locale
+): DisplayCamera {
   return {
     id: camera.id,
     name: camera.name[locale],
@@ -192,17 +195,8 @@ export const cameras: Camera[] = [
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/ponta-delgada',
   },
   {
-    id: 'cristo-rei',
-    name: { en: 'Cristo Rei, Garajau', uk: 'Крішту-Рей, Гаражау' },
-    region: { en: 'East Coast', uk: 'Східне узбережжя' },
-    category: ['East Coast'],
-    latitude: 32.638,
-    longitude: -16.851,
-    sourceUrl: 'https://worldcam.eu/webcams/europe/portugal/4920-garajau-cristo-rei',
-  },
-  {
     id: 'seixal-beach',
-    name: { en: 'Seixal Beach', uk: 'Пляж Seixal' },
+    name: { en: 'Seixal Beach', uk: 'Пляж Сейшал' },
     region: { en: 'North Coast', uk: 'Північне узбережжя' },
     category: ['Beaches', 'North Coast'],
     latitude: 32.821,
@@ -212,12 +206,34 @@ export const cameras: Camera[] = [
   },
   {
     id: 'machico-beach',
-    name: { en: 'Machico Beach', uk: 'Пляж Machico' },
+    name: { en: 'Machico Beach', uk: 'Пляж Машіку' },
     region: { en: 'East Coast', uk: 'Східне узбережжя' },
     category: ['Beaches', 'East Coast'],
     latitude: 32.7224,
     longitude: -16.7648,
     sourceUrl: 'https://www.youtube.com/watch?v=MhOuCDXuP_0',
     youtubeId: 'MhOuCDXuP_0',
+  },
+  {
+    id: 'santo-da-serra-golf',
+    name: {
+      en: 'Santo da Serra Golf Club',
+      uk: 'Гольф-клуб Санту-да-Серра',
+    },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
+    category: ['Mountains', 'East Coast'],
+    latitude: 32.7222,
+    longitude: -16.8039,
+    sourceUrl: 'https://www.youtube.com/watch?v=xiQC5Qbi3qE',
+    youtubeId: 'xiQC5Qbi3qE',
+  },
+  {
+    id: 'boaventura',
+    name: { en: 'Boaventura', uk: 'Боавентура' },
+    region: { en: 'North Coast', uk: 'Північне узбережжя' },
+    category: ['Towns', 'Mountains', 'North Coast'],
+    latitude: 32.7919,
+    longitude: -16.9731,
+    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/boaventura',
   },
 ];
