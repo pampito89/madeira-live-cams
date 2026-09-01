@@ -167,7 +167,7 @@ export const cameras: Camera[] = [
       en: 'North Coast',
       uk: 'Північне узбережжя',
     },
-    category: ['North Coast'],
+    category: ['Beaches', 'North Coast'],
     latitude: 32.867,
     longitude: -17.166,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/porto-moniz',
