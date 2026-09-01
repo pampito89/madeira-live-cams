@@ -40,38 +40,14 @@ export type DisplayCamera = {
 };
 
 const categoryLabels: Record<CameraCategory, LocalizedText> = {
-  Mountains: {
-    en: 'Mountains',
-    uk: 'Гори',
-  },
-  Beaches: {
-    en: 'Beaches',
-    uk: 'Пляжі',
-  },
-  Towns: {
-    en: 'Towns',
-    uk: 'Міста',
-  },
-  'North Coast': {
-    en: 'North',
-    uk: 'Північ',
-  },
-  'South Coast': {
-    en: 'South',
-    uk: 'Південь',
-  },
-  'East Coast': {
-    en: 'East',
-    uk: 'Схід',
-  },
-  'West Coast': {
-    en: 'West',
-    uk: 'Захід',
-  },
-  'Sunrise spots': {
-    en: 'Sunrise',
-    uk: 'Схід сонця',
-  },
+  Mountains: { en: 'Mountains', uk: 'Гори' },
+  Beaches: { en: 'Beaches', uk: 'Пляжі' },
+  Towns: { en: 'Towns', uk: 'Міста' },
+  'North Coast': { en: 'North', uk: 'Північ' },
+  'South Coast': { en: 'South', uk: 'Південь' },
+  'East Coast': { en: 'East', uk: 'Схід' },
+  'West Coast': { en: 'West', uk: 'Захід' },
+  'Sunrise spots': { en: 'Sunrise', uk: 'Схід сонця' },
 };
 
 export function getLocalizedCamera(
@@ -220,6 +196,22 @@ export const cameras: Camera[] = [
     longitude: -17.1,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/ponta-do-sol',
     youtubeId: 'BuL1tgahkXM',
+  },
+  {
+    id: 'calheta-beach',
+    name: {
+      en: 'Calheta Beach',
+      uk: 'Пляж Кальєта',
+    },
+    region: {
+      en: 'South Coast',
+      uk: 'Південне узбережжя',
+    },
+    category: ['Beaches', 'South Coast'],
+    latitude: 32.7189,
+    longitude: -17.1744,
+    sourceUrl: 'https://www.youtube.com/watch?v=t4x0u0ARLwo',
+    youtubeId: 't4x0u0ARLwo',
   },
   {
     id: 'achada-do-teixeira',
