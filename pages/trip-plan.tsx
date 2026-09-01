@@ -474,7 +474,7 @@ export default function TripPlanPage() {
       : addMinutes(previousStop.arrivalTime, previousStop.durationMinutes + 30);
   };
   const addLocation = () => { if (!selectedSlug) return; const selectedLocation = locations.find((location) => location.slug === selectedSlug); setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]); setSelectedSlug(''); };
-  const addRestaurant = () => { setStops((current) => [...current, { id: `restaurant-${Date.now()}`, type: 'restaurant', arrivalTime: getNextArrivalTime(), durationMinutes: 90, mealType: 'lunch' }]); setRecommendations((current) => ({ ...current, food: true })); };
+  const addRestaurant = () => setStops((current) => [...current, { id: `restaurant-${Date.now()}`, type: 'restaurant', arrivalTime: getNextArrivalTime(), durationMinutes: 90, mealType: 'lunch' }]);
   const addVillaStop = () => setStops((current) => [...current, { id: `villa-${Date.now()}`, type: 'villa', arrivalTime: getNextArrivalTime(), durationMinutes: 120 }]);
   const updateStop = (id: string, updates: Partial<PlanStop>) => setStops((current) => current.map((stop) => stop.id === id ? { ...stop, ...updates } : stop));
   const moveStop = (index: number, direction: -1 | 1) => { const targetIndex = index + direction; if (targetIndex < 0 || targetIndex >= stops.length) return; setStops((current) => { const next = [...current]; [next[index], next[targetIndex]] = [next[targetIndex], next[index]]; return next; }); };
