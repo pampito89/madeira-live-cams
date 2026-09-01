@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useMessages } from '../lib/i18n/useMessages';
 import {
@@ -36,6 +36,33 @@ const CameraCard: React.FC<Props> = ({
 }) => {
   const { locale, messages } = useMessages();
   const displayCamera = getLocalizedCamera(camera, locale);
+
+  const [snapshotVersion, setSnapshotVersion] = useState(
+    Math.floor(Date.now() / 60000)
+  );
+  const [snapshotFailed, setSnapshotFailed] = useState(false);
+
+  const isNetMadeiraCamera = displayCamera.sourceUrl.includes(
+    'netmadeira.com/webcams-madeira/'
+  );
+
+  useEffect(() => {
+    if (!isNetMadeiraCamera) {
+      return;
+    }
+
+    const refreshSnapshot = () => {
+      setSnapshotFailed(false);
+      setSnapshotVersion(Math.floor(Date.now() / 60000));
+    };
+
+    const interval = window.setInterval(refreshSnapshot, 60000);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [isNetMadeiraCamera]);
+
   const detailsHref =
     cameraDetailsHref[displayCamera.id] ?? `/cameras/${displayCamera.id}`;
 
@@ -43,6 +70,15 @@ const CameraCard: React.FC<Props> = ({
     returnToHome && detailsHref.startsWith('/explore/')
       ? { pathname: detailsHref, query: { returnTo: 'home' } }
       : detailsHref;
+
+  const fallbackImage = '/images/cameras/madeira-camera-2.png';
+
+  const snapshotUrl = `/api/camera-snapshot?id=${encodeURIComponent(
+    displayCamera.id
+  )}&v=${snapshotVersion}`;
+
+  const previewLabel =
+    locale === 'uk' ? 'Останній кадр трансляції' : 'Latest live preview';
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -55,10 +91,42 @@ const CameraCard: React.FC<Props> = ({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
+        ) : isNetMadeiraCamera ? (
+          <div className="relative h-full overflow-hidden">
+            <img
+              src={snapshotFailed ? fallbackImage : snapshotUrl}
+              alt={
+                snapshotFailed
+                  ? ''
+                  : `${displayCamera.name} — ${previewLabel}`
+              }
+              aria-hidden={snapshotFailed}
+              className="absolute inset-0 h-full w-full object-cover"
+              onError={() => setSnapshotFailed(true)}
+            />
+
+            <div className="absolute inset-0 bg-navy/35" />
+
+            <div className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-navy/75 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
+              <span>{previewLabel}</span>
+            </div>
+
+            <div className="relative z-10 flex h-full flex-col items-center justify-end gap-3 p-4 text-center">
+              <a
+                href={displayCamera.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-white px-3 py-2 text-xs font-semibold text-navy shadow-sm transition hover:bg-panel"
+              >
+                {messages.cameraCard.openLiveCamera}
+              </a>
+            </div>
+          </div>
         ) : (
           <div className="relative flex h-full flex-col items-center justify-center gap-3 overflow-hidden p-4 text-center">
             <img
-              src="/images/cameras/madeira-camera-2.png"
+              src={fallbackImage}
               alt=""
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover"
