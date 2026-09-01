@@ -138,6 +138,47 @@ function minutesBetween(fromTime: string, toTime: string) {
   return (toTotal - fromTotal + 1440) % 1440;
 }
 function durationLabel(minutes: number, locale: 'en' | 'uk') { const hours = Math.floor(minutes / 60); const remaining = minutes % 60; if (locale === 'uk') return hours === 0 ? `${remaining} хв` : remaining === 0 ? `${hours} год` : `${hours} год ${remaining} хв`; return hours === 0 ? `${remaining} min` : remaining === 0 ? `${hours} hr` : `${hours} hr ${remaining} min`; }
+function travelDurationLabel(minutes: number, locale: 'en' | 'uk') {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (locale === 'uk') {
+    const word = (value: number, one: string, few: string, many: string) => {
+      const lastTwoDigits = value % 100;
+      const lastDigit = value % 10;
+
+      if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return many;
+      if (lastDigit === 1) return one;
+      if (lastDigit >= 2 && lastDigit <= 4) return few;
+      return many;
+    };
+
+    if (hours === 0) {
+      return remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+    }
+
+    const hoursText = hours + ' ' + word(hours, '\u0433\u043e\u0434\u0438\u043d\u0443', '\u0433\u043e\u0434\u0438\u043d\u0438', '\u0433\u043e\u0434\u0438\u043d');
+
+    if (remainingMinutes === 0) {
+      return hoursText;
+    }
+
+    return hoursText + ' ' + remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+  }
+
+  if (hours === 0) {
+    return remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
+  }
+
+  const hoursText = hours + ' ' + (hours === 1 ? 'hour' : 'hours');
+
+  if (remainingMinutes === 0) {
+    return hoursText;
+  }
+
+  return hoursText + ' ' + remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
+}
+
 function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk') { if (locale === 'uk') { const clothing = temperature < 12 ? 'Одягайтеся тепло і шарами: тепла кофта, вітрозахисна куртка та закрите взуття.' : temperature < 20 ? 'Одягайтеся шарами: легка кофта або вітровка буде доречною.' : 'Підійде легкий одяг, але візьміть тонку кофту або вітровку на вечір та для гір.'; return `${rain >= 30 ? 'Ймовірність дощу достатня — візьміть дощовик.' : 'Ймовірність дощу невисока, але легкий дощовик у Мадейрі все одно буде корисним.'} ${clothing}`; } const clothing = temperature < 12 ? 'Dress warmly in layers: a warm mid-layer, windproof jacket and closed shoes.' : temperature < 20 ? 'Dress in layers; a light fleece or windbreaker is recommended.' : 'Light clothing is suitable, but bring a thin layer or windbreaker for the evening and mountains.'; return `${rain >= 30 ? 'Rain is possible, so take a rain jacket.' : 'Rain risk is low, but a light rain jacket is still useful in Madeira.'} ${clothing}`; }
 
 export default function TripPlanPage() {
@@ -392,8 +433,8 @@ export default function TripPlanPage() {
       departureFrom: string,
       travelMinutes: number,
     ) => locale === 'uk'
-      ? `\u{1F68C} ${departureAt} \u2014 \u0432\u0438\u0457\u0437\u0434 \u0437 ${departureFrom}, \u0447\u0430\u0441 \u0432 \u0434\u043e\u0440\u043e\u0437\u0456 ~${travelMinutes} \u0445\u0432.`
-      : `\u{1F68C} ${departureAt} \u2014 departure from ${departureFrom}, travel time ~${travelMinutes} min.`;
+      ? '\u{1F68C} ' + departureAt + ' \u2014 \u0432\u0438\u0457\u0437\u0434 \u0437 ' + departureFrom + ', \u0447\u0430\u0441 \u0443 \u0434\u043e\u0440\u043e\u0437\u0456 ~' + travelDurationLabel(travelMinutes, locale) + '.'
+      : '\u{1F68C} ' + departureAt + ' \u2014 departure from ' + departureFrom + ', travel time ~' + travelDurationLabel(travelMinutes, locale) + '.';
 
     const stopName = (stop: PlanStop) => {
       if (stop.type === 'restaurant') {
