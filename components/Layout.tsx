@@ -16,9 +16,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { locale, messages } = useMessages();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPwaInstallAvailable, setIsPwaInstallAvailable] = useState(false);
   const [isIosDevice, setIsIosDevice] = useState(false);
-  const [isIosInstallOpen, setIsIosInstallOpen] = useState(false);
+  const [isAndroidDevice, setIsAndroidDevice] = useState(false);
+  const [isPwaInstalled, setIsPwaInstalled] = useState(false);
+  const [isInstallGuideOpen, setIsInstallGuideOpen] = useState(false);
   const [deferredInstallPrompt, setDeferredInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
@@ -30,7 +31,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsMenuOpen(false);
-        setIsIosInstallOpen(false);
+        setIsInstallGuideOpen(false);
       }
     };
 
@@ -43,43 +44,39 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     setIsMenuOpen(false);
-    setIsIosInstallOpen(false);
+    setIsInstallGuideOpen(false);
   }, [router.asPath]);
 
   useEffect(() => {
     const userAgent = window.navigator.userAgent || '';
 
-    const isIos =
+    const ios =
       /iPad|iPhone|iPod/.test(userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    const android = /Android/i.test(userAgent);
 
     const navigatorWithStandalone = navigator as Navigator & {
       standalone?: boolean;
     };
 
-    const isStandalone =
+    const standalone =
       window.matchMedia('(display-mode: standalone)').matches ||
       navigatorWithStandalone.standalone === true;
 
-    setIsIosDevice(isIos);
-
-    if (isIos && !isStandalone) {
-      setIsPwaInstallAvailable(true);
-    }
+    setIsIosDevice(ios);
+    setIsAndroidDevice(android);
+    setIsPwaInstalled(standalone);
 
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-
-      if (!isIos && !isStandalone) {
-        setDeferredInstallPrompt(event as BeforeInstallPromptEvent);
-        setIsPwaInstallAvailable(true);
-      }
+      setDeferredInstallPrompt(event as BeforeInstallPromptEvent);
     };
 
     const handleAppInstalled = () => {
       setDeferredInstallPrompt(null);
-      setIsPwaInstallAvailable(false);
-      setIsIosInstallOpen(false);
+      setIsPwaInstalled(true);
+      setIsInstallGuideOpen(false);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -97,23 +94,26 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const handlePwaInstall = async () => {
     if (isIosDevice) {
-      setIsIosInstallOpen(true);
+      setIsInstallGuideOpen(true);
       return;
     }
 
-    if (!deferredInstallPrompt) {
+    if (deferredInstallPrompt) {
+      await deferredInstallPrompt.prompt();
+
+      const choice = await deferredInstallPrompt.userChoice;
+
+      if (choice.outcome === 'accepted') {
+        setIsPwaInstalled(true);
+      }
+
+      setDeferredInstallPrompt(null);
       return;
     }
 
-    await deferredInstallPrompt.prompt();
-
-    const choice = await deferredInstallPrompt.userChoice;
-
-    if (choice.outcome === 'accepted') {
-      setIsPwaInstallAvailable(false);
+    if (isAndroidDevice) {
+      setIsInstallGuideOpen(true);
     }
-
-    setDeferredInstallPrompt(null);
   };
 
   const navItems = [
@@ -150,6 +150,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     : locale === 'uk'
       ? 'Встановити застосунок'
       : 'Install app';
+
+  const showInstallButton =
+    !isPwaInstalled && (isIosDevice || isAndroidDevice || deferredInstallPrompt);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -272,7 +275,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </nav>
 
           <div className="mt-auto">
-            {isPwaInstallAvailable && (
+            {showInstallButton && (
               <div className="px-4 pb-4">
                 <button
                   type="button"
@@ -290,7 +293,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className="h-5 w-5"
                   >
                     <path d="M12 3v12" />
-                    <path d="m7 10 5 5 5-5" />
+                    <path d="m7 10 5 5-5" />
                     <path d="M5 21h14" />
                   </svg>
 
@@ -342,24 +345,24 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </aside>
       </div>
 
-      {isIosInstallOpen && (
+      {isInstallGuideOpen && (
         <div
           className="fixed inset-0 z-[60] flex items-end bg-navy/50 p-4 sm:items-center sm:justify-center"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="ios-install-title"
+          aria-labelledby="install-guide-title"
         >
           <button
             type="button"
             aria-label={locale === 'uk' ? 'Закрити' : 'Close'}
-            onClick={() => setIsIosInstallOpen(false)}
+            onClick={() => setIsInstallGuideOpen(false)}
             className="absolute inset-0 cursor-default"
           />
 
           <div className="relative w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
             <button
               type="button"
-              onClick={() => setIsIosInstallOpen(false)}
+              onClick={() => setIsInstallGuideOpen(false)}
               aria-label={locale === 'uk' ? 'Закрити' : 'Close'}
               className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-xl text-slate-600 transition hover:bg-slate-200"
             >
@@ -384,43 +387,71 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
 
             <h2
-              id="ios-install-title"
+              id="install-guide-title"
               className="mb-2 pr-8 text-xl font-bold text-navy"
             >
               {locale === 'uk'
-                ? 'Додайте Madeira Live Cams'
-                : 'Add Madeira Live Cams'}
+                ? 'Встановіть Madeira Live Cams'
+                : 'Install Madeira Live Cams'}
             </h2>
 
-            <p className="mb-5 text-sm leading-6 text-slate-600">
-              {locale === 'uk'
-                ? 'Збережіть сайт на головному екрані iPhone, щоб відкривати його як окремий застосунок.'
-                : 'Save the site to your iPhone Home Screen and open it like an app.'}
-            </p>
+            {isIosDevice ? (
+              <>
+                <p className="mb-5 text-sm leading-6 text-slate-600">
+                  {locale === 'uk'
+                    ? 'Збережіть сайт на головному екрані iPhone, щоб відкривати його як окремий застосунок.'
+                    : 'Save the site to your iPhone Home Screen and open it like an app.'}
+                </p>
 
-            <ol className="mb-6 list-decimal space-y-2 pl-5 text-sm leading-6 text-slate-700">
-              <li>
-                {locale === 'uk'
-                  ? 'У Safari натисніть кнопку «Поділитися» — квадрат зі стрілкою вгору.'
-                  : 'In Safari, tap the Share button — the square with the upward arrow.'}
-              </li>
+                <ol className="mb-6 list-decimal space-y-2 pl-5 text-sm leading-6 text-slate-700">
+                  <li>
+                    {locale === 'uk'
+                      ? 'У Safari натисніть кнопку «Поділитися» — квадрат зі стрілкою вгору.'
+                      : 'In Safari, tap the Share button — the square with the upward arrow.'}
+                  </li>
+                  <li>
+                    {locale === 'uk'
+                      ? 'Прокрутіть список і виберіть «На екран “Домівка”».'
+                      : 'Scroll through the list and select “Add to Home Screen”.'}
+                  </li>
+                  <li>
+                    {locale === 'uk'
+                      ? 'За наявності увімкніть «Відкрити як вебзастосунок», потім натисніть «Додати».'
+                      : 'If shown, enable “Open as Web App”, then tap Add.'}
+                  </li>
+                </ol>
+              </>
+            ) : (
+              <>
+                <p className="mb-5 text-sm leading-6 text-slate-600">
+                  {locale === 'uk'
+                    ? 'Chrome ще не показав системне вікно встановлення. Ви можете встановити сайт вручну через меню браузера.'
+                    : 'Chrome has not shown the system install window yet. You can install the site manually from the browser menu.'}
+                </p>
 
-              <li>
-                {locale === 'uk'
-                  ? 'Прокрутіть список і виберіть «На екран “Домівка”».'
-                  : 'Scroll through the list and select “Add to Home Screen”.'}
-              </li>
-
-              <li>
-                {locale === 'uk'
-                  ? 'За наявності увімкніть «Відкрити як вебзастосунок», потім натисніть «Додати».'
-                  : 'If shown, enable “Open as Web App”, then tap Add.'}
-              </li>
-            </ol>
+                <ol className="mb-6 list-decimal space-y-2 pl-5 text-sm leading-6 text-slate-700">
+                  <li>
+                    {locale === 'uk'
+                      ? 'Відкрийте меню Chrome — три крапки ⋮ у верхньому правому куті.'
+                      : 'Open the Chrome menu — the three dots ⋮ in the top-right corner.'}
+                  </li>
+                  <li>
+                    {locale === 'uk'
+                      ? 'Оберіть «Install app» або «Add to Home screen».'
+                      : 'Select “Install app” or “Add to Home screen”.'}
+                  </li>
+                  <li>
+                    {locale === 'uk'
+                      ? 'Підтвердьте встановлення кнопкою «Install».'
+                      : 'Confirm the installation by tapping “Install”.'}
+                  </li>
+                </ol>
+              </>
+            )}
 
             <button
               type="button"
-              onClick={() => setIsIosInstallOpen(false)}
+              onClick={() => setIsInstallGuideOpen(false)}
               className="w-full rounded-xl bg-ocean px-4 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2"
             >
               {locale === 'uk' ? 'Зрозуміло' : 'Got it'}
@@ -447,7 +478,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span>© {new Date().getFullYear()} Madeira Live Cams.</span>
-
             <span aria-hidden="true">·</span>
 
             <Link
