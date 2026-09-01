@@ -56,6 +56,19 @@ const standardLocationDurations: Record<string, number> = {
   'continente-modelo-ribeira-brava': 45,
   'continente-modelo-ribeira-brava-centro': 45,
   'continente-modelo-estreito-de-camara-de-lobos': 45,
+  'pingo-doce-machico': 45,
+  'pingo-doce-camara-de-lobos': 45,
+  'pingo-doce-plaza-madeira': 45,
+  'pingo-doce-anadia': 45,
+  'pingo-doce-funchal': 45,
+  'pingo-doce-ribeira-brava': 45,
+  'pingo-doce-santo-antonio': 45,
+  'pingo-doce-brito-camara': 45,
+  'pingo-doce-penteada': 45,
+  'pingo-doce-cancela': 45,
+  'pingo-doce-monumental': 45,
+  'pingo-doce-calheta': 45,
+
 };
 
 const locationCoordinates: Record<string, [number, number]> = {
@@ -98,6 +111,19 @@ const locationCoordinates: Record<string, [number, number]> = {
   'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
   'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
   'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],
+  'pingo-doce-machico': [32.7198279, -16.7677055],
+  'pingo-doce-camara-de-lobos': [32.6493188, -16.9750799],
+  'pingo-doce-plaza-madeira': [32.6369198, -16.9438398],
+  'pingo-doce-anadia': [32.649296, -16.904707],
+  'pingo-doce-funchal': [32.6369174, -16.9316492],
+  'pingo-doce-ribeira-brava': [32.670003, -17.0641829],
+  'pingo-doce-santo-antonio': [32.663891, -16.9393958],
+  'pingo-doce-brito-camara': [32.6475054, -16.9135832],
+  'pingo-doce-penteada': [32.6634256, -16.9286206],
+  'pingo-doce-cancela': [32.6466833, -16.857411],
+  'pingo-doce-monumental': [32.638662, -16.9345364],
+  'pingo-doce-calheta': [32.7197258, -17.1740178],
+
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }

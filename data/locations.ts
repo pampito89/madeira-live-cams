@@ -316,6 +316,34 @@ const continenteModeloLocations: Location[] = [
   }),
 ];
 
+function createPingoDoceLocation({ slug, name, area, latitude, longitude }: { slug: string; name: string; area: string; latitude: number; longitude: number }): Location {
+  return {
+    slug,
+    name: { en: name, uk: name }, area: { en: area, uk: area }, category: { en: 'Supermarket', uk: 'РЎСѓРїРµСЂРјР°СЂРєРµС‚' },
+    tags: ['Supermarkets'], hiddenFromExplore: true,
+    summary: { en: 'Pingo Doce supermarket for groceries, fresh food, drinks and everyday travel essentials.', uk: 'РЎСѓРїРµСЂРјР°СЂРєРµС‚ Pingo Doce РґР»СЏ РїСЂРѕРґСѓРєС‚С–РІ, СЃРІС–Р¶РѕС— С—Р¶С–, РЅР°РїРѕС—РІ С– РїРѕС‚СЂС–Р±РЅРёС… С‚РѕРІР°СЂС–РІ Сѓ РґРѕСЂРѕРіСѓ.' },
+    image: '/images/explore/pingo-doce.jpg', imageAlt: { en: 'Pingo Doce supermarket in Madeira', uk: 'РЎСѓРїРµСЂРјР°СЂРєРµС‚ Pingo Doce РЅР° РњР°РґРµР№СЂС–' }, mapQuery: `${latitude},${longitude}`,
+    article: {
+      intro: { en: `${name} is a Pingo Doce supermarket in ${area}, Madeira. It is a practical stop for groceries, fresh food, drinks and travel essentials.`, uk: `${name} вЂ” СЃСѓРїРµСЂРјР°СЂРєРµС‚ Pingo Doce Сѓ СЂР°Р№РѕРЅС– ${area} РЅР° РњР°РґРµР№СЂС–. Р¦Рµ Р·СЂСѓС‡РЅР° Р·СѓРїРёРЅРєР° РґР»СЏ РїСЂРѕРґСѓРєС‚С–РІ, СЃРІС–Р¶РѕС— С—Р¶С–, РЅР°РїРѕС—РІ С– С‚РѕРІР°СЂС–РІ Сѓ РґРѕСЂРѕРіСѓ.` },
+      history: { en: 'Pingo Doce is a Portuguese supermarket brand. This location is included as a practical stop for visitors and tour leaders.', uk: 'Pingo Doce вЂ” РїРѕСЂС‚СѓРіР°Р»СЊСЃСЊРєР° РјРµСЂРµР¶Р° СЃСѓРїРµСЂРјР°СЂРєРµС‚С–РІ. Р¦СЋ Р»РѕРєР°С†С–СЋ РґРѕРґР°РЅРѕ СЏРє РїСЂР°РєС‚РёС‡РЅСѓ Р·СѓРїРёРЅРєСѓ РґР»СЏ РіРѕСЃС‚РµР№ С– С‚СѓСЂР»С–РґРµСЂС–РІ.' },
+      highlights: { en: ['Groceries and fresh food', 'Drinks and everyday essentials', 'Useful stop before villa check-in', 'Directions available through Google Maps'], uk: ['РџСЂРѕРґСѓРєС‚Рё С‚Р° СЃРІС–Р¶Р° С—Р¶Р°', 'РќР°РїРѕС— Р№ С‚РѕРІР°СЂРё С‰РѕРґРµРЅРЅРѕРіРѕ РІР¶РёС‚РєСѓ', 'Р—СЂСѓС‡РЅР° Р·СѓРїРёРЅРєР° РїРµСЂРµРґ Р·Р°СЃРµР»РµРЅРЅСЏРј РЅР° РІС–Р»Р»Сѓ', 'РњР°СЂС€СЂСѓС‚ РґРѕСЃС‚СѓРїРЅРёР№ С‡РµСЂРµР· Google Maps'] },
+      practicalTip: { en: 'Check current opening hours before travelling. Add this supermarket to the trip plan when you need time for groceries before continuing the route.', uk: 'РџРµСЂРµРґ РїРѕС—Р·РґРєРѕСЋ РїРµСЂРµРІС–СЂС‚Рµ Р°РєС‚СѓР°Р»СЊРЅС– РіРѕРґРёРЅРё СЂРѕР±РѕС‚Рё. Р”РѕРґР°Р№С‚Рµ С†РµР№ СЃСѓРїРµСЂРјР°СЂРєРµС‚ РґРѕ РїР»Р°РЅСѓ РїРѕРґРѕСЂРѕР¶С–, РєРѕР»Рё РїРѕС‚СЂС–Р±РЅРѕ РїРµСЂРµРґР±Р°С‡РёС‚Рё С‡Р°СЃ РЅР° РїРѕРєСѓРїРєРё РїРµСЂРµРґ РїСЂРѕРґРѕРІР¶РµРЅРЅСЏРј РјР°СЂС€СЂСѓС‚Сѓ.' },
+    },
+  };
+}
+const pingoDoceLocations: Location[] = [  createPingoDoceLocation({ slug: 'pingo-doce-machico', name: 'Pingo Doce Super Machico', area: 'Machico', latitude: 32.7198279, longitude: -16.7677055 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-camara-de-lobos', name: 'Pingo Doce Super CГўmara de Lobos', area: 'CГўmara de Lobos', latitude: 32.6493188, longitude: -16.9750799 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-plaza-madeira', name: 'Pingo Doce Plaza Madeira', area: 'SГЈo Martinho, Funchal', latitude: 32.6369198, longitude: -16.9438398 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-anadia', name: 'Pingo Doce Super Anadia', area: 'Funchal Old Town', latitude: 32.649296, longitude: -16.904707 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-funchal', name: 'Pingo Doce Funchal', area: 'Funchal', latitude: 32.6369174, longitude: -16.9316492 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-ribeira-brava', name: 'Pingo Doce Ribeira Brava', area: 'Ribeira Brava', latitude: 32.670003, longitude: -17.0641829 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-santo-antonio', name: 'Pingo Doce Super Santo AntГіnio', area: 'Santo AntГіnio, Funchal', latitude: 32.663891, longitude: -16.9393958 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-brito-camara', name: 'Pingo Doce Brito CГўmara', area: 'Funchal', latitude: 32.6475054, longitude: -16.9135832 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-penteada', name: 'Pingo Doce Penteada', area: 'Funchal', latitude: 32.6634256, longitude: -16.9286206 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-cancela', name: 'Pingo Doce Super Cancela', area: 'Cancela', latitude: 32.6466833, longitude: -16.857411 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-monumental', name: 'Pingo Doce Super Monumental', area: 'Funchal', latitude: 32.638662, longitude: -16.9345364 }),
+  createPingoDoceLocation({ slug: 'pingo-doce-calheta', name: 'Pingo Doce Super Calheta', area: 'Calheta', latitude: 32.7197258, longitude: -17.1740178 }),
+];
 export const locations: Location[] = [
   {
     slug: 'cristo-rei',
@@ -2099,6 +2127,8 @@ export const locations: Location[] = [
 ];
 
 locations.push(...continenteModeloLocations);
+
+locations.push(...pingoDoceLocations);
 
 export function getLocationBySlug(slug: string) {
   return locations.find((location) => location.slug === slug);
