@@ -50,17 +50,12 @@ const categoryLabels: Record<CameraCategory, LocalizedText> = {
   'Sunrise spots': { en: 'Sunrise', uk: 'Схід сонця' },
 };
 
-export function getLocalizedCamera(
-  camera: Camera,
-  locale: Locale,
-): DisplayCamera {
+export function getLocalizedCamera(camera: Camera, locale: Locale): DisplayCamera {
   return {
     id: camera.id,
     name: camera.name[locale],
     region: camera.region[locale],
-    category: camera.category.map(
-      (category) => categoryLabels[category][locale],
-    ),
+    category: camera.category.map((category) => categoryLabels[category][locale]),
     altitudeMeters: camera.altitudeMeters,
     latitude: camera.latitude,
     longitude: camera.longitude,
@@ -72,14 +67,8 @@ export function getLocalizedCamera(
 export const cameras: Camera[] = [
   {
     id: 'pico-do-arieiro',
-    name: {
-      en: 'Pico do Arieiro',
-      uk: 'Піку-ду-Аріейру',
-    },
-    region: {
-      en: 'Mountains',
-      uk: 'Гори',
-    },
+    name: { en: 'Pico do Arieiro', uk: 'Піку-ду-Аріейру' },
+    region: { en: 'Mountains', uk: 'Гори' },
     category: ['Mountains', 'Sunrise spots'],
     altitudeMeters: 1818,
     latitude: 32.735,
@@ -88,14 +77,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'machico',
-    name: {
-      en: 'Machico',
-      uk: 'Машіку',
-    },
-    region: {
-      en: 'East Coast',
-      uk: 'Східне узбережжя',
-    },
+    name: { en: 'Machico', uk: 'Машіку' },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
     category: ['Towns', 'East Coast', 'Beaches'],
     latitude: 32.716,
     longitude: -16.768,
@@ -103,14 +86,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'canical',
-    name: {
-      en: 'Caniçal',
-      uk: 'Канісал',
-    },
-    region: {
-      en: 'East Coast',
-      uk: 'Східне узбережжя',
-    },
+    name: { en: 'Caniçal', uk: 'Канісал' },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
     category: ['Towns', 'East Coast'],
     latitude: 32.738,
     longitude: -16.737,
@@ -119,14 +96,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'seixal',
-    name: {
-      en: 'Seixal',
-      uk: 'Сейшал',
-    },
-    region: {
-      en: 'North Coast',
-      uk: 'Північне узбережжя',
-    },
+    name: { en: 'Seixal', uk: 'Сейшал' },
+    region: { en: 'North Coast', uk: 'Північне узбережжя' },
     category: ['Beaches', 'North Coast'],
     latitude: 32.816,
     longitude: -17.107,
@@ -135,14 +106,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'porto-moniz',
-    name: {
-      en: 'Porto Moniz',
-      uk: 'Порту-Моніш',
-    },
-    region: {
-      en: 'North Coast',
-      uk: 'Північне узбережжя',
-    },
+    name: { en: 'Porto Moniz', uk: 'Порту-Моніш' },
+    region: { en: 'North Coast', uk: 'Північне узбережжя' },
     category: ['Beaches', 'North Coast'],
     latitude: 32.867,
     longitude: -17.166,
@@ -151,14 +116,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'funchal-pontinha',
-    name: {
-      en: 'Funchal Pontinha',
-      uk: 'Фуншал — Понтінья',
-    },
-    region: {
-      en: 'South Coast',
-      uk: 'Південне узбережжя',
-    },
+    name: { en: 'Funchal Pontinha', uk: 'Фуншал — Понтінья' },
+    region: { en: 'South Coast', uk: 'Південне узбережжя' },
     category: ['Towns', 'South Coast'],
     latitude: 32.648,
     longitude: -16.907,
@@ -167,30 +126,17 @@ export const cameras: Camera[] = [
   },
   {
     id: 'eira-do-serrado',
-    name: {
-      en: 'Eira do Serrado',
-      uk: 'Ейра-ду-Серраду',
-    },
-    region: {
-      en: 'Mountains',
-      uk: 'Гори',
-    },
+    name: { en: 'Eira do Serrado', uk: 'Ейра-ду-Серраду' },
+    region: { en: 'Mountains', uk: 'Гори' },
     category: ['Mountains'],
     latitude: 32.713,
     longitude: -16.949,
-    sourceUrl:
-      'https://www.netmadeira.com/webcams-madeira/eira-do-serrado',
+    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/eira-do-serrado',
   },
   {
     id: 'ponta-do-sol',
-    name: {
-      en: 'Ponta do Sol',
-      uk: 'Понта-ду-Сол',
-    },
-    region: {
-      en: 'South Coast',
-      uk: 'Південне узбережжя',
-    },
+    name: { en: 'Ponta do Sol', uk: 'Понта-ду-Сол' },
+    region: { en: 'South Coast', uk: 'Південне узбережжя' },
     category: ['Beaches', 'South Coast'],
     latitude: 32.683,
     longitude: -17.1,
@@ -199,14 +145,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'calheta-beach',
-    name: {
-      en: 'Calheta Beach',
-      uk: 'Пляж Кальєта',
-    },
-    region: {
-      en: 'South Coast',
-      uk: 'Південне узбережжя',
-    },
+    name: { en: 'Calheta Beach', uk: 'Пляж Кальєта' },
+    region: { en: 'South Coast', uk: 'Південне узбережжя' },
     category: ['Beaches', 'South Coast'],
     latitude: 32.7189,
     longitude: -17.1744,
@@ -214,80 +154,56 @@ export const cameras: Camera[] = [
     youtubeId: 't4x0u0ARLwo',
   },
   {
+    id: 'doca-do-cavacas',
+    name: { en: 'Doca do Cavacas Pools', uk: 'Басейни Дока-ду-Кавакаш' },
+    region: { en: 'South Coast', uk: 'Південне узбережжя' },
+    category: ['Beaches', 'Towns', 'South Coast'],
+    latitude: 32.6353,
+    longitude: -16.9481,
+    sourceUrl: 'https://www.youtube.com/watch?v=8ZmLLUPqlPM',
+    youtubeId: '8ZmLLUPqlPM',
+  },
+  {
     id: 'achada-do-teixeira',
-    name: {
-      en: 'Achada do Teixeira',
-      uk: 'Ашада-ду-Тейшейра',
-    },
-    region: {
-      en: 'Mountains',
-      uk: 'Гори',
-    },
+    name: { en: 'Achada do Teixeira', uk: 'Ашада-ду-Тейшейра' },
+    region: { en: 'Mountains', uk: 'Гори' },
     category: ['Mountains'],
     latitude: 32.773,
     longitude: -16.93,
-    sourceUrl:
-      'https://www.netmadeira.com/webcams-madeira/achada-do-teixeira',
+    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/achada-do-teixeira',
   },
   {
     id: 'camara-de-lobos',
-    name: {
-      en: 'Câmara de Lobos',
-      uk: 'Камара-де-Лобуш',
-    },
-    region: {
-      en: 'South Coast',
-      uk: 'Південне узбережжя',
-    },
+    name: { en: 'Câmara de Lobos', uk: 'Камара-де-Лобуш' },
+    region: { en: 'South Coast', uk: 'Південне узбережжя' },
     category: ['Towns', 'South Coast'],
     latitude: 32.633,
     longitude: -16.972,
-    sourceUrl:
-      'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
+    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
     youtubeId: 'fnAFU7au4VQ',
   },
   {
     id: 'ponta-delgada',
-    name: {
-      en: 'Ponta Delgada',
-      uk: 'Понта-Делгада',
-    },
-    region: {
-      en: 'North Coast',
-      uk: 'Північне узбережжя',
-    },
+    name: { en: 'Ponta Delgada', uk: 'Понта-Делгада' },
+    region: { en: 'North Coast', uk: 'Північне узбережжя' },
     category: ['Towns', 'North Coast'],
     latitude: 32.828,
     longitude: -16.987,
-    sourceUrl:
-      'https://www.netmadeira.com/webcams-madeira/ponta-delgada',
+    sourceUrl: 'https://www.netmadeira.com/webcams-madeira/ponta-delgada',
   },
   {
     id: 'cristo-rei',
-    name: {
-      en: 'Cristo Rei, Garajau',
-      uk: 'Крішту-Рей, Гаражау',
-    },
-    region: {
-      en: 'East Coast',
-      uk: 'Східне узбережжя',
-    },
+    name: { en: 'Cristo Rei, Garajau', uk: 'Крішту-Рей, Гаражау' },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
     category: ['East Coast'],
     latitude: 32.638,
     longitude: -16.851,
-    sourceUrl:
-      'https://worldcam.eu/webcams/europe/portugal/4920-garajau-cristo-rei',
+    sourceUrl: 'https://worldcam.eu/webcams/europe/portugal/4920-garajau-cristo-rei',
   },
   {
     id: 'seixal-beach',
-    name: {
-      en: 'Seixal Beach',
-      uk: 'Пляж Seixal',
-    },
-    region: {
-      en: 'North Coast',
-      uk: 'Північне узбережжя',
-    },
+    name: { en: 'Seixal Beach', uk: 'Пляж Seixal' },
+    region: { en: 'North Coast', uk: 'Північне узбережжя' },
     category: ['Beaches', 'North Coast'],
     latitude: 32.821,
     longitude: -17.107,
@@ -296,14 +212,8 @@ export const cameras: Camera[] = [
   },
   {
     id: 'machico-beach',
-    name: {
-      en: 'Machico Beach',
-      uk: 'Пляж Machico',
-    },
-    region: {
-      en: 'East Coast',
-      uk: 'Східне узбережжя',
-    },
+    name: { en: 'Machico Beach', uk: 'Пляж Machico' },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
     category: ['Beaches', 'East Coast'],
     latitude: 32.7224,
     longitude: -16.7648,
