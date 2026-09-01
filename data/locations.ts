@@ -21,6 +21,7 @@ export type Location = {
   area: LocalizedText;
   category: LocalizedText;
   tags: string[];
+hiddenFromExplore?: boolean;
   summary: LocalizedText;
   image: string;
   imageAlt: LocalizedText;
@@ -128,6 +129,192 @@ export function getLocalizedLocation(
     },
   };
 }
+
+
+function createContinenteModeloLocation({
+  slug,
+  name,
+  area,
+  latitude,
+  longitude,
+}: {
+  slug: string;
+  name: string;
+  area: string;
+  latitude: number;
+  longitude: number;
+}): Location {
+  return {
+    slug,
+    name: {
+      en: name,
+      uk: name,
+    },
+    area: {
+      en: area,
+      uk: area,
+    },
+    category: {
+      en: 'Supermarket',
+      uk: 'Супермаркет',
+    },
+    tags: ['Supermarkets'],
+    hiddenFromExplore: true,
+    summary: {
+      en: 'Continente Modelo supermarket for groceries, fresh food, drinks, travel essentials and everyday shopping.',
+      uk: 'Супермаркет Continente Modelo для продуктів, свіжої їжі, напоїв, товарів у дорогу та щоденних покупок.',
+    },
+    image: '/images/explore/continente-modelo.jpg',
+    imageAlt: {
+      en: 'Continente Modelo supermarket in Madeira',
+      uk: 'Супермаркет Continente Modelo на Мадейрі',
+    },
+    mapQuery: `${latitude},${longitude}`,
+    article: {
+      intro: {
+        en: `${name} is a Continente Modelo supermarket in ${area}, Madeira. It is a practical stop for groceries, fresh food, drinks and everyday travel essentials.`,
+        uk: `${name} — супермаркет Continente Modelo у районі ${area} на Мадейрі. Це зручна зупинка для продуктів, свіжої їжі, напоїв і потрібних товарів у дорогу.`,
+      },
+      history: {
+        en: 'Continente Modelo is a Portuguese supermarket brand with stores across Madeira. This location is included as a practical planning stop for visitors and tour leaders.',
+        uk: 'Continente Modelo — португальська мережа супермаркетів із магазинами по всій Мадейрі. Цю локацію додано як практичну зупинку для гостей і турлідерів.',
+      },
+      highlights: {
+        en: [
+          'Groceries and fresh food',
+          'Drinks and everyday essentials',
+          'Useful stop after arrival or before villa check-in',
+          'Directions available through Google Maps',
+        ],
+        uk: [
+          'Продукти та свіжа їжа',
+          'Напої й товари щоденного вжитку',
+          'Зручна зупинка після прильоту або перед заселенням на віллу',
+          'Маршрут доступний через Google Maps',
+        ],
+      },
+      practicalTip: {
+        en: 'Check the current opening hours before travelling. Add this supermarket to the trip plan when you need time for groceries before reaching the villa or continuing the route.',
+        uk: 'Перед поїздкою перевірте актуальні години роботи. Додайте цей супермаркет до плану подорожі, коли потрібно передбачити час на покупки перед заїздом на віллу або продовженням маршруту.',
+      },
+    },
+  };
+}
+
+const continenteModeloLocations: Location[] = [
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-machico',
+    name: 'Continente Modelo Machico',
+    area: 'Machico',
+    latitude: 32.7205797,
+    longitude: -16.7690134,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-canico-shopping',
+    name: 'Continente Modelo Caniço Shopping',
+    area: 'Caniço',
+    latitude: 32.6533245,
+    longitude: -16.8418957,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-agua-de-pena',
+    name: 'Continente Modelo Água de Pena',
+    area: 'Água de Pena',
+    latitude: 32.7067415,
+    longitude: -16.7683431,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-camacha',
+    name: 'Continente Modelo Camacha',
+    area: 'Camacha',
+    latitude: 32.6755001,
+    longitude: -16.8524357,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-cancela',
+    name: 'Continente Modelo Cancela',
+    area: 'Cancela',
+    latitude: 32.6474157,
+    longitude: -16.8595163,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-viveiros',
+    name: 'Continente Modelo Viveiros',
+    area: 'Funchal',
+    latitude: 32.6601672,
+    longitude: -16.9198871,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-seminario',
+    name: 'Continente Modelo Seminário',
+    area: 'Funchal',
+    latitude: 32.6497195,
+    longitude: -16.9059145,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-santo-antonio',
+    name: 'Continente Modelo Santo António',
+    area: 'Funchal',
+    latitude: 32.660207,
+    longitude: -16.9303789,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-madeira-shopping',
+    name: 'Continente Modelo MadeiraShopping',
+    area: 'Funchal',
+    latitude: 32.6592184,
+    longitude: -16.9507246,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-santana',
+    name: 'Continente Modelo Santana',
+    area: 'Santana',
+    latitude: 32.8105254,
+    longitude: -16.8838053,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-camara-de-lobos',
+    name: 'Continente Modelo Câmara de Lobos',
+    area: 'Câmara de Lobos',
+    latitude: 32.6547913,
+    longitude: -16.9714938,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-monumental',
+    name: 'Continente Modelo Monumental',
+    area: 'Funchal',
+    latitude: 32.6394109,
+    longitude: -16.9470358,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-sao-martinho',
+    name: 'Continente Modelo São Martinho',
+    area: 'Funchal',
+    latitude: 32.6501934,
+    longitude: -16.9378196,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-ribeira-brava',
+    name: 'Continente Modelo Ribeira Brava',
+    area: 'Ribeira Brava',
+    latitude: 32.693712,
+    longitude: -17.0461526,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-ribeira-brava-centro',
+    name: 'Continente Modelo Ribeira Brava Centro',
+    area: 'Ribeira Brava',
+    latitude: 32.678645,
+    longitude: -17.058575,
+  }),
+  createContinenteModeloLocation({
+    slug: 'continente-modelo-estreito-de-camara-de-lobos',
+    name: 'Continente Modelo Estreito de Câmara de Lobos',
+    area: 'Estreito de Câmara de Lobos',
+    latitude: 32.6697258,
+    longitude: -16.9769132,
+  }),
+];
 
 export const locations: Location[] = [
   {
@@ -1910,6 +2097,8 @@ export const locations: Location[] = [
     },
   },
 ];
+
+locations.push(...continenteModeloLocations);
 
 export function getLocationBySlug(slug: string) {
   return locations.find((location) => location.slug === slug);

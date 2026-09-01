@@ -137,7 +137,8 @@ export default function CamerasPage() {
 
     async function loadWeather() {
       const weatherLocations = locations.filter(
-        (location) => locationCoordinates[location.slug],
+        (location) =>
+          !location.hiddenFromExplore && locationCoordinates[location.slug],
       );
 
       const weatherEntries = await Promise.all(
@@ -281,11 +282,13 @@ export default function CamerasPage() {
 
   const filteredLocations = useMemo(() => {
     if (activeFilter === 'All') {
-      return locations;
+      return locations.filter((location) => !location.hiddenFromExplore);
     }
 
-    return locations.filter((location) =>
-      location.tags.includes(activeFilter),
+    return locations.filter(
+      (location) =>
+        !location.hiddenFromExplore &&
+        location.tags.includes(activeFilter),
     );
   }, [activeFilter]);
 
@@ -344,7 +347,8 @@ export default function CamerasPage() {
 
           <p className="mt-2 text-sm text-slate-500">
             {messages.exploreList.showing} {filteredLocations.length}{' '}
-            {messages.exploreList.of} {locations.length}{' '}
+            {messages.exploreList.of}{' '}
+            {locations.filter((location) => !location.hiddenFromExplore).length}{' '}
             {messages.exploreList.places}
           </p>
         </section>

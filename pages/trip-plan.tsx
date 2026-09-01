@@ -18,19 +18,87 @@ type RouteUsage = {
 
 const villas = stays;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
-const standardLocationDurations: Record<string, number> = { 'pico-do-arieiro': 180, 'fanal-forest': 120, 'praia-do-porto-do-seixal': 120, 'machico-beach': 150, 'faja-dos-padres': 240, 'calheta-beach': 180, 'prainha-do-canical': 180, 'porto-moniz-natural-pools': 150, 'ribeira-da-janela': 30, funchal: 90, 'mercado-dos-lavradores': 30, 'cristo-rei': 45, 'pico-do-facho': 30, 'cabo-girao-skywalk': 30, 'anjos-waterfall': 30, 'miradouro-do-guindaste': 30, 'levada-nova-levada-do-moinho': 150, 'monte-palace-tropical-garden': 120, 'santana-typical-houses': 15, 'ponta-de-sao-lourenco': 180, 'miradouro-sao-cristovao': 30 };
-
-const locationCoordinates: Record<string, [number, number]> = {
-  'pico-do-arieiro': [32.7353, -16.9281], 'pico-ruivo': [32.7547, -16.9336], 'pico-grande': [32.7211, -16.9914],
-  'fanal-forest': [32.8147, -17.1494], 'praia-do-porto-do-seixal': [32.8266, -17.1052], 'machico-beach': [32.7212, -16.7652],
-  'faja-dos-padres': [32.6651, -17.0045], 'calheta-beach': [32.7211, -17.1760], 'prainha-do-canical': [32.7423, -16.7134],
-  'porto-moniz-natural-pools': [32.8667, -17.1662], 'ribeira-da-janela': [32.8537, -17.1579], funchal: [32.6496, -16.9087],
-  'mercado-dos-lavradores': [32.6480, -16.9033], 'cristo-rei': [32.6371, -16.8549], 'pico-do-facho': [32.7240, -16.7814],
-  'cabo-girao-skywalk': [32.6567, -17.0115], 'anjos-waterfall': [32.6925, -17.1027], 'miradouro-do-guindaste': [32.8393, -16.8869],
-  'levada-nova-levada-do-moinho': [32.6942, -17.0993], 'monte-palace-tropical-garden': [32.6799, -16.8989],
-  'santana-typical-houses': [32.8037, -16.8803], 'ponta-de-sao-lourenco': [32.7443, -16.6994], 'madeira-international-airport': [32.6919, -16.7745],
+const standardLocationDurations: Record<string, number> = {
+  'pico-do-arieiro': 180,
+  'fanal-forest': 120,
+  'praia-do-porto-do-seixal': 120,
+  'machico-beach': 150,
+  'faja-dos-padres': 240,
+  'calheta-beach': 180,
+  'prainha-do-canical': 180,
+  'porto-moniz-natural-pools': 150,
+  'ribeira-da-janela': 30,
+  funchal: 90,
+  'mercado-dos-lavradores': 30,
+  'cristo-rei': 45,
+  'pico-do-facho': 30,
+  'cabo-girao-skywalk': 30,
+  'anjos-waterfall': 30,
+  'miradouro-do-guindaste': 30,
+  'levada-nova-levada-do-moinho': 150,
+  'monte-palace-tropical-garden': 120,
+  'santana-typical-houses': 15,
+  'ponta-de-sao-lourenco': 180,
+  'miradouro-sao-cristovao': 30,
+  'continente-modelo-machico': 45,
+  'continente-modelo-canico-shopping': 45,
+  'continente-modelo-agua-de-pena': 45,
+  'continente-modelo-camacha': 45,
+  'continente-modelo-cancela': 45,
+  'continente-modelo-viveiros': 45,
+  'continente-modelo-seminario': 45,
+  'continente-modelo-santo-antonio': 45,
+  'continente-modelo-madeira-shopping': 45,
+  'continente-modelo-santana': 45,
+  'continente-modelo-camara-de-lobos': 45,
+  'continente-modelo-monumental': 45,
+  'continente-modelo-sao-martinho': 45,
+  'continente-modelo-ribeira-brava': 45,
+  'continente-modelo-ribeira-brava-centro': 45,
+  'continente-modelo-estreito-de-camara-de-lobos': 45,
 };
 
+const locationCoordinates: Record<string, [number, number]> = {
+  'pico-do-arieiro': [32.7353, -16.9281],
+  'pico-ruivo': [32.7547, -16.9336],
+  'pico-grande': [32.7211, -16.9914],
+  'fanal-forest': [32.8147, -17.1494],
+  'praia-do-porto-do-seixal': [32.8266, -17.1052],
+  'machico-beach': [32.7212, -16.7652],
+  'faja-dos-padres': [32.6651, -17.0045],
+  'calheta-beach': [32.7211, -17.1760],
+  'prainha-do-canical': [32.7423, -16.7134],
+  'porto-moniz-natural-pools': [32.8667, -17.1662],
+  'ribeira-da-janela': [32.8537, -17.1579],
+  funchal: [32.6496, -16.9087],
+  'mercado-dos-lavradores': [32.6480, -16.9033],
+  'cristo-rei': [32.6371, -16.8549],
+  'pico-do-facho': [32.7240, -16.7814],
+  'cabo-girao-skywalk': [32.6567, -17.0115],
+  'anjos-waterfall': [32.6925, -17.1027],
+  'miradouro-do-guindaste': [32.8393, -16.8869],
+  'levada-nova-levada-do-moinho': [32.6942, -17.0993],
+  'monte-palace-tropical-garden': [32.6799, -16.8989],
+  'santana-typical-houses': [32.8037, -16.8803],
+  'ponta-de-sao-lourenco': [32.7443, -16.6994],
+  'madeira-international-airport': [32.6919, -16.7745],
+  'continente-modelo-machico': [32.7205797, -16.7690134],
+  'continente-modelo-canico-shopping': [32.6533245, -16.8418957],
+  'continente-modelo-agua-de-pena': [32.7067415, -16.7683431],
+  'continente-modelo-camacha': [32.6755001, -16.8524357],
+  'continente-modelo-cancela': [32.6474157, -16.8595163],
+  'continente-modelo-viveiros': [32.6601672, -16.9198871],
+  'continente-modelo-seminario': [32.6497195, -16.9059145],
+  'continente-modelo-santo-antonio': [32.660207, -16.9303789],
+  'continente-modelo-madeira-shopping': [32.6592184, -16.9507246],
+  'continente-modelo-santana': [32.8105254, -16.8838053],
+  'continente-modelo-camara-de-lobos': [32.6547913, -16.9714938],
+  'continente-modelo-monumental': [32.6394109, -16.9470358],
+  'continente-modelo-sao-martinho': [32.6501934, -16.9378196],
+  'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
+  'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
+  'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],
+};
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
 
@@ -62,7 +130,7 @@ export default function TripPlanPage() {
     title: 'Trip plan', intro: 'Create a simple day itinerary: choose a villa, add locations, a restaurant stop and timing for each point.', dayDetails: 'Day details', date: 'Date', startVilla: 'Starting villa', departure: 'Departure time', addStop: 'Add a stop', location: 'Location', locationFilters: 'Location filters', chooseLocation: 'Choose a location', addLocation: 'Add location', addRestaurant: 'Add restaurant', addVilla: 'Add villa return', selectedStops: 'Day route', noStops: 'Add your first location or restaurant to build the route.', arrival: 'Arrival', duration: 'Duration', sunrise: 'Sunrise', bar: 'Bar', restaurantOption: 'Restaurant', meal: 'Meal', breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', up: 'Move up', down: 'Move down', remove: 'Remove', restaurant: 'Restaurant', output: 'Ready programme', share: 'Share', copied: 'Copied', clear: 'Clear route', return: 'Return to', departureFrom: 'departure from', defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.', recommendations: 'Day recommendations', weather: 'Weather', beach: 'Beach', levada: 'Levada', weatherLoading: 'Loading the current forecast…', weatherUnavailable: 'A current forecast is unavailable for the selected date. Check the weather before departure.',
   };
 
-  const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Lab Travel', label: 'Lab Travel' }];
+  const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }];
   const availableLocations = useMemo(() => locations.filter((location) => locationFilter === 'All' || location.tags.includes(locationFilter)).map((location) => getLocalizedLocation(location, locale)).sort((a, b) => a.name.localeCompare(b.name, locale)), [locale, locationFilter]);
   const locationBySlug = useMemo(() => new Map(locations.map((location) => [location.slug, getLocalizedLocation(location, locale)])), [locale]);
   const routeLocations = useMemo(() => stops.filter((stop) => stop.type === 'location' && stop.slug).map((stop) => locationBySlug.get(stop.slug as string)).filter(Boolean), [stops, locationBySlug]);
@@ -477,3 +545,4 @@ export default function TripPlanPage() {
 </div></section>
   </section></main></Layout>;
 }
+
