@@ -1,21 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { cameras } from '../../components/cameraData';
 
-const NETMADEIRA_HOST = 'www.netmadeira.com';
+const ALLOWED_CAMERA_HOSTS = new Set([
+  'www.netmadeira.com',
+  'netmadeira.com',
+  'worldcam.eu',
+  'www.worldcam.eu',
+]);
 
 function getImageUrlFromCameraPage(
   pageHtml: string,
   cameraPageUrl: string
 ): string | null {
-  const imageMatch = pageHtml.match(
-    /<img[^>]*id=["']webcam_image["'][^>]*src=["']([^"']+)["'][^>]*>/i
+  const webcamImageTagMatch = pageHtml.match(
+    /<img\b[^>]*\bid=["']webcam_image["'][^>]*>/i
   );
 
-  if (!imageMatch?.[1]) {
+  if (!webcamImageTagMatch?.[0]) {
     return null;
   }
 
-  const imageSource = imageMatch[1].trim();
+  const webcamImageTag = webcamImageTagMatch[0];
+
+  const imageSourceMatch = webcamImageTag.match(
+    /\bsrc=["']([^"']+)["']/i
+  );
+
+  if (!imageSourceMatch?.[1]) {
+    return null;
+  }
+
+  const imageSource = imageSourceMatch[1].trim();
 
   if (imageSource.startsWith('//')) {
     return `https:${imageSource}`;
@@ -43,15 +58,24 @@ export default async function handler(
     return;
   }
 
-  const cameraPageUrl = new URL(camera.sourceUrl);
+  let cameraPageUrl: URL;
 
-  const isNetMadeiraCamera =
-    cameraPageUrl.hostname === NETMADEIRA_HOST &&
-    cameraPageUrl.pathname.startsWith('/webcams-madeira/');
-
-  if (!isNetMadeiraCamera) {
+  try {
+    cameraPageUrl = new URL(camera.sourceUrl);
+  } catch {
     res.status(400).json({
-      error: 'This camera does not use a NetMadeira snapshot',
+      error: 'Invalid camera source URL',
+    });
+    return;
+  }
+
+  const isSupportedCameraSource = ALLOWED_CAMERA_HOSTS.has(
+    cameraPageUrl.hostname
+  );
+
+  if (!isSupportedCameraSource) {
+    res.status(400).json({
+      error: 'This camera source does not support live image previews',
     });
     return;
   }
@@ -61,7 +85,8 @@ export default async function handler(
       headers: {
         'User-Agent':
           'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeira-live-cams.vercel.app)',
-        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
     });
 
@@ -86,12 +111,22 @@ export default async function handler(
       return;
     }
 
+    const snapshotImageUrlObject = new URL(snapshotImageUrl);
+
+    if (!ALLOWED_CAMERA_HOSTS.has(snapshotImageUrlObject.hostname)) {
+      res.status(502).json({
+        error: 'The camera image is from an unsupported host',
+      });
+      return;
+    }
+
     const snapshotResponse = await fetch(snapshotImageUrl, {
       headers: {
         Referer: camera.sourceUrl,
         'User-Agent':
           'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeira-live-cams.vercel.app)',
-        Accept: 'image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5',
+        Accept:
+          'image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5',
       },
     });
 

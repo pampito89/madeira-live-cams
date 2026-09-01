@@ -42,12 +42,12 @@ const CameraCard: React.FC<Props> = ({
   );
   const [snapshotFailed, setSnapshotFailed] = useState(false);
 
-  const isNetMadeiraCamera = displayCamera.sourceUrl.includes(
-    'netmadeira.com/webcams-madeira/'
-  );
+  const isSnapshotCamera =
+    displayCamera.sourceUrl.includes('netmadeira.com/webcams-madeira/') ||
+    displayCamera.sourceUrl.includes('worldcam.eu/');
 
   useEffect(() => {
-    if (!isNetMadeiraCamera) {
+    if (!isSnapshotCamera) {
       return;
     }
 
@@ -61,7 +61,7 @@ const CameraCard: React.FC<Props> = ({
     return () => {
       window.clearInterval(interval);
     };
-  }, [isNetMadeiraCamera]);
+  }, [isSnapshotCamera]);
 
   const detailsHref =
     cameraDetailsHref[displayCamera.id] ?? `/cameras/${displayCamera.id}`;
@@ -91,7 +91,7 @@ const CameraCard: React.FC<Props> = ({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
-        ) : isNetMadeiraCamera ? (
+        ) : isSnapshotCamera ? (
           <div className="relative h-full overflow-hidden">
             <img
               src={snapshotFailed ? fallbackImage : snapshotUrl}
