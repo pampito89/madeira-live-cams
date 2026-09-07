@@ -67,6 +67,19 @@ async function geocodeGoogleMapsQuery(query: string): Promise<[number, number] |
     : null;
 }
 
+async function geocodeOpenStreetMapQuery(query: string): Promise<[number, number] | null> {
+  if (!query) return null;
+  const url = new URL('https://nominatim.openstreetmap.org/search');
+  url.searchParams.set('q', query);
+  url.searchParams.set('format', 'jsonv2');
+  url.searchParams.set('limit', '1');
+  const response = await fetch(url.toString(), { headers: { 'User-Agent': 'MadeiraLiveCams/1.0 (contact@madeiralivecams.com)' } });
+  if (!response.ok) return null;
+  const results = (await response.json()) as Array<{ lat?: string; lon?: string }>;
+  const first = results[0];
+  return first && Number.isFinite(Number(first.lat)) && Number.isFinite(Number(first.lon)) ? [Number(first.lat), Number(first.lon)] : null;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResolvedRoutePoint | { error: string }>,
@@ -110,7 +123,7 @@ export default async function handler(
       const mapResponse = await fetch(currentUrl.toString(), { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0)' } });
       if (mapResponse.ok) coordinates = coordinatesFromGoogleMapsHtml(await mapResponse.text());
     }
-    coordinates = coordinates ?? await geocodeGoogleMapsQuery(query);
+    coordinates = coordinates ?? await geocodeGoogleMapsQuery(query) ?? await geocodeOpenStreetMapQuery(query);
     if (!coordinates) {
       return res.status(422).json({ error: 'Coordinates were not found in this Google Maps link.' });
     }
