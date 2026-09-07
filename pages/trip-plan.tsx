@@ -1,158 +1,705 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
-import { stays } from '../data/stays';
 import { useMessages } from '../lib/i18n/useMessages';
+import { stays } from '../data/stays';
 
-type Coordinates = [number, number];
-type Point = { id: string; name: string; coordinates: Coordinates; duration: number; slug?: string };
-type Usage = { limit: number; used: number; remaining: number; month: string };
-
-const airport = { name: 'Madeira Airport', coordinates: [32.6919, -16.7745] as Coordinates };
-const otherPoint = 'other-route-point';
-const durations = [15, 30, 45, 60, 90, 120, 150, 180, 240];
-const knownCoordinates: Record<string, Coordinates> = {
-  'pico-do-arieiro': [32.7353, -16.9281], 'pico-ruivo': [32.7547, -16.9336],
-  'fanal-forest': [32.8147, -17.1494], 'praia-do-porto-do-seixal': [32.8266, -17.1052],
-  'machico-beach': [32.7212, -16.7652], 'faja-dos-padres': [32.6651, -17.0045],
-  'calheta-beach': [32.7211, -17.176], 'prainha-do-canical': [32.7423, -16.7134],
-  'porto-moniz-natural-pools': [32.8667, -17.1662], 'ribeira-da-janela': [32.8537, -17.1579],
-  funchal: [32.6496, -16.9087], 'mercado-dos-lavradores': [32.648, -16.9033],
-  'cristo-rei': [32.6371, -16.8549], 'pico-do-facho': [32.724, -16.7814],
-  'cabo-girao-skywalk': [32.6567, -17.0115], 'anjos-waterfall': [32.6925, -17.1027],
-  'miradouro-do-guindaste': [32.8393, -16.8869], 'levada-nova-levada-do-moinho': [32.6942, -17.0993],
-  'monte-palace-tropical-garden': [32.6799, -16.8989], 'santana-typical-houses': [32.8037, -16.8803],
-  'ponta-de-sao-lourenco': [32.7443, -16.6994], 'madeira-international-airport': airport.coordinates,
+type MealType = 'breakfast' | 'lunch' | 'dinner';
+type RecommendationKey = 'weather' | 'beach' | 'levada' | 'sunrise' | 'food';
+type PlanStop = { id: string; type: 'location' | 'restaurant' | 'villa'; slug?: string; latitude?: number; longitude?: number; name?: string; arrivalTime: string; durationMinutes: number; isSunrise?: boolean; mealType?: MealType; hasCristovaoBar?: boolean; hasCristovaoRestaurant?: boolean };
+type WeatherSummary = { averageTemperature: number; rainProbability: number; picoTemperature: number | null; picoWindSpeed: number | null; picoWindGusts: number | null; waterTemperature: number | null };
+type RouteUsage = {
+  limit: number;
+  used: number;
+  remaining: number;
+  month: string;
 };
 
-function addMinutes(time: string, minutes: number) {
-  const [hours, mins] = time.split(':').map(Number);
-  const value = (hours * 60 + mins + minutes) % 1440;
-  return `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
+const villas = stays;
+const airportStartPoint = { slug: 'madeira-international-airport', latitude: 32.6919, longitude: -16.7745 };
+const customStartPoint = 'custom-start-point';
+function parseCoordinates(value: string): [number, number] | null { const match = value.match(/@?(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/); if (!match) return null; const latitude = Number(match[1]); const longitude = Number(match[2]); return latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 ? [latitude, longitude] : null; }
+const madeiraFoodRecommendations = `Що скуштувати на Мадейрі 🍽️
+
+🥩 Espetada — великі соковиті шматки яловичини, обсмажені на лавровій шпазі. Класично подають із bolo do caco та milho frito
+
+🍞 Bolo do caco — традиційний м’який плаский хліб із солодкою картоплею. Найкраще замовляти теплим, з часниковим маслом
+
+🌽 Milho frito — обсмажені кубики кукурудзяної каші з додаванням капусти. Один із найтиповіших гарнірів Мадейри, особливо до espetada, але також добре пасує до риби
+
+Риба та морепродукти 🐟🦐
+
+🐟 Filete de espada com banana — філе чорної шаблезубої риби в паніровці зі смаженим бананом. Найвідоміша рибна страва Мадейри
+
+🍋 Espada com maracujá — філе чорної шаблезубої риби з кисло-солодким соусом із маракуї. Більш тропічна варіація класичної espada
+
+🐟 Bife de atum — стейк із тунця, зазвичай маринований та обсмажений. Один із найкращих варіантів для любителів риби
+
+🐙 Polvo à lagareiro — восьминіг, запечений або обсмажений з оливковою олією, часником і картоплею
+
+🐙 Polvo à vinagrete — холодна закуска з восьминога в заправці з оливкової олії, оцту, цибулі та зелені. Добре брати як закуску до вина або пончі
+
+🦪 Lapas grelhadas — місцеві морські молюски, запечені на грилі у мушлях. Подаються гарячими, з часником, маслом, петрушкою та лимоном
+
+🐟 Atum à escabeche — тунець у пряному маринаді з оцтом, цибулею та спеціями
+
+🦑 Lulas grelhadas — кальмари на грилі з часником, оливковою олією та лимоном
+
+🦐 Camarão ao alho — креветки з часником, вершковим маслом або оливковою олією. До них обов’язково варто взяти bolo do caco, щоб зібрати ароматний соус
+
+🦐 Camarão grelhado — великі креветки, обсмажені на грилі з лимоном і часниковим соусом. Особливо добре замовляти у ресторанах біля океану
+
+🍚 Arroz de marisco — рис із морепродуктами: зазвичай креветки, мідії, кальмари, молюски та риба в ароматному томатному бульйоні. Часто порція розрахована на 2 людей
+
+🍝 Tagliatelle com camarão — тальятеле з креветками у вершковому, томатному або часниково-оливковому соусі. Хороша альтернатива, якщо хочеться морепродуктів, але без риби
+
+🍝 Massa de marisco — паста з міксом морепродуктів: креветками, кальмарами, мідіями та іноді восьминогом. Зазвичай варто брати на двох
+
+🍲 Cataplana de peixe e marisco — велика страва для двох або компанії, яку готують у спеціальній закритій мідній посудині. Усередині — мікс свіжої риби, креветок, кальмарів, мідій, молюсків, томатів, цибулі та зелені
+
+🐟🦐 Prato misto de peixe e marisco — велика тарілка-мікс із риби та морепродуктів на грилі: риба дня, кальмари, креветки, восьминіг, мідії або лапас. Найкраще брати на 2–4 людей і ділитися
+
+🐟 Peixe fresco do dia — свіжа риба дня, зазвичай на грилі. Запитайте в офіціанта, що саме зловили сьогодні; часто пропонують дорадо, окуня, морського ляща або іншу сезонну рибу
+
+Солодке та фрукти 🍰🍌
+
+🍰 Bolo de mel — традиційний мадейрський пряний пиріг із тростинним медом, спеціями та сухофруктами. Добре смакує з кавою, лікером або мадерським вином
+
+🍪 Broas de mel — невеликі пряні медові печива, хрумкі зовні та м’які всередині
+
+🧁 Queijada da Madeira — невелика солодка випічка з м’якого сиру, яєць і цукру. Ідеально до еспресо
+
+🥧 Pastel de nata — класична португальська листкова тарталетка з ніжним заварним кремом. Найкраще смакує ще теплою, з еспресо та дрібкою кориці
+
+🍍 Maracujá — маракуя: пробуйте в десертах, соусах, морозиві або напоях
+
+🍌 Banana da Madeira — маленькі ароматні мадейрські банани. Найавтентичніше поєднання — разом із філе espada
+
+Що випити 🍹
+
+🍹 Poncha — головний місцевий коктейль на основі тростинного алкоголю, меду й лимона. Спробуйте також варіанти з маракуєю, мандарином або апельсином
+
+🍷 Vinho da Madeira — кріплене мадерське вино. Добре взяти дегустацію або келих як аперитив; солодкі стилі пасують до десертів
+
+🍍 Nikita — солодкий вершково-ананасовий коктейль, легкий і десертний за характером
+
+🍺 Coral — місцеве мадейрське пиво, легкий світлий лагер із м’яким смаком. Добре підходить до морепродуктів, espetada та закусок
+
+🥤 Brisa Maracujá — культовий місцевий солодкий газований напій із маракуї.`;
+const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
+const standardLocationDurations: Record<string, number> = {
+  'pico-do-arieiro': 180,
+  'fanal-forest': 120,
+  'praia-do-porto-do-seixal': 120,
+  'machico-beach': 150,
+  'faja-dos-padres': 240,
+  'calheta-beach': 180,
+  'prainha-do-canical': 180,
+  'porto-moniz-natural-pools': 150,
+  'ribeira-da-janela': 30,
+  funchal: 90,
+  'mercado-dos-lavradores': 30,
+  'cristo-rei': 45,
+  'pico-do-facho': 30,
+  'cabo-girao-skywalk': 30,
+  'anjos-waterfall': 30,
+  'miradouro-do-guindaste': 30,
+  'levada-nova-levada-do-moinho': 150,
+  'monte-palace-tropical-garden': 120,
+  'santana-typical-houses': 15,
+  'ponta-de-sao-lourenco': 180,
+  'miradouro-sao-cristovao': 30,
+  'continente-modelo-machico': 45,
+  'continente-modelo-canico-shopping': 45,
+  'continente-modelo-agua-de-pena': 45,
+  'continente-modelo-camacha': 45,
+  'continente-modelo-cancela': 45,
+  'continente-modelo-viveiros': 45,
+  'continente-modelo-seminario': 45,
+  'continente-modelo-santo-antonio': 45,
+  'continente-modelo-madeira-shopping': 45,
+  'continente-modelo-santana': 45,
+  'continente-modelo-camara-de-lobos': 45,
+  'continente-modelo-monumental': 45,
+  'continente-modelo-sao-martinho': 45,
+  'continente-modelo-ribeira-brava': 45,
+  'continente-modelo-ribeira-brava-centro': 45,
+  'continente-modelo-estreito-de-camara-de-lobos': 45,
+  'pingo-doce-machico': 45,
+  'pingo-doce-camara-de-lobos': 45,
+  'pingo-doce-plaza-madeira': 45,
+  'pingo-doce-anadia': 45,
+  'pingo-doce-funchal': 45,
+  'pingo-doce-ribeira-brava': 45,
+  'pingo-doce-santo-antonio': 45,
+  'pingo-doce-brito-camara': 45,
+  'pingo-doce-penteada': 45,
+  'pingo-doce-cancela': 45,
+  'pingo-doce-monumental': 45,
+  'pingo-doce-calheta': 45,
+
+};
+
+const locationCoordinates: Record<string, [number, number]> = {
+  'pico-do-arieiro': [32.7353, -16.9281],
+  'pico-ruivo': [32.7547, -16.9336],
+  'pico-grande': [32.7211, -16.9914],
+  'fanal-forest': [32.8147, -17.1494],
+  'praia-do-porto-do-seixal': [32.8266, -17.1052],
+  'machico-beach': [32.7212, -16.7652],
+  'faja-dos-padres': [32.6651, -17.0045],
+  'calheta-beach': [32.7211, -17.1760],
+  'prainha-do-canical': [32.7423, -16.7134],
+  'porto-moniz-natural-pools': [32.8667, -17.1662],
+  'ribeira-da-janela': [32.8537, -17.1579],
+  funchal: [32.6496, -16.9087],
+  'mercado-dos-lavradores': [32.6480, -16.9033],
+  'cristo-rei': [32.6371, -16.8549],
+  'pico-do-facho': [32.7240, -16.7814],
+  'cabo-girao-skywalk': [32.6567, -17.0115],
+  'anjos-waterfall': [32.6925, -17.1027],
+  'miradouro-do-guindaste': [32.8393, -16.8869],
+  'levada-nova-levada-do-moinho': [32.6942, -17.0993],
+  'monte-palace-tropical-garden': [32.6799, -16.8989],
+  'santana-typical-houses': [32.8037, -16.8803],
+  'ponta-de-sao-lourenco': [32.7443, -16.6994],
+  'madeira-international-airport': [32.6919, -16.7745],
+  'continente-modelo-machico': [32.7205797, -16.7690134],
+  'continente-modelo-canico-shopping': [32.6533245, -16.8418957],
+  'continente-modelo-agua-de-pena': [32.7067415, -16.7683431],
+  'continente-modelo-camacha': [32.6755001, -16.8524357],
+  'continente-modelo-cancela': [32.6474157, -16.8595163],
+  'continente-modelo-viveiros': [32.6601672, -16.9198871],
+  'continente-modelo-seminario': [32.6497195, -16.9059145],
+  'continente-modelo-santo-antonio': [32.660207, -16.9303789],
+  'continente-modelo-madeira-shopping': [32.6592184, -16.9507246],
+  'continente-modelo-santana': [32.8105254, -16.8838053],
+  'continente-modelo-camara-de-lobos': [32.6547913, -16.9714938],
+  'continente-modelo-monumental': [32.6394109, -16.9470358],
+  'continente-modelo-sao-martinho': [32.6501934, -16.9378196],
+  'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
+  'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
+  'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],
+  'pingo-doce-machico': [32.7198279, -16.7677055],
+  'pingo-doce-camara-de-lobos': [32.6493188, -16.9750799],
+  'pingo-doce-plaza-madeira': [32.6369198, -16.9438398],
+  'pingo-doce-anadia': [32.649296, -16.904707],
+  'pingo-doce-funchal': [32.6369174, -16.9316492],
+  'pingo-doce-ribeira-brava': [32.670003, -17.0641829],
+  'pingo-doce-santo-antonio': [32.663891, -16.9393958],
+  'pingo-doce-brito-camara': [32.6475054, -16.9135832],
+  'pingo-doce-penteada': [32.6634256, -16.9286206],
+  'pingo-doce-cancela': [32.6466833, -16.857411],
+  'pingo-doce-monumental': [32.638662, -16.9345364],
+  'pingo-doce-calheta': [32.7197258, -17.1740178],
+
+};
+function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10); }
+function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
+
+function minutesBetween(fromTime: string, toTime: string) {
+  const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+  const [toHours, toMinutes] = toTime.split(':').map(Number);
+
+  const fromTotal = fromHours * 60 + fromMinutes;
+  const toTotal = toHours * 60 + toMinutes;
+
+  return (toTotal - fromTotal + 1440) % 1440;
+}
+function durationLabel(minutes: number, locale: 'en' | 'uk') { const hours = Math.floor(minutes / 60); const remaining = minutes % 60; if (locale === 'uk') return hours === 0 ? `${remaining} хв` : remaining === 0 ? `${hours} год` : `${hours} год ${remaining} хв`; return hours === 0 ? `${remaining} min` : remaining === 0 ? `${hours} hr` : `${hours} hr ${remaining} min`; }
+function getRouteStopIcon(location: { slug: string; tags: string[] }) {
+  if (location.tags.includes('Supermarkets')) return '🛒';
+  if (location.slug === 'pico-do-arieiro' || location.slug === 'ponta-de-sao-lourenco') return '⛰️';
+  if (location.tags.includes('Beaches')) return '🏖️';
+  if (location.tags.includes('Hiking')) return '🌿';
+  return '📍';
 }
 
-function durationLabel(value: number, locale: 'en' | 'uk') {
-  if (value < 60) return locale === 'uk' ? `${value} хв` : `${value} min`;
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
-  return locale === 'uk' ? `${hours} год${minutes ? ` ${minutes} хв` : ''}` : `${hours} hr${minutes ? ` ${minutes} min` : ''}`;
+function travelDurationLabel(minutes: number, locale: 'en' | 'uk') {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (locale === 'uk') {
+    const word = (value: number, one: string, few: string, many: string) => {
+      const lastTwoDigits = value % 100;
+      const lastDigit = value % 10;
+
+      if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return many;
+      if (lastDigit === 1) return one;
+      if (lastDigit >= 2 && lastDigit <= 4) return few;
+      return many;
+    };
+
+    if (hours === 0) {
+      return remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+    }
+
+    const hoursText = hours + ' ' + word(hours, '\u0433\u043e\u0434\u0438\u043d\u0443', '\u0433\u043e\u0434\u0438\u043d\u0438', '\u0433\u043e\u0434\u0438\u043d');
+
+    if (remainingMinutes === 0) {
+      return hoursText;
+    }
+
+    return hoursText + ' ' + remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+  }
+
+  if (hours === 0) {
+    return remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
+  }
+
+  const hoursText = hours + ' ' + (hours === 1 ? 'hour' : 'hours');
+
+  if (remainingMinutes === 0) {
+    return hoursText;
+  }
+
+  return hoursText + ' ' + remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
 }
 
-function directCoordinates(value: string): Coordinates | null {
-  const match = value.match(/@?(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
-  if (!match) return null;
-  const latitude = Number(match[1]), longitude = Number(match[2]);
-  return latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 ? [latitude, longitude] : null;
-}
+function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk') { if (locale === 'uk') { const clothing = temperature < 12 ? 'Одягайтеся тепло і шарами: тепла кофта, вітрозахисна куртка та закрите взуття.' : temperature < 20 ? 'Одягайтеся шарами: легка кофта або вітровка буде доречною.' : 'Підійде легкий одяг, але візьміть тонку кофту або вітровку на вечір та для гір.'; return `${rain >= 30 ? 'Ймовірність дощу достатня — візьміть дощовик.' : 'Ймовірність дощу невисока, але легкий дощовик у Мадейрі все одно буде корисним.'} ${clothing}`; } const clothing = temperature < 12 ? 'Dress warmly in layers: a warm mid-layer, windproof jacket and closed shoes.' : temperature < 20 ? 'Dress in layers; a light fleece or windbreaker is recommended.' : 'Light clothing is suitable, but bring a thin layer or windbreaker for the evening and mountains.'; return `${rain >= 30 ? 'Rain is possible, so take a rain jacket.' : 'Rain risk is low, but a light rain jacket is still useful in Madeira.'} ${clothing}`; }
 
 export default function TripPlanPage() {
-  const { locale } = useMessages();
-  const ukrainian = locale === 'uk';
-  const t = ukrainian ? {
-    title: 'План подорожі', start: 'Початкова точка', finish: 'Кінцева точка', same: 'Старт = фініш',
-    other: 'Інша точка маршруту', name: 'Назва точки', link: 'Google Maps посилання або координати',
-    details: 'Деталі дня', departure: 'Час виїзду', add: 'Додати точку', choose: 'Оберіть локацію',
-    custom: 'Довільна точка', route: 'Маршрут дня', calculate: 'Розрахувати маршрут', clear: 'Очистити',
-    arrival: 'Прибуття', duration: 'Тривалість', remove: 'Видалити', finishAt: 'Фініш', resolving: 'Визначаємо точку…',
-    pointError: 'Не вдалося визначити координати. Вставте Google Maps URL або координати.', noStops: 'Додайте локацію або довільну точку.',
+  const { locale, messages } = useMessages();
+  const [date, setDate] = useState(todayValue); const [villa, setVilla] = useState(villas[0].slug); const [startPoint, setStartPoint] = useState(villas[0].slug); const [endVilla, setEndVilla] = useState(''); const [customPointInput, setCustomPointInput] = useState(''); const [restaurantInput, setRestaurantInput] = useState(''); const [restaurantFormOpen, setRestaurantFormOpen] = useState(false); const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
+  const selectedEndVilla = stays.find((stay) => stay.slug === endVilla) ?? null;
+  const isAirportStart = startPoint === airportStartPoint.slug;
+  const isCustomStart = startPoint === customStartPoint;
+  const customCoordinates = useMemo(() => parseCoordinates(customPointInput), [customPointInput]);
+  const startPointName = isAirportStart ? (locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport') : isCustomStart ? (locale === 'uk' ? 'Довільна точка' : 'Custom point') : selectedVilla.name;
+  const startCoordinates: [number, number] | null = isAirportStart ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomStart ? customCoordinates : [selectedVilla.latitude, selectedVilla.longitude];
+  const [departureTime, setDepartureTime] = useState('09:00'); const [stops, setStops] = useState<PlanStop[]>([]); const [selectedSlug, setSelectedSlug] = useState(''); const [locationFilter, setLocationFilter] = useState('Lab Travel'); const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
+  const [recommendations, setRecommendations] = useState<Record<RecommendationKey, boolean>>({ weather: false, beach: false, levada: false, sunrise: false, food: false });
+  const [weather, setWeather] = useState<WeatherSummary | null>(null); const [weatherStatus, setWeatherStatus] = useState<'idle' | 'loading' | 'unavailable'>('idle');
+  const [routeStatus, setRouteStatus] = useState<'idle' | 'loading'>('idle');
+  const [routeUsage, setRouteUsage] = useState<RouteUsage | null>(null);
+  const [routeUsageStatus, setRouteUsageStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading');
+
+  const text = locale === 'uk' ? {
+    title: 'План подорожі', intro: 'Створіть просту програму дня: оберіть стартову точку, додайте локації, ресторан і час для кожної зупинки.', dayDetails: 'Деталі дня', date: 'Дата', startVilla: 'Стартова точка', whatToTry: 'Що скуштувати', departure: 'Час виїзду', addStop: 'Додати точку', location: 'Локація', locationFilters: 'Фільтр локацій', chooseLocation: 'Оберіть локацію', addLocation: 'Додати локацію', addRestaurant: 'Додати ресторан', addVilla: 'Додати повернення на віллу', selectedStops: 'Маршрут дня', noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.', arrival: 'Прибуття', duration: 'Тривалість', sunrise: 'Схід сонця', bar: 'Бар', restaurantOption: 'Ресторан', meal: 'Прийом їжі', breakfast: 'Сніданок', lunch: 'Обід', dinner: 'Вечеря', up: 'Вище', down: 'Нижче', remove: 'Видалити', restaurant: 'Ресторан', output: 'Готова програма', share: 'Поділитися', copied: 'Скопійовано', clear: 'Очистити маршрут', return: 'Повернення до', departureFrom: 'виїзд з', defaultProgram: 'Додайте точки маршруту — тут з’явиться готова програма для копіювання.', endPoint: 'Кінцева точка', chooseEndVilla: 'Оберіть кінцеву віллу', endVillaRequired: 'Оберіть кінцеву віллу, щоб завершити маршрут.', recommendations: 'Рекомендації на день', weather: 'Погода', beach: 'Пляж', levada: 'Левада', weatherLoading: 'Завантажуємо актуальний прогноз…', weatherUnavailable: 'Актуальний прогноз для обраної дати недоступний. Перевірте погоду перед виїздом.',
   } : {
-    title: 'Trip plan', start: 'Starting point', finish: 'End point', same: 'Start = finish',
-    other: 'Other route point', name: 'Point name', link: 'Google Maps link or coordinates',
-    details: 'Day details', departure: 'Departure time', add: 'Add point', choose: 'Choose a location',
-    custom: 'Custom point', route: 'Day route', calculate: 'Calculate route', clear: 'Clear',
-    arrival: 'Arrival', duration: 'Duration', remove: 'Remove', finishAt: 'Finish', resolving: 'Resolving point…',
-    pointError: 'Coordinates could not be resolved. Paste a Google Maps URL or coordinates.', noStops: 'Add a location or custom point.',
-  };
-  const [start, setStart] = useState(stays[0].slug);
-  const [finish, setFinish] = useState(stays[0].slug);
-  const [sameStartFinish, setSameStartFinish] = useState(true);
-  const [startCustomName, setStartCustomName] = useState('');
-  const [startCustomValue, setStartCustomValue] = useState('');
-  const [finishCustomName, setFinishCustomName] = useState('');
-  const [finishCustomValue, setFinishCustomValue] = useState('');
-  const [customName, setCustomName] = useState('');
-  const [customValue, setCustomValue] = useState('');
-  const [selectedSlug, setSelectedSlug] = useState('');
-  const [departure, setDeparture] = useState('09:00');
-  const [points, setPoints] = useState<Point[]>([]);
-  const [arrivals, setArrivals] = useState<string[]>([]);
-  const [finishArrival, setFinishArrival] = useState('');
-  const [usage, setUsage] = useState<Usage | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const selectableLocations = useMemo(() => locations
-    .map((location) => ({ location: getLocalizedLocation(location, locale), coordinates: knownCoordinates[location.slug] ?? directCoordinates(location.mapQuery) }))
-    .filter((item) => item.coordinates)
-    .sort((a, b) => a.location.name.localeCompare(b.location.name, locale)), [locale]);
-
-  const resolve = async (value: string, name: string) => {
-    const coordinates = directCoordinates(value);
-    if (coordinates) return { name: name || t.other, coordinates };
-    const response = await fetch('/api/resolve-route-point', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value }) });
-    const data = await response.json() as { latitude?: number; longitude?: number; name?: string | null; error?: string };
-    if (!response.ok || data.latitude === undefined || data.longitude === undefined) throw new Error(data.error || t.pointError);
-    return { name: name || data.name || t.other, coordinates: [data.latitude, data.longitude] as Coordinates };
+    title: 'Trip plan', intro: 'Create a simple day itinerary: choose a starting point, add locations, a restaurant stop and timing for each point.', dayDetails: 'Day details', date: 'Date', startVilla: 'Starting point', whatToTry: 'What to try', departure: 'Departure time', addStop: 'Add a stop', location: 'Location', locationFilters: 'Location filters', chooseLocation: 'Choose a location', addLocation: 'Add location', addRestaurant: 'Add restaurant', addVilla: 'Add villa return', selectedStops: 'Day route', noStops: 'Add your first location or restaurant to build the route.', arrival: 'Arrival', duration: 'Duration', sunrise: 'Sunrise', bar: 'Bar', restaurantOption: 'Restaurant', meal: 'Meal', breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', up: 'Move up', down: 'Move down', remove: 'Remove', restaurant: 'Restaurant', output: 'Ready programme', share: 'Share', copied: 'Copied', clear: 'Clear route', return: 'Return to', departureFrom: 'departure from', defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.', endPoint: 'End point', chooseEndVilla: 'Choose an end villa', endVillaRequired: 'Choose an end villa to complete the route.', recommendations: 'Day recommendations', weather: 'Weather', beach: 'Beach', levada: 'Levada', weatherLoading: 'Loading the current forecast…', weatherUnavailable: 'A current forecast is unavailable for the selected date. Check the weather before departure.',
   };
 
-  const selectedBase = (value: string, name: string, customValue: string) => {
-    if (value === otherPoint) return customValue ? resolve(customValue, name) : Promise.resolve(null);
-    if (value === 'airport') return Promise.resolve(airport);
-    const stay = stays.find((item) => item.slug === value);
-    return Promise.resolve(stay ? { name: stay.name, coordinates: [stay.latitude, stay.longitude] as Coordinates } : null);
+  const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }];
+  const availableLocations = useMemo(() => locations.filter((location) => locationFilter === 'All' || location.tags.includes(locationFilter)).map((location) => getLocalizedLocation(location, locale)).sort((a, b) => a.name.localeCompare(b.name, locale)), [locale, locationFilter]);
+  const locationBySlug = useMemo(() => new Map(locations.map((location) => [location.slug, getLocalizedLocation(location, locale)])), [locale]);
+  const routeLocations = useMemo(() => stops.filter((stop) => stop.type === 'location' && stop.slug).map((stop) => locationBySlug.get(stop.slug as string)).filter(Boolean), [stops, locationBySlug]);
+  const hasBeach = routeLocations.some((location) => location?.tags.includes('Beaches') || location?.slug === 'faja-dos-padres');
+  const hasLevada = routeLocations.some((location) => location?.tags.includes('Levada walks'));
+  const hasSunrise = stops.some((stop) => stop.slug === 'pico-do-arieiro' && stop.isSunrise);
+  const hasRestaurant = stops.some((stop) => stop.type === 'restaurant');
+  const hasAirportEnd = stops[stops.length - 1]?.type === 'location' && stops[stops.length - 1]?.slug === airportStartPoint.slug;
+  const needsEndVilla = (isAirportStart || isCustomStart) && !hasAirportEnd;
+
+  useEffect(() => {
+    const slugs = stops
+      .filter((stop) => stop.type === 'location' && stop.slug)
+      .map((stop) => stop.slug as string)
+      .filter((slug, index, allSlugs) => allSlugs.indexOf(slug) === index);
+    if (slugs.length === 0) { setWeather(null); setWeatherStatus('idle'); return; }
+    let cancelled = false;
+    const loadWeather = async () => {
+      setWeatherStatus('loading'); setWeather(null);
+      try {
+        const coordinates = slugs.map((slug) => locationCoordinates[slug] ?? [32.72, -16.97] as [number, number]);
+        const forecasts = await Promise.all(coordinates.map(async ([latitude, longitude]) => {
+          const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&timezone=auto&start_date=${date}&end_date=${date}`);
+          if (!response.ok) throw new Error('Weather request failed');
+          return response.json();
+        }));
+        const readings = forecasts.map((forecast) => ({ average: (forecast.daily.temperature_2m_max[0] + forecast.daily.temperature_2m_min[0]) / 2, rain: forecast.daily.precipitation_probability_max[0] ?? 0, wind: forecast.daily.wind_speed_10m_max[0] ?? 0, gusts: forecast.daily.wind_gusts_10m_max[0] ?? 0 }));
+        const picoIndex = slugs.indexOf('pico-do-arieiro');
+        let waterTemperature: number | null = null;
+        if (hasBeach) {
+          const marine = await fetch(`https://marine-api.open-meteo.com/v1/marine?latitude=32.70&longitude=-17.05&hourly=sea_surface_temperature&timezone=auto&start_date=${date}&end_date=${date}`);
+          if (marine.ok) { const data = await marine.json(); const values = (data.hourly.sea_surface_temperature as Array<number | null>).filter((value): value is number => value !== null); if (values.length) waterTemperature = values.reduce((sum, value) => sum + value, 0) / values.length; }
+        }
+        if (!cancelled) { setWeather({ averageTemperature: readings.reduce((sum, reading) => sum + reading.average, 0) / readings.length, rainProbability: Math.max(...readings.map((reading) => reading.rain)), picoTemperature: picoIndex >= 0 ? readings[picoIndex].average : null, picoWindSpeed: picoIndex >= 0 ? readings[picoIndex].wind : null, picoWindGusts: picoIndex >= 0 ? readings[picoIndex].gusts : null, waterTemperature }); setWeatherStatus('idle'); }
+      } catch { if (!cancelled) setWeatherStatus('unavailable'); }
+    };
+    loadWeather();
+    return () => { cancelled = true; };
+  }, [date, stops, hasBeach]);
+
+  const roundTravelMinutes = (minutes: number) => Math.ceil(minutes / 5) * 5;
+  const routeKey = [startPoint, customPointInput, endVilla, departureTime, stops.map((stop) => [stop.id, stop.type, stop.slug, stop.durationMinutes].join(':')).join('|')].join('|');
+
+  const pointForStop = (stop: PlanStop): [number, number] | null => {
+    if (stop.type === 'villa') {
+      return [selectedVilla.latitude, selectedVilla.longitude];
+    }
+
+    if (stop.type === 'restaurant' && stop.latitude !== undefined && stop.longitude !== undefined) return [stop.latitude, stop.longitude];
+    if (stop.type === 'location' && stop.slug) {
+      return locationCoordinates[stop.slug] ?? null;
+    }
+
+    return null;
   };
 
-  const addLocation = () => {
-    const item = selectableLocations.find(({ location }) => location.slug === selectedSlug);
-    if (!item?.coordinates) return;
-    setPoints((current) => [...current, { id: `${item.location.slug}-${Date.now()}`, name: item.location.name, coordinates: item.coordinates as Coordinates, slug: item.location.slug, duration: 90 }]);
-    setSelectedSlug('');
-  };
 
-  const addCustom = async () => {
-    if (!customValue.trim()) return;
-    setLoading(true); setError('');
-    try {
-      const point = await resolve(customValue, customName);
-      setPoints((current) => [...current, { id: `custom-${Date.now()}`, ...point, duration: 90 }]);
-      setCustomName(''); setCustomValue('');
-    } catch (reason) { setError(reason instanceof Error ? reason.message : t.pointError); }
-    finally { setLoading(false); }
-  };
+  useEffect(() => {
+    if (!stops.length) {
+      return;
+    }
 
-  const calculate = async () => {
-    if (!points.length || loading) return;
-    setLoading(true); setError('');
-    try {
-      const startPoint = await selectedBase(start, startCustomName, startCustomValue);
-      const endPoint = sameStartFinish ? startPoint : await selectedBase(finish, finishCustomName, finishCustomValue);
-      if (!startPoint || !endPoint) throw new Error(t.pointError);
-      const journey = [...points, { id: 'finish', ...endPoint, duration: 0 }];
-      let previous = startPoint.coordinates, cursor = departure;
-      const nextArrivals: string[] = [];
-      for (const point of journey) {
-        const response = await fetch('/api/route-time', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ origin: { latitude: previous[0], longitude: previous[1] }, destination: { latitude: point.coordinates[0], longitude: point.coordinates[1] } }) });
-        const data = await response.json() as { durationMinutes?: number; usage?: Usage; error?: string };
-        if (!response.ok || !data.durationMinutes) throw new Error(data.error || 'Google Routes error.');
-        if (data.usage) setUsage(data.usage);
-        cursor = addMinutes(cursor, Math.ceil(data.durationMinutes / 5) * 5);
-        nextArrivals.push(cursor);
-        cursor = addMinutes(cursor, point.duration);
-        previous = point.coordinates;
+    let cursor = departureTime;
+
+    const nextArrivalTimes = stops.map((stop) => {
+      const arrivalTime = addMinutes(cursor, 30);
+      cursor = addMinutes(arrivalTime, stop.durationMinutes);
+
+      return arrivalTime;
+    });
+
+    setStops((current) =>
+      current.map((stop, index) => ({
+        ...stop,
+        arrivalTime: nextArrivalTimes[index] ?? stop.arrivalTime,
+      })),
+    );
+  }, [routeKey]);
+
+
+  const calculateRoute = async () => {
+    if (
+      !stops.length ||
+      routeStatus === 'loading' ||
+      !routeUsage ||
+      routeUsage.remaining <= 0
+    ) {
+      return;
+    }
+
+    setRouteStatus('loading');
+
+    let previous: [number, number] | null = [
+      startCoordinates?.[0] ?? selectedVilla.latitude,
+      startCoordinates?.[1] ?? selectedVilla.longitude,
+    ];
+
+    let cursor = departureTime;
+    const nextStops: PlanStop[] = [];
+
+    for (const stop of stops) {
+      const destination = pointForStop(stop);
+      let travelMinutes = 30;
+
+      if (previous && destination) {
+        try {
+          const response = await fetch('/api/route-time', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              origin: {
+                latitude: previous[0],
+                longitude: previous[1],
+              },
+              destination: {
+                latitude: destination[0],
+                longitude: destination[1],
+              },
+            }),
+          });
+
+          const data = (await response.json()) as {
+            durationMinutes?: number;
+            usage?: RouteUsage;
+          };
+
+          if (data.usage) {
+            setRouteUsage(data.usage);
+          }
+
+          if (response.status === 429) {
+            await loadRouteUsage();
+            break;
+          }
+
+          if (response.ok && data.durationMinutes) {
+            travelMinutes = roundTravelMinutes(data.durationMinutes);
+          }
+        } catch {
+          travelMinutes = 30;
+        }
       }
-      setArrivals(nextArrivals.slice(0, -1)); setFinishArrival(nextArrivals.at(-1) ?? '');
-    } catch (reason) { setError(reason instanceof Error ? reason.message : 'Unable to calculate the route.'); }
-    finally { setLoading(false); }
+
+      const arrivalTime = addMinutes(cursor, travelMinutes);
+
+      nextStops.push({
+        ...stop,
+        arrivalTime,
+      });
+
+      cursor = addMinutes(arrivalTime, stop.durationMinutes);
+      previous = destination;
+    }
+
+    setStops((current) =>
+      current.map((stop, index) => ({
+        ...stop,
+        arrivalTime: nextStops[index]?.arrivalTime ?? stop.arrivalTime,
+      })),
+    );
+
+    await loadRouteUsage();
+    setRouteStatus('idle');
   };
 
-  const selectOptions = <><option value="airport">{airport.name}</option>{stays.map((stay) => <option key={stay.slug} value={stay.slug}>{stay.name}</option>)}<option value={otherPoint}>{t.other}</option></>;
-  const customFields = (name: string, setName: (value: string) => void, value: string, setValue: (value: string) => void) => <div className="grid gap-3 sm:grid-cols-2"><label className="flex flex-col gap-1 text-sm font-semibold text-navy">{t.name}<input value={name} onChange={(event) => setName(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm" placeholder={ukrainian ? 'Наприклад, Restaurant X' : 'For example, Restaurant X'} /></label><label className="flex flex-col gap-1 text-sm font-semibold text-navy">{t.link}<input value={value} onChange={(event) => setValue(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm" placeholder="https://maps.app.goo.gl/…" /></label></div>;
 
-  return <Layout><Head><title>{t.title} | Madeira Live Cams</title></Head><main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10"><section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8"><p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p><h1 className="mt-2 text-3xl font-bold text-navy sm:text-4xl">{t.title}</h1><p className="mt-3 text-slate-600">{ukrainian ? 'Оберіть старт, зупинки та фініш. Google Routes порахує весь маршрут, включно з останнім відрізком.' : 'Choose a start, stops and finish. Google Routes calculates the entire route, including the final leg.'}</p>
-    <div className="mt-8 space-y-5 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{t.details}</h2><div className="grid gap-4 sm:grid-cols-2"><label className="flex flex-col gap-1 text-sm font-semibold text-navy">{t.start}<select value={start} onChange={(event) => setStart(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm">{selectOptions}</select></label><label className="flex flex-col gap-1 text-sm font-semibold text-navy">{t.departure}<input type="time" value={departure} onChange={(event) => setDeparture(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm" /></label></div>{start === otherPoint && customFields(startCustomName, setStartCustomName, startCustomValue, setStartCustomValue)}<label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-navy"><input type="checkbox" checked={sameStartFinish} onChange={(event) => setSameStartFinish(event.target.checked)} className="h-4 w-4 rounded text-ocean focus:ring-ocean" />{t.same}</label>{!sameStartFinish && <><label className="flex flex-col gap-1 text-sm font-semibold text-navy">{t.finish}<select value={finish} onChange={(event) => setFinish(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm">{selectOptions}</select></label>{finish === otherPoint && customFields(finishCustomName, setFinishCustomName, finishCustomValue, setFinishCustomValue)}</>}</div>
-    <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{t.add}</h2><div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]"><select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm"><option value="">{t.choose}</option>{selectableLocations.map(({ location }) => <option key={location.slug} value={location.slug}>{location.name}</option>)}</select><button type="button" onClick={addLocation} disabled={!selectedSlug} className="min-h-11 rounded-lg bg-ocean px-4 text-sm font-bold text-white disabled:opacity-40">+ 📍</button></div><div className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_auto]"><input value={customName} onChange={(event) => setCustomName(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm" placeholder={t.name} /><input value={customValue} onChange={(event) => setCustomValue(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm" placeholder={t.link} /><button type="button" onClick={addCustom} disabled={loading || !customValue.trim()} className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean disabled:opacity-40">{loading ? t.resolving : '+ 📍'}</button></div>{error && <p className="mt-3 text-sm font-medium text-red-600">{error}</p>}</div>
-    <section className="mt-6"><div className="flex items-center justify-between"><h2 className="text-xl font-bold text-navy">{t.route}</h2>{points.length > 0 && <button type="button" onClick={() => { setPoints([]); setArrivals([]); setFinishArrival(''); }} className="text-sm font-semibold text-slate-500 hover:text-ocean">{t.clear}</button>}</div>{points.length === 0 ? <p className="mt-3 rounded-xl border border-dashed border-slate-300 p-5 text-sm text-slate-500">{t.noStops}</p> : <div className="mt-3 space-y-3">{points.map((point, index) => <article key={point.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><div className="flex items-start gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span><div className="flex-1"><p className="font-bold text-navy">📍 {point.name}</p><p className="mt-1 text-xs text-slate-500">{arrivals[index] ? `${t.arrival}: ${arrivals[index]}` : ''}</p></div><button type="button" onClick={() => setPoints((current) => current.filter((item) => item.id !== point.id))} className="text-sm font-semibold text-slate-500 hover:text-red-600">×</button></div><label className="mt-3 flex flex-col gap-1 text-xs font-semibold text-slate-600">{t.duration}<select value={point.duration} onChange={(event) => setPoints((current) => current.map((item) => item.id === point.id ? { ...item, duration: Number(event.target.value) } : item))} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm">{durations.map((value) => <option key={value} value={value}>{durationLabel(value, locale)}</option>)}</select></label></article>)}</div>}</section>
-    <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><button type="button" onClick={calculate} disabled={loading || !points.length} className="min-h-11 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean disabled:opacity-40">{loading ? (ukrainian ? 'Розраховуємо…' : 'Calculating…') : t.calculate}</button>{finishArrival && <p className="mt-4 rounded-xl bg-white p-4 text-sm font-semibold text-navy">🏁 {t.finishAt}: {finishArrival} — {sameStartFinish ? (start === otherPoint ? startCustomName || t.other : start === 'airport' ? airport.name : stays.find((stay) => stay.slug === start)?.name) : (finish === otherPoint ? finishCustomName || t.other : finish === 'airport' ? airport.name : stays.find((stay) => stay.slug === finish)?.name)}</p>}{usage && <p className="mt-3 text-xs text-slate-500">Google Routes: {usage.remaining.toLocaleString()} / {usage.limit.toLocaleString()}</p>}</section>
+  const loadRouteUsage = async () => {
+    setRouteUsageStatus('loading');
+
+    try {
+      const response = await fetch('/api/route-usage');
+
+      if (!response.ok) {
+        throw new Error('Usage request failed');
+      }
+
+      const data = (await response.json()) as RouteUsage;
+
+      setRouteUsage(data);
+      setRouteUsageStatus('ready');
+    } catch {
+      setRouteUsageStatus('unavailable');
+    }
+  };
+
+
+  useEffect(() => {
+    loadRouteUsage();
+  }, []);
+
+
+  const getNextArrivalTime = () => {
+    const previousStop = stops[stops.length - 1];
+    return !previousStop
+      ? addMinutes(departureTime, 30)
+      : addMinutes(previousStop.arrivalTime, previousStop.durationMinutes + 30);
+  };
+  const addLocation = () => { if (!selectedSlug) return; const selectedLocation = locations.find((location) => location.slug === selectedSlug); setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]); setSelectedSlug(''); };
+  const addRestaurant = () => { const point = parseCoordinates(restaurantInput); if (!restaurantFormOpen) { setRestaurantFormOpen(true); return; } if (!point) return; setStops((current) => [...current, { id: `restaurant-${Date.now()}`, type: 'restaurant', latitude: point[0], longitude: point[1], name: text.restaurant, arrivalTime: getNextArrivalTime(), durationMinutes: 90, mealType: 'lunch' }]); setRestaurantInput(''); setRestaurantFormOpen(false); };
+  const addVillaStop = () => setStops((current) => [...current, { id: `villa-${Date.now()}`, type: 'villa', arrivalTime: getNextArrivalTime(), durationMinutes: 120 }]);
+  const updateStop = (id: string, updates: Partial<PlanStop>) => setStops((current) => current.map((stop) => stop.id === id ? { ...stop, ...updates } : stop));
+  const moveStop = (index: number, direction: -1 | 1) => { const targetIndex = index + direction; if (targetIndex < 0 || targetIndex >= stops.length) return; setStops((current) => { const next = [...current]; [next[index], next[targetIndex]] = [next[targetIndex], next[index]]; return next; }); };
+  const removeStop = (id: string) => setStops((current) => current.filter((stop) => stop.id !== id));
+  const mealLabelForTime = (time: string) => {
+    const hour = Number(time.split(':')[0]);
+    if (hour < 12) return text.breakfast;
+    if (hour < 17) return text.lunch;
+    return text.dinner;
+  };
+
+  const mealProgrammeText = (time: string) => {
+    const meal = mealLabelForTime(time).toLowerCase();
+    return locale === 'uk' ? `${meal} в ресторані` : `${meal} at a restaurant`;
+  };
+
+  const recommendationLines = useMemo(() => {
+    const lines: string[] = [];
+    const unavailable = weatherStatus === 'unavailable' ? text.weatherUnavailable : text.weatherLoading;
+    if (recommendations.weather) { lines.push(`🌤️ ${text.weather}`); lines.push(weather ? (locale === 'uk' ? `Середня температура за маршрутом: близько ${Math.round(weather.averageTemperature)}°C. Ймовірність дощу: до ${Math.round(weather.rainProbability)}%. ${adviceForWeather(weather.averageTemperature, weather.rainProbability, locale)}` : `Average temperature across the route: about ${Math.round(weather.averageTemperature)}°C. Rain probability: up to ${Math.round(weather.rainProbability)}%. ${adviceForWeather(weather.averageTemperature, weather.rainProbability, locale)}`) : unavailable, ''); }
+    if (recommendations.beach) { lines.push(`🏖️ ${text.beach}`); lines.push(weather?.waterTemperature !== null && weather?.waterTemperature !== undefined ? (locale === 'uk' ? `Температура води біля Мадейри: близько ${Math.round(weather.waterTemperature)}°C.` : `Sea temperature around Madeira: about ${Math.round(weather.waterTemperature)}°C.`) : unavailable); lines.push(locale === 'uk' ? 'Візьміть підстилки, повний комплект для купання, сонячні окуляри, сонцезахисний крем і головний убір.' : 'Bring beach mats, a full swim kit, sunglasses, sunscreen and a hat.', ''); }
+    if (recommendations.levada) { lines.push(`🌿 ${text.levada}`); lines.push(locale === 'uk' ? 'Візьміть зручне взуття для левади з хорошим зчепленням. Якщо левала вийшла з берегів або стежка мокра, візьміть водонепроникні чохли, щоб не промокли ноги. Вода обов’язкова. Усім, хто вищий за 175 см, потрібно уважно проходити тунелі: є ризик вдаритися головою. Якщо боїтеся висоти, йдіть поруч із гідом.' : 'Wear comfortable levada shoes with good grip. If the levada has overflowed or the path is wet, take waterproof overshoes to keep your feet dry. Carry water. If you are taller than 175 cm, take care in tunnels because there is a risk of hitting your head. If you are afraid of heights, stay close to your guide.', ''); }
+    if (recommendations.sunrise) { lines.push(`🌅 ${text.sunrise}`); lines.push(weather?.picoTemperature !== null && weather?.picoTemperature !== undefined ? (locale === 'uk' ? `На Pico do Areeiro: близько ${Math.round(weather.picoTemperature)}°C, вітер до ${Math.round(weather.picoWindSpeed ?? 0)} км/год, пориви до ${Math.round(weather.picoWindGusts ?? 0)} км/год.` : `At Pico do Areeiro: about ${Math.round(weather.picoTemperature)}°C, wind up to ${Math.round(weather.picoWindSpeed ?? 0)} km/h and gusts up to ${Math.round(weather.picoWindGusts ?? 0)} km/h.`) : unavailable); lines.push(locale === 'uk' ? 'Одягніть теплий шар, вітрозахисну куртку, довгі штани та закрите взуття. Перед виїздом бажано з’їсти щось легке: каву з тістечком або бутерброди. Скористайтеся туалетом перед виїздом.' : 'Wear a warm layer, windproof jacket, long trousers and closed shoes. Before leaving, have something light such as coffee and a pastry or sandwiches. Use the toilet before departure.', ''); }
+    if (recommendations.food && hasRestaurant) lines.push(`🍽️ ${text.whatToTry}`, madeiraFoodRecommendations, '');
+    return lines;
+  }, [hasRestaurant, locale, recommendations, text, weather, weatherStatus]);
+
+  const programme = useMemo(() => {
+    if (stops.length === 0) return '';
+    const selectedDate = new Date(`${date}T12:00:00`); const formattedDate = new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'long' }).format(selectedDate); const ukrainianWeekdays = ['неділю', 'понеділок', 'вівторок', 'середу', 'четвер', 'п’ятницю', 'суботу']; const englishWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(selectedDate); const heading = locale === 'uk' ? `Програма на ${ukrainianWeekdays[selectedDate.getDay()]}, ${formattedDate}` : `Programme for ${englishWeekday}, ${formattedDate}`; const firstStop = stops[0];
+    const firstTravelMinutes = firstStop
+      ? minutesBetween(departureTime, firstStop.arrivalTime)
+      : 30;
+
+    const travelLine = (
+      departureAt: string,
+      departureFrom: string,
+      travelMinutes: number,
+    ) => locale === 'uk'
+      ? '\u{1F68C} ' + departureAt + ' \u2014 ' + (departureFrom ? '\u0432\u0438\u0457\u0437\u0434 \u0437 ' + departureFrom : '\u0432\u0438\u0457\u0437\u0434') + ', \u0447\u0430\u0441 \u0443 \u0434\u043e\u0440\u043e\u0437\u0456 ~' + travelDurationLabel(travelMinutes, locale) + '.'
+      : '\u{1F68C} ' + departureAt + ' \u2014 ' + (departureFrom ? 'departure from ' + departureFrom : 'departure') + ', travel time ~' + travelDurationLabel(travelMinutes, locale) + '.';
+
+    const stopName = (stop: PlanStop) => {
+      if (stop.type === 'restaurant') {
+        return stop.name ?? text.restaurant;
+      }
+
+      if (stop.type === 'villa') {
+        return selectedVilla.name;
+      }
+
+      return stop.slug
+        ? locationBySlug.get(stop.slug)?.name ?? ''
+        : '';
+    };
+
+    const lines = [
+      heading,
+      '',
+      travelLine(departureTime, isCustomStart ? '' : startPointName, firstTravelMinutes),
+      '',
+    ];
+
+    const endsAtAirport = hasAirportEnd;
+    const returnVilla = (isAirportStart || isCustomStart) ? selectedEndVilla : selectedVilla;
+    stops.forEach((stop, index) => {
+      const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
+
+      if (index > 0) {
+        const previousStop = stops[index - 1];
+
+        const previousEndTime = addMinutes(
+          previousStop.arrivalTime,
+          previousStop.durationMinutes,
+        );
+
+        const travelMinutes = minutesBetween(
+          previousEndTime,
+          stop.arrivalTime,
+        );
+
+        lines.push(
+          travelLine(
+            previousEndTime,
+            stopName(previousStop),
+            travelMinutes,
+          ),
+          '',
+        );
+      } if (stop.type === 'restaurant') { lines.push(`🍽️ ${stop.arrivalTime}–${endTime} — ${mealProgrammeText(stop.arrivalTime)}.`, ''); return; } if (stop.type === 'villa') { lines.push(`🏡 ${stop.arrivalTime}–${endTime} — ${selectedVilla.name}.`, `https://madeiralivecams.com/${locale}/stays/${selectedVilla.slug}`, ''); return; } if (stop.type === 'location' && stop.slug === 'madeira-international-airport') { const airport = locationBySlug.get(stop.slug); if (airport) lines.push(`✈️ ${stop.arrivalTime}–${endTime} — ${airport.name}.`, `https://madeiralivecams.com/${locale}/explore/${airport.slug}`, ''); return; } const location = stop.slug ? locationBySlug.get(stop.slug) : undefined; if (!location) return; const icon = getRouteStopIcon(location); const sunriseSuffix = stop.slug === 'pico-do-arieiro' && stop.isSunrise ? locale === 'uk' ? ' Зустрічаємо схід сонця + прогулянка по маршруту PR1 – Vereda do Areeiro до Miradouro da Pedra Rija.' : ' Sunrise viewing plus a walk on PR1 – Vereda do Areeiro to Miradouro da Pedra Rija.' : '';
+      const cristovaoSuffix = stop.slug === 'miradouro-sao-cristovao' && (stop.hasCristovaoBar || stop.hasCristovaoRestaurant)
+        ? locale === 'uk'
+          ? ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'напої та перекус у барі' : ''}`
+          : ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'drinks and snacks at the bar' : ''}`
+        : '';
+      lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.${sunriseSuffix}${cristovaoSuffix}`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, ''); });
+    if (endsAtAirport) lines.push(locale === 'uk' ? '😭 На цьому програма туру завершена.' : '😭 The tour programme ends here.'); else if (!returnVilla) lines.push(`🏡 ${text.endVillaRequired}`); else lines.push(`🏡 ${text.return} ${returnVilla.name}.`, `https://madeiralivecams.com/${locale}/stays/${returnVilla.slug}`);
+    if (recommendationLines.length > 0) lines.push('', locale === 'uk' ? 'РЕКОМЕНДАЦІЇ НА ДЕНЬ' : 'DAY RECOMMENDATIONS', '', ...recommendationLines);
+    return lines.join('\n');
+  }, [customPointInput, date, departureTime, hasAirportEnd, isAirportStart, isCustomStart, locale, locationBySlug, recommendationLines, selectedEndVilla, selectedVilla, stops, text.departureFrom, text.endVillaRequired, text.return]);
+
+  const shareProgramme = async () => {
+    if (!programme) return;
+
+    const shareNavigator = navigator as Navigator & {
+      share?: (data: { title: string; text: string }) => Promise<void>;
+    };
+
+    if (shareNavigator.share) {
+      try {
+        await shareNavigator.share({
+          title: text.title,
+          text: programme,
+        });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      }
+    }
+
+    await navigator.clipboard.writeText(programme);
+    setCopyStatus('copied');
+    window.setTimeout(() => setCopyStatus('idle'), 2000);
+  };
+
+  return <Layout><Head><title>{text.title} | Madeira Live Cams</title><meta name="description" content={text.intro} /></Head><main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10"><section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8"><p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">{text.title}</h1><p className="mt-3 max-w-2xl leading-7 text-slate-600">{text.intro}</p>
+    <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2><div className={`mt-4 grid gap-4 ${isCustomStart ? 'sm:grid-cols-2' : 'sm:grid-cols-3'}`}><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.date}<input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.startVilla}<select value={startPoint} onChange={(event) => { const value = event.target.value; setStartPoint(value); if (value === airportStartPoint.slug) setDepartureTime('17:00'); else { setDepartureTime('09:00'); if (value !== customStartPoint) setVilla(value); } }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label>{isCustomStart && <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps або координати' : 'Google Maps link or coordinates'}<span className="relative block"><input value={customPointInput} onChange={(event) => setCustomPointInput(event.target.value)} placeholder="https://maps.google.com/?q=32.6919,-16.7745" className="min-h-11 w-full rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-11 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /><button type="button" onClick={async () => { try { setCustomPointInput(await navigator.clipboard.readText()); } catch {} }} aria-label="Вставити" title="Вставити" className="absolute inset-y-1 right-1 flex w-9 items-center justify-center rounded-md text-base text-ocean hover:bg-ocean/10">📋</button></span></label>}{(isAirportStart || isCustomStart) && <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.endPoint}<select value={endVilla} onChange={(event) => setEndVilla(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseEndVilla}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label>}<label className={`flex flex-col gap-1.5 text-sm font-semibold text-navy ${isCustomStart ? 'sm:col-span-2' : ''}`}>{text.departure}<input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label></div></div>
+    <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.addStop}</h2><div className="mt-4"><p className="text-sm font-semibold text-navy">{text.locationFilters}</p><div className="mt-2 flex gap-2 overflow-x-auto pb-2">{locationFilters.map((filter) => <button key={filter.value} type="button" onClick={() => { setLocationFilter(filter.value); setSelectedSlug(''); }} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${locationFilter === filter.value ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{filter.label}</button>)}</div></div><div className="mt-3">
+  <label className="flex min-w-[150px] flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">{text.location}<select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseLocation}</option>{availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}</select></label>
+  <div className="mt-3 grid grid-cols-3 gap-2">
+    <div className="[&>button]:w-full">
+      <button
+  type="button"
+  onClick={addLocation}
+  disabled={!selectedSlug}
+  aria-label={text.addLocation}
+  title={text.addLocation}
+  className="flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean text-lg font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end"
+>
+  + {'\u{1F4CD}'}
+</button>
+    </div>
+    <div className="[&>button]:w-full">
+      <button
+  type="button"
+  onClick={addRestaurant}
+  aria-label={text.addRestaurant}
+  title={text.addRestaurant}
+  className="flex min-h-11 w-full items-center justify-center rounded-lg border border-ocean bg-white text-lg font-bold text-ocean transition hover:bg-ocean hover:text-white sm:self-end"
+>
+  + {'\u{1F37D}\uFE0F'}
+</button>
+    </div>
+    <div className="[&>button]:w-full">
+      <button
+  type="button"
+  onClick={addVillaStop}
+  aria-label={text.addVilla}
+  title={text.addVilla}
+  className="flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-bold text-navy transition hover:border-ocean hover:text-ocean sm:self-end"
+>
+  + {'\u{1F3E1}'}
+</button>
+    </div>
+  </div>
+</div></div>
+    {restaurantFormOpen && <div className="mt-4 rounded-xl border border-ocean/30 bg-ocean/5 p-3"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps або координати ресторану' : 'Restaurant Google Maps link or coordinates'}<span className="relative block"><input value={restaurantInput} onChange={(event) => setRestaurantInput(event.target.value)} placeholder="https://maps.google.com/?q=32.6919,-16.7745" className="min-h-11 w-full rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-11 text-sm font-medium text-navy" /><button type="button" onClick={async () => { try { setRestaurantInput(await navigator.clipboard.readText()); } catch {} }} className="absolute inset-y-1 right-1 flex w-9 items-center justify-center rounded-md text-base text-ocean hover:bg-ocean/10">📋</button></span></label><p className="mt-2 text-xs text-slate-500">{locale === 'uk' ? 'Введіть координати, потім ще раз натисніть 🍽️.' : 'Enter coordinates, then press 🍽️ again.'}</p></div>}<section className="mt-6"><div className="flex items-center justify-between gap-3"><h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>{routeStatus === 'loading' && <span className="text-xs font-semibold text-slate-500">{locale === 'uk' ? 'Оновлюємо час у дорозі…' : 'Updating travel times…'}</span>}{stops.length > 0 && <button type="button" onClick={() => setStops([])} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}</div>{stops.length === 0 ? <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p> : <div className="mt-3 space-y-3">{stops.map((stop, index) => { const location = stop.slug ? locationBySlug.get(stop.slug) : undefined; const name = stop.type === 'restaurant' ? (stop.name ?? text.restaurant) : stop.type === 'villa' ? selectedVilla.name : location?.name ?? ''; const icon = stop.type === 'restaurant' ? '🍽️' : stop.type === 'villa' ? '🏡' : location ? getRouteStopIcon(location) : '📍'; const canSelectSunrise = stop.type === 'location' && stop.slug === 'pico-do-arieiro'; return <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><div className="flex items-start gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span><div className="min-w-0 flex-1"><p className="font-bold text-navy">{icon} {name}</p><p className="mt-1 text-xs text-slate-500">{durationLabel(stop.durationMinutes, locale)}</p></div><button type="button" onClick={() => removeStop(stop.id)} aria-label={text.remove} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600">×</button></div><div className="mt-4 grid grid-cols-2 gap-3"><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.arrival}<input type="time" value={stop.arrivalTime} readOnly className="min-h-10 rounded-lg border border-slate-300 bg-slate-100 px-2 text-sm text-navy" /></label><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.duration}<select value={stop.durationMinutes} onChange={(event) => updateStop(stop.id, { durationMinutes: Number(event.target.value) })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none">{durationOptions.map((minutes) => <option key={minutes} value={minutes}>{durationLabel(minutes, locale)}</option>)}</select></label></div>{canSelectSunrise && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isSunrise)} onChange={(event) => updateStop(stop.id, { isSunrise: event.target.checked })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" /><span>🌅 {text.sunrise}</span></label>}
+                    {stop.type === 'location' && stop.slug === 'miradouro-sao-cristovao' && <div className="mt-4 grid grid-cols-2 gap-2"><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoBar)} onChange={(event) => updateStop(stop.id, { hasCristovaoBar: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoRestaurant ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🥤 {text.bar}</label><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoRestaurant)} onChange={(event) => updateStop(stop.id, { hasCristovaoRestaurant: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoBar ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🍽️ {text.restaurantOption}</label></div>}<div className="mt-3 flex gap-2"><button type="button" onClick={() => moveStop(index, -1)} disabled={index === 0} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↑ {text.up}</button><button type="button" onClick={() => moveStop(index, 1)} disabled={index === stops.length - 1} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↓ {text.down}</button></div></article>; })}</div>}</section>
+    {stops.length > 0 && <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"><h2 className="text-xl font-bold text-navy">{text.recommendations}</h2><p className="mt-1 text-sm text-slate-500">{locale === 'uk' ? 'Оберіть рекомендації, які потрібно додати до готової програми.' : 'Choose recommendations to add to the ready programme.'}</p><div className="mt-4 grid gap-2 sm:grid-cols-2"><label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.weather} onChange={(event) => setRecommendations((current) => ({ ...current, weather: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🌤️ {text.weather}</label>{hasBeach && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.beach} onChange={(event) => setRecommendations((current) => ({ ...current, beach: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🏖️ {text.beach}</label>}{hasLevada && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.levada} onChange={(event) => setRecommendations((current) => ({ ...current, levada: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🌿 {text.levada}</label>}{hasRestaurant && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.food} onChange={(event) => setRecommendations((current) => ({ ...current, food: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🍽️ {text.whatToTry}</label>}{hasSunrise && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.sunrise} onChange={(event) => setRecommendations((current) => ({ ...current, sunrise: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />🌅 {text.sunrise}</label>}</div></section>}
+    <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><div>
+  <h2 className="text-xl font-bold text-navy">{text.output}</h2>
+  <div className="mt-3 flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2"><button type="button" onClick={calculateRoute} disabled={stops.length === 0 || (isCustomStart && !customCoordinates) || (needsEndVilla && !endVilla) || routeStatus === 'loading' || routeUsageStatus !== 'ready' || !routeUsage || routeUsage.remaining <= 0} className="min-h-10 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white disabled:cursor-not-allowed disabled:opacity-50">{routeStatus === 'loading' ? (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u043e\u0432\u0443\u0454\u043c\u043e...' : 'Calculating...') : (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u0443\u0432\u0430\u0442\u0438 \u043c\u0430\u0440\u0448\u0440\u0443\u0442' : 'Calculate route')}</button><button
+  type="button"
+  onClick={shareProgramme}
+  disabled={!programme}
+  aria-label={text.share}
+  title={text.share}
+  className="flex min-h-10 w-11 shrink-0 items-center justify-center rounded-lg bg-ocean text-lg font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40"
+>
+  {copyStatus === 'copied' ? '\u2713' : '\u{1F5FA}\uFE0F'}
+</button></div>
+  </div>
+</div><textarea readOnly value={programme || text.defaultProgram} className="mt-4 min-h-[260px] w-full resize-y rounded-xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-700 focus:outline-none" />
+<div className="mt-3 border-t border-slate-200 pt-3 text-xs leading-5 text-slate-400">
+  {routeUsageStatus === 'loading' && (
+    <span>
+      {locale === 'uk'
+        ? '\u0417\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0443\u0454\u043c\u043e \u043b\u0456\u043c\u0456\u0442 Google Routes...'
+        : 'Loading Google Routes limit...'}
+    </span>
+  )}
+
+  {routeUsageStatus === 'unavailable' && (
+    <span>
+      {locale === 'uk'
+        ? '\u041b\u0456\u0447\u0438\u043b\u044c\u043d\u0438\u043a Google Routes \u0442\u0438\u043c\u0447\u0430\u0441\u043e\u0432\u043e \u043d\u0435\u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0438\u0439.'
+        : 'Google Routes usage counter is temporarily unavailable.'}
+    </span>
+  )}
+
+  {routeUsageStatus === 'ready' && routeUsage && routeUsage.remaining > 0 && (
+    <span>
+      {locale === 'uk'
+        ? `Google Routes: \u0437\u0430\u043b\u0438\u0448\u0438\u043b\u043e\u0441\u044c ${routeUsage.remaining.toLocaleString()} \u0437 ${routeUsage.limit.toLocaleString()} \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0445 \u0437\u0432\u0435\u0440\u043d\u0435\u043d\u044c \u0446\u044c\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f.`
+        : `Google Routes: ${routeUsage.remaining.toLocaleString()} of ${routeUsage.limit.toLocaleString()} free requests remain this month.`}
+    </span>
+  )}
+
+  {routeUsageStatus === 'ready' && routeUsage && routeUsage.remaining <= 0 && (
+    <span className="font-semibold text-red-600">
+      {locale === 'uk'
+        ? '\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u043c\u0456\u0441\u044f\u0447\u043d\u0438\u0439 \u043b\u0456\u043c\u0456\u0442 Google Routes \u0432\u0438\u0447\u0435\u0440\u043f\u0430\u043d\u043e. \u041a\u043d\u043e\u043f\u043a\u0430 \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u043d\u043a\u0443 \u0431\u0443\u0434\u0435 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0430 \u043d\u0430 \u043f\u043e\u0447\u0430\u0442\u043a\u0443 \u043d\u0430\u0441\u0442\u0443\u043f\u043d\u043e\u0433\u043e \u043c\u0456\u0441\u044f\u0446\u044f.'
+        : 'The monthly Google Routes limit has been reached. Route calculation will be available again next month.'}
+    </span>
+  )}
+</div></section>
   </section></main></Layout>;
 }
+
