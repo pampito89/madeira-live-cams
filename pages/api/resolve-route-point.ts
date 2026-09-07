@@ -29,6 +29,12 @@ function coordinatesFromUrl(value: URL): [number, number] | null {
     : null;
 }
 
+function coordinatesFromGoogleMapsHtml(html: string): [number, number] | null {
+  const match = decodeURIComponent(html).match(/!3d(-?\d{1,2}\.\d+)!4d(-?\d{1,3}\.\d+)/);
+  if (!match) return null;
+  return [Number(match[1]), Number(match[2])];
+}
+
 function nameFromUrl(value: URL) {
   const placeMatch = value.pathname.match(/\/maps\/place\/([^/@]+)/i);
   const queryName = value.searchParams.get('q') || value.searchParams.get('query');
@@ -99,7 +105,12 @@ export default async function handler(
     }
 
     const query = currentUrl.searchParams.get('q') || currentUrl.searchParams.get('query') || '';
-    const coordinates = coordinatesFromUrl(currentUrl) ?? await geocodeGoogleMapsQuery(query);
+    let coordinates = coordinatesFromUrl(currentUrl);
+    if (!coordinates) {
+      const mapResponse = await fetch(currentUrl.toString(), { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0)' } });
+      if (mapResponse.ok) coordinates = coordinatesFromGoogleMapsHtml(await mapResponse.text());
+    }
+    coordinates = coordinates ?? await geocodeGoogleMapsQuery(query);
     if (!coordinates) {
       return res.status(422).json({ error: 'Coordinates were not found in this Google Maps link.' });
     }
