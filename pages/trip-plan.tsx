@@ -261,24 +261,32 @@ function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk'
 
 export default function TripPlanPage() {
   const { locale, messages } = useMessages();
-  const [date, setDate] = useState(todayValue); const [villa, setVilla] = useState(villas[0].slug); const [startPoint, setStartPoint] = useState(villas[0].slug); const [endVilla, setEndVilla] = useState(''); const [customPointInput, setCustomPointInput] = useState(''); const [restaurantInput, setRestaurantInput] = useState(''); const [restaurantFormOpen, setRestaurantFormOpen] = useState(false); const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
-  const selectedEndVilla = stays.find((stay) => stay.slug === endVilla) ?? null;
+  const [date, setDate] = useState(todayValue); const [villa, setVilla] = useState(villas[0].slug); const [startPoint, setStartPoint] = useState(villas[0].slug); const [endAtStart, setEndAtStart] = useState(true); const [endPoint, setEndPoint] = useState(villas[0].slug); const [customPointInput, setCustomPointInput] = useState(''); const [endCustomPointInput, setEndCustomPointInput] = useState(''); const [restaurantInput, setRestaurantInput] = useState(''); const [restaurantFormOpen, setRestaurantFormOpen] = useState(false); const selectedVilla = stays.find((stay) => stay.slug === villa) ?? stays[0];
+  const selectedEndVilla = stays.find((stay) => stay.slug === endPoint) ?? null;
   const isAirportStart = startPoint === airportStartPoint.slug;
   const isCustomStart = startPoint === customStartPoint;
+  const isAirportEnd = endPoint === airportStartPoint.slug;
+  const isCustomEnd = endPoint === customStartPoint;
   const customCoordinates = useMemo(() => parseCoordinates(customPointInput), [customPointInput]);
+  const endCustomCoordinates = useMemo(() => parseCoordinates(endCustomPointInput), [endCustomPointInput]);
   const startPointName = isAirportStart ? (locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport') : isCustomStart ? (locale === 'uk' ? 'Довільна точка' : 'Custom point') : selectedVilla.name;
   const startCoordinates: [number, number] | null = isAirportStart ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomStart ? customCoordinates : [selectedVilla.latitude, selectedVilla.longitude];
+  const selectedEndPointName = isAirportEnd ? (locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport') : isCustomEnd ? (locale === 'uk' ? 'Довільна точка' : 'Custom point') : selectedEndVilla?.name ?? '';
+  const selectedEndCoordinates: [number, number] | null = isAirportEnd ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomEnd ? endCustomCoordinates : selectedEndVilla ? [selectedEndVilla.latitude, selectedEndVilla.longitude] : null;
+  const finalPointName = endAtStart ? startPointName : selectedEndPointName;
+  const finalCoordinates = endAtStart ? startCoordinates : selectedEndCoordinates;
   const [departureTime, setDepartureTime] = useState('09:00'); const [stops, setStops] = useState<PlanStop[]>([]); const [selectedSlug, setSelectedSlug] = useState(''); const [locationFilter, setLocationFilter] = useState('Lab Travel'); const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
   const [recommendations, setRecommendations] = useState<Record<RecommendationKey, boolean>>({ weather: false, beach: false, levada: false, sunrise: false, food: false });
   const [weather, setWeather] = useState<WeatherSummary | null>(null); const [weatherStatus, setWeatherStatus] = useState<'idle' | 'loading' | 'unavailable'>('idle');
   const [routeStatus, setRouteStatus] = useState<'idle' | 'loading'>('idle');
   const [routeUsage, setRouteUsage] = useState<RouteUsage | null>(null);
   const [routeUsageStatus, setRouteUsageStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading');
+  const [returnTravelMinutes, setReturnTravelMinutes] = useState(30);
 
   const text = locale === 'uk' ? {
-    title: 'План подорожі', intro: 'Створіть просту програму дня: оберіть стартову точку, додайте локації, ресторан і час для кожної зупинки.', dayDetails: 'Деталі дня', date: 'Дата', startVilla: 'Стартова точка', whatToTry: 'Що скуштувати', departure: 'Час виїзду', addStop: 'Додати точку', location: 'Локація', locationFilters: 'Фільтр локацій', chooseLocation: 'Оберіть локацію', addLocation: 'Додати локацію', addRestaurant: 'Додати ресторан', addVilla: 'Додати повернення на віллу', selectedStops: 'Маршрут дня', noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.', arrival: 'Прибуття', duration: 'Тривалість', sunrise: 'Схід сонця', bar: 'Бар', restaurantOption: 'Ресторан', meal: 'Прийом їжі', breakfast: 'Сніданок', lunch: 'Обід', dinner: 'Вечеря', up: 'Вище', down: 'Нижче', remove: 'Видалити', restaurant: 'Ресторан', output: 'Готова програма', share: 'Поділитися', copied: 'Скопійовано', clear: 'Очистити маршрут', return: 'Повернення до', departureFrom: 'виїзд з', defaultProgram: 'Додайте точки маршруту — тут з’явиться готова програма для копіювання.', endPoint: 'Кінцева точка', chooseEndVilla: 'Оберіть кінцеву віллу', endVillaRequired: 'Оберіть кінцеву віллу, щоб завершити маршрут.', recommendations: 'Рекомендації на день', weather: 'Погода', beach: 'Пляж', levada: 'Левада', weatherLoading: 'Завантажуємо актуальний прогноз…', weatherUnavailable: 'Актуальний прогноз для обраної дати недоступний. Перевірте погоду перед виїздом.',
+    title: 'План подорожі', intro: 'Створіть просту програму дня: оберіть стартову точку, додайте локації, ресторан і час для кожної зупинки.', dayDetails: 'Деталі дня', date: 'Дата', startVilla: 'Стартова точка', endPoint: 'Кінцева точка', endAtStart: 'Старт дорівнює фінішу', customPoint: 'Посилання Google Maps або координати', whatToTry: 'Що скуштувати', departure: 'Час виїзду', addStop: 'Додати точку', location: 'Локація', locationFilters: 'Фільтр локацій', chooseLocation: 'Оберіть локацію', addLocation: 'Додати локацію', addRestaurant: 'Додати ресторан', addVilla: 'Додати повернення на віллу', selectedStops: 'Маршрут дня', noStops: 'Додайте першу локацію або ресторан, щоб сформувати маршрут.', arrival: 'Прибуття', duration: 'Тривалість', sunrise: 'Схід сонця', bar: 'Бар', restaurantOption: 'Ресторан', meal: 'Прийом їжі', breakfast: 'Сніданок', lunch: 'Обід', dinner: 'Вечеря', up: 'Вище', down: 'Нижче', remove: 'Видалити', restaurant: 'Ресторан', output: 'Готова програма', share: 'Поділитися', copied: 'Скопійовано', clear: 'Очистити маршрут', return: 'Повернення до', departureFrom: 'виїзд з', defaultProgram: 'Додайте точки маршруту — тут з’явиться готова програма для копіювання.', endVillaRequired: 'Оберіть коректну кінцеву точку, щоб завершити маршрут.', recommendations: 'Рекомендації на день', weather: 'Погода', beach: 'Пляж', levada: 'Левада', weatherLoading: 'Завантажуємо актуальний прогноз…', weatherUnavailable: 'Актуальний прогноз для обраної дати недоступний. Перевірте погоду перед виїздом.',
   } : {
-    title: 'Trip plan', intro: 'Create a simple day itinerary: choose a starting point, add locations, a restaurant stop and timing for each point.', dayDetails: 'Day details', date: 'Date', startVilla: 'Starting point', whatToTry: 'What to try', departure: 'Departure time', addStop: 'Add a stop', location: 'Location', locationFilters: 'Location filters', chooseLocation: 'Choose a location', addLocation: 'Add location', addRestaurant: 'Add restaurant', addVilla: 'Add villa return', selectedStops: 'Day route', noStops: 'Add your first location or restaurant to build the route.', arrival: 'Arrival', duration: 'Duration', sunrise: 'Sunrise', bar: 'Bar', restaurantOption: 'Restaurant', meal: 'Meal', breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', up: 'Move up', down: 'Move down', remove: 'Remove', restaurant: 'Restaurant', output: 'Ready programme', share: 'Share', copied: 'Copied', clear: 'Clear route', return: 'Return to', departureFrom: 'departure from', defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.', endPoint: 'End point', chooseEndVilla: 'Choose an end villa', endVillaRequired: 'Choose an end villa to complete the route.', recommendations: 'Day recommendations', weather: 'Weather', beach: 'Beach', levada: 'Levada', weatherLoading: 'Loading the current forecast…', weatherUnavailable: 'A current forecast is unavailable for the selected date. Check the weather before departure.',
+    title: 'Trip plan', intro: 'Create a simple day itinerary: choose a starting point, add locations, a restaurant stop and timing for each point.', dayDetails: 'Day details', date: 'Date', startVilla: 'Starting point', endPoint: 'End point', endAtStart: 'Start equals finish', customPoint: 'Google Maps link or coordinates', whatToTry: 'What to try', departure: 'Departure time', addStop: 'Add a stop', location: 'Location', locationFilters: 'Location filters', chooseLocation: 'Choose a location', addLocation: 'Add location', addRestaurant: 'Add restaurant', addVilla: 'Add villa return', selectedStops: 'Day route', noStops: 'Add your first location or restaurant to build the route.', arrival: 'Arrival', duration: 'Duration', sunrise: 'Sunrise', bar: 'Bar', restaurantOption: 'Restaurant', meal: 'Meal', breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', up: 'Move up', down: 'Move down', remove: 'Remove', restaurant: 'Restaurant', output: 'Ready programme', share: 'Share', copied: 'Copied', clear: 'Clear route', return: 'Return to', departureFrom: 'departure from', defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.', endVillaRequired: 'Choose a valid end point to complete the route.', recommendations: 'Day recommendations', weather: 'Weather', beach: 'Beach', levada: 'Levada', weatherLoading: 'Loading the current forecast…', weatherUnavailable: 'A current forecast is unavailable for the selected date. Check the weather before departure.',
   };
 
   const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }];
@@ -289,8 +297,7 @@ export default function TripPlanPage() {
   const hasLevada = routeLocations.some((location) => location?.tags.includes('Levada walks'));
   const hasSunrise = stops.some((stop) => stop.slug === 'pico-do-arieiro' && stop.isSunrise);
   const hasRestaurant = stops.some((stop) => stop.type === 'restaurant');
-  const hasAirportEnd = stops[stops.length - 1]?.type === 'location' && stops[stops.length - 1]?.slug === airportStartPoint.slug;
-  const needsEndVilla = (isAirportStart || isCustomStart) && !hasAirportEnd;
+  const needsEndPoint = !endAtStart && !finalCoordinates;
 
   useEffect(() => {
     const slugs = stops
@@ -323,7 +330,7 @@ export default function TripPlanPage() {
   }, [date, stops, hasBeach]);
 
   const roundTravelMinutes = (minutes: number) => Math.ceil(minutes / 5) * 5;
-  const routeKey = [startPoint, customPointInput, endVilla, departureTime, stops.map((stop) => [stop.id, stop.type, stop.slug, stop.durationMinutes].join(':')).join('|')].join('|');
+  const routeKey = [startPoint, customPointInput, endAtStart, endPoint, endCustomPointInput, departureTime, stops.map((stop) => [stop.id, stop.type, stop.slug, stop.durationMinutes].join(':')).join('|')].join('|');
 
   const pointForStop = (stop: PlanStop): [number, number] | null => {
     if (stop.type === 'villa') {
@@ -365,6 +372,8 @@ export default function TripPlanPage() {
   const calculateRoute = async () => {
     if (
       !stops.length ||
+      !startCoordinates ||
+      !finalCoordinates ||
       routeStatus === 'loading' ||
       !routeUsage ||
       routeUsage.remaining <= 0
@@ -437,6 +446,37 @@ export default function TripPlanPage() {
       cursor = addMinutes(arrivalTime, stop.durationMinutes);
       previous = destination;
     }
+
+    let finalTravelMinutes = 30;
+
+    if (previous && finalCoordinates) {
+      try {
+        const response = await fetch('/api/route-time', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            origin: { latitude: previous[0], longitude: previous[1] },
+            destination: {
+              latitude: finalCoordinates[0],
+              longitude: finalCoordinates[1],
+            },
+          }),
+        });
+        const data = (await response.json()) as {
+          durationMinutes?: number;
+          usage?: RouteUsage;
+        };
+
+        if (data.usage) setRouteUsage(data.usage);
+        if (response.ok && data.durationMinutes) {
+          finalTravelMinutes = roundTravelMinutes(data.durationMinutes);
+        }
+      } catch {
+        finalTravelMinutes = 30;
+      }
+    }
+
+    setReturnTravelMinutes(finalTravelMinutes);
 
     setStops((current) =>
       current.map((stop, index) => ({
@@ -546,8 +586,9 @@ export default function TripPlanPage() {
       '',
     ];
 
-    const endsAtAirport = hasAirportEnd;
-    const returnVilla = (isAirportStart || isCustomStart) ? selectedEndVilla : selectedVilla;
+    const finalStay = endAtStart
+      ? (!isAirportStart && !isCustomStart ? selectedVilla : null)
+      : selectedEndVilla;
     stops.forEach((stop, index) => {
       const endTime = addMinutes(stop.arrivalTime, stop.durationMinutes);
 
@@ -579,10 +620,18 @@ export default function TripPlanPage() {
           : ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'drinks and snacks at the bar' : ''}`
         : '';
       lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.${sunriseSuffix}${cristovaoSuffix}`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, ''); });
-    if (endsAtAirport) lines.push(locale === 'uk' ? '😭 На цьому програма туру завершена.' : '😭 The tour programme ends here.'); else if (!returnVilla) lines.push(`🏡 ${text.endVillaRequired}`); else lines.push(`🏡 ${text.return} ${returnVilla.name}.`, `https://madeiralivecams.com/${locale}/stays/${returnVilla.slug}`);
+    const lastStop = stops[stops.length - 1];
+    const lastStopEndTime = addMinutes(lastStop.arrivalTime, lastStop.durationMinutes);
+    const returnArrivalTime = addMinutes(lastStopEndTime, returnTravelMinutes);
+    lines.push(
+      travelLine(lastStopEndTime, stopName(lastStop), returnTravelMinutes),
+      '',
+      `🏡 ${returnArrivalTime} — ${text.return} ${finalPointName}.`,
+    );
+    if (finalStay) lines.push(`https://madeiralivecams.com/${locale}/stays/${finalStay.slug}`);
     if (recommendationLines.length > 0) lines.push('', locale === 'uk' ? 'РЕКОМЕНДАЦІЇ НА ДЕНЬ' : 'DAY RECOMMENDATIONS', '', ...recommendationLines);
     return lines.join('\n');
-  }, [customPointInput, date, departureTime, hasAirportEnd, isAirportStart, isCustomStart, locale, locationBySlug, recommendationLines, selectedEndVilla, selectedVilla, stops, text.departureFrom, text.endVillaRequired, text.return]);
+  }, [date, departureTime, endAtStart, finalPointName, isAirportStart, isCustomStart, locale, locationBySlug, recommendationLines, returnTravelMinutes, selectedEndVilla, selectedVilla, stops, text.return]);
 
   const shareProgramme = async () => {
     if (!programme) return;
@@ -609,7 +658,7 @@ export default function TripPlanPage() {
   };
 
   return <Layout><Head><title>{text.title} | Madeira Live Cams</title><meta name="description" content={text.intro} /></Head><main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10"><section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8"><p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">{text.title}</h1><p className="mt-3 max-w-2xl leading-7 text-slate-600">{text.intro}</p>
-    <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2><div className={`mt-4 grid gap-4 ${isCustomStart ? 'sm:grid-cols-2' : 'sm:grid-cols-3'}`}><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.date}<input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.startVilla}<select value={startPoint} onChange={(event) => { const value = event.target.value; setStartPoint(value); if (value === airportStartPoint.slug) setDepartureTime('17:00'); else { setDepartureTime('09:00'); if (value !== customStartPoint) setVilla(value); } }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label>{isCustomStart && <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps або координати' : 'Google Maps link or coordinates'}<span className="relative block"><input value={customPointInput} onChange={(event) => setCustomPointInput(event.target.value)} placeholder="https://maps.google.com/?q=32.6919,-16.7745" className="min-h-11 w-full rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-11 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /><button type="button" onClick={async () => { try { setCustomPointInput(await navigator.clipboard.readText()); } catch {} }} aria-label="Вставити" title="Вставити" className="absolute inset-y-1 right-1 flex w-9 items-center justify-center rounded-md text-base text-ocean hover:bg-ocean/10">📋</button></span></label>}{(isAirportStart || isCustomStart) && <label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.endPoint}<select value={endVilla} onChange={(event) => setEndVilla(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseEndVilla}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label>}<label className={`flex flex-col gap-1.5 text-sm font-semibold text-navy ${isCustomStart ? 'sm:col-span-2' : ''}`}>{text.departure}<input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label></div></div>
+    <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2><div className="mt-4 grid gap-4 sm:grid-cols-3"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.date}<input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.startVilla}<select value={startPoint} onChange={(event) => { const value = event.target.value; setStartPoint(value); if (value === airportStartPoint.slug) setDepartureTime('17:00'); else { setDepartureTime('09:00'); if (value !== customStartPoint) setVilla(value); } }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.departure}<input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /></label></div>{isCustomStart && <label className="mt-4 flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.customPoint}<span className="relative block"><input value={customPointInput} onChange={(event) => setCustomPointInput(event.target.value)} placeholder="https://maps.google.com/?q=32.6919,-16.7745" className="min-h-11 w-full rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-11 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /><button type="button" onClick={async () => { try { setCustomPointInput(await navigator.clipboard.readText()); } catch {} }} aria-label="Вставити" title="Вставити" className="absolute inset-y-1 right-1 flex w-9 items-center justify-center rounded-md text-base text-ocean hover:bg-ocean/10">📋</button></span></label>}<label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-ocean/30 bg-white px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={endAtStart} onChange={(event) => setEndAtStart(event.target.checked)} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean" />{text.endAtStart}</label>{!endAtStart && <div className="mt-4"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.endPoint}<select value={endPoint} onChange={(event) => setEndPoint(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label>{isCustomEnd && <label className="mt-4 flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.customPoint}<span className="relative block"><input value={endCustomPointInput} onChange={(event) => setEndCustomPointInput(event.target.value)} placeholder="https://maps.google.com/?q=32.6919,-16.7745" className="min-h-11 w-full rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-11 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" /><button type="button" onClick={async () => { try { setEndCustomPointInput(await navigator.clipboard.readText()); } catch {} }} aria-label="Вставити" title="Вставити" className="absolute inset-y-1 right-1 flex w-9 items-center justify-center rounded-md text-base text-ocean hover:bg-ocean/10">📋</button></span></label>}</div>}</div>
     <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.addStop}</h2><div className="mt-4"><p className="text-sm font-semibold text-navy">{text.locationFilters}</p><div className="mt-2 flex gap-2 overflow-x-auto pb-2">{locationFilters.map((filter) => <button key={filter.value} type="button" onClick={() => { setLocationFilter(filter.value); setSelectedSlug(''); }} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${locationFilter === filter.value ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{filter.label}</button>)}</div></div><div className="mt-3">
   <label className="flex min-w-[150px] flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">{text.location}<select value={selectedSlug} onChange={(event) => setSelectedSlug(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseLocation}</option>{availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}</select></label>
   <div className="mt-3 grid grid-cols-3 gap-2">
@@ -655,7 +704,7 @@ export default function TripPlanPage() {
     <section className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><div>
   <h2 className="text-xl font-bold text-navy">{text.output}</h2>
   <div className="mt-3 flex items-center gap-2">
-    <div className="flex flex-wrap items-center gap-2"><button type="button" onClick={calculateRoute} disabled={stops.length === 0 || (isCustomStart && !customCoordinates) || (needsEndVilla && !endVilla) || routeStatus === 'loading' || routeUsageStatus !== 'ready' || !routeUsage || routeUsage.remaining <= 0} className="min-h-10 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white disabled:cursor-not-allowed disabled:opacity-50">{routeStatus === 'loading' ? (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u043e\u0432\u0443\u0454\u043c\u043e...' : 'Calculating...') : (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u0443\u0432\u0430\u0442\u0438 \u043c\u0430\u0440\u0448\u0440\u0443\u0442' : 'Calculate route')}</button><button
+    <div className="flex flex-wrap items-center gap-2"><button type="button" onClick={calculateRoute} disabled={stops.length === 0 || !startCoordinates || needsEndPoint || routeStatus === 'loading' || routeUsageStatus !== 'ready' || !routeUsage || routeUsage.remaining <= 0} className="min-h-10 rounded-lg border border-ocean bg-white px-4 text-sm font-bold text-ocean transition hover:bg-ocean hover:text-white disabled:cursor-not-allowed disabled:opacity-50">{routeStatus === 'loading' ? (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u043e\u0432\u0443\u0454\u043c\u043e...' : 'Calculating...') : (locale === 'uk' ? '\u0420\u043e\u0437\u0440\u0430\u0445\u0443\u0432\u0430\u0442\u0438 \u043c\u0430\u0440\u0448\u0440\u0443\u0442' : 'Calculate route')}</button><button
   type="button"
   onClick={shareProgramme}
   disabled={!programme}
