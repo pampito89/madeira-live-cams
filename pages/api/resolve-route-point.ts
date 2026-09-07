@@ -41,6 +41,26 @@ function nameFromUrl(value: URL) {
   }
 }
 
+async function geocodeGoogleMapsQuery(query: string): Promise<[number, number] | null> {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  if (!apiKey || !query) return null;
+
+  const url = new URL('https://maps.googleapis.com/maps/api/geocode/json');
+  url.searchParams.set('address', query);
+  url.searchParams.set('key', apiKey);
+
+  const response = await fetch(url.toString());
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as {
+    results?: Array<{ geometry?: { location?: { lat?: number; lng?: number } } }>;
+  };
+  const location = data.results?.[0]?.geometry?.location;
+  return typeof location?.lat === 'number' && typeof location.lng === 'number'
+    ? [location.lat, location.lng]
+    : null;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResolvedRoutePoint | { error: string }>,
@@ -78,7 +98,8 @@ export default async function handler(
       return res.status(400).json({ error: 'The Google Maps link could not be resolved.' });
     }
 
-    const coordinates = coordinatesFromUrl(currentUrl);
+    const query = currentUrl.searchParams.get('q') || currentUrl.searchParams.get('query') || '';
+    const coordinates = coordinatesFromUrl(currentUrl) ?? await geocodeGoogleMapsQuery(query);
     if (!coordinates) {
       return res.status(422).json({ error: 'Coordinates were not found in this Google Maps link.' });
     }
