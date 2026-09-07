@@ -30,7 +30,7 @@ function coordinatesFromUrl(value: URL): [number, number] | null {
 }
 
 function coordinatesFromGoogleMapsHtml(html: string): [number, number] | null {
-  const match = decodeURIComponent(html).match(/!3d(-?\d{1,2}\.\d+)!4d(-?\d{1,3}\.\d+)/);
+  const match = html.match(/(?:!|%21)3d(-?\d{1,2}\.\d+)(?:!|%21)4d(-?\d{1,3}\.\d+)/i);
   if (!match) return null;
   return [Number(match[1]), Number(match[2])];
 }
