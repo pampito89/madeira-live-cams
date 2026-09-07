@@ -29,6 +29,16 @@ function coordinatesFromUrl(value: URL): [number, number] | null {
     : null;
 }
 
+function coordinatesFromInput(value: string): [number, number] | null {
+  const match = value.match(/^\s*(-?\d{1,2}(?:\.\d+)?)\s*[,\s]\s*(-?\d{1,3}(?:\.\d+)?)\s*$/);
+  if (!match) return null;
+  const latitude = Number(match[1]);
+  const longitude = Number(match[2]);
+  return latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180
+    ? [latitude, longitude]
+    : null;
+}
+
 function coordinatesFromGoogleMapsHtml(html: string): [number, number] | null {
   const match = html.match(/(?:!|%21)3d(-?\d{1,2}\.\d+)(?:!|%21)4d(-?\d{1,3}\.\d+)/i);
   if (!match) return null;
@@ -90,6 +100,15 @@ export default async function handler(
   }
 
   const sharedUrl = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
+  const directCoordinates = coordinatesFromInput(sharedUrl);
+
+  if (directCoordinates) {
+    return res.status(200).json({
+      name: 'Custom point',
+      latitude: directCoordinates[0],
+      longitude: directCoordinates[1],
+    });
+  }
 
   let currentUrl: URL;
   try {
