@@ -15,9 +15,10 @@ const GOOGLE_HOSTS = new Set([
 ]);
 
 function coordinatesFromUrl(value: URL): [number, number] | null {
+  const fromPlace = value.href.match(/!3d(-?\d{1,2}\.\d+)!4d(-?\d{1,3}\.\d+)/);
   const fromAt = value.href.match(/@(-?\d{1,2}\.\d+),(-?\d{1,3}\.\d+)/);
   const fromQuery = value.searchParams.get('q')?.match(/(-?\d{1,2}\.\d+),\s*(-?\d{1,3}\.\d+)/);
-  const match = fromAt ?? fromQuery;
+  const match = fromPlace ?? fromAt ?? fromQuery;
 
   if (!match) return null;
 

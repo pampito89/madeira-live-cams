@@ -670,7 +670,7 @@ export default function TripPlanPage() {
   disabled={!selectedSlug}
   aria-label={text.addLocation}
   title={text.addLocation}
-  className="flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean text-lg font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end"
+  className="mt-3 flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean text-lg font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end"
 >
   + {'\u{1F4CD}'}
 </button>
