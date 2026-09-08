@@ -88,7 +88,7 @@ const madeiraFoodRecommendations = `Що скуштувати на Мадейр�
 🍺 Coral — місцеве мадейрське пиво, легкий світлий лагер із м’яким смаком. Добре підходить до морепродуктів, espetada та закусок
 
 🥤 Brisa Maracujá — культовий місцевий солодкий газований напій із маракуї.`;
-const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 240];
+const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300];
 const standardLocationDurations: Record<string, number> = {
   'pico-do-arieiro': 180,
   'fanal-forest': 120,

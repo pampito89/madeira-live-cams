@@ -114,7 +114,20 @@ export default async function handler(
   try {
     currentUrl = new URL(sharedUrl);
   } catch {
-    return res.status(400).json({ error: 'Enter a valid Google Maps link.' });
+    try {
+      const coordinates = await geocodeOpenStreetMapQuery(sharedUrl);
+      if (coordinates) {
+        return res.status(200).json({
+          name: sharedUrl.split(',')[0].trim() || 'Custom point',
+          latitude: coordinates[0],
+          longitude: coordinates[1],
+        });
+      }
+    } catch {
+      // Continue to the validation error below.
+    }
+
+    return res.status(400).json({ error: 'Enter a Google Maps link, address, or coordinates.' });
   }
 
   if (currentUrl.protocol !== 'https:' || !GOOGLE_HOSTS.has(currentUrl.hostname)) {
