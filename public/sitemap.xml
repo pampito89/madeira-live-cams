@@ -1,50 +1,223 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://madeiralivecams.com/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/cameras</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/weather-guide</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/uk</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/uk/cameras</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/uk/weather-guide</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://madeiralivecams.com/uk/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-moinho-velho</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-moinho-velho</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-lilys</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-lilys</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-o-pescador-machico</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-o-pescador-machico</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-o-recante</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-o-recante</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-frente-ao-sol-o-polvo</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-frente-ao-sol-o-polvo</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-laranjinha</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-laranjinha</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-la-terraca</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-la-terraca</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-patio-das-babosas</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-patio-das-babosas</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-o-velho-pescador</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-o-velho-pescador</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-galeria</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-galeria</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-o-barqueiro</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-o-barqueiro</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-onda-do-sol</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-onda-do-sol</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-leme-marisqueira</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-leme-marisqueira</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-domino</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-domino</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-talho-santa</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-talho-santa</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-portus-villa</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-portus-villa</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-las-caraibas</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-las-caraibas</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-obsidian-17</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-obsidian-17</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-casa-de-pasto-justiniano</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-casa-de-pasto-justiniano</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-caravela</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-caravela</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-porto-de-abrigo</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-porto-de-abrigo</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-sao-cristovao</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-sao-cristovao</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-calhau-de-sao-jorge</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-calhau-de-sao-jorge</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-casa-de-palha</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-casa-de-palha</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-quinta-do-furao</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-quinta-do-furao</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-marisquera-gale</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-marisquera-gale</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-baia-do-bago</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-baia-do-bago</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-boca-da-encumeada</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-boca-da-encumeada</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-escondidinho</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-escondidinho</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/en/explore/restaurant-brunchology</loc>
+  </url>
+  <url>
+    <loc>https://madeiralivecams.com/uk/explore/restaurant-brunchology</loc>
   </url>
 </urlset>

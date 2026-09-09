@@ -1,23 +1,51 @@
+import { useRef } from "react";
+import { restaurantCoordinates } from "../data/restaurants";
+import { restaurantStopTitle } from "../lib/restaurantMeals";
+import { usePlannerDraft } from "../lib/usePlannerDraft";
+import RestaurantPlannerDetails from "../components/RestaurantPlannerDetails";
 import CustomDayPoint, { useCustomDayPoint } from '../components/CustomDayPoint';
 import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import { getLocalizedLocation, locations } from '../data/locations';
+import { getLocalizedLocation, locations } from "../data/plannerLocations";
 import { useMessages } from '../lib/i18n/useMessages';
 import { stays } from '../data/stays';
-
 type MealType = 'breakfast' | 'lunch' | 'dinner';
 type RecommendationKey = 'weather' | 'beach' | 'levada' | 'sunrise' | 'food';
-type PlanStop = { id: string; type: 'location' | 'custom' | 'villa'; slug?: string; latitude?: number; longitude?: number; name?: string; sourceUrl?: string; arrivalTime: string; durationMinutes: number; isSunrise?: boolean; mealType?: MealType; hasCristovaoBar?: boolean; hasCristovaoRestaurant?: boolean };
-type CustomRoutePoint = { name: string; latitude: number; longitude: number };
-type WeatherSummary = { averageTemperature: number; rainProbability: number; picoTemperature: number | null; picoWindSpeed: number | null; picoWindGusts: number | null; waterTemperature: number | null };
-type RouteUsage = {
-  limit: number;
-  used: number;
-  remaining: number;
-  month: string;
+type PlanStop = {
+    id: string;
+    type: 'location' | 'custom' | 'villa';
+    slug?: string;
+    latitude?: number;
+    longitude?: number;
+    name?: string;
+    sourceUrl?: string;
+    arrivalTime: string;
+    durationMinutes: number;
+    isSunrise?: boolean;
+    mealType?: MealType;
+    hasCristovaoBar?: boolean;
+    hasCristovaoRestaurant?: boolean;
 };
-
+type CustomRoutePoint = {
+    name: string;
+    latitude: number;
+    longitude: number;
+};
+type WeatherSummary = {
+    averageTemperature: number;
+    rainProbability: number;
+    picoTemperature: number | null;
+    picoWindSpeed: number | null;
+    picoWindGusts: number | null;
+    waterTemperature: number | null;
+};
+type RouteUsage = {
+    limit: number;
+    used: number;
+    remaining: number;
+    month: string;
+};
 const villas = stays;
 const airportStartPoint = { slug: 'madeira-international-airport', latitude: 32.6919, longitude: -16.7745 };
 const customStartPoint = 'custom-start-point';
@@ -91,175 +119,186 @@ const madeiraFoodRecommendations = `Що скуштувати на Мадейр�
 🥤 Brisa Maracujá — культовий місцевий солодкий газований напій із маракуї.`;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300];
 const standardLocationDurations: Record<string, number> = {
-  'pico-do-arieiro': 180,
-  'fanal-forest': 120,
-  'praia-do-porto-do-seixal': 120,
-  'machico-beach': 150,
-  'faja-dos-padres': 240,
-  'calheta-beach': 180,
-  'prainha-do-canical': 180,
-  'porto-moniz-natural-pools': 150,
-  'ribeira-da-janela': 30,
-  funchal: 90,
-  'mercado-dos-lavradores': 30,
-  'cristo-rei': 45,
-  'pico-do-facho': 30,
-  'cabo-girao-skywalk': 30,
-  'anjos-waterfall': 30,
-  'miradouro-do-guindaste': 30,
-  'levada-nova-levada-do-moinho': 150,
-  'monte-palace-tropical-garden': 120,
-  'santana-typical-houses': 15,
-  'ponta-de-sao-lourenco': 180,
-  'miradouro-sao-cristovao': 30,
-  'continente-modelo-machico': 45,
-  'continente-modelo-canico-shopping': 45,
-  'continente-modelo-agua-de-pena': 45,
-  'continente-modelo-camacha': 45,
-  'continente-modelo-cancela': 45,
-  'continente-modelo-viveiros': 45,
-  'continente-modelo-seminario': 45,
-  'continente-modelo-santo-antonio': 45,
-  'continente-modelo-madeira-shopping': 45,
-  'continente-modelo-santana': 45,
-  'continente-modelo-camara-de-lobos': 45,
-  'continente-modelo-monumental': 45,
-  'continente-modelo-sao-martinho': 45,
-  'continente-modelo-ribeira-brava': 45,
-  'continente-modelo-ribeira-brava-centro': 45,
-  'continente-modelo-estreito-de-camara-de-lobos': 45,
-  'pingo-doce-machico': 45,
-  'pingo-doce-camara-de-lobos': 45,
-  'pingo-doce-plaza-madeira': 45,
-  'pingo-doce-anadia': 45,
-  'pingo-doce-funchal': 45,
-  'pingo-doce-ribeira-brava': 45,
-  'pingo-doce-santo-antonio': 45,
-  'pingo-doce-brito-camara': 45,
-  'pingo-doce-penteada': 45,
-  'pingo-doce-cancela': 45,
-  'pingo-doce-monumental': 45,
-  'pingo-doce-calheta': 45,
-
+    'pico-do-arieiro': 180,
+    'fanal-forest': 120,
+    'praia-do-porto-do-seixal': 120,
+    'machico-beach': 150,
+    'faja-dos-padres': 240,
+    'calheta-beach': 180,
+    'prainha-do-canical': 180,
+    'porto-moniz-natural-pools': 150,
+    'ribeira-da-janela': 30,
+    funchal: 90,
+    'mercado-dos-lavradores': 30,
+    'cristo-rei': 45,
+    'pico-do-facho': 30,
+    'cabo-girao-skywalk': 30,
+    'anjos-waterfall': 30,
+    'miradouro-do-guindaste': 30,
+    'levada-nova-levada-do-moinho': 150,
+    'monte-palace-tropical-garden': 120,
+    'santana-typical-houses': 15,
+    'ponta-de-sao-lourenco': 180,
+    'miradouro-sao-cristovao': 30,
+    'continente-modelo-machico': 45,
+    'continente-modelo-canico-shopping': 45,
+    'continente-modelo-agua-de-pena': 45,
+    'continente-modelo-camacha': 45,
+    'continente-modelo-cancela': 45,
+    'continente-modelo-viveiros': 45,
+    'continente-modelo-seminario': 45,
+    'continente-modelo-santo-antonio': 45,
+    'continente-modelo-madeira-shopping': 45,
+    'continente-modelo-santana': 45,
+    'continente-modelo-camara-de-lobos': 45,
+    'continente-modelo-monumental': 45,
+    'continente-modelo-sao-martinho': 45,
+    'continente-modelo-ribeira-brava': 45,
+    'continente-modelo-ribeira-brava-centro': 45,
+    'continente-modelo-estreito-de-camara-de-lobos': 45,
+    'pingo-doce-machico': 45,
+    'pingo-doce-camara-de-lobos': 45,
+    'pingo-doce-plaza-madeira': 45,
+    'pingo-doce-anadia': 45,
+    'pingo-doce-funchal': 45,
+    'pingo-doce-ribeira-brava': 45,
+    'pingo-doce-santo-antonio': 45,
+    'pingo-doce-brito-camara': 45,
+    'pingo-doce-penteada': 45,
+    'pingo-doce-cancela': 45,
+    'pingo-doce-monumental': 45,
+    'pingo-doce-calheta': 45,
 };
-
-const locationCoordinates: Record<string, [number, number]> = {
-  'pico-do-arieiro': [32.7353, -16.9281],
-  'pico-ruivo': [32.7547, -16.9336],
-  'pico-grande': [32.7211, -16.9914],
-  'fanal-forest': [32.8147, -17.1494],
-  'praia-do-porto-do-seixal': [32.8266, -17.1052],
-  'machico-beach': [32.7212, -16.7652],
-  'faja-dos-padres': [32.6651, -17.0045],
-  'calheta-beach': [32.7211, -17.1760],
-  'prainha-do-canical': [32.7423, -16.7134],
-  'porto-moniz-natural-pools': [32.8667, -17.1662],
-  'ribeira-da-janela': [32.8537, -17.1579],
-  funchal: [32.6496, -16.9087],
-  'mercado-dos-lavradores': [32.6480, -16.9033],
-  'cristo-rei': [32.6371, -16.8549],
-  'pico-do-facho': [32.7240, -16.7814],
-  'cabo-girao-skywalk': [32.6567, -17.0115],
-  'anjos-waterfall': [32.6925, -17.1027],
-  'miradouro-do-guindaste': [32.8393, -16.8869],
-  'levada-nova-levada-do-moinho': [32.6942, -17.0993],
-  'monte-palace-tropical-garden': [32.6799, -16.8989],
-  'santana-typical-houses': [32.8037, -16.8803],
-  'ponta-de-sao-lourenco': [32.7443, -16.6994],
-  'madeira-international-airport': [32.6919, -16.7745],
-  'continente-modelo-machico': [32.7205797, -16.7690134],
-  'continente-modelo-canico-shopping': [32.6533245, -16.8418957],
-  'continente-modelo-agua-de-pena': [32.7067415, -16.7683431],
-  'continente-modelo-camacha': [32.6755001, -16.8524357],
-  'continente-modelo-cancela': [32.6474157, -16.8595163],
-  'continente-modelo-viveiros': [32.6601672, -16.9198871],
-  'continente-modelo-seminario': [32.6497195, -16.9059145],
-  'continente-modelo-santo-antonio': [32.660207, -16.9303789],
-  'continente-modelo-madeira-shopping': [32.6592184, -16.9507246],
-  'continente-modelo-santana': [32.8105254, -16.8838053],
-  'continente-modelo-camara-de-lobos': [32.6547913, -16.9714938],
-  'continente-modelo-monumental': [32.6394109, -16.9470358],
-  'continente-modelo-sao-martinho': [32.6501934, -16.9378196],
-  'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
-  'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
-  'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],
-  'pingo-doce-machico': [32.7198279, -16.7677055],
-  'pingo-doce-camara-de-lobos': [32.6493188, -16.9750799],
-  'pingo-doce-plaza-madeira': [32.6369198, -16.9438398],
-  'pingo-doce-anadia': [32.649296, -16.904707],
-  'pingo-doce-funchal': [32.6369174, -16.9316492],
-  'pingo-doce-ribeira-brava': [32.670003, -17.0641829],
-  'pingo-doce-santo-antonio': [32.663891, -16.9393958],
-  'pingo-doce-brito-camara': [32.6475054, -16.9135832],
-  'pingo-doce-penteada': [32.6634256, -16.9286206],
-  'pingo-doce-cancela': [32.6466833, -16.857411],
-  'pingo-doce-monumental': [32.638662, -16.9345364],
-  'pingo-doce-calheta': [32.7197258, -17.1740178],
-
+const locationCoordinates: Record<string, [
+    number,
+    number
+]> = {
+    'pico-do-arieiro': [32.7353, -16.9281],
+    'pico-ruivo': [32.7547, -16.9336],
+    'pico-grande': [32.7211, -16.9914],
+    'fanal-forest': [32.8147, -17.1494],
+    'praia-do-porto-do-seixal': [32.8266, -17.1052],
+    'machico-beach': [32.7212, -16.7652],
+    'faja-dos-padres': [32.6651, -17.0045],
+    'calheta-beach': [32.7211, -17.1760],
+    'prainha-do-canical': [32.7423, -16.7134],
+    'porto-moniz-natural-pools': [32.8667, -17.1662],
+    'ribeira-da-janela': [32.8537, -17.1579],
+    funchal: [32.6496, -16.9087],
+    'mercado-dos-lavradores': [32.6480, -16.9033],
+    'cristo-rei': [32.6371, -16.8549],
+    'pico-do-facho': [32.7240, -16.7814],
+    'cabo-girao-skywalk': [32.6567, -17.0115],
+    'anjos-waterfall': [32.6925, -17.1027],
+    'miradouro-do-guindaste': [32.8393, -16.8869],
+    'levada-nova-levada-do-moinho': [32.6942, -17.0993],
+    'monte-palace-tropical-garden': [32.6799, -16.8989],
+    'santana-typical-houses': [32.8037, -16.8803],
+    'ponta-de-sao-lourenco': [32.7443, -16.6994],
+    'madeira-international-airport': [32.6919, -16.7745],
+    'continente-modelo-machico': [32.7205797, -16.7690134],
+    'continente-modelo-canico-shopping': [32.6533245, -16.8418957],
+    'continente-modelo-agua-de-pena': [32.7067415, -16.7683431],
+    'continente-modelo-camacha': [32.6755001, -16.8524357],
+    'continente-modelo-cancela': [32.6474157, -16.8595163],
+    'continente-modelo-viveiros': [32.6601672, -16.9198871],
+    'continente-modelo-seminario': [32.6497195, -16.9059145],
+    'continente-modelo-santo-antonio': [32.660207, -16.9303789],
+    'continente-modelo-madeira-shopping': [32.6592184, -16.9507246],
+    'continente-modelo-santana': [32.8105254, -16.8838053],
+    'continente-modelo-camara-de-lobos': [32.6547913, -16.9714938],
+    'continente-modelo-monumental': [32.6394109, -16.9470358],
+    'continente-modelo-sao-martinho': [32.6501934, -16.9378196],
+    'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
+    'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
+    'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],
+    'pingo-doce-machico': [32.7198279, -16.7677055],
+    'pingo-doce-camara-de-lobos': [32.6493188, -16.9750799],
+    'pingo-doce-plaza-madeira': [32.6369198, -16.9438398],
+    'pingo-doce-anadia': [32.649296, -16.904707],
+    'pingo-doce-funchal': [32.6369174, -16.9316492],
+    'pingo-doce-ribeira-brava': [32.670003, -17.0641829],
+    'pingo-doce-santo-antonio': [32.663891, -16.9393958],
+    'pingo-doce-brito-camara': [32.6475054, -16.9135832],
+    'pingo-doce-penteada': [32.6634256, -16.9286206],
+    'pingo-doce-cancela': [32.6466833, -16.857411],
+    'pingo-doce-monumental': [32.638662, -16.9345364],
+    'pingo-doce-calheta': [32.7197258, -17.1740178],
+    ...restaurantCoordinates
 };
-function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10); }
+function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
-
 function minutesBetween(fromTime: string, toTime: string) {
-  const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
-  const [toHours, toMinutes] = toTime.split(':').map(Number);
-
-  const fromTotal = fromHours * 60 + fromMinutes;
-  const toTotal = toHours * 60 + toMinutes;
-
-  return (toTotal - fromTotal + 1440) % 1440;
+    const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+    const [toHours, toMinutes] = toTime.split(':').map(Number);
+    const fromTotal = fromHours * 60 + fromMinutes;
+    const toTotal = toHours * 60 + toMinutes;
+    return (toTotal - fromTotal + 1440) % 1440;
 }
-function durationLabel(minutes: number, locale: 'en' | 'uk') { const hours = Math.floor(minutes / 60); const remaining = minutes % 60; if (locale === 'uk') return hours === 0 ? `${remaining} хв` : remaining === 0 ? `${hours} год` : `${hours} год ${remaining} хв`; return hours === 0 ? `${remaining} min` : remaining === 0 ? `${hours} hr` : `${hours} hr ${remaining} min`; }
-function getRouteStopIcon(location: { slug: string; tags: string[] }) {
-  if (location.tags.includes('Supermarkets')) return '🛒';
-  if (location.slug === 'pico-do-arieiro' || location.slug === 'ponta-de-sao-lourenco') return '⛰️';
-  if (location.tags.includes('Beaches')) return '🏖️';
-  if (location.tags.includes('Hiking')) return '🌿';
-  return '📍';
+function durationLabel(minutes: number, locale: 'en' | 'uk') {
+    const hours = Math.floor(minutes / 60);
+    const remaining = minutes % 60;
+    if (locale === 'uk')
+        return hours === 0 ? `${remaining} хв` : remaining === 0 ? `${hours} год` : `${hours} год ${remaining} хв`;
+    return hours === 0 ? `${remaining} min` : remaining === 0 ? `${hours} hr` : `${hours} hr ${remaining} min`;
 }
-
+function getRouteStopIcon(location: {
+    slug: string;
+    tags: string[];
+}) {
+    if (location.tags.includes("Restaurants"))
+        return "\uD83C\uDF7D\uFE0F";
+    if (location.tags.includes('Supermarkets'))
+        return '🛒';
+    if (location.slug === 'pico-do-arieiro' || location.slug === 'ponta-de-sao-lourenco')
+        return '⛰️';
+    if (location.tags.includes('Beaches'))
+        return '🏖️';
+    if (location.tags.includes('Hiking'))
+        return '🌿';
+    return '📍';
+}
 function travelDurationLabel(minutes: number, locale: 'en' | 'uk') {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  if (locale === 'uk') {
-    const word = (value: number, one: string, few: string, many: string) => {
-      const lastTwoDigits = value % 100;
-      const lastDigit = value % 10;
-
-      if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return many;
-      if (lastDigit === 1) return one;
-      if (lastDigit >= 2 && lastDigit <= 4) return few;
-      return many;
-    };
-
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    if (locale === 'uk') {
+        const word = (value: number, one: string, few: string, many: string) => {
+            const lastTwoDigits = value % 100;
+            const lastDigit = value % 10;
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 14)
+                return many;
+            if (lastDigit === 1)
+                return one;
+            if (lastDigit >= 2 && lastDigit <= 4)
+                return few;
+            return many;
+        };
+        if (hours === 0) {
+            return remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+        }
+        const hoursText = hours + ' ' + word(hours, '\u0433\u043e\u0434\u0438\u043d\u0443', '\u0433\u043e\u0434\u0438\u043d\u0438', '\u0433\u043e\u0434\u0438\u043d');
+        if (remainingMinutes === 0) {
+            return hoursText;
+        }
+        return hoursText + ' ' + remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+    }
     if (hours === 0) {
-      return remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
+        return remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
     }
-
-    const hoursText = hours + ' ' + word(hours, '\u0433\u043e\u0434\u0438\u043d\u0443', '\u0433\u043e\u0434\u0438\u043d\u0438', '\u0433\u043e\u0434\u0438\u043d');
-
+    const hoursText = hours + ' ' + (hours === 1 ? 'hour' : 'hours');
     if (remainingMinutes === 0) {
-      return hoursText;
+        return hoursText;
     }
-
-    return hoursText + ' ' + remainingMinutes + ' ' + word(remainingMinutes, '\u0445\u0432\u0438\u043b\u0438\u043d\u0443', '\u0445\u0432\u0438\u043b\u0438\u043d\u0438', '\u0445\u0432\u0438\u043b\u0438\u043d');
-  }
-
-  if (hours === 0) {
-    return remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
-  }
-
-  const hoursText = hours + ' ' + (hours === 1 ? 'hour' : 'hours');
-
-  if (remainingMinutes === 0) {
-    return hoursText;
-  }
-
-  return hoursText + ' ' + remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
+    return hoursText + ' ' + remainingMinutes + ' ' + (remainingMinutes === 1 ? 'minute' : 'minutes');
 }
-
-function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk') { if (locale === 'uk') { const clothing = temperature < 12 ? 'Одягайтеся тепло і шарами: тепла кофта, вітрозахисна куртка та закрите взуття.' : temperature < 20 ? 'Одягайтеся шарами: легка кофта або вітровка буде доречною.' : 'Підійде легкий одяг, але візьміть тонку кофту або вітровку на вечір та для гір.'; return `${rain >= 30 ? 'Ймовірність дощу достатня — візьміть дощовик.' : 'Ймовірність дощу невисока, але легкий дощовик у Мадейрі все одно буде корисним.'} ${clothing}`; } const clothing = temperature < 12 ? 'Dress warmly in layers: a warm mid-layer, windproof jacket and closed shoes.' : temperature < 20 ? 'Dress in layers; a light fleece or windbreaker is recommended.' : 'Light clothing is suitable, but bring a thin layer or windbreaker for the evening and mountains.'; return `${rain >= 30 ? 'Rain is possible, so take a rain jacket.' : 'Rain risk is low, but a light rain jacket is still useful in Madeira.'} ${clothing}`; }
+function adviceForWeather(temperature: number, rain: number, locale: 'en' | 'uk') {
+    if (locale === 'uk') {
+        const clothing = temperature < 12 ? 'Одягайтеся тепло і шарами: тепла кофта, вітрозахисна куртка та закрите взуття.' : temperature < 20 ? 'Одягайтеся шарами: легка кофта або вітровка буде доречною.' : 'Підійде легкий одяг, але візьміть тонку кофту або вітровку на вечір та для гір.';
+        return `${rain >= 30 ? 'Ймовірність дощу достатня — візьміть дощовик.' : 'Ймовірність дощу невисока, але легкий дощовик у Мадейрі все одно буде корисним.'} ${clothing}`;
+    }
+    const clothing = temperature < 12 ? 'Dress warmly in layers: a warm mid-layer, windproof jacket and closed shoes.' : temperature < 20 ? 'Dress in layers; a light fleece or windbreaker is recommended.' : 'Light clothing is suitable, but bring a thin layer or windbreaker for the evening and mountains.';
+    return `${rain >= 30 ? 'Rain is possible, so take a rain jacket.' : 'Rain risk is low, but a light rain jacket is still useful in Madeira.'} ${clothing}`;
+}
 export default function TripPlanPage() {
     const { locale, messages } = useMessages();
     const [date, setDate] = useState(todayValue);
@@ -285,7 +324,7 @@ export default function TripPlanPage() {
     const startCoordinates: [
         number,
         number
-    ] | null = isAirportStart ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomStart && customStartForRoute ? [customStartForRoute.latitude, customStartForRoute.longitude] : null;
+    ] | null = isAirportStart ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomStart ? (customStartForRoute ? [customStartForRoute.latitude, customStartForRoute.longitude] : null) : [selectedVilla.latitude, selectedVilla.longitude];
     const selectedEndPointName = isAirportEnd ? (locale === "uk" ? "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u041C\u0430\u0434\u0435\u0439\u0440\u0438" : "Madeira Airport") : isCustomEnd ? (customEndForRoute?.name ?? (locale === "uk" ? "\u0414\u043E\u0432\u0456\u043B\u044C\u043D\u0430 \u0442\u043E\u0447\u043A\u0430" : "Custom point")) : selectedEndVilla?.name ?? "";
     const selectedEndCoordinates: [
         number,
@@ -320,8 +359,35 @@ export default function TripPlanPage() {
     const hasBeach = routeLocations.some((location) => location?.tags.includes('Beaches') || location?.slug === 'faja-dos-padres');
     const hasLevada = routeLocations.some((location) => location?.tags.includes('Levada walks'));
     const hasSunrise = stops.some((stop) => stop.slug === 'pico-do-arieiro' && stop.isSunrise);
-    const hasRestaurant = false;
+    const hasRestaurant = routeLocations.some(location => location?.tags.includes("Restaurants")) || stops.some(stop => stop.hasCristovaoRestaurant);
     const needsEndPoint = !endAtStart && !finalCoordinates;
+    const routeInitialized = useRef(false);
+    const draftReady = usePlannerDraft({ date, villa, startPoint, endAtStart, endPoint, customPointInput, endCustomPointInput, customStartForRoute, customEndForRoute, departureTime, stops, recommendations }, saved => {
+        if (saved.date !== undefined)
+            setDate(saved.date);
+        if (saved.villa !== undefined)
+            setVilla(saved.villa);
+        if (saved.startPoint !== undefined)
+            setStartPoint(saved.startPoint);
+        if (saved.endAtStart !== undefined)
+            setEndAtStart(saved.endAtStart);
+        if (saved.endPoint !== undefined)
+            setEndPoint(saved.endPoint);
+        if (saved.customPointInput !== undefined)
+            setCustomPointInput(saved.customPointInput);
+        if (saved.endCustomPointInput !== undefined)
+            setEndCustomPointInput(saved.endCustomPointInput);
+        if (saved.customStartForRoute !== undefined)
+            setCustomStartForRoute(saved.customStartForRoute);
+        if (saved.customEndForRoute !== undefined)
+            setCustomEndForRoute(saved.customEndForRoute);
+        if (saved.departureTime !== undefined)
+            setDepartureTime(saved.departureTime);
+        if (saved.recommendations !== undefined)
+            setRecommendations(saved.recommendations);
+        if (saved.stops !== undefined)
+            setStops(saved.stops);
+    });
     useEffect(() => {
         const slugs = stops
             .filter((stop) => stop.type === 'location' && stop.slug)
@@ -389,6 +455,12 @@ export default function TripPlanPage() {
         return null;
     };
     useEffect(() => {
+        if (!draftReady)
+            return;
+        if (!routeInitialized.current) {
+            routeInitialized.current = true;
+            return;
+        }
         if (!stops.length) {
             return;
         }
@@ -402,7 +474,7 @@ export default function TripPlanPage() {
             ...stop,
             arrivalTime: nextArrivalTimes[index] ?? stop.arrivalTime,
         })));
-    }, [routeKey]);
+    }, [routeKey, draftReady]);
     const calculateRoute = async () => {
         if (!stops.length ||
             !startCoordinates ||
@@ -530,35 +602,50 @@ export default function TripPlanPage() {
             ? addMinutes(departureTime, 30)
             : addMinutes(previousStop.arrivalTime, previousStop.durationMinutes + 30);
     };
-    const addLocation = () => { if (selectedSlug === customRoutePoint) {
-        void addGoogleMapsPoint();
-        return;
-    } if (!selectedSlug)
-        return; const selectedLocation = locations.find((location) => location.slug === selectedSlug); setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]); setSelectedSlug(''); };
-    const addGoogleMapsPoint = async () => { if (!googleMapsUrl || isResolvingGoogleMapsUrl)
-        return; setIsResolvingGoogleMapsUrl(true); setGoogleMapsUrlError(''); try {
-        const response = await fetch('/api/resolve-route-point', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: googleMapsUrl }) });
-        const data = (await response.json()) as {
-            name?: string;
-            latitude?: number;
-            longitude?: number;
-            error?: string;
-        };
-        if (!response.ok || !data.name || data.latitude === undefined || data.longitude === undefined)
-            throw new Error(data.error || 'Unable to resolve the Google Maps link.');
-        setStops((current) => [...current, { id: `custom-${Date.now()}`, type: 'custom', latitude: data.latitude, longitude: data.longitude, name: data.name, sourceUrl: googleMapsUrl, arrivalTime: getNextArrivalTime(), durationMinutes: 60 }]);
-        setGoogleMapsUrl('');
+    const addLocation = () => {
+        if (selectedSlug === customRoutePoint) {
+            void addGoogleMapsPoint();
+            return;
+        }
+        if (!selectedSlug)
+            return;
+        const selectedLocation = locations.find((location) => location.slug === selectedSlug);
+        setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]);
         setSelectedSlug('');
-    }
-    catch (error) {
-        setGoogleMapsUrlError(error instanceof Error ? error.message : 'Unable to resolve the Google Maps link.');
-    }
-    finally {
-        setIsResolvingGoogleMapsUrl(false);
-    } };
+    };
+    const addGoogleMapsPoint = async () => {
+        if (!googleMapsUrl || isResolvingGoogleMapsUrl)
+            return;
+        setIsResolvingGoogleMapsUrl(true);
+        setGoogleMapsUrlError('');
+        try {
+            const response = await fetch('/api/resolve-route-point', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: googleMapsUrl }) });
+            const data = (await response.json()) as {
+                name?: string;
+                latitude?: number;
+                longitude?: number;
+                error?: string;
+            };
+            if (!response.ok || !data.name || data.latitude === undefined || data.longitude === undefined)
+                throw new Error(data.error || 'Unable to resolve the Google Maps link.');
+            setStops((current) => [...current, { id: `custom-${Date.now()}`, type: 'custom', latitude: data.latitude, longitude: data.longitude, name: data.name, sourceUrl: googleMapsUrl, arrivalTime: getNextArrivalTime(), durationMinutes: 60 }]);
+            setGoogleMapsUrl('');
+            setSelectedSlug('');
+        }
+        catch (error) {
+            setGoogleMapsUrlError(error instanceof Error ? error.message : 'Unable to resolve the Google Maps link.');
+        }
+        finally {
+            setIsResolvingGoogleMapsUrl(false);
+        }
+    };
     const updateStop = (id: string, updates: Partial<PlanStop>) => setStops((current) => current.map((stop) => stop.id === id ? { ...stop, ...updates } : stop));
-    const moveStop = (index: number, direction: -1 | 1) => { const targetIndex = index + direction; if (targetIndex < 0 || targetIndex >= stops.length)
-        return; setStops((current) => { const next = [...current]; [next[index], next[targetIndex]] = [next[targetIndex], next[index]]; return next; }); };
+    const moveStop = (index: number, direction: -1 | 1) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= stops.length)
+            return;
+        setStops((current) => { const next = [...current]; [next[index], next[targetIndex]] = [next[targetIndex], next[index]]; return next; });
+    };
     const removeStop = (id: string) => setStops((current) => current.filter((stop) => stop.id !== id));
     const mealLabelForTime = (time: string) => {
         const hour = Number(time.split(':')[0]);
@@ -665,7 +752,7 @@ export default function TripPlanPage() {
                     ? ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'напої та перекус у барі' : ''}`
                     : ` + ${stop.hasCristovaoRestaurant ? `${mealProgrammeText(stop.arrivalTime)}, ` : ''}${stop.hasCristovaoBar ? 'drinks and snacks at the bar' : ''}`
                 : '';
-            lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.name}.${sunriseSuffix}${cristovaoSuffix}`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, '');
+            lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.tags.includes("Restaurants") ? restaurantStopTitle(location.name, stop.arrivalTime, locale) : location.name}.${sunriseSuffix}${cristovaoSuffix}`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, '');
         });
         const lastStop = stops[stops.length - 1];
         const lastStopEndTime = addMinutes(lastStop.arrivalTime, lastStop.durationMinutes);
@@ -704,25 +791,35 @@ export default function TripPlanPage() {
         window.setTimeout(() => setCopyStatus('idle'), 2000);
     };
     return <Layout><Head><title>{text.title} | Madeira Live Cams</title><meta name="description" content={text.intro}/></Head><main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10"><section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8"><p className="text-sm font-semibold uppercase tracking-wider text-ocean">Madeira Live Cams</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-navy sm:text-4xl">{text.title}</h1><p className="mt-3 max-w-2xl leading-7 text-slate-600">{text.intro}</p>
-    <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2><div className="mt-4 grid gap-4 sm:grid-cols-4"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.date}<input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"/></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.startVilla}<select value={startPoint} onChange={(event) => { const value = event.target.value; setStartPoint(value); if (value === airportStartPoint.slug)
-        setDepartureTime('17:00');
-    else {
-        setDepartureTime('09:00');
-        if (value !== customStartPoint)
-            setVilla(value);
-    } }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.departure}<input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"/></label><label className="flex min-h-11 cursor-pointer items-center gap-2 self-end rounded-lg border border-ocean/30 bg-white px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={endAtStart} onChange={(event) => setEndAtStart(event.target.checked)} className="h-4 w-4 shrink-0 rounded border-slate-300 text-ocean focus:ring-ocean"/>{text.endAtStart}</label></div>{isCustomStart && <CustomDayPoint id="custom-start" value={customPointInput} onChange={setCustomPointInput} onAdd={() => { if (customCoordinates.point) setCustomStartForRoute(customCoordinates.point); }} isAdded={customCoordinates.point?.latitude === customStartForRoute?.latitude && customCoordinates.point?.longitude === customStartForRoute?.longitude} locale={locale} resolution={customCoordinates}/>}{!endAtStart && <div className="mt-4"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.endPoint}<select value={endPoint} onChange={(event) => setEndPoint(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label>{isCustomEnd && <CustomDayPoint id="custom-end" value={endCustomPointInput} onChange={setEndCustomPointInput} onAdd={() => { if (endCustomCoordinates.point) setCustomEndForRoute(endCustomCoordinates.point); }} isAdded={endCustomCoordinates.point?.latitude === customEndForRoute?.latitude && endCustomCoordinates.point?.longitude === customEndForRoute?.longitude} locale={locale} resolution={endCustomCoordinates}/>}</div>}</div>
+    <div className="mt-8 rounded-2xl border border-slate-200 bg-panel p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.dayDetails}</h2><div className="mt-4 grid gap-4 sm:grid-cols-4"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.date}<input type="date" value={date} onChange={(event) => setDate(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"/></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.startVilla}<select value={startPoint} onChange={(event) => {
+            const value = event.target.value;
+            setStartPoint(value);
+            if (value === airportStartPoint.slug)
+                setDepartureTime('17:00');
+            else {
+                setDepartureTime('09:00');
+                if (value !== customStartPoint)
+                    setVilla(value);
+            }
+        }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.departure}<input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"/></label><label className="flex min-h-11 cursor-pointer items-center gap-2 self-end rounded-lg border border-ocean/30 bg-white px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={endAtStart} onChange={(event) => setEndAtStart(event.target.checked)} className="h-4 w-4 shrink-0 rounded border-slate-300 text-ocean focus:ring-ocean"/>{text.endAtStart}</label></div>{isCustomStart && <CustomDayPoint id="custom-start" value={customPointInput} onChange={setCustomPointInput} onAdd={() => {
+                if (customCoordinates.point)
+                    setCustomStartForRoute(customCoordinates.point);
+            }} isAdded={customCoordinates.point?.latitude === customStartForRoute?.latitude && customCoordinates.point?.longitude === customStartForRoute?.longitude} locale={locale} resolution={customCoordinates}/>}{!endAtStart && <div className="mt-4"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{text.endPoint}<select value={endPoint} onChange={(event) => setEndPoint(event.target.value)} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value={airportStartPoint.slug}>{locale === 'uk' ? 'Аеропорт Мадейри' : 'Madeira Airport'}</option>{villas.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}<option value={customStartPoint}>{locale === 'uk' ? 'Довільна точка' : 'Custom point'}</option></select></label>{isCustomEnd && <CustomDayPoint id="custom-end" value={endCustomPointInput} onChange={setEndCustomPointInput} onAdd={() => {
+                    if (endCustomCoordinates.point)
+                        setCustomEndForRoute(endCustomCoordinates.point);
+                }} isAdded={endCustomCoordinates.point?.latitude === customEndForRoute?.latitude && endCustomCoordinates.point?.longitude === customEndForRoute?.longitude} locale={locale} resolution={endCustomCoordinates}/>}</div>}</div>
     <div className="mt-6 rounded-2xl border border-slate-200 p-4 sm:p-5"><h2 className="text-lg font-bold text-navy">{text.addStop}</h2><div className="mt-4"><p className="text-sm font-semibold text-navy">{text.locationFilters}</p><div className="mt-2 flex gap-2 overflow-x-auto pb-2">{locationFilters.map((filter) => <button key={filter.value} type="button" onClick={() => { setLocationFilter(filter.value); setSelectedSlug(''); }} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${locationFilter === filter.value ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{filter.label}</button>)}</div></div><div className="mt-3">
-  <label className="flex min-w-[150px] flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">{text.location}<select value={selectedSlug} onChange={(event) => { setSelectedSlug(event.target.value); setGoogleMapsUrlError(''); }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseLocation}</option><option value={customRoutePoint}>{locale === 'uk' ? 'Інша локація' : 'Other location'}</option>{availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}</select></label>
+  <><label className="flex min-w-[150px] flex-1 flex-col gap-1.5 text-sm font-semibold text-navy">{text.location}<select value={selectedSlug} onChange={(event) => { setSelectedSlug(event.target.value); setGoogleMapsUrlError(''); }} className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"><option value="">{text.chooseLocation}</option><option value={customRoutePoint}>{locale === 'uk' ? 'Інша локація' : 'Other location'}</option>{availableLocations.map((location) => <option key={location.slug} value={location.slug}>{location.name}</option>)}</select></label><RestaurantPlannerDetails slug={selectedSlug} locale={locale} preview/></>
       <button type="button" onClick={addLocation} disabled={!selectedSlug} aria-label={text.addLocation} title={text.addLocation} className="mt-3 flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean text-lg font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-40 sm:self-end">
   + {'\u{1F4CD}'}
     </button>
     </div>
   </div>{selectedSlug === customRoutePoint && <div className="mt-4 rounded-xl border border-ocean/30 bg-ocean/5 p-3"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps' : 'Google Maps link'}<input value={googleMapsUrl} onChange={(event) => setGoogleMapsUrl(event.target.value)} placeholder="https://maps.app.goo.gl/..." className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy"/></label>{googleMapsUrlError && <p className="mt-2 text-xs font-medium text-red-600">{googleMapsUrlError}</p>}<p className="mt-2 text-xs text-slate-500">{locale === 'uk' ? 'Вставте коротке або повне посилання Google Maps, потім натисніть «Додати локацію».' : 'Paste a short or full Google Maps link, then press Add location.'}</p></div>}<section className="mt-6"><div className="flex items-center justify-between gap-3"><h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>{routeStatus === 'loading' && <span className="text-xs font-semibold text-slate-500">{locale === 'uk' ? 'Оновлюємо час у дорозі…' : 'Updating travel times…'}</span>}{stops.length > 0 && <button type="button" onClick={() => setStops([])} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}</div>{stops.length === 0 ? <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p> : <div className="mt-3 space-y-3">{stops.map((stop, index) => {
                 const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
-                const name = stop.type === 'custom' ? (stop.name ?? (locale === 'uk' ? 'Інша локація' : 'Other location')) : stop.type === 'villa' ? selectedVilla.name : location?.name ?? '';
+                const name = location?.tags.includes("Restaurants") ? restaurantStopTitle(location.name, stop.arrivalTime, locale) : stop.type === 'custom' ? (stop.name ?? (locale === 'uk' ? 'Інша локація' : 'Other location')) : stop.type === 'villa' ? selectedVilla.name : location?.name ?? '';
                 const icon = stop.type === 'custom' ? '📍' : stop.type === 'villa' ? '🏡' : location ? getRouteStopIcon(location) : '📍';
                 const canSelectSunrise = stop.type === 'location' && stop.slug === 'pico-do-arieiro';
-                return <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><div className="flex items-start gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span><div className="min-w-0 flex-1"><p className="font-bold text-navy">{icon} {name}</p><p className="mt-1 text-xs text-slate-500">{durationLabel(stop.durationMinutes, locale)}</p></div><button type="button" onClick={() => removeStop(stop.id)} aria-label={text.remove} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600">×</button></div><div className="mt-4 grid grid-cols-2 gap-3"><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.arrival}<input type="time" value={stop.arrivalTime} readOnly className="min-h-10 rounded-lg border border-slate-300 bg-slate-100 px-2 text-sm text-navy"/></label><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.duration}<select value={stop.durationMinutes} onChange={(event) => updateStop(stop.id, { durationMinutes: Number(event.target.value) })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none">{durationOptions.map((minutes) => <option key={minutes} value={minutes}>{durationLabel(minutes, locale)}</option>)}</select></label></div>{canSelectSunrise && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isSunrise)} onChange={(event) => updateStop(stop.id, { isSunrise: event.target.checked })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/><span>🌅 {text.sunrise}</span></label>}
+                return <article key={stop.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><div className="flex items-start gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ocean text-sm font-bold text-white">{index + 1}</span><div className="min-w-0 flex-1"><><p className="font-bold text-navy">{icon} {name}</p><RestaurantPlannerDetails slug={stop.slug} locale={locale}/></><p className="mt-1 text-xs text-slate-500">{durationLabel(stop.durationMinutes, locale)}</p></div><button type="button" onClick={() => removeStop(stop.id)} aria-label={text.remove} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600">×</button></div><div className="mt-4 grid grid-cols-2 gap-3"><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.arrival}<input type="time" value={stop.arrivalTime} readOnly className="min-h-10 rounded-lg border border-slate-300 bg-slate-100 px-2 text-sm text-navy"/></label><label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">{text.duration}<select value={stop.durationMinutes} onChange={(event) => updateStop(stop.id, { durationMinutes: Number(event.target.value) })} className="min-h-10 rounded-lg border border-slate-300 px-2 text-sm text-navy focus:border-ocean focus:outline-none">{durationOptions.map((minutes) => <option key={minutes} value={minutes}>{durationLabel(minutes, locale)}</option>)}</select></label></div>{canSelectSunrise && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isSunrise)} onChange={(event) => updateStop(stop.id, { isSunrise: event.target.checked })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/><span>🌅 {text.sunrise}</span></label>}
                     {stop.type === 'location' && stop.slug === 'miradouro-sao-cristovao' && <div className="mt-4 grid grid-cols-2 gap-2"><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoBar)} onChange={(event) => updateStop(stop.id, { hasCristovaoBar: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoRestaurant ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🥤 {text.bar}</label><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoRestaurant)} onChange={(event) => updateStop(stop.id, { hasCristovaoRestaurant: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoBar ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🍽️ {text.restaurantOption}</label></div>}<div className="mt-3 flex gap-2"><button type="button" onClick={() => moveStop(index, -1)} disabled={index === 0} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↑ {text.up}</button><button type="button" onClick={() => moveStop(index, 1)} disabled={index === stops.length - 1} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↓ {text.down}</button></div></article>;
             })}</div>}</section>
     {stops.length > 0 && <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"><h2 className="text-xl font-bold text-navy">{text.recommendations}</h2><p className="mt-1 text-sm text-slate-500">{locale === 'uk' ? 'Оберіть рекомендації, які потрібно додати до готової програми.' : 'Choose recommendations to add to the ready programme.'}</p><div className="mt-4 grid gap-2 sm:grid-cols-2"><label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.weather} onChange={(event) => setRecommendations((current) => ({ ...current, weather: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌤️ {text.weather}</label>{hasBeach && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.beach} onChange={(event) => setRecommendations((current) => ({ ...current, beach: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🏖️ {text.beach}</label>}{hasLevada && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.levada} onChange={(event) => setRecommendations((current) => ({ ...current, levada: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌿 {text.levada}</label>}{hasRestaurant && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.food} onChange={(event) => setRecommendations((current) => ({ ...current, food: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🍽️ {text.whatToTry}</label>}{hasSunrise && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.sunrise} onChange={(event) => setRecommendations((current) => ({ ...current, sunrise: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌅 {text.sunrise}</label>}</div></section>}
