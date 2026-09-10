@@ -282,6 +282,7 @@ export default function TripPlanPage() {
     ] | null = isAirportEnd ? [airportStartPoint.latitude, airportStartPoint.longitude] : isCustomEnd && customEndForRoute ? [customEndForRoute.latitude, customEndForRoute.longitude] : selectedEndVilla ? [selectedEndVilla.latitude, selectedEndVilla.longitude] : null;
     const finalPointName = endAtStart ? startPointName : selectedEndPointName;
     const finalCoordinates = endAtStart ? startCoordinates : selectedEndCoordinates;
+    const isAirportFinal = endAtStart ? isAirportStart : isAirportEnd;
     const [departureTime, setDepartureTime] = useState('09:00');
     const [stops, setStops] = useState<PlanStop[]>([]);
     const [selectedSlug, setSelectedSlug] = useState('');
@@ -424,6 +425,7 @@ export default function TripPlanPage() {
             ...stop,
             arrivalTime: nextArrivalTimes[index] ?? stop.arrivalTime,
         })));
+        setReturnTravelMinutes(30);
     }, [routeKey, draftReady]);
     const calculateRoute = async () => {
         if (!stops.length ||
@@ -707,13 +709,19 @@ export default function TripPlanPage() {
         const lastStop = stops[stops.length - 1];
         const lastStopEndTime = addMinutes(lastStop.arrivalTime, lastStop.durationMinutes);
         const returnArrivalTime = addMinutes(lastStopEndTime, returnTravelMinutes);
-        lines.push(travelLine(lastStopEndTime, stopName(lastStop), returnTravelMinutes), '', `🏡 ${returnArrivalTime} — ${text.return} ${finalPointName}.`);
+        lines.push(travelLine(lastStopEndTime, stopName(lastStop), returnTravelMinutes), '');
+        if (isAirportFinal) {
+            lines.push(`✈️ ${returnArrivalTime} — ${locale === 'uk' ? 'Прибуття до Міжнародного аеропорту Мадейри.' : 'Arrival at Madeira International Airport.'}`, `https://madeiralivecams.com/${locale}/explore/${airportStartPoint.slug}`);
+        }
+        else {
+            lines.push(`🏡 ${returnArrivalTime} — ${text.return} ${finalPointName}.`);
+        }
         if (finalStay)
             lines.push(`https://madeiralivecams.com/${locale}/stays/${finalStay.slug}`);
         if (recommendationLines.length > 0)
             lines.push('', locale === 'uk' ? 'РЕКОМЕНДАЦІЇ НА ДЕНЬ' : 'DAY RECOMMENDATIONS', '', ...recommendationLines);
         return lines.join('\n');
-    }, [date, departureTime, endAtStart, finalPointName, isAirportStart, isCustomStart, locale, locationBySlug, recommendationLines, returnTravelMinutes, selectedEndVilla, selectedVilla, stops, text.return]);
+    }, [date, departureTime, endAtStart, finalPointName, isAirportFinal, isCustomStart, locale, locationBySlug, recommendationLines, returnTravelMinutes, selectedEndVilla, selectedVilla, stops, text.return]);
     const shareProgramme = async () => {
         if (!programme)
             return;
