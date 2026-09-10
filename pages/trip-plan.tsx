@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from "../data/plannerLocations";
 import { useMessages } from '../lib/i18n/useMessages';
 import { stays } from '../data/stays';
+import { plannerStopDuration } from "../lib/plannerStopDuration";
 type MealType = 'breakfast' | 'lunch' | 'dinner';
 type RecommendationKey = 'weather' | 'beach' | 'levada' | 'sunrise' | 'food';
 type PlanStop = {
@@ -118,57 +119,6 @@ const madeiraFoodRecommendations = `Що скуштувати на Мадейр�
 
 🥤 Brisa Maracujá — культовий місцевий солодкий газований напій із маракуї.`;
 const durationOptions = [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300];
-const standardLocationDurations: Record<string, number> = {
-    'pico-do-arieiro': 180,
-    'fanal-forest': 120,
-    'praia-do-porto-do-seixal': 120,
-    'machico-beach': 150,
-    'faja-dos-padres': 240,
-    'calheta-beach': 180,
-    'prainha-do-canical': 180,
-    'porto-moniz-natural-pools': 150,
-    'ribeira-da-janela': 30,
-    funchal: 90,
-    'mercado-dos-lavradores': 30,
-    'cristo-rei': 45,
-    'pico-do-facho': 30,
-    'cabo-girao-skywalk': 30,
-    'anjos-waterfall': 30,
-    'miradouro-do-guindaste': 30,
-    'levada-nova-levada-do-moinho': 150,
-    'monte-palace-tropical-garden': 120,
-    'santana-typical-houses': 15,
-    'ponta-de-sao-lourenco': 180,
-    'miradouro-sao-cristovao': 30,
-    'continente-modelo-machico': 45,
-    'continente-modelo-canico-shopping': 45,
-    'continente-modelo-agua-de-pena': 45,
-    'continente-modelo-camacha': 45,
-    'continente-modelo-cancela': 45,
-    'continente-modelo-viveiros': 45,
-    'continente-modelo-seminario': 45,
-    'continente-modelo-santo-antonio': 45,
-    'continente-modelo-madeira-shopping': 45,
-    'continente-modelo-santana': 45,
-    'continente-modelo-camara-de-lobos': 45,
-    'continente-modelo-monumental': 45,
-    'continente-modelo-sao-martinho': 45,
-    'continente-modelo-ribeira-brava': 45,
-    'continente-modelo-ribeira-brava-centro': 45,
-    'continente-modelo-estreito-de-camara-de-lobos': 45,
-    'pingo-doce-machico': 45,
-    'pingo-doce-camara-de-lobos': 45,
-    'pingo-doce-plaza-madeira': 45,
-    'pingo-doce-anadia': 45,
-    'pingo-doce-funchal': 45,
-    'pingo-doce-ribeira-brava': 45,
-    'pingo-doce-santo-antonio': 45,
-    'pingo-doce-brito-camara': 45,
-    'pingo-doce-penteada': 45,
-    'pingo-doce-cancela': 45,
-    'pingo-doce-monumental': 45,
-    'pingo-doce-calheta': 45,
-};
 const locationCoordinates: Record<string, [
     number,
     number
@@ -610,7 +560,7 @@ export default function TripPlanPage() {
         if (!selectedSlug)
             return;
         const selectedLocation = locations.find((location) => location.slug === selectedSlug);
-        setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation?.tags.includes('Airport') ? 15 : standardLocationDurations[selectedSlug] ?? 90, isSunrise: false }]);
+        setStops((current) => [...current, { id: `${selectedSlug}-${Date.now()}`, type: 'location', slug: selectedSlug, arrivalTime: getNextArrivalTime(), durationMinutes: selectedLocation ? plannerStopDuration(selectedLocation) : 90, isSunrise: false }]);
         setSelectedSlug('');
     };
     const addGoogleMapsPoint = async () => {

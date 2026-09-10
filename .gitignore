@@ -15,6 +15,7 @@ node_modules/
 # Local backups
 backups/
 *.backup
+*.bak
 
 # Logs
 npm-debug.log*

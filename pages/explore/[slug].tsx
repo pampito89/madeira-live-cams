@@ -1,3 +1,4 @@
+import Link from "next/link";
 import RestaurantPage from "../../components/RestaurantPage";
 import { getRestaurant, type Restaurant } from "../../data/restaurants";
 import { useState } from 'react';
@@ -199,7 +200,7 @@ function StandardLocationPage({ location }: LocationPageProps) {
                 {displayLocation.name}
               </h1>
 
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-3 flex flex-wrap gap-2"><Link href={`/trip-plan?addLocation=${encodeURIComponent(displayLocation.slug)}`} className="inline-flex min-h-11 items-center justify-center rounded-lg bg-ocean px-4 py-2 text-sm font-semibold text-white transition hover:bg-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2">+ {locale === "uk" ? "\u0423 \u043F\u043B\u0430\u043D \u043F\u043E\u0434\u043E\u0440\u043E\u0436\u0456" : "Add to trip plan"}</Link>
                 <div className="relative">
                   <button type="button" onClick={() => setIsNavigationOpen((current) => !current)} aria-label={locationText.route} aria-expanded={isNavigationOpen} title={locationText.route} className="inline-flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-ocean px-3 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">
                     <span aria-hidden="true">🗺️</span>
