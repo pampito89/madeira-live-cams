@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -9,6 +10,17 @@ export default function ActivityPage({ restaurant: r, hasPhoto }: {
     restaurant: Activity;
     hasPhoto: boolean;
 }) {
+    const router = useRouter();
+    const handleBack = () => { if (router.query.returnTo === "cameras") {
+        router.push("/cameras?restore=1");
+        return;
+    } if (router.query.returnTo === "home") {
+        router.push("/?restoreCameraFilter=1");
+        return;
+    } if (window.history.length > 1) {
+        router.back();
+        return;
+    } router.push("/cameras"); };
     const { locale } = useMessages();
     const uk = locale === 'uk';
     const [routeOpen, setRouteOpen] = useState(false);
@@ -55,7 +67,7 @@ export default function ActivityPage({ restaurant: r, hasPhoto }: {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}/>
     </Head>
     <main className="page-shell">
-      <Link href="/trip-plan" className={actionClass}>← {uk ? 'До планувальника' : 'Back to trip planner'}</Link>
+      <button type="button" onClick={handleBack} className={actionClass}>← {uk ? "\u041D\u0430\u0437\u0430\u0434" : "Back"}</button>
       <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <ActivityPhoto src={r.image} name={r.name} locale={locale} available={hasPhoto}/>
         <div className="p-5 sm:p-8">
