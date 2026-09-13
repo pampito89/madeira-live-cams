@@ -1,3 +1,4 @@
+import ActivityPhoto from "../components/ActivityPhoto";
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -7,300 +8,245 @@ import Layout from '../components/Layout';
 import { getLocalizedLocation, locations } from '../data/locations';
 import { locationCoordinates } from '../lib/locationWeather';
 import { useMessages } from '../lib/i18n/useMessages';
-
 type CurrentWeather = {
-  temperature: number;
-  weatherCode: number;
-  windSpeed: number;
-  windDirection: number;
-  time: string;
+    temperature: number;
+    weatherCode: number;
+    windSpeed: number;
+    windDirection: number;
+    time: string;
 };
-
 type WeatherByLocation = Record<string, CurrentWeather>;
-
 function getWeatherDetails(code: number, locale: 'en' | 'uk') {
-  const weather = {
-    clear: { icon: '☀️', en: 'Clear', uk: 'Сонячно' },
-    partlyCloudy: { icon: '🌤️', en: 'Partly cloudy', uk: 'Мінлива хмарність' },
-    cloudy: { icon: '☁️', en: 'Cloudy', uk: 'Хмарно' },
-    fog: { icon: '🌫️', en: 'Fog', uk: 'Туман' },
-    drizzle: { icon: '🌦️', en: 'Light rain', uk: 'Невеликий дощ' },
-    rain: { icon: '🌧️', en: 'Rain', uk: 'Дощ' },
-    snow: { icon: '❄️', en: 'Snow', uk: 'Сніг' },
-    storm: { icon: '⛈️', en: 'Thunderstorm', uk: 'Гроза' },
-  };
-
-  let condition = weather.cloudy;
-
-  if (code === 0) {
-    condition = weather.clear;
-  } else if (code === 1 || code === 2) {
-    condition = weather.partlyCloudy;
-  } else if (code === 3) {
-    condition = weather.cloudy;
-  } else if (code === 45 || code === 48) {
-    condition = weather.fog;
-  } else if ([51, 53, 55, 56, 57].includes(code)) {
-    condition = weather.drizzle;
-  } else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
-    condition = weather.rain;
-  } else if ([71, 73, 75, 77, 85, 86].includes(code)) {
-    condition = weather.snow;
-  } else if ([95, 96, 99].includes(code)) {
-    condition = weather.storm;
-  }
-
-  return {
-    icon: condition.icon,
-    label: condition[locale],
-  };
-}
-
-function getWindDirection(degrees: number, locale: 'en' | 'uk') {
-  const directions =
-    locale === 'uk'
-      ? [
-          'Північний',
-          'Північно-східний',
-          'Східний',
-          'Південно-східний',
-          'Південний',
-          'Південно-західний',
-          'Західний',
-          'Північно-західний',
-        ]
-      : [
-          'North',
-          'North-east',
-          'East',
-          'South-east',
-          'South',
-          'South-west',
-          'West',
-          'North-west',
-        ];
-
-  return directions[Math.round(degrees / 45) % 8];
-}
-
-function getWindArrow(degrees: number) {
-  const arrows = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
-  return arrows[Math.round(degrees / 45) % 8];
-}
-
-function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
-  const date = new Date(time);
-
-  if (Number.isNaN(date.getTime())) {
-    return '';
-  }
-
-  return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'Atlantic/Madeira',
-  }).format(date);
-}
-
-export default function CamerasPage() {
-  const { locale, messages } = useMessages();
-  const router = useRouter();
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
-
-  const handleFilterChange = (filter: string) => {
-    setActiveFilter(filter);
-  };
-
-  const handleLocationOpen = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    slug: string,
-  ) => {
-    event.preventDefault();
-
-    window.sessionStorage.setItem(
-      'madeira-location-list-view',
-      JSON.stringify({
-        activeFilter,
-        scrollY: Math.round(window.scrollY),
-      }),
-    );
-
-    router.push({
-      pathname: "/explore/" + slug,
-      query: { returnTo: 'cameras' },
-    });
-  };
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadWeather() {
-      const weatherLocations = locations.filter(
-        (location) =>
-          !location.hiddenFromExplore && locationCoordinates[location.slug],
-      );
-
-      const weatherEntries = await Promise.all(
-        weatherLocations.map(async (location) => {
-          const coordinates = locationCoordinates[location.slug];
-          const params = new URLSearchParams({
-            latitude: coordinates.latitude.toString(),
-            longitude: coordinates.longitude.toString(),
-            current: 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m',
-            wind_speed_unit: 'kmh',
-            timezone: 'Europe/Lisbon',
-          });
-
-          try {
-            const response = await fetch(
-              `https://api.open-meteo.com/v1/forecast?${params.toString()}`,
-            );
-
-            if (!response.ok) {
-              return null;
-            }
-
-            const data = await response.json();
-            const current = data.current;
-
-            if (!current) {
-              return null;
-            }
-
-            return [
-              location.slug,
-              {
-                temperature: Math.round(current.temperature_2m),
-                weatherCode: current.weather_code,
-                windSpeed: Math.round(current.wind_speed_10m),
-                windDirection: current.wind_direction_10m,
-                time: current.time,
-              },
-            ] as const;
-          } catch {
-            return null;
-          }
-        }),
-      );
-
-      if (cancelled) {
-        return;
-      }
-
-      const nextWeather: WeatherByLocation = {};
-
-      weatherEntries.forEach((entry) => {
-        if (entry) {
-          nextWeather[entry[0]] = entry[1];
-        }
-      });
-
-      setWeatherByLocation(nextWeather);
-    }
-
-    loadWeather();
-
-    return () => {
-      cancelled = true;
+    const weather = {
+        clear: { icon: '☀️', en: 'Clear', uk: 'Сонячно' },
+        partlyCloudy: { icon: '🌤️', en: 'Partly cloudy', uk: 'Мінлива хмарність' },
+        cloudy: { icon: '☁️', en: 'Cloudy', uk: 'Хмарно' },
+        fog: { icon: '🌫️', en: 'Fog', uk: 'Туман' },
+        drizzle: { icon: '🌦️', en: 'Light rain', uk: 'Невеликий дощ' },
+        rain: { icon: '🌧️', en: 'Rain', uk: 'Дощ' },
+        snow: { icon: '❄️', en: 'Snow', uk: 'Сніг' },
+        storm: { icon: '⛈️', en: 'Thunderstorm', uk: 'Гроза' },
     };
-  }, []);
-
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    if (router.query.restore !== '1') {
-      window.sessionStorage.removeItem('madeira-location-list-view');
-      return;
+    let condition = weather.cloudy;
+    if (code === 0) {
+        condition = weather.clear;
     }
-
-    const rawView = window.sessionStorage.getItem('madeira-location-list-view');
-    window.sessionStorage.removeItem('madeira-location-list-view');
-
-    if (!rawView) {
-      router.replace('/cameras', undefined, { shallow: true, scroll: false });
-      return;
+    else if (code === 1 || code === 2) {
+        condition = weather.partlyCloudy;
     }
-
-    try {
-      const savedView = JSON.parse(rawView) as {
-        activeFilter?: unknown;
-        scrollY?: unknown;
-      };
-
-      if (typeof savedView.activeFilter === 'string') {
-        setActiveFilter(savedView.activeFilter);
-      }
-
-      const scrollY =
-        typeof savedView.scrollY === 'number' && Number.isFinite(savedView.scrollY)
-          ? savedView.scrollY
-          : 0;
-
-      const timer = window.setTimeout(() => {
-        window.scrollTo({ top: scrollY, behavior: 'auto' });
-        router.replace('/cameras', undefined, { shallow: true, scroll: false });
-      }, 0);
-
-      return () => window.clearTimeout(timer);
-    } catch {
-      router.replace('/cameras', undefined, { shallow: true, scroll: false });
+    else if (code === 3) {
+        condition = weather.cloudy;
     }
-  }, [router.isReady, router.query.restore]);
-
-  const filters = [
-    { value: 'All', label: messages.exploreList.filters.all },
-    {
-      value: 'Viewpoints',
-      label: messages.exploreList.filters.viewpoints,
-    },
-    {
-      value: 'Hiking',
-      label: messages.exploreList.filters.hiking,
-    },
-    {
-      value: 'Beaches',
-      label: messages.exploreList.filters.beaches,
-    },
-    {
-      value: 'City & culture',
-      label: messages.exploreList.filters.cityCulture,
-    },
-    {
-      value: 'Levada walks',
-      label: messages.exploreList.filters.levadaWalks,
-    },
-    {
-      value: 'Airport',
-      label: locale === 'uk' ? 'Аеропорт' : 'Airport',
-    },
-    {
-      value: 'Lab Travel',
-      label: 'Lab Travel',
-    },
-  ];
-
-  const filteredLocations = useMemo(() => {
-    if (activeFilter === 'All') {
-      return locations.filter((location) => !location.hiddenFromExplore);
+    else if (code === 45 || code === 48) {
+        condition = weather.fog;
     }
-
-    return locations.filter(
-      (location) =>
-        !location.hiddenFromExplore &&
-        location.tags.includes(activeFilter),
-    );
-  }, [activeFilter]);
-
-  return (
-    <Layout>
+    else if ([51, 53, 55, 56, 57].includes(code)) {
+        condition = weather.drizzle;
+    }
+    else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+        condition = weather.rain;
+    }
+    else if ([71, 73, 75, 77, 85, 86].includes(code)) {
+        condition = weather.snow;
+    }
+    else if ([95, 96, 99].includes(code)) {
+        condition = weather.storm;
+    }
+    return {
+        icon: condition.icon,
+        label: condition[locale],
+    };
+}
+function getWindDirection(degrees: number, locale: 'en' | 'uk') {
+    const directions = locale === 'uk'
+        ? [
+            'Північний',
+            'Північно-східний',
+            'Східний',
+            'Південно-східний',
+            'Південний',
+            'Південно-західний',
+            'Західний',
+            'Північно-західний',
+        ]
+        : [
+            'North',
+            'North-east',
+            'East',
+            'South-east',
+            'South',
+            'South-west',
+            'West',
+            'North-west',
+        ];
+    return directions[Math.round(degrees / 45) % 8];
+}
+function getWindArrow(degrees: number) {
+    const arrows = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
+    return arrows[Math.round(degrees / 45) % 8];
+}
+function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
+    const date = new Date(time);
+    if (Number.isNaN(date.getTime())) {
+        return '';
+    }
+    return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Atlantic/Madeira',
+    }).format(date);
+}
+export default function CamerasPage() {
+    const { locale, messages } = useMessages();
+    const router = useRouter();
+    const [activeFilter, setActiveFilter] = useState('All');
+    const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
+    const handleFilterChange = (filter: string) => {
+        setActiveFilter(filter);
+    };
+    const handleLocationOpen = (event: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+        event.preventDefault();
+        window.sessionStorage.setItem('madeira-location-list-view', JSON.stringify({
+            activeFilter,
+            scrollY: Math.round(window.scrollY),
+        }));
+        router.push({
+            pathname: "/explore/" + slug,
+            query: { returnTo: 'cameras' },
+        });
+    };
+    useEffect(() => {
+        let cancelled = false;
+        async function loadWeather() {
+            const weatherLocations = locations.filter((location) => !location.hiddenFromExplore && locationCoordinates[location.slug]);
+            const weatherEntries = await Promise.all(weatherLocations.map(async (location) => {
+                const coordinates = locationCoordinates[location.slug];
+                const params = new URLSearchParams({
+                    latitude: coordinates.latitude.toString(),
+                    longitude: coordinates.longitude.toString(),
+                    current: 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m',
+                    wind_speed_unit: 'kmh',
+                    timezone: 'Europe/Lisbon',
+                });
+                try {
+                    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
+                    if (!response.ok) {
+                        return null;
+                    }
+                    const data = await response.json();
+                    const current = data.current;
+                    if (!current) {
+                        return null;
+                    }
+                    return [
+                        location.slug,
+                        {
+                            temperature: Math.round(current.temperature_2m),
+                            weatherCode: current.weather_code,
+                            windSpeed: Math.round(current.wind_speed_10m),
+                            windDirection: current.wind_direction_10m,
+                            time: current.time,
+                        },
+                    ] as const;
+                }
+                catch {
+                    return null;
+                }
+            }));
+            if (cancelled) {
+                return;
+            }
+            const nextWeather: WeatherByLocation = {};
+            weatherEntries.forEach((entry) => {
+                if (entry) {
+                    nextWeather[entry[0]] = entry[1];
+                }
+            });
+            setWeatherByLocation(nextWeather);
+        }
+        loadWeather();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+    useEffect(() => {
+        if (!router.isReady)
+            return;
+        if (router.query.restore !== '1') {
+            window.sessionStorage.removeItem('madeira-location-list-view');
+            return;
+        }
+        const rawView = window.sessionStorage.getItem('madeira-location-list-view');
+        window.sessionStorage.removeItem('madeira-location-list-view');
+        if (!rawView) {
+            router.replace('/cameras', undefined, { shallow: true, scroll: false });
+            return;
+        }
+        try {
+            const savedView = JSON.parse(rawView) as {
+                activeFilter?: unknown;
+                scrollY?: unknown;
+            };
+            if (typeof savedView.activeFilter === 'string') {
+                setActiveFilter(savedView.activeFilter);
+            }
+            const scrollY = typeof savedView.scrollY === 'number' && Number.isFinite(savedView.scrollY)
+                ? savedView.scrollY
+                : 0;
+            const timer = window.setTimeout(() => {
+                window.scrollTo({ top: scrollY, behavior: 'auto' });
+                router.replace('/cameras', undefined, { shallow: true, scroll: false });
+            }, 0);
+            return () => window.clearTimeout(timer);
+        }
+        catch {
+            router.replace('/cameras', undefined, { shallow: true, scroll: false });
+        }
+    }, [router.isReady, router.query.restore]);
+    const filters = [
+        { value: 'All', label: messages.exploreList.filters.all },
+        {
+            value: 'Viewpoints',
+            label: messages.exploreList.filters.viewpoints,
+        },
+        {
+            value: 'Hiking',
+            label: messages.exploreList.filters.hiking,
+        },
+        {
+            value: 'Beaches',
+            label: messages.exploreList.filters.beaches,
+        },
+        {
+            value: 'City & culture',
+            label: messages.exploreList.filters.cityCulture,
+        },
+        {
+            value: 'Levada walks',
+            label: messages.exploreList.filters.levadaWalks,
+        },
+        {
+            value: 'Airport',
+            label: locale === 'uk' ? 'Аеропорт' : 'Airport',
+        },
+        {
+            value: 'Lab Travel',
+            label: 'Lab Travel',
+        },
+        ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" })
+    ];
+    const filteredLocations = useMemo(() => {
+        if (activeFilter === 'All') {
+            return locations.filter((location) => !location.hiddenFromExplore);
+        }
+        return locations.filter((location) => !location.hiddenFromExplore &&
+            location.tags.includes(activeFilter));
+    }, [activeFilter]);
+    return (<Layout>
       <Head>
         <title>{messages.exploreList.pageTitle}</title>
-        <meta
-          name="description"
-          content={messages.exploreList.pageDescription}
-        />
-        <link rel="canonical" href="https://madeiralivecams.com/cameras" />
+        <meta name="description" content={messages.exploreList.pageDescription}/>
+        <link rel="canonical" href="https://madeiralivecams.com/cameras"/>
       </Head>
 
       <main className="page-shell">
@@ -316,33 +262,20 @@ export default function CamerasPage() {
           </p>
         </section>
 
-        <section
-          className="mt-6"
-          aria-label={messages.exploreList.filterAriaLabel}
-        >
+        <section className="mt-6" aria-label={messages.exploreList.filterAriaLabel}>
           <p className="text-sm font-semibold text-navy">
             {messages.exploreList.browseByInterest}
           </p>
 
           <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
             {filters.map((filter) => {
-              const isActive = activeFilter === filter.value;
-
-              return (
-                <button
-                  key={filter.value}
-                  type="button"
-                  onClick={() => handleFilterChange(filter.value)}
-                  className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
-                    isActive
-                      ? 'border-ocean bg-ocean text-white'
-                      : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
-                  }`}
-                >
+            const isActive = activeFilter === filter.value;
+            return (<button key={filter.value} type="button" onClick={() => handleFilterChange(filter.value)} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${isActive
+                    ? 'border-ocean bg-ocean text-white'
+                    : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>
                   {filter.label}
-                </button>
-              );
-            })}
+                </button>);
+        })}
           </div>
 
           <p className="mt-2 text-sm text-slate-500">
@@ -353,24 +286,14 @@ export default function CamerasPage() {
           </p>
         </section>
 
-        <section
-          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          aria-label={messages.exploreList.locationsAriaLabel}
-        >
+        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label={messages.exploreList.locationsAriaLabel}>
           {filteredLocations.map((location) => {
             const displayLocation = getLocalizedLocation(location, locale);
             const weather = weatherByLocation[location.slug];
             const weatherDetails = weather
-              ? getWeatherDetails(weather.weatherCode, locale)
-              : null;
-
-            return (
-              <Link
-                key={displayLocation.slug}
-                href={`/explore/${displayLocation.slug}`}
-                onClick={(event) => handleLocationOpen(event, displayLocation.slug)}
-                className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"
-              >
+                ? getWeatherDetails(weather.weatherCode, locale)
+                : null;
+            return (<Link key={displayLocation.slug} href={`/explore/${displayLocation.slug}`} onClick={(event) => handleLocationOpen(event, displayLocation.slug)} className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md">
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
                     {displayLocation.category}
@@ -391,36 +314,17 @@ export default function CamerasPage() {
 
                 <div className="w-20 shrink-0 sm:w-24">
                   <div className="relative h-20 overflow-hidden rounded-xl bg-mist sm:h-24">
-                    <Image
-                      src={displayLocation.image}
-                      alt={displayLocation.imageAlt}
-                      fill
-                      unoptimized
-                      className="object-cover transition duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 80px, 96px"
-                    />
+                    {location.tags.includes("Outdoor activities") ? <ActivityPhoto src={displayLocation.image} name={displayLocation.imageAlt} locale={locale} compact/> : <Image src={displayLocation.image} alt={displayLocation.imageAlt} fill unoptimized className="object-cover transition duration-300 group-hover:scale-105" sizes="(max-width: 640px) 80px, 96px"/>}
                   </div>
 
-                  {weather && weatherDetails ? (
-                    <div className="mt-2 rounded-lg border border-slate-200 bg-panel px-2 py-2 text-xs text-slate-600">
+                  {weather && weatherDetails ? (<div className="mt-2 rounded-lg border border-slate-200 bg-panel px-2 py-2 text-xs text-slate-600">
                       <p className="flex items-center gap-1 font-semibold text-navy">
                         <span aria-hidden="true">{weatherDetails.icon}</span>
                         <span>{weather.temperature}°C</span>
                       </p>
                       <p className="mt-1 leading-4">{weatherDetails.label}</p>
-                      <p
-                        className="mt-1 leading-4"
-                        title={`${getWindDirection(
-                          weather.windDirection,
-                          locale,
-                        )}, ${weather.windSpeed} ${
-                          locale === 'uk' ? 'км/год' : 'km/h'
-                        }`}
-                      >
-                        <span
-                          className="font-semibold text-ocean"
-                          aria-hidden="true"
-                        >
+                      <p className="mt-1 leading-4" title={`${getWindDirection(weather.windDirection, locale)}, ${weather.windSpeed} ${locale === 'uk' ? 'км/год' : 'km/h'}`}>
+                        <span className="font-semibold text-ocean" aria-hidden="true">
                           {getWindArrow(weather.windDirection)}
                         </span>{' '}
                         {weather.windSpeed}{' '}
@@ -430,16 +334,11 @@ export default function CamerasPage() {
                         {locale === 'uk' ? 'Оновлено' : 'Updated'}{' '}
                         {formatUpdatedTime(weather.time, locale)}
                       </p>
-                    </div>
-                  ) : (
-                    <div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100" />
-                  )}
+                    </div>) : (<div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100"/>)}
                 </div>
-              </Link>
-            );
-          })}
+              </Link>);
+        })}
         </section>
       </main>
-    </Layout>
-  );
+    </Layout>);
 }

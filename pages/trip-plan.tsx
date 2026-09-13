@@ -1,3 +1,4 @@
+import { activityCoordinates } from "../data/activities";
 import { calculatePlannerRoute, resolvePlannerLocation, validRoutePoint } from "../lib/calculatePlannerRoute";
 import PlannerRouteFinish from "../components/PlannerRouteFinish";
 import { useRef } from "react";
@@ -197,7 +198,8 @@ const locationCoordinates: Record<string, [
     "pr13-vereda-do-fanal": [32.7938, -17.1422],
     "pr5-vereda-das-funduras": [32.7287, -16.8336],
     "pr17-pinaculo-folhadal": [32.7466, -17.0551],
-    "levada-do-furado": [32.7408, -16.8767]
+    "levada-do-furado": [32.7408, -16.8767],
+    ...activityCoordinates
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
@@ -219,6 +221,8 @@ function getRouteStopIcon(location: {
     slug: string;
     tags: string[];
 }) {
+    if (location.tags.includes("Outdoor activities"))
+        return "\uD83E\uDDED";
     if (location.tags.includes("Restaurants"))
         return "\uD83C\uDF7D\uFE0F";
     if (location.tags.includes('Supermarkets'))
@@ -326,7 +330,7 @@ export default function TripPlanPage() {
     } : {
         title: 'Trip plan', intro: 'Create a simple day itinerary: choose a starting point, add locations, a restaurant stop and timing for each point.', dayDetails: 'Day details', date: 'Date', startVilla: 'Starting point', endPoint: 'End point', endAtStart: 'Start equals finish', customPoint: 'Google Maps link or coordinates', whatToTry: 'What to try', departure: 'Departure time', addStop: 'Add a stop', location: 'Location', locationFilters: 'Location filters', chooseLocation: 'Choose a location', addLocation: 'Add location', addRestaurant: 'Add restaurant', addVilla: 'Add villa return', selectedStops: 'Day route', noStops: 'Add your first location or restaurant to build the route.', arrival: 'Arrival', duration: 'Duration', sunrise: 'Sunrise', bar: 'Bar', restaurantOption: 'Restaurant', meal: 'Meal', breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', up: 'Move up', down: 'Move down', remove: 'Remove', restaurant: 'Restaurant', output: 'Ready programme', share: 'Share', copied: 'Copied', clear: 'Clear route', return: 'Return to', departureFrom: 'departure from', defaultProgram: 'Add route stops and a ready-to-copy programme will appear here.', endVillaRequired: 'Choose a valid end point to complete the route.', recommendations: 'Day recommendations', weather: 'Weather', beach: 'Beach', levada: 'Levada', weatherLoading: 'Loading the current forecast…', weatherUnavailable: 'A current forecast is unavailable for the selected date. Check the weather before departure.',
     };
-    const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }];
+    const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }, ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" })];
     const availableLocations = useMemo(() => locations.filter((location) => locationFilter === 'All' || location.tags.includes(locationFilter)).map((location) => getLocalizedLocation(location, locale)).sort((a, b) => a.name.localeCompare(b.name, locale)), [locale, locationFilter]);
     const locationBySlug = useMemo(() => new Map(locations.map((location) => [location.slug, getLocalizedLocation(location, locale)])), [locale]);
     const routeLocations = useMemo(() => stops.filter((stop) => stop.type === 'location' && stop.slug).map((stop) => locationBySlug.get(stop.slug as string)).filter(Boolean), [stops, locationBySlug]);

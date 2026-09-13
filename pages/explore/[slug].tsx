@@ -1,3 +1,5 @@
+import { getActivity } from "../../data/activities";
+import ActivityPage from "../../components/ActivityPage";
 import Link from "next/link";
 import RestaurantPage from "../../components/RestaurantPage";
 import { getRestaurant, type Restaurant } from "../../data/restaurants";
@@ -300,7 +302,7 @@ export const getStaticProps: GetStaticProps<LocationPageProps> = async ({ params
     const location = typeof slug === "string" ? getLocationBySlug(slug) : undefined;
     if (!location)
         return { notFound: true };
-    const restaurant = getRestaurant(location.slug) ?? null;
+    const restaurant = getRestaurant(location.slug) ?? getActivity(location.slug) ?? null;
     let hasPhoto = false;
     if (restaurant) {
         try {
@@ -313,6 +315,5 @@ export const getStaticProps: GetStaticProps<LocationPageProps> = async ({ params
     }
     return { props: { location, restaurant, hasPhoto } };
 };
-export default function LocationPage(props: LocationPageProps) {
-    return props.restaurant ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)}/> : <StandardLocationPage {...props}/>;
-}
+export default function LocationPage(props: LocationPageProps) { const activity = getActivity(props.location.slug); if (activity)
+    return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)}/>; return props.restaurant ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)}/> : <StandardLocationPage {...props}/>; }

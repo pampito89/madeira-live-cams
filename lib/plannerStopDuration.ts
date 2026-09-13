@@ -48,7 +48,13 @@ const standardLocationDurations: Record<string, number> = {
     'pingo-doce-cancela': 45,
     'pingo-doce-monumental': 45,
     'pingo-doce-calheta': 45,
+    "madeira-sea-emotions": 180,
+    "h2o-madeira": 150,
+    "adrenaline-xtreme-adventures": 180
 };
-export function plannerStopDuration(location: { slug: string; tags: string[] }) {
-  return location.tags.includes("Airport") ? 15 : standardLocationDurations[location.slug] ?? 90;
+export function plannerStopDuration(location: {
+    slug: string;
+    tags: string[];
+}) {
+    return location.tags.includes("Airport") ? 15 : standardLocationDurations[location.slug] ?? 90;
 }
