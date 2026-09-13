@@ -57,6 +57,10 @@ const navigationDestinations: Record<string, NavigationDestination> = {
         latitude: 32.866443,
         longitude: -17.1684326,
     },
+    "ribeira-da-janela": {
+        latitude: 32.8547476,
+        longitude: -17.1537419
+    }
 };
 function googleMapsLocationUrl(query: string) {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -315,5 +319,9 @@ export const getStaticProps: GetStaticProps<LocationPageProps> = async ({ params
     }
     return { props: { location, restaurant, hasPhoto } };
 };
-export default function LocationPage(props: LocationPageProps) { const activity = getActivity(props.location.slug); if (activity)
-    return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)}/>; return props.restaurant ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)}/> : <StandardLocationPage {...props}/>; }
+export default function LocationPage(props: LocationPageProps) {
+    const activity = getActivity(props.location.slug);
+    if (activity)
+        return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)}/>;
+    return props.restaurant ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)}/> : <StandardLocationPage {...props}/>;
+}
