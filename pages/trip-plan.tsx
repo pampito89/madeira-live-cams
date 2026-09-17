@@ -16,6 +16,7 @@ import { stays } from '../data/stays';
 import { plannerStopDuration } from "../lib/plannerStopDuration";
 type MealType = 'breakfast' | 'lunch' | 'dinner';
 type RecommendationKey = 'weather' | 'beach' | 'levada' | 'sunrise' | 'food' | 'fanal' | 'lastDay' | 'trekking';
+const emptyRecommendations: Record<RecommendationKey, boolean> = { weather: false, beach: false, levada: false, sunrise: false, food: false, fanal: false, lastDay: false, trekking: false };
 type PlanStop = {
     id: string;
     type: 'location' | 'custom' | 'villa';
@@ -320,7 +321,7 @@ export default function TripPlanPage() {
     const [selectedSlug, setSelectedSlug] = useState('');
     const [locationFilter, setLocationFilter] = useState('Lab Travel');
     const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
-    const [recommendations, setRecommendations] = useState<Record<RecommendationKey, boolean>>({ weather: false, beach: false, levada: false, sunrise: false, food: false, fanal: false, lastDay: false, trekking: false });
+    const [recommendations, setRecommendations] = useState<Record<RecommendationKey, boolean>>({ ...emptyRecommendations });
     const [weather, setWeather] = useState<WeatherSummary | null>(null);
     const [weatherStatus, setWeatherStatus] = useState<'idle' | 'loading' | 'unavailable'>('idle');
     const [routeStatus, setRouteStatus] = useState<'idle' | 'loading'>('idle');
@@ -583,7 +584,11 @@ export default function TripPlanPage() {
             return;
         setStops((current) => { const next = [...current]; [next[index], next[targetIndex]] = [next[targetIndex], next[index]]; return next; });
     };
-    const removeStop = (id: string) => setStops((current) => current.filter((stop) => stop.id !== id));
+    const removeStop = (id: string) => {
+        const remaining = stops.filter((stop) => stop.id !== id);
+        setStops(remaining);
+        if (remaining.length === 0) setRecommendations({ ...emptyRecommendations });
+    };
     const mealLabelForTime = (time: string) => {
         const hour = Number(time.split(':')[0]);
         if (hour < 12)
@@ -603,12 +608,12 @@ export default function TripPlanPage() {
             lines.push(`🌤️ ${text.weather}`);
             lines.push(weather ? (locale === 'uk' ? `Середня температура за маршрутом: близько ${Math.round(weather.averageTemperature)}°C. Ймовірність дощу: до ${Math.round(weather.rainProbability)}%. ${adviceForWeather(weather.averageTemperature, weather.rainProbability, locale)}` : `Average temperature across the route: about ${Math.round(weather.averageTemperature)}°C. Rain probability: up to ${Math.round(weather.rainProbability)}%. ${adviceForWeather(weather.averageTemperature, weather.rainProbability, locale)}`) : unavailable, '');
         }
-        if (recommendations.beach) {
+        if (recommendations.beach && hasBeach) {
             lines.push(`🏖️ ${text.beach}`);
             lines.push(weather?.waterTemperature !== null && weather?.waterTemperature !== undefined ? (locale === 'uk' ? `Температура води біля Мадейри: близько ${Math.round(weather.waterTemperature)}°C.` : `Sea temperature around Madeira: about ${Math.round(weather.waterTemperature)}°C.`) : unavailable);
             lines.push(locale === 'uk' ? 'Візьміть підстилки, повний комплект для купання, сонячні окуляри, сонцезахисний крем і головний убір.' : 'Bring beach mats, a full swim kit, sunglasses, sunscreen and a hat.', '');
         }
-        if (recommendations.levada) {
+        if (recommendations.levada && hasLevada) {
             lines.push(`🌿 ${text.levada}`);
             lines.push(locale === 'uk' ? 'Візьміть зручне взуття для левади з хорошим зчепленням. Якщо левала вийшла з берегів або стежка мокра, візьміть водонепроникні чохли, щоб не промокли ноги. Вода обов’язкова. Усім, хто вищий за 175 см, потрібно уважно проходити тунелі: є ризик вдаритися головою. Якщо боїтеся висоти, йдіть поруч із гідом.' : 'Wear comfortable levada shoes with good grip. If the levada has overflowed or the path is wet, take waterproof overshoes to keep your feet dry. Carry water. If you are taller than 175 cm, take care in tunnels because there is a risk of hitting your head. If you are afraid of heights, stay close to your guide.', '');
         }
@@ -616,7 +621,7 @@ export default function TripPlanPage() {
             lines.push(`🥾 ${text.trekking}`);
             lines.push(locale === 'uk' ? 'Цього дня запланований трекінг. Вдягніть відповідне взуття та зручний одяг для пішого маршруту.' : 'Today includes trekking. Wear suitable footwear and comfortable clothing for walking.', '');
         }
-        if (recommendations.sunrise) {
+        if (recommendations.sunrise && hasSunrise) {
             lines.push(`🌅 ${text.sunrise}`);
             lines.push(weather?.picoTemperature !== null && weather?.picoTemperature !== undefined ? (locale === 'uk' ? `На Pico do Areeiro: близько ${Math.round(weather.picoTemperature)}°C, вітер до ${Math.round(weather.picoWindSpeed ?? 0)} км/год, пориви до ${Math.round(weather.picoWindGusts ?? 0)} км/год.` : `At Pico do Areeiro: about ${Math.round(weather.picoTemperature)}°C, wind up to ${Math.round(weather.picoWindSpeed ?? 0)} km/h and gusts up to ${Math.round(weather.picoWindGusts ?? 0)} km/h.`) : unavailable);
             lines.push(locale === 'uk' ? 'Одягніть теплий шар, вітрозахисну куртку, довгі штани та закрите взуття. Перед виїздом бажано з’їсти щось легке: каву з тістечком або бутерброди. Скористайтеся туалетом перед виїздом.' : 'Wear a warm layer, windproof jacket, long trousers and closed shoes. Before leaving, have something light such as coffee and a pastry or sandwiches. Use the toilet before departure.', '');
@@ -642,7 +647,7 @@ export default function TripPlanPage() {
         if (recommendations.food && hasRestaurant)
             lines.push(`🍽️ ${text.whatToTry}`, madeiraFoodRecommendations, '');
         return lines;
-    }, [hasRestaurant, hasFanal, hasLastDay, hasTrekking, locale, recommendations, text, weather, weatherStatus]);
+    }, [hasBeach, hasLevada, hasRestaurant, hasFanal, hasLastDay, hasSunrise, hasTrekking, locale, recommendations, text, weather, weatherStatus]);
     const programme = useMemo(() => {
         if (!hasRoute || !startCoordinates || !finalCoordinates)
             return "";
@@ -786,7 +791,7 @@ export default function TripPlanPage() {
   + {'\u{1F4CD}'}
     </button>
     </div>
-  </div>{selectedSlug === customRoutePoint && <div className="mt-4 rounded-xl border border-ocean/30 bg-ocean/5 p-3"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps' : 'Google Maps link'}<input value={googleMapsUrl} onChange={(event) => setGoogleMapsUrl(event.target.value)} placeholder="https://maps.app.goo.gl/..." className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy"/></label>{googleMapsUrlError && <p className="mt-2 text-xs font-medium text-red-600">{googleMapsUrlError}</p>}<p className="mt-2 text-xs text-slate-500">{locale === 'uk' ? 'Вставте коротке або повне посилання Google Maps, потім натисніть «Додати локацію».' : 'Paste a short or full Google Maps link, then press Add location.'}</p></div>}<section className="mt-6"><div className="flex items-center justify-between gap-3"><h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>{routeStatus === 'loading' && <span className="text-xs font-semibold text-slate-500">{locale === 'uk' ? 'Оновлюємо час у дорозі…' : 'Updating travel times…'}</span>}{stops.length > 0 && <button type="button" onClick={() => setStops([])} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}</div>{stops.length === 0 ? <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p> : <div className="mt-3 space-y-3">{stops.map((stop, index) => {
+  </div>{selectedSlug === customRoutePoint && <div className="mt-4 rounded-xl border border-ocean/30 bg-ocean/5 p-3"><label className="flex flex-col gap-1.5 text-sm font-semibold text-navy">{locale === 'uk' ? 'Посилання Google Maps' : 'Google Maps link'}<input value={googleMapsUrl} onChange={(event) => setGoogleMapsUrl(event.target.value)} placeholder="https://maps.app.goo.gl/..." className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-navy"/></label>{googleMapsUrlError && <p className="mt-2 text-xs font-medium text-red-600">{googleMapsUrlError}</p>}<p className="mt-2 text-xs text-slate-500">{locale === 'uk' ? 'Вставте коротке або повне посилання Google Maps, потім натисніть «Додати локацію».' : 'Paste a short or full Google Maps link, then press Add location.'}</p></div>}<section className="mt-6"><div className="flex items-center justify-between gap-3"><h2 className="text-xl font-bold text-navy">{text.selectedStops}</h2>{routeStatus === 'loading' && <span className="text-xs font-semibold text-slate-500">{locale === 'uk' ? 'Оновлюємо час у дорозі…' : 'Updating travel times…'}</span>}{stops.length > 0 && <button type="button" onClick={() => { setStops([]); setRecommendations({ ...emptyRecommendations }); }} className="text-sm font-semibold text-slate-500 hover:text-ocean">{text.clear}</button>}</div>{stops.length === 0 ? <p className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-5 text-sm leading-6 text-slate-500">{text.noStops}</p> : <div className="mt-3 space-y-3">{stops.map((stop, index) => {
                 const location = stop.slug ? locationBySlug.get(stop.slug) : undefined;
                 const name = location?.tags.includes("Restaurants") ? restaurantStopTitle(location.name, stop.arrivalTime, locale) : stop.type === 'custom' ? (stop.name ?? (locale === 'uk' ? 'Інша локація' : 'Other location')) : stop.type === 'villa' ? selectedVilla.name : location?.name ?? '';
                 const icon = stop.type === 'custom' ? '📍' : stop.type === 'villa' ? '🏡' : location ? getRouteStopIcon(location) : '📍';
