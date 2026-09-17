@@ -33,6 +33,7 @@ const standardLocationDurations: Record<string, number> = {
     'continente-modelo-camara-de-lobos': 45,
     'continente-modelo-monumental': 45,
     'continente-modelo-sao-martinho': 45,
+    'continente-modelo-sao-vicente': 45,
     'continente-modelo-ribeira-brava': 45,
     'continente-modelo-ribeira-brava-centro': 45,
     'continente-modelo-estreito-de-camara-de-lobos': 45,

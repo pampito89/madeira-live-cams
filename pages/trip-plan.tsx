@@ -168,6 +168,7 @@ const locationCoordinates: Record<string, [
     'continente-modelo-camara-de-lobos': [32.6547913, -16.9714938],
     'continente-modelo-monumental': [32.6394109, -16.9470358],
     'continente-modelo-sao-martinho': [32.6501934, -16.9378196],
+    'continente-modelo-sao-vicente': [32.8028012, -17.0454738],
     'continente-modelo-ribeira-brava': [32.693712, -17.0461526],
     'continente-modelo-ribeira-brava-centro': [32.678645, -17.058575],
     'continente-modelo-estreito-de-camara-de-lobos': [32.6697258, -16.9769132],

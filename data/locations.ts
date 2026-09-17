@@ -270,6 +270,13 @@ const continenteModeloLocations: Location[] = [
         longitude: -16.9378196,
     }),
     createContinenteModeloLocation({
+        slug: 'continente-modelo-sao-vicente',
+        name: 'Continente Modelo São Vicente',
+        area: 'São Vicente',
+        latitude: 32.8028012,
+        longitude: -17.0454738,
+    }),
+    createContinenteModeloLocation({
         slug: 'continente-modelo-ribeira-brava',
         name: 'Continente Modelo Ribeira Brava',
         area: 'Ribeira Brava',
