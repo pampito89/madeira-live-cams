@@ -54,7 +54,7 @@ export function usePlannerDraft<T extends Draft>(draft: T, apply: (draft: Partia
                             restored[key] = value;
                     }
                     else if (key === 'recommendations') {
-                        if (value && ['weather', 'beach', 'levada', 'sunrise', 'food'].every(option => typeof value[option] === 'boolean'))
+                        if (value && ['weather', 'beach', 'levada', 'sunrise', 'food'].every(option => typeof value[option] === 'boolean') && ['fanal', 'lastDay'].every(option => value[option] === undefined || typeof value[option] === 'boolean'))
                             restored[key] = value;
                     }
                     else if (typeof value === typeof draft[key] && value !== undefined) {
