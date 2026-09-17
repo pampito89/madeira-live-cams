@@ -42,25 +42,19 @@ export async function calculatePlannerRoute<T extends Stop>(options: {
   departure: string;
   stops: T[];
   pointForStop: (stop: T) => Promise<RoutePoint>;
-  pointAfterStop?: (stop: T) => Promise<RoutePoint>;
   onUsage?: (usage: Usage) => void;
   request?: typeof fetch;
 }) {
-  const { start, end, departure, stops, pointForStop, pointAfterStop, onUsage, request = fetch } = options;
-  const stopPoints: RoutePoint[] = [];
-  const exitPoints: RoutePoint[] = [];
-  for (const stop of stops) {
-    const arrival = await pointForStop(stop);
-    stopPoints.push(arrival);
-    exitPoints.push(pointAfterStop ? await pointAfterStop(stop) : arrival);
-  }
-  if (![start, end, ...stopPoints, ...exitPoints].every(validRoutePoint)) throw new Error('point');
+  const { start, end, departure, stops, pointForStop, onUsage, request = fetch } = options;
+  const points = [start];
+  for (const stop of stops) points.push(await pointForStop(stop));
+  points.push(end);
+  if (!points.every(validRoutePoint)) throw new Error('point');
   let cursor = departure;
   const nextStops: T[] = [];
   const travelMinutes: number[] = [];
-  for (let index = 0; index <= stops.length; index++) {
-    const origin = index === 0 ? start : exitPoints[index - 1];
-    const destination = index === stops.length ? end : stopPoints[index];
+  for (let index = 1; index < points.length; index++) {
+    const origin = points[index - 1], destination = points[index];
     let minutes = 0;
     if (origin[0] !== destination[0] || origin[1] !== destination[1]) {
       const response = await request('/api/route-time', {
@@ -79,7 +73,7 @@ export async function calculatePlannerRoute<T extends Stop>(options: {
     }
     travelMinutes.push(minutes);
     cursor = addRouteMinutes(cursor, minutes);
-    const stop = stops[index];
+    const stop = stops[index - 1];
     if (stop) {
       nextStops.push({ ...stop, arrivalTime: cursor });
       cursor = addRouteMinutes(cursor, stop.durationMinutes);

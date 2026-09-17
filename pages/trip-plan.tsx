@@ -464,13 +464,6 @@ export default function TripPlanPage() {
             return resolvePlannerLocation(location, locationCoordinates, resolvedPoints.current);
         throw new Error("point");
     };
-    const pointAfterStop = async (stop: PlanStop): Promise<[number, number]> => {
-        if (stop.slug === 'ponta-de-sao-lourenco' && stop.boatDirection === 'cafeToOffice') {
-            const office = locations.find(item => item.slug === 'madeira-sea-emotions');
-            if (office) return resolvePlannerLocation(office, locationCoordinates, resolvedPoints.current);
-        }
-        return pointForStop(stop);
-    };
     useEffect(() => {
         setRouteError("");
         setCalculatedKey(null);
@@ -504,7 +497,7 @@ export default function TripPlanPage() {
         setRouteError("");
         setCalculatedKey(null);
         try {
-            const result = await calculatePlannerRoute({ start: startCoordinates, end: finalCoordinates, departure: departureTime, stops, pointForStop, pointAfterStop, onUsage: setRouteUsage });
+            const result = await calculatePlannerRoute({ start: startCoordinates, end: finalCoordinates, departure: departureTime, stops, pointForStop, onUsage: setRouteUsage });
             if (activeRouteKey.current !== requestedKey)
                 return;
             setStops(result.stops);
@@ -670,8 +663,6 @@ export default function TripPlanPage() {
             if (stop.type === 'villa') {
                 return selectedVilla.name;
             }
-            if (stop.slug === 'ponta-de-sao-lourenco' && stop.boatDirection === 'cafeToOffice')
-                return locale === 'uk' ? 'офісу човнового оператора' : 'the boat operator’s office';
             return stop.slug
                 ? locationBySlug.get(stop.slug)?.name ?? ''
                 : '';
