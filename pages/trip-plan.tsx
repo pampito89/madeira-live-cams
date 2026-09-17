@@ -614,7 +614,7 @@ export default function TripPlanPage() {
         }
         if (recommendations.trekking && hasTrekking) {
             lines.push(`🥾 ${text.trekking}`);
-            lines.push(locale === 'uk' ? 'Цього дня запланований трекінг або активний відпочинок. Вдягніть відповідне взуття та зручний одяг для пішого маршруту.' : 'Today includes trekking or outdoor activities. Wear suitable footwear and comfortable clothing for walking.', '');
+            lines.push(locale === 'uk' ? 'Цього дня запланований трекінг. Вдягніть відповідне взуття та зручний одяг для пішого маршруту.' : 'Today includes trekking. Wear suitable footwear and comfortable clothing for walking.', '');
         }
         if (recommendations.sunrise) {
             lines.push(`🌅 ${text.sunrise}`);
