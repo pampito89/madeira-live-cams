@@ -972,8 +972,8 @@ export const locations: Location[] = [
                 ],
             },
             practicalTip: {
-                en: 'Levada Nova traverses a steep hillside, in places alongside rock faces. If you are afraid of heights, walk with a guide and stay close to them. After roughly the first kilometre, especially inside the ravine, mobile reception may disappear for much of the route. Bring drinking water. Only refill from the waterfalls if you can treat the water; do not drink it untreated. If walking independently, turn left onto Levada do Moinho after descending the connecting steps and follow it without taking side paths all the way back to the parking area.',
-                uk: 'Levada Nova проходить траверсом крутого схилу, місцями вздовж скелі. Якщо боїтеся висоти, краще йдіть із гідом і тримайтеся поруч із ним. Приблизно після першого кілометра, особливо в ущелині, мобільний зв’язок може зникати на значній частині маршруту. Візьміть із собою питну воду. Поповнюйте пляшку водою з водоспадів лише за наявності засобу для її очищення; не пийте цю воду необробленою. Якщо йдете самостійно, після спуску сходами поверніть ліворуч на Levada do Moinho та йдіть без відгалужень аж до парковки.',
+                en: 'Levada Nova traverses a steep hillside, in places alongside rock faces. If you are afraid of heights, walk with a guide and stay close to them. After roughly the first kilometre, especially inside the ravine, mobile reception may disappear for much of the route. Bring drinking water. If walking independently, turn left onto Levada do Moinho after descending the connecting steps and follow it without taking side paths all the way back to the parking area.',
+                uk: 'Levada Nova проходить траверсом крутого схилу, місцями вздовж скелі. Якщо боїтеся висоти, краще йдіть із гідом і тримайтеся поруч із ним. Приблизно після першого кілометра, особливо в ущелині, мобільний зв’язок може зникати на значній частині маршруту. Візьміть із собою питну воду. Якщо йдете самостійно, після спуску сходами поверніть ліворуч на Levada do Moinho та йдіть без відгалужень аж до парковки.',
             },
         },
     },
