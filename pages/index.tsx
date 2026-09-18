@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { cameras, type CameraCategory } from '../components/cameraData';
@@ -90,21 +89,9 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary" />
       </Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
-        <section className="rounded-xl border border-slate-200 bg-white p-5 sm:p-7">
-          <h1 className="text-2xl font-bold tracking-tight text-navy sm:text-4xl">
-            {uk ? 'Мадейра наживо: камери, умови та ідеї для подорожі' : 'Madeira live webcams and places to explore'}
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-700 sm:text-base">
-            {uk
-              ? 'Подивіться на різні частини острова перед поїздкою: узбережжя, міста й гори можуть мати зовсім різні умови. Камери показують зображення з джерел їхніх власників; трансляції інколи бувають недоступні або затримані.'
-              : 'See the coast, towns and mountains before you travel: conditions can differ across Madeira. Streams come from their owners and may be delayed or temporarily unavailable.'}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-ocean">
-            <Link href="/cameras" className="hover:underline">{uk ? 'Переглянути локації' : 'Explore places'}</Link>
-            <Link href="/weather-guide" className="hover:underline">{uk ? 'Погода в горах' : 'Mountain weather guide'}</Link>
-            <Link href="/trip-plan" className="hover:underline">{uk ? 'Спланувати день' : 'Plan your day'}</Link>
-          </div>
-        </section>
+        <h1 className="text-xl font-semibold tracking-tight text-navy sm:text-2xl">
+          {uk ? 'Вебкамери Мадейри наживо' : 'Madeira live webcams'}
+        </h1>
 
         <section aria-labelledby="airport-camera-title">
           <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
