@@ -1,3 +1,4 @@
+import LevadaNovaRoute from "../../components/LevadaNovaRoute";
 import { getActivity } from "../../data/activities";
 import ActivityPage from "../../components/ActivityPage";
 import Link from "next/link";
@@ -257,22 +258,19 @@ function StandardLocationPage({ location }: LocationPageProps) {
               </p>
             </section>
 
-            <section className="mt-8">
-              <h2 className="text-xl font-semibold text-navy">
-                {messages.location.whyVisit}
-              </h2>
-
-              <ul className="mt-3 space-y-2 text-slate-600">
-                {displayLocation.article.highlights.map((highlight) => (<li key={highlight} className="flex gap-2 leading-6">
-                    <span className="font-bold text-ocean" aria-hidden="true">
-                      •
-                    </span>
-
+            {displayLocation.slug === 'levada-nova-levada-do-moinho' ? (
+              <LevadaNovaRoute locale={locale} />
+            ) : (
+              <section className="mt-8">
+                <h2 className="text-xl font-semibold text-navy">{messages.location.whyVisit}</h2>
+                <ul className="mt-3 space-y-2 text-slate-600">
+                  {displayLocation.article.highlights.map((highlight) => (<li key={highlight} className="flex gap-2 leading-6">
+                    <span className="font-bold text-ocean" aria-hidden="true">•</span>
                     <span>{highlight}</span>
                   </li>))}
-              </ul>
-            </section>
-
+                </ul>
+              </section>
+            )}
             <section className="mt-8 rounded-xl bg-panel p-4">
               <h2 className="font-semibold text-navy">
                 {messages.location.practicalTip}
