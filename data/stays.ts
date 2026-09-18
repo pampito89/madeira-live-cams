@@ -55,6 +55,17 @@ export const stays: Stay[] = [
     longitude: -16.8178741,
     mapUrl: 'https://www.google.com/maps/place/Quinta+Santo+Antonio+da+Serra/@32.7253127,-16.7915338,10696m/data=!3m1!1e3!4m9!3m8!1s0xc6061587ff73f91:0x15820c875181db4e!5m2!4m1!1i2!8m2!3d32.7236258!4d-16.8178741!16s%2Fg%2F1v2y_37f?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D',
   },
+  {
+    slug: 'villa-orshak',
+    name: 'Villa Orshak',
+    shortDescription: {
+      en: 'A villa in Calheta, useful as a starting and finishing point for day trips around Madeira.',
+      uk: 'Вілла в Calheta — стартова та фінальна точка для одноденних маршрутів Мадейрою.',
+    },
+    latitude: 32.7379763,
+    longitude: -17.1659178,
+    mapUrl: 'https://maps.app.goo.gl/PnUCNQ7NKTRTFF4t9',
+  },
 ];
 
 export function getStayBySlug(slug: string) {
