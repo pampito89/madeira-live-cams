@@ -972,8 +972,8 @@ export const locations: Location[] = [
                 ],
             },
             practicalTip: {
-                en: 'Start near Igreja da Lombada da Ponta do Sol and check the current trail condition before setting out. The route can be wet and slippery near the waterfall, while some sections are narrow and exposed. Wear shoes with good grip, take a light waterproof layer and torch, and do not block the levada channel: it remains part of an active water-supply system.',
-                uk: 'Починайте біля Igreja da Lombada da Ponta do Sol і перед виходом перевіряйте актуальний стан маршруту. Біля водоспаду може бути мокро й слизько, а деякі ділянки вузькі та відкриті. Взувайтеся у взуття з хорошим зчепленням, візьміть легкий водонепроникний шар і ліхтарик; не перекривайте канал левади, адже він досі є частиною діючої системи подачі води.',
+                en: 'Park near Igreja da Lombada da Ponta do Sol and walk uphill to the Levada Nova start. The route can be wet and slippery near the waterfall, while some sections are narrow and exposed. Wear shoes with good grip, take a light waterproof layer and torch, and do not block the levada channel: it remains part of an active water-supply system.',
+                uk: 'Паркуйтеся біля Igreja da Lombada da Ponta do Sol і пішки піднімайтеся до старту Levada Nova. Біля водоспаду може бути мокро й слизько, а деякі ділянки вузькі та відкриті. Взувайтеся у взуття з хорошим зчепленням, візьміть легкий водонепроникний шар і ліхтарик; не перекривайте канал левади, адже він досі є частиною діючої системи подачі води.',
             },
         },
     },
