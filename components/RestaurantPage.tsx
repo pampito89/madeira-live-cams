@@ -37,7 +37,7 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: {
         geo: { '@type': 'GeoCoordinates', latitude: r.latitude, longitude: r.longitude },
         ...(hasPhoto ? { image: `https://madeiralivecams.com${r.image}` } : {}),
     };
-    const actionClass = 'inline-flex min-h-11 items-center justify-center rounded-lg border border-ocean px-4 py-2 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
+    const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
     return <Layout>
     <Head>
       <title>{r.name} — {r.area} | Madeira Live Cams</title>
@@ -65,7 +65,7 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: {
           <p className="mt-1 text-xs text-slate-500">{uk ? 'Перевірено' : 'Checked'} <time dateTime={r.checkedAt}>{r.checkedAt}</time> · {uk ? 'Оцінка може змінюватися' : 'Rating may change'}</p>
           {r.temporarilyClosed && <p role="note" className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{uk ? 'Google Maps позначає заклад як тимчасово закритий. Перед поїздкою уточніть, чи він відновив роботу.' : 'Google Maps marks this venue as temporarily closed. Confirm that it has reopened before travelling.'}</p>}
           <div className="mt-5 flex flex-wrap gap-2">
-            <Link href={planner} className={`${actionClass} bg-ocean text-white`}>+ {uk ? 'У план подорожі' : 'Add to trip plan'}</Link>
+            <Link href={planner} className={`${actionClass} bg-ocean text-white`}>+ {uk ? 'До плану' : 'Add to plan'}</Link>
             <div className="relative">
   <button type="button" aria-label={uk ? "\u041C\u0430\u0440\u0448\u0440\u0443\u0442" : "Route"} title={uk ? "\u041C\u0430\u0440\u0448\u0440\u0443\u0442" : "Route"} aria-expanded={routeOpen} aria-controls="restaurant-route-options" onClick={() => setRouteOpen(current => !current)} className="inline-flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-ocean px-3 text-sm font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">
     <span aria-hidden="true">🗺️</span><span>{uk ? "\u041C\u0430\u0440\u0448\u0440\u0443\u0442" : "Route"}</span>
