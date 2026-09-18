@@ -246,7 +246,7 @@ export default function CamerasPage() {
       <Head>
         <title>{messages.exploreList.pageTitle}</title>
         <meta name="description" content={messages.exploreList.pageDescription}/>
-        <link rel="canonical" href="https://madeiralivecams.com/cameras"/>
+        
       </Head>
 
       <main className="page-shell">

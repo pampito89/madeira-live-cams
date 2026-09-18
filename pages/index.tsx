@@ -1,18 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import {
-  cameras,
-  type CameraCategory,
-} from '../components/cameraData';
+import { cameras, type CameraCategory } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 
-const cameraFilters: Array<{
-  value: CameraCategory;
-  en: string;
-  uk: string;
-}> = [
+const cameraFilters: Array<{ value: CameraCategory; en: string; uk: string }> = [
   { value: 'Mountains', en: 'Mountains', uk: 'Гори' },
   { value: 'Beaches', en: 'Beaches', uk: 'Пляжі' },
   { value: 'Towns', en: 'Towns', uk: 'Міста' },
@@ -22,13 +17,18 @@ const cameraFilters: Array<{
   { value: 'Sunrise spots', en: 'Sunrise', uk: 'Схід сонця' },
 ];
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   const { locale, messages } = useMessages();
   const router = useRouter();
-  const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>(
-    'All',
-  );
+  const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
   const [flightNumber, setFlightNumber] = useState('');
+  const uk = locale === 'uk';
+  const title = uk
+    ? 'Вебкамери Мадейри наживо, погода та план подорожі | Madeira Live Cams'
+    : 'Madeira Live Webcams, Weather & Trip Planning | Madeira Live Cams';
+  const description = uk
+    ? 'Переглядайте вебкамери Мадейри, порівнюйте умови в горах і на узбережжі, знаходьте локації та плануйте день. Перевіряйте джерела перед виходом.'
+    : 'Explore Madeira live webcams, compare mountain and coastal conditions, discover places and plan your day. Check current sources before setting out.';
 
   const saveHomeCameraView = () => {
     window.sessionStorage.setItem(
@@ -39,22 +39,18 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (!router.isReady || router.query.restoreCameraFilter !== '1') return;
-
     const rawView = window.sessionStorage.getItem('madeira-home-camera-view');
     window.sessionStorage.removeItem('madeira-home-camera-view');
-
     if (!rawView) {
       router.replace('/', undefined, { shallow: true, scroll: false });
       return;
     }
-
     try {
       const savedView = JSON.parse(rawView) as {
         activeFilter?: CameraCategory | 'All';
         scrollY?: number;
       };
       if (savedView.activeFilter) setActiveFilter(savedView.activeFilter);
-
       const timer = window.setTimeout(() => {
         window.scrollTo({ top: savedView.scrollY ?? 0, behavior: 'auto' });
         router.replace('/', undefined, { shallow: true, scroll: false });
@@ -67,16 +63,8 @@ const HomePage: React.FC = () => {
 
   const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const cleanFlightNumber = flightNumber
-      .trim()
-      .replace(/\s+/g, '')
-      .toUpperCase();
-
-    if (!cleanFlightNumber) {
-      return;
-    }
-
+    const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
+    if (!cleanFlightNumber) return;
     window.open(
       `https://www.flightradar24.com/${cleanFlightNumber.toLowerCase()}`,
       '_blank',
@@ -84,60 +72,71 @@ const HomePage: React.FC = () => {
     );
   };
 
-  const filtered = useMemo(() => {
-    if (activeFilter === 'All') {
-      return cameras;
-    }
-
-    return cameras.filter((camera) => camera.category.includes(activeFilter));
-  }, [activeFilter]);
+  const filtered = useMemo(
+    () => activeFilter === 'All'
+      ? cameras
+      : cameras.filter((camera) => camera.category.includes(activeFilter)),
+    [activeFilter],
+  );
 
   return (
     <Layout>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary" />
+      </Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
-        <section className="w-full">
+        <section className="rounded-xl border border-slate-200 bg-white p-5 sm:p-7">
+          <h1 className="text-2xl font-bold tracking-tight text-navy sm:text-4xl">
+            {uk ? 'Мадейра наживо: камери, умови та ідеї для подорожі' : 'Madeira live webcams and places to explore'}
+          </h1>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-700 sm:text-base">
+            {uk
+              ? 'Подивіться на різні частини острова перед поїздкою: узбережжя, міста й гори можуть мати зовсім різні умови. Камери показують зображення з джерел їхніх власників; трансляції інколи бувають недоступні або затримані.'
+              : 'See the coast, towns and mountains before you travel: conditions can differ across Madeira. Streams come from their owners and may be delayed or temporarily unavailable.'}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-ocean">
+            <Link href="/cameras" className="hover:underline">{uk ? 'Переглянути локації' : 'Explore places'}</Link>
+            <Link href="/weather-guide" className="hover:underline">{uk ? 'Погода в горах' : 'Mountain weather guide'}</Link>
+            <Link href="/trip-plan" className="hover:underline">{uk ? 'Спланувати день' : 'Plan your day'}</Link>
+          </div>
+        </section>
+
+        <section aria-labelledby="airport-camera-title">
           <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="font-semibold text-navy">
+                <h2 id="airport-camera-title" className="font-semibold text-navy">
                   {messages.home.airportCameraTitle}
                 </h2>
-
                 <p className="mt-1 text-xs text-slate-500">
                   {messages.home.airportCameraDescription}
                 </p>
               </div>
-
               <span className="rounded-full bg-red-50 px-2 py-1 text-[11px] font-medium text-red-600">
                 {messages.home.live}
               </span>
             </div>
-
             <div className="aspect-video overflow-hidden rounded-lg bg-slate-900">
               <iframe
                 className="h-full w-full"
                 src="https://www.youtube.com/embed/8Drrabk3h6M?autoplay=1&mute=1"
                 title={messages.home.airportCameraTitle}
+                loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
             </div>
-
-            <form
-              onSubmit={trackFlight}
-              className="mt-1 rounded-lg border border-slate-200 bg-panel p-3"
-            >
+            <form onSubmit={trackFlight} className="mt-1 rounded-lg border border-slate-200 bg-panel p-3">
               <div className="flex flex-col gap-2">
                 <div>
-                  <h3 className="text-sm font-semibold text-navy">
-                    {messages.home.flightTitle}
-                  </h3>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    {messages.home.flightDescription}
-                  </p>
+                  <h3 className="text-sm font-semibold text-navy">{messages.home.flightTitle}</h3>
+                  <p className="mt-1 text-xs text-slate-500">{messages.home.flightDescription}</p>
                 </div>
-
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -147,11 +146,7 @@ const HomePage: React.FC = () => {
                     className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-ocean focus:ring-2 focus:ring-ocean/20"
                     aria-label={messages.home.flightAriaLabel}
                   />
-
-                  <button
-                    type="submit"
-                    className="shrink-0 rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white hover:bg-ocean/90"
-                  >
+                  <button type="submit" className="shrink-0 rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white hover:bg-ocean/90">
                     {messages.home.trackFlight}
                   </button>
                 </div>
@@ -160,51 +155,36 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-3" aria-labelledby="all-cameras-title">
           <div>
-            <h2 className="text-lg font-semibold text-navy">
+            <h2 id="all-cameras-title" className="text-lg font-semibold text-navy">
               {messages.home.allCameras}
             </h2>
-
             <p className="mt-1 text-sm text-slate-500">
-              {locale === 'uk'
+              {uk
                 ? `Показано ${filtered.length} з ${cameras.length} камер`
                 : `Showing ${filtered.length} of ${cameras.length} cameras`}
             </p>
           </div>
-
-          <div
-            className="flex gap-2 overflow-x-auto pb-2"
-            aria-label={locale === 'uk' ? 'Фільтри камер' : 'Camera filters'}
-          >
+          <div className="flex gap-2 overflow-x-auto pb-2" aria-label={uk ? 'Фільтри камер' : 'Camera filters'}>
             <button
               type="button"
               onClick={() => setActiveFilter('All')}
-              className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
-                activeFilter === 'All'
-                  ? 'border-ocean bg-ocean text-white'
-                  : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
-              }`}
+              className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === 'All' ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
             >
-              {locale === 'uk' ? 'Усі' : 'All'}
+              {uk ? 'Усі' : 'All'}
             </button>
-
             {cameraFilters.map((filter) => (
               <button
                 key={filter.value}
                 type="button"
                 onClick={() => setActiveFilter(filter.value)}
-                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${
-                  activeFilter === filter.value
-                    ? 'border-ocean bg-ocean text-white'
-                    : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'
-                }`}
+                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter.value ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
               >
                 {filter[locale]}
               </button>
             ))}
           </div>
-
           <div className="grid gap-4 md:grid-cols-3">
             {filtered.map((camera) => (
               <CameraCard
@@ -219,6 +199,4 @@ const HomePage: React.FC = () => {
       </div>
     </Layout>
   );
-};
-
-export default HomePage;
+}

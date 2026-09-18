@@ -1,13 +1,10 @@
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { useMessages } from '../lib/i18n/useMessages';
-
 export default function PrivacyPage() {
-  const { locale } = useMessages();
-  const uk = locale === 'uk';
-
-  return (
-    <Layout>
+    const { locale } = useMessages();
+    const uk = locale === 'uk';
+    return (<Layout>
       <Head>
         <title>
           {uk
@@ -15,19 +12,11 @@ export default function PrivacyPage() {
             : 'Privacy Policy | Madeira Live Cams'}
         </title>
 
-        <meta
-          name="description"
-          content={
-            uk
-              ? 'Політика конфіденційності Madeira Live Cams.'
-              : 'Madeira Live Cams privacy policy.'
-          }
-        />
+        <meta name="description" content={uk
+            ? 'Політика конфіденційності Madeira Live Cams.'
+            : 'Madeira Live Cams privacy policy.'}/>
 
-        <link
-          rel="canonical"
-          href="https://madeiralivecams.com/privacy"
-        />
+        
       </Head>
 
       <main className="page-shell">
@@ -42,14 +31,13 @@ export default function PrivacyPage() {
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-white/85 sm:text-base">
             {uk
-              ? 'Останнє оновлення: 16 серпня 2026 року.'
-              : 'Last updated: 16 August 2026.'}
+            ? 'Останнє оновлення: 16 серпня 2026 року.'
+            : 'Last updated: 16 August 2026.'}
           </p>
         </section>
 
         <article className="rounded-2xl border border-moss/50 bg-white p-5 text-sm leading-7 text-slate-700 shadow-sm sm:p-8 sm:text-base">
-          {uk ? (
-            <>
+          {uk ? (<>
               <h2 className="text-xl font-bold text-navy">
                 1. Загальна інформація
               </h2>
@@ -141,9 +129,7 @@ export default function PrivacyPage() {
                 сайту, законодавство або підключені сервіси. Актуальна версія
                 завжди буде доступна на цій сторінці.
               </p>
-            </>
-          ) : (
-            <>
+            </>) : (<>
               <h2 className="text-xl font-bold text-navy">
                 1. General information
               </h2>
@@ -234,10 +220,8 @@ export default function PrivacyPage() {
                 connected services change. The current version will always be
                 available on this page.
               </p>
-            </>
-          )}
+            </>)}
         </article>
       </main>
-    </Layout>
-  );
+    </Layout>);
 }
