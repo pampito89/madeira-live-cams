@@ -721,7 +721,7 @@ export default function TripPlanPage() {
                 : stop.slug === 'ponta-de-sao-lourenco' && stop.boatDirection === 'cafeToOffice'
                     ? (locale === 'uk' ? ' + екскурсійний човен до маяка: спершу пішки від старту маршруту до Casa de Sardinha, потім човном через маяк до офісу. Вартість екскурсії — 30 €.' : ' + lighthouse boat excursion: first walk from the trail start to Casa de Sardinha, then take the boat via the lighthouse to the office. Tour price: €30.')
                     : '';
-            const whaleSuffix = stop.slug === 'h2o-madeira' && stop.isWhaleTour ? locale === 'uk' ? ' Морська екскурсія для спостереження за дельфінами та китами (близько 2 годин); Варість — 60€ (оплата лише готівкою).' : ' Whale and dolphin watching boat tour (about 2 hours), Tour price: €60 (cash only).' : '';
+            const whaleSuffix = stop.slug === 'h2o-madeira' && stop.isWhaleTour ? locale === 'uk' ? ' Морська екскурсія для спостереження за дельфінами та китами (близько 2 годин); Вартість — 60€ (оплата лише готівкою).' : ' Whale and dolphin watching boat tour (about 2 hours), Tour price: €60 (cash only).' : '';
             lines.push(`${icon} ${stop.arrivalTime}–${endTime} — ${location.tags.includes("Restaurants") ? restaurantStopTitle(location.name, stop.arrivalTime, locale) : location.name}${boatSuffix.startsWith(' +') ? '' : '.'}${sunriseSuffix}${sunsetSuffix}${boatSuffix}${whaleSuffix}${cristovaoSuffix}`, `https://madeiralivecams.com/${locale}/explore/${location.slug}`, '');
         });
         const lastStop = stops[stops.length - 1];
