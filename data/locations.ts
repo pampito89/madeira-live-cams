@@ -972,8 +972,8 @@ export const locations: Location[] = [
                 ],
             },
             practicalTip: {
-                en: 'Park near Igreja da Lombada da Ponta do Sol and walk uphill to the Levada Nova start. The route can be wet and slippery near the waterfall, while some sections are narrow and exposed. Wear shoes with good grip, take a light waterproof layer and torch, and do not block the levada channel: it remains part of an active water-supply system.',
-                uk: 'Паркуйтеся біля Igreja da Lombada da Ponta do Sol і пішки піднімайтеся до старту Levada Nova. Біля водоспаду може бути мокро й слизько, а деякі ділянки вузькі та відкриті. Взувайтеся у взуття з хорошим зчепленням, візьміть легкий водонепроникний шар і ліхтарик; не перекривайте канал левади, адже він досі є частиною діючої системи подачі води.',
+                en: 'Levada Nova traverses a steep hillside, in places alongside rock faces. If you are afraid of heights, walk with a guide and stay close to them. After roughly the first kilometre, especially inside the ravine, mobile reception may disappear for much of the route. Bring drinking water. Only refill from the waterfalls if you can treat the water; do not drink it untreated. If walking independently, turn left onto Levada do Moinho after descending the connecting steps and follow it without taking side paths all the way back to the parking area.',
+                uk: 'Levada Nova проходить траверсом крутого схилу, місцями вздовж скелі. Якщо боїтеся висоти, краще йдіть із гідом і тримайтеся поруч із ним. Приблизно після першого кілометра, особливо в ущелині, мобільний зв’язок може зникати на значній частині маршруту. Візьміть із собою питну воду. Поповнюйте пляшку водою з водоспадів лише за наявності засобу для її очищення; не пийте цю воду необробленою. Якщо йдете самостійно, після спуску сходами поверніть ліворуч на Levada do Moinho та йдіть без відгалужень аж до парковки.',
             },
         },
     },
