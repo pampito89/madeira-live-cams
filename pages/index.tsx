@@ -89,7 +89,7 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary" />
       </Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
-        <h1 className="text-xl font-semibold tracking-tight text-navy sm:text-2xl">
+        <h1 className="text-center text-xl font-semibold tracking-tight text-navy sm:text-2xl">
           {uk ? 'Вебкамери Мадейри наживо' : 'Madeira live webcams'}
         </h1>
 
