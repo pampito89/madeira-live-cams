@@ -4,16 +4,12 @@ import { locations } from '../data/plannerLocations';
 import { stays } from '../data/stays';
 
 const ORIGIN = 'https://madeiralivecams.com';
-
 function escapeXml(value: string) {
   return value.replace(/[&<>"']/g, (character) => {
-    const entities: Record<string, string> = {
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;',
-    };
+    const entities: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' };
     return entities[character];
   });
 }
-
 function urlEntry(path: string, locale: 'en' | 'uk') {
   const english = `${ORIGIN}${path}`;
   const ukrainian = `${ORIGIN}/uk${path === '/' ? '' : path}`;
@@ -27,10 +23,9 @@ function urlEntry(path: string, locale: 'en' | 'uk') {
     '  </url>',
   ].join('\n');
 }
-
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const paths = [
-    '/', '/cameras', '/weather-guide', '/about', '/parties', '/privacy', '/trip-plan',
+    '/', '/cameras', '/weather-guide', '/about', '/parties', '/privacy', '/trip-plan', '/trail-availability',
     ...cameras.map((camera) => `/cameras/${camera.id}`),
     ...locations.filter((location) => !location.hiddenFromExplore).map((location) => `/explore/${location.slug}`),
     ...stays.map((stay) => `/stays/${stay.slug}`),
@@ -43,13 +38,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     ...entries,
     '</urlset>',
   ].join('\n');
-
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
   res.end(xml);
   return { props: {} };
 };
-
-export default function SitemapPages() {
-  return null;
-}
+export default function SitemapPages() { return null; }

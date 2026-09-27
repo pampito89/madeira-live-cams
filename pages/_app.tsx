@@ -14,6 +14,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const englishUrl = `${SITE_URL}${normalizedPath}`;
   const ukrainianUrl = `${SITE_URL}/uk${normalizedPath === '/' ? '' : normalizedPath}`;
   const canonicalUrl = router.locale === 'uk' ? ukrainianUrl : englishUrl;
+  const trailBreadcrumbs = normalizedPath === '/trail-availability' ? {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: router.locale === 'uk' ? 'Головна' : 'Home', item: `${SITE_URL}${router.locale === 'uk' ? '/uk' : '/'}` },
+      { '@type': 'ListItem', position: 2, name: router.locale === 'uk' ? 'Завантаженість маршрутів' : 'Trail availability', item: canonicalUrl },
+    ],
+  } : null;
 
   return (
     <>
@@ -25,6 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="robots" content="index,follow" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="Madeira Live Cams" />
+        {trailBreadcrumbs && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(trailBreadcrumbs).replace(/</g, '\\u003c') }} />}
       </Head>
       <Component {...pageProps} />
     </>
