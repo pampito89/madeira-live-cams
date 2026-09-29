@@ -3,6 +3,7 @@ import Head from 'next/head';
 import type { GetServerSideProps } from 'next';
 import Layout from '../components/Layout';
 import TrailGroupCalculator from '../components/TrailGroupCalculator';
+import TrailIPhoneBooking from '../components/TrailIPhoneBooking';
 import { useMessages } from '../lib/i18n/useMessages';
 import { addDays, AvailabilityResult, BOOKING_URL, BookingCategory, madeiraDate, Trail, TrailDay, validDate } from '../lib/trailAvailability';
 import { planningDates, weekStarts } from '../lib/trailPlanning';
@@ -11,9 +12,6 @@ import styles from '../styles/trailAvailability.module.css';
 
 type Props = { trails: Trail[]; initialDate: string; catalogUnavailable: boolean };
 type Search = { route: number; dates: string[] };
-// The public portal router supports /start. It starts the official application;
-// its startProcess handler does not accept route, date, time or party parameters.
-const BOOKING_START_URL = `${BOOKING_URL}/start`;
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const { getTrails } = await import('../lib/simplifica');
   try { return { props: { trails: await getTrails(), initialDate: madeiraDate(), catalogUnavailable: false } }; }
@@ -36,7 +34,6 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState('');
   const [chosen, setChosen] = useState<{ context: string; time: string } | null>(null);
-  const [copied, setCopied] = useState<{ key: string; message: string } | null>(null);
   const [now, setNow] = useState(0);
   const controller = useRef<AbortController | null>(null);
   const version = useRef(0);
@@ -52,7 +49,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     return () => { window.clearInterval(timer); controller.current?.abort(); };
   }, []);
   function reset() {
-    version.current += 1; controller.current?.abort(); setLoading(false); setSearch(null); setDays({}); setChosen(null); setCopied(null);
+    version.current += 1; controller.current?.abort(); setLoading(false); setSearch(null); setDays({}); setChosen(null);
   }
   function changeStart(value: string) {
     reset(); setStart(value);
@@ -65,7 +62,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const abort = new AbortController(); controller.current = abort;
     const id = ++version.current;
     const requested = [...dates];
-    setSearch({ route: Number(route), dates: requested }); setDays({}); setSelected(start); setChosen(null); setCopied(null); setLoading(true);
+    setSearch({ route: Number(route), dates: requested }); setDays({}); setSelected(start); setChosen(null); setLoading(true);
     try {
       for (const first of weekStarts(requested)) {
         let batch: TrailDay[];
@@ -98,12 +95,6 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
   const context = `${search?.route}/${selected}/${category}/${people}`;
   const selectedSlot = chosen?.context === context ? slots.find(slot => slot.start === chosen.time) : undefined;
   const categories: [BookingCategory, string][] = [['visitor', t('Non-resident visitor', 'Відвідувач / нерезидент')], ['operator', t('Economic operator', 'Туроператор')], ['resident', t('Madeira resident', 'Резидент Мадейри')]];
-  const bookingText = searchedTrail && selectedSlot ? `${searchedTrail.name}\n${selected} · ${selectedSlot.start}–${selectedSlot.end} · Madeira\n${size} ${t('people', 'людей')} · ${categories.find(([id]) => id === category)?.[1]}\n${t('Planning only. Not booked.', 'План відвідування. Ще не заброньовано.')}` : '';
-  async function copyBooking() {
-    if (!bookingText) return;
-    try { await navigator.clipboard.writeText(bookingText); setCopied({ key: bookingText, message: t('Booking details copied.', 'Дані для бронювання скопійовано.') }); }
-    catch { setCopied({ key: bookingText, message: t('Could not copy. Select the details below and copy them manually.', 'Не вдалося скопіювати. Виділіть дані нижче та скопіюйте вручну.') }); }
-  }
   return <Layout><Head>
     <title>{title} | Madeira Live Cams</title><meta name="description" content={description} />
     <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" />
@@ -140,15 +131,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
       </>}
     </>}
     </section>
-    <section className={styles.booking}>
-      <div><h2>{t('Continue with your booking', 'Перейти до оформлення')}</h2>
-        {bookingText ? <><pre className={styles.bookingSummary}>{bookingText}</pre>{active && stale(active) && <p>{t('Refresh availability before booking.', 'Оновіть доступність перед бронюванням.')}</p>}</> : <p>{t('Select a time slot above to prepare the details for your booking.', 'Оберіть тайм-слот вище, щоб підготувати дані для бронювання.')}</p>}
-        <p>{t('The button starts the official SIMplifica application, skipping the information page. Choose the route, date, time and people there; these details are not filled automatically.', 'Кнопка запускає оформлення заявки в SIMplifica, пропускаючи інформаційну сторінку. Маршрут, дату, час і кількість людей потрібно вибрати там — ці дані автоматично не заповнюються.')}</p>
-        <p>{t('If the direct start does not open, use the', 'Якщо оформлення не відкриється, скористайтеся')} <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{t('service page', 'сторінкою послуги')}</a>.</p>
-        {copied?.key === bookingText && <p role="status">{copied.message}</p>}
-      </div>
-      <div className={styles.bookingActions}>{bookingText && <button className={styles.secondary} type="button" onClick={copyBooking}>{t('Copy booking details', 'Копіювати дані бронювання')}</button>}<a className={styles.primary} href={BOOKING_START_URL} target="_blank" rel="noopener noreferrer">{t('Start on SIMplifica ↗', 'Почати оформлення ↗')}</a></div>
-    </section>
+    <TrailIPhoneBooking routeName={searchedTrail?.name} date={selected} time={selectedSlot?.start} people={size} category={category} fresh={!!active && !stale(active)} uk={uk} />
     <p className={styles.source}>{t('Source:', 'Джерело:')} <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SIMplifica / IFCN</a>. {t('Booking availability does not confirm trail safety or opening status.', 'Доступність бронювання не підтверджує безпеку чи відкриття маршруту.')}</p>
   </div></Layout>;
 }
