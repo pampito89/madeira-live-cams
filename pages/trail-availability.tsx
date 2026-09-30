@@ -88,7 +88,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
   </Head><div className={`page-shell ${styles.page}`}>
-    <section className={styles.hero}><h1>{title}</h1></section>
+    <section className={styles.hero}><div className={styles.eyebrow}>{t('MADEIRA · GROUP PLANNING', 'МАДЕЙРА · ПЛАНУВАННЯ ДЛЯ ГРУП')}</div><h1>{title}</h1><p>{t('Your group. Your dates. Find the right time slot.', 'Ваша група. Ваші дати. Знайдіть зручний тайм-слот.')}</p></section>
     <form className={styles.filters} onSubmit={load}>
       <div className={styles.fields} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
         <label>{t('Walking route', 'Маршрут')}<select value={route} onChange={event => { reset(); setRoute(event.target.value); }} disabled={!trails.length}>{!trails.length && <option value="">{t('Routes unavailable', 'Маршрути недоступні')}</option>}{trails.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
