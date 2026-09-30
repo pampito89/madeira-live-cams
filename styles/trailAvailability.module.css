@@ -1,9 +1,9 @@
 .page { color:#183434; padding-bottom:40px; }
-.hero { background-color:#173d2b; background-image:linear-gradient(to bottom right,rgba(9,43,34,.95),rgba(11,61,49,.82),rgba(17,34,59,.78)),url('/images/trail-hikers-mobile.jpg'); background-size:cover; background-position:center; color:white; padding:28px 20px; border-radius:16px; overflow:hidden; box-shadow:0 10px 15px -3px rgba(23,61,43,.15),0 4px 6px -4px rgba(23,61,43,.15); }
+.hero { background-color:#172b3e; background-image:linear-gradient(100deg,rgba(8,20,35,.58),rgba(8,20,35,.24) 65%,rgba(8,20,35,.06)),url('/images/trail-hikers-mobile.jpg'); background-size:cover; background-position:center 75%; color:white; padding:28px 20px; border-radius:16px; overflow:hidden; box-shadow:0 10px 15px -3px rgba(23,61,43,.15),0 4px 6px -4px rgba(23,61,43,.15); }
 .eyebrow { font-size:11px; letter-spacing:.15em; font-weight:700; }
-.hero .eyebrow { color:#b7cbaa; font-size:12px; line-height:16px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; }
+.hero .eyebrow { color:#eef3e9; font-size:12px; line-height:16px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; }
 .hero h1 { max-width:672px; font-size:30px; line-height:36px; font-weight:700; margin:8px 0 0; letter-spacing:-.025em; }
-.hero p { max-width:672px; margin-top:12px; color:rgba(255,255,255,.9); font-size:14px; line-height:24px; }
+.hero p { max-width:672px; margin-top:12px; color:rgba(255,255,255,.95); font-size:14px; line-height:24px; }
 .heroMeta { display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; font-size:12px; }
 .heroMeta span { border:1px solid #50716a; padding:6px 10px; border-radius:30px; }
 .filters { background:white; border:1px solid #dbe5df; border-radius:18px; padding:24px; margin:24px 0 20px; }
@@ -72,6 +72,6 @@
 .source { margin-top:18px; font-size:12px; color:#53675b; line-height:1.8; }
 .source a { text-decoration:underline; text-underline-offset:3px; }
 @media(min-width:640px) { .hero { padding:36px 32px; } .hero h1 { font-size:36px; line-height:40px; } .hero p { font-size:16px; } }
-@media(min-width:768px) { .hero { background-image:linear-gradient(to bottom right,rgba(9,43,34,.95),rgba(11,61,49,.82),rgba(17,34,59,.78)),url('/images/trail-hikers-desktop.jpg'); } }
+@media(min-width:768px) { .hero { background-image:linear-gradient(100deg,rgba(8,20,35,.62),rgba(8,20,35,.28) 58%,rgba(8,20,35,.04)),url('/images/trail-hikers-desktop.jpg'); background-position:center 68%; } }
 @media(max-width:900px) { .slots { grid-template-columns:repeat(2,minmax(0,1fr)); } .days { grid-template-columns:repeat(5,minmax(0,1fr)); } .fields { grid-template-columns:repeat(2,minmax(0,1fr)); } .booking { align-items:flex-start; flex-direction:column; } }
 @media(max-width:600px) { .filters { padding:18px; } .fields { gap:12px; } .filterBottom { align-items:stretch; flex-direction:column; } .days { grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; } .day { min-height:100px; } .slots { grid-template-columns:1fr; } .resultHeading h2 { font-size:20px; } .groupBadge { padding:8px; font-size:11px; } .seatInputs { grid-template-columns:repeat(3,minmax(0,1fr)); } .booking { padding:20px; } .bookingActions { width:100%; } }
