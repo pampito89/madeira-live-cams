@@ -66,7 +66,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { href: '/', label: locale === 'uk' ? 'Головна' : 'Home', icon: '⌂' },
     { href: '/cameras', label: locale === 'uk' ? 'Локації' : 'Locations', icon: '⌖' },
     { href: '/trip-plan', label: locale === 'uk' ? 'План подорожі' : 'Trip plan', icon: '🗺️' },
-    { href: '/trail-availability', label: locale === 'uk' ? 'Завантаженість маршрутів' : 'Trail availability', icon: '▦' },
+    { href: '/trail-availability', label: locale === 'uk' ? 'Завантаженість маршрутів' : 'Trail availability', icon: '📈' },
     { href: '/weather-guide', label: messages.nav.sunrise, icon: '☀' },
     { href: '/about', label: messages.nav.about, icon: 'ⓘ' },
   ];
