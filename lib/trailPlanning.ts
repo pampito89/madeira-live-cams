@@ -4,7 +4,7 @@ import { addDays, validDate } from './trailAvailability';
 export function planningDates(start: string, end: string): string[] {
   if (!validDate(start) || !validDate(end) || end < start) return [];
   const count = Math.round((Date.parse(`${end}T12:00:00Z`) - Date.parse(`${start}T12:00:00Z`)) / 86400000) + 1;
-  return count <= 30 ? Array.from({ length: count }, (_, index) => addDays(start, index)) : [];
+  return count <= 60 ? Array.from({ length: count }, (_, index) => addDays(start, index)) : [];
 }
 
 export function weekStarts(dates: string[]): string[] {
