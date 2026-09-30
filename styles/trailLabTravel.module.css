@@ -1,7 +1,13 @@
 .controls { margin-top:20px; }
 .dates { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; max-width:480px; }
 .dates label { display:flex; flex-direction:column; gap:8px; font-size:12px; font-weight:650; min-width:0; }
-.dates input { min-width:0; width:100%; min-height:44px; padding:10px; border:1px solid #b5c6be; border-radius:9px; background:white; color:#183434; font-size:16px; }
+.dates input { appearance:none; -webkit-appearance:none; box-sizing:border-box; display:block; min-width:0; width:100%; max-width:100%; height:44px; padding:8px 6px; border:1px solid #b5c6be; border-radius:9px; background:white; color:#183434; font-size:16px; line-height:24px; }
+.dates input::-webkit-date-and-time-value { min-width:0; text-align:left; }
+.dates input::-webkit-datetime-edit { min-width:0; padding:0; }
+.bookingButton { display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; min-height:44px; padding:10px 14px; border-radius:9px; background:#235e50; color:white; font-size:13px; font-weight:650; line-height:20px; white-space:nowrap; }
+.bookingButton:hover { background:#174637; }
+.resultHeading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+.resultHeading h2 { min-width:0; flex:1 1 240px; }
 button.groupDay { background:#fff0ef; border-color:#c76661; color:#812923; }
 button.groupDay[aria-pressed=true] { background:#9b3630; border-color:#742620; color:white; box-shadow:inset 0 0 0 2px white; }
 .badge { font-weight:700; font-size:10px; }
