@@ -1,0 +1,23 @@
+.controls { margin-top:20px; }
+.toggle { display:flex; align-items:center; gap:9px; font-size:14px; cursor:pointer; }
+.toggle input { width:18px; height:18px; accent-color:#235e50; }
+.panel { max-width:390px; margin-top:14px; min-width:0; }
+.calendar { padding:10px; border:1px solid #cbd9d1; border-radius:12px; background:white; }
+.month { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.month strong { font-size:15px; text-transform:capitalize; text-align:center; }
+.month button { width:44px; height:44px; border-radius:8px; font-size:25px; color:#235e50; }
+.month button:hover { background:#e2eee7; }
+.hint { min-height:40px; margin:8px 0; font-size:12px; line-height:20px; color:#52655b; }
+.grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:3px; }
+.weekday { text-align:center; font-size:11px; color:#52655b; padding:6px 0; }
+.day { min-width:0; min-height:44px; border-radius:6px; font-size:14px; border:1px solid transparent; }
+.day:hover { border-color:#235e50; }
+.day[aria-current=date] { text-decoration:underline; text-underline-offset:4px; }
+.saved { background:#fff0ef; color:#812923; }
+.draft { background:#e1eee6; color:#183434; }
+.endpoint { background:#235e50; color:white; font-weight:700; }
+.ranges { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.ranges li { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px 4px 12px; border-radius:8px; background:#fff0ef; color:#812923; font-size:12px; }
+.ranges button { flex-shrink:0; width:44px; height:44px; font-size:22px; border-radius:6px; }
+.add { width:100%; margin-top:12px; min-height:44px; padding:10px; border-radius:9px; background:#235e50; color:white; font-size:14px; font-weight:650; }
+.add:disabled { opacity:.45; cursor:default; }

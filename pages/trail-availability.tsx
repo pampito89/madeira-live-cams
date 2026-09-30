@@ -2,8 +2,9 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next';
 import Layout from '../components/Layout';
+import GroupTourCalendar, { TourRange } from '../components/GroupTourCalendar';
 import { useMessages } from '../lib/i18n/useMessages';
-import { addDays, AvailabilityResult, BOOKING_URL, BookingCategory, madeiraDate, Trail, TrailDay, validDate } from '../lib/trailAvailability';
+import { addDays, AvailabilityResult, BOOKING_URL, BookingCategory, madeiraDate, Trail, TrailDay } from '../lib/trailAvailability';
 import { planningDates, weekStarts } from '../lib/trailPlanning';
 import { availableSlots, timeSlotLabel } from '../lib/trailBooking';
 import styles from '../styles/trailAvailability.module.css';
@@ -24,12 +25,8 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
   const [route, setRoute] = useState(String(trails.find(item => item.id === 301)?.id ?? trails[0]?.id ?? ''));
   const [period, setPeriod] = useState(30);
   const [category, setCategory] = useState<BookingCategory>('visitor');
-  const [labTravel, setLabTravel] = useState(false);
-  const [groupFrom, setGroupFrom] = useState('');
-  const [groupTo, setGroupTo] = useState('');
-  const groupValid = validDate(groupFrom) && validDate(groupTo) && groupFrom <= groupTo;
-  const groupReversed = validDate(groupFrom) && validDate(groupTo) && groupFrom > groupTo;
-  const isGroupDay = (date: string) => labTravel && groupValid && date >= groupFrom && date <= groupTo;
+  const [groupRanges, setGroupRanges] = useState<TourRange[]>([]);
+  const isGroupDay = (date: string) => groupRanges.some(range => date >= range.from && date <= range.to);
   const [search, setSearch] = useState<Search | null>(null);
   const [days, setDays] = useState<Record<string, TrailDay>>({});
   const [loading, setLoading] = useState(false);
@@ -91,7 +88,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
   const categories: [BookingCategory, string][] = [['visitor', t('Non-resident visitor', 'Відвідувач / нерезидент')], ['operator', t('Economic operator', 'Туроператор')], ['resident', t('Madeira resident', 'Резидент Мадейри')]];
   const today = now ? madeiraDate(new Date(now)) : initialDate;
   const calendarDates = search?.dates ?? planningDates(today, addDays(today, period - 1));
-  const groupOutside = labTravel && groupValid && (groupFrom < calendarDates[0] || groupTo > calendarDates[calendarDates.length - 1]);
+  const groupOutside = groupRanges.some(range => range.from < calendarDates[0] || range.to > calendarDates[calendarDates.length - 1]);
   return <Layout><Head>
     <title>{title} | Madeira Live Cams</title><meta name="description" content={description} />
     <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" />
@@ -104,17 +101,8 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
         <label>{t('Booking category', 'Категорія бронювання')}<select value={category} onChange={event => setCategory(event.target.value as BookingCategory)}>{categories.map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
       </div>
       <div className={styles.shortcuts}><span>{t('From today:', 'Від сьогодні:')}</span>{[7, 14, 30, 60].map(count => <button key={count} type="button" aria-pressed={period === count} onClick={() => { reset(); setPeriod(count); }}>{count} {t('days', 'днів')}</button>)}</div>
-      <div className={lab.controls}>
-        <label className={styles.checkbox}><input type="checkbox" checked={labTravel} onChange={event => setLabTravel(event.target.checked)} aria-controls="lab-travel-dates" aria-expanded={labTravel} />Lab Travel</label>
-        {labTravel && <div id="lab-travel-dates">
-          <div className={lab.dates}>
-            <label>{t('Group from', 'Група з')}<input type="date" value={groupFrom} onChange={event => setGroupFrom(event.target.value)} /></label>
-            <label>{t('Through (inclusive)', 'По (включно)')}<input type="date" value={groupTo} onChange={event => setGroupTo(event.target.value)} aria-invalid={groupReversed} aria-describedby={groupReversed ? 'lab-date-error' : undefined} /></label>
-          </div>
-          {groupReversed && <p id="lab-date-error" role="alert" className={styles.error}>{t('The end date must be on or after the start date.', 'Дата «по» має бути не раніше дати «з».')}</p>}
-          {groupOutside && <p className={styles.source}>{t('Some group dates fall outside the displayed period. Choose a longer period to see them.', 'Частина дат групи поза показаним періодом. Оберіть довший період, щоб побачити їх.')}</p>}
-        </div>}
-      </div>
+      <GroupTourCalendar today={today} uk={uk} onChange={setGroupRanges} />
+      {groupOutside && <p className={styles.source}>{t('Some group dates fall outside the displayed period. Choose a longer period to see them.', 'Частина дат групи поза показаним періодом. Оберіть довший період, щоб побачити їх.')}</p>}
       <div className={styles.filterBottom}><span className={styles.source}>{dateLabel(today)} – {dateLabel(addDays(today, period - 1))}</span><button className={styles.primary} disabled={!route || loading}>{loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →')}</button></div>
     </form>
     <section className={styles.results}>
@@ -128,9 +116,9 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
           const unknown = day && !day.error && (!day.slots.length || day.slots.some(slot => slot.percentages[category] === null));
           const label = !day ? t('Waiting', 'Очікуємо') : day.error ? t('No data', 'Без даних') : stale(day) ? t('Refresh needed', 'Час оновити') : unknown && !count ? t('Unknown', 'Невідомо') : timeSlotLabel(count ?? 0, uk);
           const group = isGroupDay(date);
-          return <button type="button" key={date} aria-pressed={date === selected} className={`${styles.day} ${date === selected ? styles.selectedDay : ''} ${group ? lab.groupDay : ''}`} onClick={() => setSelected(date)}><span>{dateLabel(date)}</span><strong>{count === null || (unknown && !count) ? '—' : count}</strong><small>{label}</small>{group && <small className={lab.badge}>Lab Travel</small>}</button>;
+          return <button type="button" key={date} aria-pressed={date === selected} className={`${styles.day} ${date === selected ? styles.selectedDay : ''} ${group ? lab.groupDay : ''}`} onClick={() => setSelected(date)}><span>{dateLabel(date)}</span><strong>{count === null || (unknown && !count) ? '—' : count}</strong><small>{label}</small>{group && <small className={lab.badge}>{t('Group tour', 'Груповий тур')}</small>}</button>;
         })}</div>
-        <div className={styles.dayHeading}><h3>{dateLabel(selected)}{isGroupDay(selected) && <span className={lab.headingBadge}>Lab Travel</span>}</h3><p>{active?.checkedAt ? `${t('Checked', 'Перевірено')} ${new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(active.checkedAt))}` : t('No verified data yet', 'Перевірених даних ще немає')}</p></div>
+        <div className={styles.dayHeading}><h3>{dateLabel(selected)}{isGroupDay(selected) && <span className={lab.headingBadge}>{t('Group tour', 'Груповий тур')}</span>}</h3><p>{active?.checkedAt ? `${t('Checked', 'Перевірено')} ${new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(active.checkedAt))}` : t('No verified data yet', 'Перевірених даних ще немає')}</p></div>
         {!active ? <p className={styles.empty}>{t('This date is waiting to be checked.', 'Ця дата очікує перевірки.')}</p> : active.error ? <p className={styles.error}>{t('Could not check this date. Run the search again.', 'Не вдалося перевірити цю дату. Запустіть пошук ще раз.')}</p> : <>
           {stale(active) && <p className={styles.error}>{t('Data is more than five minutes old. Refresh the search.', 'Даним понад п’ять хвилин. Оновіть пошук.')}</p>}
           {!slots.length && <p className={styles.empty}>{active.slots.length && active.slots.every(slot => slot.percentages[category] !== null) ? t('No available future time slots for this category on this day. Choose another date.', 'На цей день немає доступних майбутніх тайм-слотів для цієї категорії. Оберіть іншу дату.') : t('Availability could not be confirmed for this date. Try again or check SIMplifica.', 'Доступність на цю дату не підтверджена. Повторіть пошук або перевірте SIMplifica.')}</p>}
