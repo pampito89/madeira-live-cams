@@ -51,8 +51,7 @@ const standardLocationDurations: Record<string, number> = {
     'pingo-doce-calheta': 45,
     "madeira-sea-emotions": 180,
     "h2o-madeira": 150,
-    "adrenaline-xtreme-adventures": 180,
-    "ribeira-brava-beach": 120
+    "adrenaline-xtreme-adventures": 180
 };
 export function plannerStopDuration(location: {
     slug: string;

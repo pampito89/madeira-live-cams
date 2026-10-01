@@ -49,16 +49,7 @@ type WeatherSummary = {
     picoWindSpeed: number | null;
     picoWindGusts: number | null;
     waterTemperature: number | null;
-    fanal?: {
-        temperature: number;
-        wind: number;
-        gusts: number;
-        humidity: number | null;
-        rain: number | null;
-        elevation: number | null;
-        forecastTime: string;
-        fetchedAt: string;
-    };
+    fanal?: { temperature: number; wind: number; gusts: number; humidity: number | null; rain: number | null; elevation: number | null; forecastTime: string; fetchedAt: string };
 };
 type RouteUsage = {
     limit: number;
@@ -216,11 +207,7 @@ const locationCoordinates: Record<string, [
     "pr5-vereda-das-funduras": [32.7287, -16.8336],
     "pr17-pinaculo-folhadal": [32.7466, -17.0551],
     "levada-do-furado": [32.7408, -16.8767],
-    ...activityCoordinates,
-    "ribeira-brava-beach": [
-        32.6722295,
-        -17.0681673
-    ]
+    ...activityCoordinates
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
@@ -602,8 +589,7 @@ export default function TripPlanPage() {
     const removeStop = (id: string) => {
         const remaining = stops.filter((stop) => stop.id !== id);
         setStops(remaining);
-        if (remaining.length === 0)
-            setRecommendations({ ...emptyRecommendations });
+        if (remaining.length === 0) setRecommendations({ ...emptyRecommendations });
     };
     const mealLabelForTime = (time: string) => {
         const hour = Number(time.split(':')[0]);
@@ -650,8 +636,7 @@ export default function TripPlanPage() {
                 lines.push(locale === 'uk'
                     ? `Прогноз на ${fanal.forecastTime.slice(11)}: ${Math.round(fanal.temperature)}°C; вітер ${Math.round(fanal.wind)} км/год, пориви ${Math.round(fanal.gusts)} км/год${fanal.humidity !== null ? `, вологість ${Math.round(fanal.humidity)}%` : ''}${fanal.rain !== null ? `, ймовірність опадів ${Math.round(fanal.rain)}%` : ''}.`
                     : `Forecast for ${fanal.forecastTime.slice(11)}: ${Math.round(fanal.temperature)}°C; wind ${Math.round(fanal.wind)} km/h, gusts ${Math.round(fanal.gusts)} km/h${fanal.humidity !== null ? `, humidity ${Math.round(fanal.humidity)}%` : ''}${fanal.rain !== null ? `, precipitation chance ${Math.round(fanal.rain)}%` : ''}.`);
-            }
-            else if (unavailable) {
+            } else if (unavailable) {
                 lines.push(unavailable);
             }
             lines.push(locale === 'uk' ? 'Якщо на ліс насунеться хмара або туман, вологість зросте і може відчуватися значно прохолодніше за прогноз. Візьміть теплий шар і куртку.' : 'If cloud or fog moves into the forest, humidity rises and it may feel much colder than the forecast. Bring a warm layer and jacket.', '');
@@ -822,10 +807,7 @@ export default function TripPlanPage() {
                     {stop.slug === 'madeira-sea-emotions' && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={stop.boatDirection === 'officeToCafe'} onChange={(event) => updateStop(stop.id, { boatDirection: event.target.checked ? 'officeToCafe' : undefined, durationMinutes: event.target.checked ? 150 : 180 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🚤 {locale === 'uk' ? 'Офіс → кафе' : 'Office → café'}</label>}
                     {stop.slug === 'ponta-de-sao-lourenco' && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={stop.boatDirection === 'cafeToOffice'} onChange={(event) => updateStop(stop.id, { boatDirection: event.target.checked ? 'cafeToOffice' : undefined, durationMinutes: event.target.checked ? 150 : 180 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🚤 {locale === 'uk' ? 'Кафе → офіс' : 'Café → office'}</label>}
                     {stop.slug === 'h2o-madeira' && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isWhaleTour)} onChange={(event) => updateStop(stop.id, { isWhaleTour: event.target.checked, durationMinutes: event.target.checked ? 120 : 150 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🐬 {locale === 'uk' ? 'Морська екскурсія до дельфінів і китів' : 'Whale and dolphin watching tour'}</label>}
-                    {stop.slug === 'madeira-international-airport' && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isLastDay)} onChange={(event) => { updateStop(stop.id, { isLastDay: event.target.checked }); if (event.target.checked) {
-                    setEndAtStart(false);
-                    setEndPoint(airportStartPoint.slug);
-                } }} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🧳 {locale === 'uk' ? 'Останній день · виліт групи' : 'Final day · group departure'}</label>}
+                    {stop.slug === 'madeira-international-airport' && <label className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.isLastDay)} onChange={(event) => { updateStop(stop.id, { isLastDay: event.target.checked }); if (event.target.checked) { setEndAtStart(false); setEndPoint(airportStartPoint.slug); } }} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🧳 {locale === 'uk' ? 'Останній день · виліт групи' : 'Final day · group departure'}</label>}
                     {stop.type === 'location' && stop.slug === 'miradouro-sao-cristovao' && <div className="mt-4 grid grid-cols-2 gap-2"><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoBar)} onChange={(event) => updateStop(stop.id, { hasCristovaoBar: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoRestaurant ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🥤 {text.bar}</label><label className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(stop.hasCristovaoRestaurant)} onChange={(event) => updateStop(stop.id, { hasCristovaoRestaurant: event.target.checked, durationMinutes: event.target.checked || stop.hasCristovaoBar ? 90 : 30 })} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🍽️ {text.restaurantOption}</label></div>}<div className="mt-3 flex gap-2"><button type="button" onClick={() => moveStop(index, -1)} disabled={index === 0} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↑ {text.up}</button><button type="button" onClick={() => moveStop(index, 1)} disabled={index === stops.length - 1} className="min-h-10 flex-1 rounded-lg border border-slate-200 text-xs font-bold text-navy transition hover:border-ocean hover:text-ocean disabled:opacity-35">↓ {text.down}</button></div></article>;
             })}</div>}{hasRoute && <PlannerRouteFinish locale={locale} name={finalPointName} airport={isAirportFinal} arrival={endsAtAirportStop ? stops[stops.length - 1].arrivalTime : addMinutes(finalDeparture, returnTravelMinutes)} travel={durationLabel(endsAtAirportStop ? 0 : returnTravelMinutes, locale)} calculated={calculated} error={routeError}/>}</section>
     {stops.length > 0 && <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"><h2 className="text-xl font-bold text-navy">{text.recommendations}</h2><p className="mt-1 text-sm text-slate-500">{locale === 'uk' ? 'Оберіть рекомендації, які потрібно додати до готової програми.' : 'Choose recommendations to add to the ready programme.'}</p><div className="mt-4 grid gap-2 sm:grid-cols-2"><label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.weather} onChange={(event) => setRecommendations((current) => ({ ...current, weather: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌤️ {text.weather}</label>{hasBeach && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.beach} onChange={(event) => setRecommendations((current) => ({ ...current, beach: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🏖️ {text.beach}</label>}{hasLevada && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.levada} onChange={(event) => setRecommendations((current) => ({ ...current, levada: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌿 {text.levada}</label>}{hasTrekking && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(recommendations.trekking)} onChange={(event) => setRecommendations((current) => ({ ...current, trekking: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🥾 {text.trekking}</label>}{hasRestaurant && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.food} onChange={(event) => setRecommendations((current) => ({ ...current, food: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🍽️ {text.whatToTry}</label>}{hasSunrise && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={recommendations.sunrise} onChange={(event) => setRecommendations((current) => ({ ...current, sunrise: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌅 {text.sunrise}</label>}{hasFanal && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(recommendations.fanal)} onChange={(event) => setRecommendations((current) => ({ ...current, fanal: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🌳 {locale === 'uk' ? 'Ліс Фанал' : 'Fanal Forest'}</label>}{hasLastDay && <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-navy"><input type="checkbox" checked={Boolean(recommendations.lastDay)} onChange={(event) => setRecommendations((current) => ({ ...current, lastDay: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-ocean focus:ring-ocean"/>🧳 {locale === 'uk' ? 'Останній день' : 'Final day'}</label>}</div></section>}

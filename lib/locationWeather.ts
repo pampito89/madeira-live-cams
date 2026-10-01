@@ -49,9 +49,5 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
     'madeira-international-airport': { latitude: 32.6933, longitude: -16.7745 },
     "madeira-sea-emotions": { "latitude": 32.7416264, "longitude": -16.7104624 },
     "h2o-madeira": { "latitude": 32.717841, "longitude": -17.1707108 },
-    "adrenaline-xtreme-adventures": { "latitude": 32.8565674, "longitude": -17.1573105 },
-    "ribeira-brava-beach": {
-        "latitude": 32.6722295,
-        "longitude": -17.0681673
-    }
+    "adrenaline-xtreme-adventures": { "latitude": 32.8565674, "longitude": -17.1573105 }
 };
