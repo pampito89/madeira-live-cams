@@ -105,7 +105,7 @@ export const cameras: Camera[] = [
     latitude: 32.816,
     longitude: -17.107,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/seixal',
-    youtubeId: 'WwOuI_G5WUI',
+    youtubeId: 'JcHZCL9Up20',
   },
   {
     id: 'porto-moniz',
@@ -153,8 +153,8 @@ export const cameras: Camera[] = [
     category: ['Beaches', 'South Coast'],
     latitude: 32.7189,
     longitude: -17.1744,
-    sourceUrl: 'https://www.youtube.com/watch?v=t4x0u0ARLwo',
-    youtubeId: 't4x0u0ARLwo',
+    sourceUrl: 'https://www.youtube.com/watch?v=4dbXjCzI5FU',
+    youtubeId: '4dbXjCzI5FU',
   },
   {
     id: 'doca-do-cavacas',
