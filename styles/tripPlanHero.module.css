@@ -16,8 +16,8 @@
   letter-spacing: .2em;
 }
 
-.content > h1 { color: #fff; }
-.content > p:last-child { color: #fff; font-size: 14px; line-height: 24px; }
+.content > h1 { color: #fff; max-width: 672px; }
+.content > p:last-child { color: #fff; max-width: 672px; font-size: 14px; line-height: 24px; }
 
 @media (min-width: 640px) {
   .content { padding: 36px 32px; }
@@ -25,11 +25,5 @@
 }
 
 @media (min-width: 1024px) {
-  .hero {
-    aspect-ratio: 3 / 1;
-    background-position: center;
-    display: flex;
-    align-items: center;
-  }
-  .content { width: 50%; }
+  .hero { background-position: center; }
 }
