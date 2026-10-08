@@ -1,0 +1,11 @@
+.hero {
+  padding: 28px 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #124d6a url('/images/locations-sao-lourenco.jpg') center / cover no-repeat;
+  box-shadow: 0 10px 15px -3px rgba(23, 61, 43, .15);
+  text-shadow: 0 1px 3px #102b3e, 0 2px 8px #102b3e;
+}
+.hero > p, .hero > h1 { color: white; max-width: 672px; }
+.hero > p:first-child { font-size: 12px; letter-spacing: .2em; }
+@media (min-width: 640px) { .hero { padding: 36px 32px; } }

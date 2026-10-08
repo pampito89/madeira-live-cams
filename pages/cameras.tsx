@@ -1,3 +1,4 @@
+import heroStyles from "../styles/locationsHero.module.css";
 import ActivityPhoto from "../components/ActivityPhoto";
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -250,7 +251,7 @@ export default function CamerasPage() {
       </Head>
 
       <main className="page-shell">
-        <section className="max-w-3xl">
+        <section className={heroStyles.hero}>
           <p className="text-sm font-medium text-ocean">
             {messages.exploreList.eyebrow}
           </p>
