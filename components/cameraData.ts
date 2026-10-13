@@ -95,7 +95,7 @@ export const cameras: Camera[] = [
     latitude: 32.738,
     longitude: -16.737,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/canical',
-    youtubeId: 'H4ODWatYyb8',
+    youtubeId: 'cfJDZELr32U',
   },
   {
     id: 'seixal',
@@ -211,8 +211,8 @@ export const cameras: Camera[] = [
     category: ['Beaches', 'East Coast'],
     latitude: 32.7224,
     longitude: -16.7648,
-    sourceUrl: 'https://www.youtube.com/watch?v=MhOuCDXuP_0',
-    youtubeId: 'MhOuCDXuP_0',
+    sourceUrl: 'https://www.youtube.com/watch?v=Vr5lrM2oIHo',
+    youtubeId: 'Vr5lrM2oIHo',
   },
   {
     id: 'santo-da-serra-golf',
