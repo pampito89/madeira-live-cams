@@ -29,11 +29,11 @@ function urlEntry(path: string, locale: Locale, alternates: readonly Locale[]) {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const cameraPaths = cameras.map((camera) => `/cameras/${camera.id}`);
   const establishedPaths = [
-    '/cameras', '/parties', '/trip-plan', '/trail-availability',
+    '/cameras', '/trip-plan', '/trail-availability',
     ...locations.filter((location) => !location.hiddenFromExplore).map((location) => `/explore/${location.slug}`),
     ...stays.map((stay) => `/stays/${stay.slug}`),
   ];
-  const multilingualPaths = ['/', '/about', '/privacy', '/weather-guide', ...cameraPaths];
+  const multilingualPaths = ['/', '/about', '/parties', '/privacy', '/weather-guide', ...cameraPaths];
   const multilingualEntries = multilingualPaths.flatMap((path) => supportedLocales.map((locale) => urlEntry(path, locale, supportedLocales)));
   const establishedEntries = Array.from(new Set(establishedPaths)).flatMap((path) => establishedLocales.map((locale) => urlEntry(path, locale, establishedLocales)));
   const xml = [
