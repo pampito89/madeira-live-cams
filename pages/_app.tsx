@@ -17,9 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '');
   const canonicalUrl = `${SITE_URL}${localePath(locale, normalizedPath)}`;
   const englishUrl = `${SITE_URL}${localePath('en', normalizedPath)}`;
-  const homepageReady = normalizedPath === '/';
-  const alternateLocales = homepageReady ? supportedLocales : fullyIndexedLocales;
-  const mayIndex = homepageReady || fullyIndexedLocales.includes(locale);
+  const multilingualReady = normalizedPath === '/' || /^\/cameras\/[^/]+$/.test(normalizedPath);
+  const alternateLocales = multilingualReady ? supportedLocales : fullyIndexedLocales;
+  const mayIndex = multilingualReady || fullyIndexedLocales.includes(locale);
   const trailBreadcrumbs = normalizedPath === '/trail-availability' ? {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

@@ -19,8 +19,6 @@ const labels: Record<Locale, { change: string; choose: string }> = {
   uk: { change: 'Змінити мову сайту', choose: 'Оберіть мову' },
 };
 
-const fullyRoutedLocales: Locale[] = ['en', 'uk'];
-
 export default function LanguageSwitcher({
   fullWidth = false,
   placement = 'bottom',
@@ -31,7 +29,7 @@ export default function LanguageSwitcher({
   const [isOpen, setIsOpen] = useState(false);
   const currentLocale = isSupportedLocale(router.locale) ? router.locale : defaultLocale;
   const currentLanguage = localeDetails[currentLocale];
-  const isDetailPage = /^\/(?:cameras|explore|stays)\/[^/?#]+/.test(router.asPath);
+  const requiresHomepageFallback = /^\/(?:explore|stays)\/[^/?#]+/.test(router.asPath);
 
   useEffect(() => {
     const closeOnOutsideClick = (event: MouseEvent) => {
@@ -61,6 +59,7 @@ export default function LanguageSwitcher({
   };
 
   const menuPosition = placement === 'top' ? 'bottom-full mb-2' : 'top-full mt-2';
+  const availableLocales = supportedLocales.filter((languageLocale) => languageLocale !== currentLocale);
 
   return (
     <div ref={containerRef} className={`relative ${fullWidth ? 'w-full' : ''}`}>
@@ -72,10 +71,7 @@ export default function LanguageSwitcher({
         onClick={() => setIsOpen((open) => !open)}
         className={`inline-flex min-h-10 items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-navy transition hover:border-ocean hover:bg-panel focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2 ${fullWidth ? 'w-full' : ''}`}
       >
-        <span className="flex items-center gap-2">
-          <span className="text-lg leading-none" aria-hidden="true">{currentLanguage.flag}</span>
-          <span>{fullWidth ? currentLanguage.name : currentLanguage.code}</span>
-        </span>
+        <span>{currentLanguage.code}</span>
         <svg viewBox="0 0 20 20" aria-hidden="true" className={`h-4 w-4 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="currentColor">
           <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clipRule="evenodd" />
         </svg>
@@ -87,24 +83,21 @@ export default function LanguageSwitcher({
           aria-label={labels[currentLocale].choose}
           className={`absolute right-0 z-[70] min-w-52 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl ${menuPosition} ${fullWidth ? 'w-full' : ''}`}
         >
-          {supportedLocales.map((languageLocale) => {
+          {availableLocales.map((languageLocale) => {
             const language = localeDetails[languageLocale];
-            const active = languageLocale === currentLocale;
-            const targetHref = isDetailPage && !fullyRoutedLocales.includes(languageLocale) ? '/' : router.asPath;
+            const targetHref = requiresHomepageFallback && !['en', 'uk'].includes(languageLocale) ? '/' : router.asPath;
 
             return (
               <Link
                 key={languageLocale}
                 href={targetHref}
                 locale={languageLocale}
-                role="menuitemradio"
-                aria-checked={active}
+                role="menuitem"
                 onClick={() => saveLocale(languageLocale)}
-                className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${active ? 'bg-ocean text-white' : 'text-navy hover:bg-panel'}`}
+                className="flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm text-navy transition hover:bg-panel"
               >
                 <span className="text-xl leading-none" aria-hidden="true">{language.flag}</span>
-                <span className="flex-1 font-semibold">{language.name}</span>
-                {active && <span aria-hidden="true">✓</span>}
+                <span className="font-semibold">{language.name}</span>
               </Link>
             );
           })}
