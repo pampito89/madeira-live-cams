@@ -6,13 +6,15 @@ import NextDocument, {
   type DocumentContext,
   type DocumentInitialProps,
 } from 'next/document';
+import { defaultLocale, isSupportedLocale, localeDetails } from '../lib/i18n/config';
 
 type Props = DocumentInitialProps & { documentLocale: string };
 
 export default class Document extends NextDocument<Props> {
   static async getInitialProps(ctx: DocumentContext): Promise<Props> {
     const initialProps = await NextDocument.getInitialProps(ctx);
-    return { ...initialProps, documentLocale: ctx.locale === 'uk' ? 'uk' : 'en' };
+    const locale = isSupportedLocale(ctx.locale) ? ctx.locale : defaultLocale;
+    return { ...initialProps, documentLocale: localeDetails[locale].htmlLang };
   }
 
   render() {
