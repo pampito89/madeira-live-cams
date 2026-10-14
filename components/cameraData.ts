@@ -69,6 +69,16 @@ export function getLocalizedCamera(
 
 export const cameras: Camera[] = [
   {
+    id: 'madeira-airport',
+    name: { en: 'Madeira Airport (FNC)', uk: 'Аеропорт Мадейри (FNC)' },
+    region: { en: 'East Coast', uk: 'Східне узбережжя' },
+    category: ['Towns', 'East Coast'],
+    latitude: 32.6979,
+    longitude: -16.7745,
+    sourceUrl: 'https://www.youtube.com/watch?v=8Drrabk3h6M',
+    youtubeId: '8Drrabk3h6M',
+  },
+  {
     id: 'pico-do-arieiro',
     name: { en: 'Pico do Arieiro', uk: 'Піку-ду-Аріейру' },
     region: { en: 'Mountains', uk: 'Гори' },

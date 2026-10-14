@@ -7,7 +7,25 @@ import type { Restaurant } from '../data/restaurants';
 import { useMessages } from '../lib/i18n/useMessages';
 
 type Props = { restaurant: Restaurant; hasPhoto: boolean };
+
+type OfficialRestaurantInfo = {
+  website: string;
+  menuSummary: {
+    en: string;
+    uk: string;
+  };
+};
+
 const ORIGIN = 'https://madeiralivecams.com';
+const officialRestaurantInfo: Record<string, OfficialRestaurantInfo> = {
+  'restaurant-portus-villa': {
+    website: 'https://portusvilla.pt/',
+    menuSummary: {
+      en: 'The official Portus Villa website highlights fillet mignon, octopus à Portus, stuffed bread with cheese and bacon, and seared tuna. Dishes, prices and availability can change, so confirm the current menu directly with the restaurant.',
+      uk: 'На офіційному сайті Portus Villa серед фірмових страв зазначені філе міньйон, восьминіг à Portus, хліб із сиром і беконом та обсмажений тунець. Страви, ціни й наявність можуть змінюватися, тому перевіряйте актуальне меню безпосередньо в ресторані.',
+    },
+  },
+};
 
 export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
   const { locale } = useMessages();
@@ -17,7 +35,13 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
   const canonical = `${ORIGIN}${uk ? '/uk' : ''}/explore/${r.slug}`;
   const position = `${r.latitude},${r.longitude}`;
   const planner = `/trip-plan?addRestaurant=${encodeURIComponent(r.slug)}`;
-  const description = r.summary[locale];
+  const description = uk
+    ? `${r.name} у ${r.area}: рейтинг, підсумок відгуків, карта та посилання для перевірки актуального меню, годин роботи й наявності столиків.`
+    : `Plan a visit to ${r.name} in ${r.area}: rating, review summary, map, and links to check the current menu, opening hours and table availability.`;
+  const seoTitle = uk
+    ? `${r.name}, ${r.area}: меню, відгуки та інформація`
+    : `${r.name}, ${r.area}: Reviews, Menu & Visitor Info`;
+  const officialInfo = officialRestaurantInfo[r.slug];
   const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
 
   const share = async () => {
@@ -43,20 +67,21 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
     hasMap: r.googleMapsUrl,
     geo: { '@type': 'GeoCoordinates', latitude: r.latitude, longitude: r.longitude },
     ...(hasPhoto ? { image: `${ORIGIN}${r.image}` } : {}),
+    ...(officialInfo ? { sameAs: [officialInfo.website] } : {}),
   };
 
   return (
     <Layout>
       <Head>
-        <title>{r.name} — {r.area} | Madeira Live Cams</title>
+        <title>{seoTitle}</title>
         <meta name="description" content={description} />
-        <meta property="og:title" content={`${r.name} | Madeira Live Cams`} />
+        <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonical} />
         <meta property="og:locale" content={uk ? 'uk_UA' : 'en_GB'} />
         <meta name="twitter:card" content={hasPhoto ? 'summary_large_image' : 'summary'} />
-        <meta name="twitter:title" content={r.name} />
+        <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={description} />
         {hasPhoto && (
           <>
@@ -102,7 +127,29 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
               </div>
               <button type="button" onClick={share} className={actionClass}>{copied ? (uk ? 'Скопійовано' : 'Copied') : (uk ? 'Поділитися' : 'Share')}</button>
             </div>
-            <p className="mt-6 leading-7 text-slate-700">{description}</p>
+            <p className="mt-6 leading-7 text-slate-700">{r.summary[locale]}</p>
+
+            <section className="mt-8 rounded-xl border border-slate-200 bg-panel p-4" aria-labelledby="restaurant-menu">
+              <h2 id="restaurant-menu" className="font-semibold text-navy">{uk ? 'Меню та години роботи' : 'Menu and opening hours'}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                {officialInfo
+                  ? officialInfo.menuSummary[locale]
+                  : uk
+                    ? 'Меню, ціни та години роботи можуть змінюватися. Перевірте актуальну інформацію безпосередньо у закладі або в його профілі Google Maps перед поїздкою.'
+                    : 'Menus, prices and opening hours can change. Confirm the latest information directly with the venue or on its Google Maps listing before travelling.'}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {officialInfo && (
+                  <a href={officialInfo.website} target="_blank" rel="noopener noreferrer" className={actionClass}>
+                    {uk ? 'Офіційний сайт і меню' : 'Official website and menu'} ↗
+                  </a>
+                )}
+                <a href={r.googleMapsUrl} target="_blank" rel="noopener noreferrer" className={actionClass}>
+                  {uk ? 'Актуальні години в Google Maps' : 'Current hours on Google Maps'} ↗
+                </a>
+              </div>
+            </section>
+
             <section className="mt-8" aria-labelledby="restaurant-reviews">
               <h2 id="restaurant-reviews" className="text-xl font-semibold text-navy">{uk ? 'Що кажуть відвідувачі' : 'What visitors say'}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-500">

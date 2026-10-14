@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { cameras, type CameraCategory } from '../components/cameraData';
@@ -16,6 +17,8 @@ const cameraFilters: Array<{ value: CameraCategory; en: string; uk: string }> = 
   { value: 'Sunrise spots', en: 'Sunrise', uk: 'Схід сонця' },
 ];
 
+const directoryCameras = cameras.filter((camera) => camera.id !== 'madeira-airport');
+
 export default function HomePage() {
   const { locale, messages } = useMessages();
   const router = useRouter();
@@ -26,8 +29,8 @@ export default function HomePage() {
     ? 'Вебкамери Мадейри наживо, погода та план подорожі | Madeira Live Cams'
     : 'Madeira Live Webcams, Weather & Trip Planning | Madeira Live Cams';
   const description = uk
-    ? 'Переглядайте вебкамери Мадейри, порівнюйте умови в горах і на узбережжі, знаходьте локації та плануйте день. Перевіряйте джерела перед виходом.'
-    : 'Explore Madeira live webcams, compare mountain and coastal conditions, discover places and plan your day. Check current sources before setting out.';
+    ? 'Переглядайте вебкамери Мадейри, включно з камерою аеропорту FNC, порівнюйте умови в горах і на узбережжі та плануйте день.'
+    : 'Watch Madeira live webcams, including the FNC airport camera, compare mountain and coastal conditions, and plan your day around the island.';
 
   const saveHomeCameraView = () => {
     window.sessionStorage.setItem(
@@ -73,8 +76,8 @@ export default function HomePage() {
 
   const filtered = useMemo(
     () => activeFilter === 'All'
-      ? cameras
-      : cameras.filter((camera) => camera.category.includes(activeFilter)),
+      ? directoryCameras
+      : directoryCameras.filter((camera) => camera.category.includes(activeFilter)),
     [activeFilter],
   );
 
@@ -98,7 +101,9 @@ export default function HomePage() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h2 id="airport-camera-title" className="font-semibold text-navy">
-                  {messages.home.airportCameraTitle}
+                  <Link href="/cameras/madeira-airport" className="transition hover:text-ocean hover:underline">
+                    {messages.home.airportCameraTitle}
+                  </Link>
                 </h2>
                 <p className="mt-1 text-xs text-slate-500">
                   {messages.home.airportCameraDescription}
@@ -139,6 +144,9 @@ export default function HomePage() {
                 </div>
               </div>
             </form>
+            <Link href="/cameras/madeira-airport" className="inline-flex min-h-10 items-center justify-center rounded-lg border border-ocean px-4 py-2 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white">
+              {uk ? 'Камера, прибуття та вильоти FNC' : 'FNC webcam, arrivals and departures'}
+            </Link>
           </div>
         </section>
 
@@ -149,8 +157,8 @@ export default function HomePage() {
             </h2>
             <p className="mt-1 text-sm text-slate-500">
               {uk
-                ? `Показано ${filtered.length} з ${cameras.length} камер`
-                : `Showing ${filtered.length} of ${cameras.length} cameras`}
+                ? `Показано ${filtered.length} з ${directoryCameras.length} камер`
+                : `Showing ${filtered.length} of ${directoryCameras.length} cameras`}
             </p>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-2" aria-label={uk ? 'Фільтри камер' : 'Camera filters'}>
