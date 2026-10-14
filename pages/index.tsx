@@ -6,31 +6,26 @@ import Layout from '../components/Layout';
 import { cameras, type CameraCategory } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
+import { homePageText } from '../lib/i18n/homePage';
 
-const cameraFilters: Array<{ value: CameraCategory; en: string; uk: string }> = [
-  { value: 'Mountains', en: 'Mountains', uk: 'Гори' },
-  { value: 'Beaches', en: 'Beaches', uk: 'Пляжі' },
-  { value: 'Towns', en: 'Towns', uk: 'Міста' },
-  { value: 'North Coast', en: 'North', uk: 'Північ' },
-  { value: 'South Coast', en: 'South', uk: 'Південь' },
-  { value: 'East Coast', en: 'East', uk: 'Схід' },
-  { value: 'Sunrise spots', en: 'Sunrise', uk: 'Схід сонця' },
+const cameraFilters: CameraCategory[] = [
+  'Mountains',
+  'Beaches',
+  'Towns',
+  'North Coast',
+  'South Coast',
+  'East Coast',
+  'Sunrise spots',
 ];
 
 const directoryCameras = cameras.filter((camera) => camera.id !== 'madeira-airport');
 
 export default function HomePage() {
-  const { locale, messages } = useMessages();
+  const { siteLocale, messages } = useMessages();
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
   const [flightNumber, setFlightNumber] = useState('');
-  const uk = locale === 'uk';
-  const title = uk
-    ? 'Вебкамери Мадейри наживо, погода та план подорожі | Madeira Live Cams'
-    : 'Madeira Live Webcams, Weather & Trip Planning | Madeira Live Cams';
-  const description = uk
-    ? 'Переглядайте вебкамери Мадейри, включно з камерою аеропорту FNC, порівнюйте умови в горах і на узбережжі та плануйте день.'
-    : 'Watch Madeira live webcams, including the FNC airport camera, compare mountain and coastal conditions, and plan your day around the island.';
+  const text = homePageText[siteLocale];
 
   const saveHomeCameraView = () => {
     window.sessionStorage.setItem(
@@ -84,16 +79,16 @@ export default function HomePage() {
   return (
     <Layout>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <title>{text.title}</title>
+        <meta name="description" content={text.description} />
+        <meta property="og:title" content={text.title} />
+        <meta property="og:description" content={text.description} />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary" />
       </Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
         <h1 className="text-center text-xl font-semibold tracking-tight text-navy sm:text-2xl">
-          {uk ? 'Вебкамери Мадейри наживо' : 'Madeira live webcams'}
+          {text.heading}
         </h1>
 
         <section aria-labelledby="airport-camera-title">
@@ -145,7 +140,7 @@ export default function HomePage() {
               </div>
             </form>
             <Link href="/cameras/madeira-airport" className="inline-flex min-h-10 items-center justify-center rounded-lg border border-ocean px-4 py-2 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white">
-              {uk ? 'Камера, прибуття та вильоти FNC' : 'FNC webcam, arrivals and departures'}
+              {text.airportCta}
             </Link>
           </div>
         </section>
@@ -156,27 +151,25 @@ export default function HomePage() {
               {messages.home.allCameras}
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              {uk
-                ? `Показано ${filtered.length} з ${directoryCameras.length} камер`
-                : `Showing ${filtered.length} of ${directoryCameras.length} cameras`}
+              {text.showing(filtered.length, directoryCameras.length)}
             </p>
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-2" aria-label={uk ? 'Фільтри камер' : 'Camera filters'}>
+          <div className="flex gap-2 overflow-x-auto pb-2" aria-label={text.filtersLabel}>
             <button
               type="button"
               onClick={() => setActiveFilter('All')}
               className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === 'All' ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
             >
-              {uk ? 'Усі' : 'All'}
+              {text.all}
             </button>
             {cameraFilters.map((filter) => (
               <button
-                key={filter.value}
+                key={filter}
                 type="button"
-                onClick={() => setActiveFilter(filter.value)}
-                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter.value ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
+                onClick={() => setActiveFilter(filter)}
+                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
               >
-                {filter[locale]}
+                {text.filters[filter]}
               </button>
             ))}
           </div>
