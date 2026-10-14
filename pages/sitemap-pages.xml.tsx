@@ -16,6 +16,7 @@ function escapeXml(value: string) {
 
 function urlEntry(path: string, locale: Locale, alternates: readonly Locale[]) {
   const url = `${ORIGIN}${localePath(locale, path)}`;
+
   return [
     '  <url>',
     `    <loc>${escapeXml(url)}</loc>`,
@@ -28,11 +29,11 @@ function urlEntry(path: string, locale: Locale, alternates: readonly Locale[]) {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const cameraPaths = cameras.map((camera) => `/cameras/${camera.id}`);
   const establishedPaths = [
-    '/cameras', '/weather-guide', '/about', '/parties', '/privacy', '/trip-plan', '/trail-availability',
+    '/cameras', '/about', '/parties', '/privacy', '/trip-plan', '/trail-availability',
     ...locations.filter((location) => !location.hiddenFromExplore).map((location) => `/explore/${location.slug}`),
     ...stays.map((stay) => `/stays/${stay.slug}`),
   ];
-  const multilingualPaths = ['/', ...cameraPaths];
+  const multilingualPaths = ['/', '/weather-guide', ...cameraPaths];
   const multilingualEntries = multilingualPaths.flatMap((path) => supportedLocales.map((locale) => urlEntry(path, locale, supportedLocales)));
   const establishedEntries = Array.from(new Set(establishedPaths)).flatMap((path) => establishedLocales.map((locale) => urlEntry(path, locale, establishedLocales)));
   const xml = [
@@ -42,9 +43,11 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     ...establishedEntries,
     '</urlset>',
   ].join('\n');
+
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
   res.end(xml);
+
   return { props: {} };
 };
 

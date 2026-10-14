@@ -36,11 +36,13 @@ const CameraCard: React.FC<Props> = ({ camera, returnToHome = false, onDetailsOp
 
   useEffect(() => {
     if (!isSnapshotCamera) return;
+
     const refreshSnapshot = () => {
       setSnapshotFailed(false);
       setSnapshotVersion(Math.floor(Date.now() / 60000));
     };
     const interval = window.setInterval(refreshSnapshot, 60000);
+
     return () => window.clearInterval(interval);
   }, [isSnapshotCamera]);
 
@@ -48,7 +50,7 @@ const CameraCard: React.FC<Props> = ({ camera, returnToHome = false, onDetailsOp
   const linkHref = returnToHome && detailsHref.startsWith('/explore/')
     ? { pathname: detailsHref, query: { returnTo: 'home' } }
     : detailsHref;
-  const detailsLocale = siteLocale === 'uk' ? 'uk' : 'en';
+  const detailsLocale = detailsHref.startsWith('/cameras/') ? siteLocale : siteLocale === 'uk' ? 'uk' : 'en';
   const fallbackImage = '/images/cameras/madeira-camera-2.png';
   const snapshotUrl = `/api/camera-snapshot?id=${encodeURIComponent(displayCamera.id)}&v=${snapshotVersion}`;
   const previewLabel = cameraPreviewLabel(siteLocale);

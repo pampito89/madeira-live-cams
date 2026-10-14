@@ -17,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '');
   const canonicalUrl = `${SITE_URL}${localePath(locale, normalizedPath)}`;
   const englishUrl = `${SITE_URL}${localePath('en', normalizedPath)}`;
-  const multilingualReady = normalizedPath === '/' || /^\/cameras\/[^/]+$/.test(normalizedPath);
+  const multilingualReady = normalizedPath === '/'
+    || normalizedPath === '/weather-guide'
+    || /^\/cameras\/[^/]+$/.test(normalizedPath);
   const alternateLocales = multilingualReady ? supportedLocales : fullyIndexedLocales;
   const mayIndex = multilingualReady || fullyIndexedLocales.includes(locale);
   const trailBreadcrumbs = normalizedPath === '/trail-availability' ? {
