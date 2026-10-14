@@ -91,7 +91,7 @@ export default function CameraPage({ camera }: CameraPageProps) {
 
       <main className="page-shell">
         <Link
-          href="/cameras"
+          href="/#all-cameras-title"
           className="inline-flex text-sm font-medium text-ocean hover:underline"
         >
           ← {messages.home.allCameras}
