@@ -18,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const canonicalUrl = `${SITE_URL}${localePath(locale, normalizedPath)}`;
   const englishUrl = `${SITE_URL}${localePath('en', normalizedPath)}`;
   const multilingualReady = normalizedPath === '/'
+    || normalizedPath === '/about'
     || normalizedPath === '/weather-guide'
     || /^\/cameras\/[^/]+$/.test(normalizedPath);
   const alternateLocales = multilingualReady ? supportedLocales : fullyIndexedLocales;
