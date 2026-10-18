@@ -10,6 +10,7 @@ import { translateCameraLabel } from '../../lib/i18n/cameraUi';
 import { localePath, supportedLocales } from '../../lib/i18n/config';
 import Layout from '../../components/Layout';
 import AirportFlightBoard from '../../components/AirportFlightBoard';
+import AirportWeatherPanel from '../../components/AirportWeatherPanel';
 import { cameras, getLocalizedCamera, type Camera } from '../../components/cameraData';
 
 type CameraPageProps = { camera: Camera };
@@ -52,8 +53,8 @@ export default function CameraPage({ camera }: CameraPageProps) {
             <h1 className="text-2xl font-semibold tracking-tight text-navy md:text-3xl">{localize(heading)}</h1>
             <p className="mt-3 text-base leading-7 text-slate-600">{localize(intro)}</p>
           </header>
-          <section className="mt-6 grid gap-6 md:grid-cols-[2fr,1.2fr]">
-            <div className="flex flex-col gap-4">
+          <section className="mt-6 grid items-start gap-6 md:grid-cols-[2fr,1.2fr]">
+            <div className="flex min-w-0 flex-col gap-4">
               <div className="aspect-video overflow-hidden rounded-xl bg-slate-900">
                 {displayCamera.youtubeId ? (
                   <iframe className="h-full w-full" src={`https://www.youtube.com/embed/${displayCamera.youtubeId}?autoplay=0&mute=1`} title={`${localize(displayCamera.name)} ${localize(messages.cameraCard.liveStreamTitleSuffix)}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
@@ -66,16 +67,17 @@ export default function CameraPage({ camera }: CameraPageProps) {
               </div>
               <p className="text-xs leading-5 text-slate-500">{localize(text.streamNotice)}</p>
             </div>
-            <aside className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-base font-semibold text-navy">{localize(isAirport ? text.airportInfo : messages.cameraCard.watchDetails)}</h2>
-              <dl className="mt-4 space-y-3 text-sm">
-                <div><dt className="text-slate-500">{localize(messages.cameraCard.region)}</dt><dd className="mt-1 font-medium text-navy">{localize(region)}</dd></div>
-                {displayCamera.altitudeMeters !== undefined ? <div><dt className="text-slate-500">{localize(messages.cameraCard.altitude)}</dt><dd className="mt-1 font-medium text-navy">{displayCamera.altitudeMeters}{localize(' m')}</dd></div> : null}
-                <div><dt className="text-slate-500">{localize(messages.cameraCard.coordinates)}</dt><dd className="mt-1 font-medium text-navy">{displayCamera.latitude.toFixed(3)}, {displayCamera.longitude.toFixed(3)}</dd></div>
-              </dl>
-              {isAirport ? <a href="#airport-flights" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-forest">{localize(text.airportInfo)} ↓</a> : null}
-              {!isAirport ? <a href={displayCamera.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-4 py-3 text-sm font-semibold text-navy transition hover:bg-mist">{localize(messages.cameraCard.openOriginalSource)}</a> : null}
-            </aside>
+            {isAirport ? <AirportWeatherPanel locale={siteLocale} /> : (
+              <aside className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="text-base font-semibold text-navy">{localize(messages.cameraCard.watchDetails)}</h2>
+                <dl className="mt-4 space-y-3 text-sm">
+                  <div><dt className="text-slate-500">{localize(messages.cameraCard.region)}</dt><dd className="mt-1 font-medium text-navy">{localize(region)}</dd></div>
+                  {displayCamera.altitudeMeters !== undefined ? <div><dt className="text-slate-500">{localize(messages.cameraCard.altitude)}</dt><dd className="mt-1 font-medium text-navy">{displayCamera.altitudeMeters}{localize(' m')}</dd></div> : null}
+                  <div><dt className="text-slate-500">{localize(messages.cameraCard.coordinates)}</dt><dd className="mt-1 font-medium text-navy">{displayCamera.latitude.toFixed(3)}, {displayCamera.longitude.toFixed(3)}</dd></div>
+                </dl>
+                <a href={displayCamera.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-4 py-3 text-sm font-semibold text-navy transition hover:bg-mist">{localize(messages.cameraCard.openOriginalSource)}</a>
+              </aside>
+            )}
           </section>
           {isAirport ? <AirportFlightBoard locale={siteLocale} /> : null}
           <section className="mt-8 max-w-3xl rounded-xl border border-slate-200 bg-white p-5">
