@@ -1,3 +1,5 @@
+import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { useText } from '../lib/i18n/TranslationProvider';
 import heroStyles from "../styles/locationsHero.module.css";
 import ActivityPhoto from "../components/ActivityPhoto";
 import { useEffect, useMemo, useState } from 'react';
@@ -86,18 +88,9 @@ function getWindArrow(degrees: number) {
     const arrows = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
     return arrows[Math.round(degrees / 45) % 8];
 }
-function formatUpdatedTime(time: string, locale: 'en' | 'uk') {
-    const date = new Date(time);
-    if (Number.isNaN(date.getTime())) {
-        return '';
-    }
-    return new Intl.DateTimeFormat(locale === 'uk' ? 'uk-UA' : 'en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'Atlantic/Madeira',
-    }).format(date);
-}
+function formatUpdatedTime(time: string, locale: string) { const date = new Date(time); return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", timeZone: "Atlantic/Madeira" }).format(date); }
 export default function CamerasPage() {
+    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
     const router = useRouter();
     const [activeFilter, setActiveFilter] = useState('All');
@@ -245,50 +238,50 @@ export default function CamerasPage() {
     }, [activeFilter]);
     return (<Layout>
       <Head>
-        <title>{messages.exploreList.pageTitle}</title>
-        <meta name="description" content={messages.exploreList.pageDescription}/>
+        <title>{[localize(messages.exploreList.pageTitle)].join("")}</title>
+        <meta name="description" content={localize(messages.exploreList.pageDescription)}/>
         
-      </Head>
+      <meta property="og:title" content={[localize(messages.exploreList.pageTitle)].join("")}/><meta property="og:description" content={localize(messages.exploreList.pageDescription)}/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={[localize(messages.exploreList.pageTitle)].join("")}/><meta name="twitter:description" content={localize(messages.exploreList.pageDescription)}/></Head>
 
       <main className="page-shell">
         <section className={heroStyles.hero}>
           <p className="text-sm font-medium text-ocean">
-            {messages.exploreList.eyebrow}
+            {localize(messages.exploreList.eyebrow)}
           </p>
           <h1 className="mt-1 text-2xl font-semibold text-navy sm:text-3xl">
-            {messages.exploreList.title}
+            {localize(messages.exploreList.title)}
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
-            {messages.exploreList.intro}
+            {localize(messages.exploreList.intro)}
           </p>
         </section>
 
-        <section className="mt-6" aria-label={messages.exploreList.filterAriaLabel}>
+        <section className="mt-6" aria-label={localize(messages.exploreList.filterAriaLabel)}>
           <p className="text-sm font-semibold text-navy">
-            {messages.exploreList.browseByInterest}
+            {localize(messages.exploreList.browseByInterest)}
           </p>
 
           <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
-            {filters.map((filter) => {
+            {localize(filters.map((filter) => {
             const isActive = activeFilter === filter.value;
             return (<button key={filter.value} type="button" onClick={() => handleFilterChange(filter.value)} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${isActive
                     ? 'border-ocean bg-ocean text-white'
                     : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>
-                  {filter.label}
+                  {localize(filter.label)}
                 </button>);
-        })}
+        }))}
           </div>
 
           <p className="mt-2 text-sm text-slate-500">
-            {messages.exploreList.showing} {filteredLocations.length}{' '}
-            {messages.exploreList.of}{' '}
-            {locations.filter((location) => !location.hiddenFromExplore).length}{' '}
-            {messages.exploreList.places}
+            {localize(messages.exploreList.showing)} {localize(filteredLocations.length)}{localize(' ')}
+            {localize(messages.exploreList.of)}{localize(' ')}
+            {localize(locations.filter((location) => !location.hiddenFromExplore).length)}{localize(' ')}
+            {localize(messages.exploreList.places)}
           </p>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label={messages.exploreList.locationsAriaLabel}>
-          {filteredLocations.map((location) => {
+        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label={localize(messages.exploreList.locationsAriaLabel)}>
+          {localize(filteredLocations.map((location) => {
             const displayLocation = getLocalizedLocation(location, locale);
             const weather = weatherByLocation[location.slug];
             const weatherDetails = weather
@@ -297,49 +290,50 @@ export default function CamerasPage() {
             return (<Link key={displayLocation.slug} href={`/explore/${displayLocation.slug}`} onClick={(event) => handleLocationOpen(event, displayLocation.slug)} className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md">
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ocean">
-                    {displayLocation.category}
+                    {localize(displayLocation.category)}
                   </p>
                   <h2 className="mt-1 text-lg font-semibold text-navy">
-                    {displayLocation.name}
+                    {localize(displayLocation.name)}
                   </h2>
                   <p className="mt-1 text-sm font-medium text-slate-500">
-                    {displayLocation.area}
+                    {localize(displayLocation.area)}
                   </p>
                   <p className="mt-3 text-sm leading-6 text-slate-600">
-                    {displayLocation.summary}
+                    {localize(displayLocation.summary)}
                   </p>
                   <span className="mt-4 inline-block text-sm font-semibold text-ocean group-hover:underline">
-                    {messages.exploreList.readGuide}
+                    {localize(messages.exploreList.readGuide)}
                   </span>
                 </div>
 
                 <div className="w-20 shrink-0 sm:w-24">
                   <div className="relative h-20 overflow-hidden rounded-xl bg-mist sm:h-24">
-                    {location.tags.includes("Outdoor activities") ? <ActivityPhoto src={displayLocation.image} name={displayLocation.imageAlt} locale={locale} compact/> : <Image src={displayLocation.image} alt={displayLocation.imageAlt} fill unoptimized className="object-cover transition duration-300 group-hover:scale-105" sizes="(max-width: 640px) 80px, 96px"/>}
+                    {localize(location.tags.includes("Outdoor activities") ? <ActivityPhoto src={displayLocation.image} name={displayLocation.imageAlt} locale={locale} compact/> : <Image src={displayLocation.image} alt={localize(displayLocation.imageAlt)} fill unoptimized className="object-cover transition duration-300 group-hover:scale-105" sizes="(max-width: 640px) 80px, 96px"/>)}
                   </div>
 
-                  {weather && weatherDetails ? (<div className="mt-2 rounded-lg border border-slate-200 bg-panel px-2 py-2 text-xs text-slate-600">
+                  {localize(weather && weatherDetails ? (<div className="mt-2 rounded-lg border border-slate-200 bg-panel px-2 py-2 text-xs text-slate-600">
                       <p className="flex items-center gap-1 font-semibold text-navy">
-                        <span aria-hidden="true">{weatherDetails.icon}</span>
-                        <span>{weather.temperature}°C</span>
+                        <span aria-hidden="true">{localize(weatherDetails.icon)}</span>
+                        <span>{localize(weather.temperature)}{localize("\u00B0C")}</span>
                       </p>
-                      <p className="mt-1 leading-4">{weatherDetails.label}</p>
-                      <p className="mt-1 leading-4" title={`${getWindDirection(weather.windDirection, locale)}, ${weather.windSpeed} ${locale === 'uk' ? 'км/год' : 'km/h'}`}>
+                      <p className="mt-1 leading-4">{localize(weatherDetails.label)}</p>
+                      <p className="mt-1 leading-4" title={localize(`${getWindDirection(weather.windDirection, locale)}, ${weather.windSpeed} ${locale === 'uk' ? 'км/год' : 'km/h'}`)}>
                         <span className="font-semibold text-ocean" aria-hidden="true">
-                          {getWindArrow(weather.windDirection)}
-                        </span>{' '}
-                        {weather.windSpeed}{' '}
-                        {locale === 'uk' ? 'км/год' : 'km/h'}
+                          {localize(getWindArrow(weather.windDirection))}
+                        </span>{localize(' ')}
+                        {localize(weather.windSpeed)}{localize(' ')}
+                        {localize(locale === 'uk' ? 'км/год' : 'km/h')}
                       </p>
                       <p className="mt-1 text-[10px] leading-3 text-slate-400">
-                        {locale === 'uk' ? 'Оновлено' : 'Updated'}{' '}
-                        {formatUpdatedTime(weather.time, locale)}
+                        {localize(locale === 'uk' ? 'Оновлено' : 'Updated')}{localize(' ')}
+                        {localize(formatUpdatedTime(weather.time, translationLanguage))}
                       </p>
-                    </div>) : (<div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100"/>)}
+                    </div>) : (<div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100"/>))}
                 </div>
               </Link>);
-        })}
+        }))}
         </section>
       </main>
     </Layout>);
 }
+export const getStaticProps = translatedStaticProps("/cameras");

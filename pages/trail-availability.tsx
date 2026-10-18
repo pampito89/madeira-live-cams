@@ -1,3 +1,5 @@
+import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { useText } from '../lib/i18n/TranslationProvider';
 import { TrailWeatherProvider, TrailSlotWeather } from "../components/TrailSlotWeather";
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
@@ -19,7 +21,7 @@ type Search = {
     route: number;
     dates: string[];
 };
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = withServerTranslations<Props>(async () => {
     const { getTrails } = await import('../lib/simplifica');
     try {
         return { props: { trails: await getTrails(), initialDate: madeiraDate(), catalogUnavailable: false } };
@@ -27,11 +29,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     catch {
         return { props: { trails: [], initialDate: madeiraDate(), catalogUnavailable: true } };
     }
-};
+}, "/trail-availability");
 export default function TrailAvailabilityPage({ trails, initialDate, catalogUnavailable }: Props) {
+    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale } = useMessages();
     const uk = locale === 'uk';
-    const t = (en: string, ua: string) => uk ? ua : en;
+    const t = (en: string, ua: string) => localize(uk ? ua : en);
     const [route, setRoute] = useState(String(trails.find(item => item.id === 301)?.id ?? trails[0]?.id ?? ''));
     const [period, setPeriod] = useState(30);
     const [category, setCategory] = useState<BookingCategory>('visitor');
@@ -106,7 +109,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
                 setLoading(false);
         }
     }
-    const dateLabel = (date: string) => new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Atlantic/Madeira' }).format(new Date(`${date}T12:00:00Z`));
+    const dateLabel = (date: string) => new Intl.DateTimeFormat(translationLanguage, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Atlantic/Madeira' }).format(new Date(localizeFormat("__VAR_0__T12:00:00Z", date)));
     const stale = (day: TrailDay) => !day.checkedAt || now - Date.parse(day.checkedAt) >= 300000;
     const loaded = search?.dates.filter(date => !!days[date]).length ?? 0;
     const failed = search?.dates.filter(date => days[date]?.error).length ?? 0;
@@ -121,42 +124,42 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const calendarDates = search?.dates ?? planningDates(today, addDays(today, period - 1));
     const groupOutside = groupRanges.some(range => range.from < calendarDates[0] || range.to > calendarDates[calendarDates.length - 1]);
     return <Layout><Head>
-    <title>{title} | Madeira Live Cams</title><meta name="description" content={description}/>
-    <meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/>
-    <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>
+    <title>{[localize(title), localize(" | Madeira Live Cams")].join("")}</title><meta name="description" content={localize(description)}/>
+    <meta property="og:title" content={localize(title)}/><meta property="og:description" content={localize(description)}/><meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={localize(title)}/><meta name="twitter:description" content={localize(description)}/>
   </Head><div className={`page-shell ${styles.page}`}>
-    <section className={styles.hero}><div className={styles.eyebrow}>{t('MADEIRA · GROUP PLANNING', 'МАДЕЙРА · ПЛАНУВАННЯ ДЛЯ ГРУП')}</div><h1>{title}</h1><p>{t('Your group. Your dates. Find the right time slot.', 'Ваша група. Ваші дати. Знайдіть зручний тайм-слот.')}</p></section>
+    <section className={styles.hero}><div className={styles.eyebrow}>{localize(t('MADEIRA · GROUP PLANNING', 'МАДЕЙРА · ПЛАНУВАННЯ ДЛЯ ГРУП'))}</div><h1>{localize(title)}</h1><p>{localize(t('Your group. Your dates. Find the right time slot.', 'Ваша група. Ваші дати. Знайдіть зручний тайм-слот.'))}</p></section>
     <form className={styles.filters} onSubmit={load}>
       <div className={styles.fields} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
-        <label>{t('Walking route', 'Маршрут')}<select value={route} onChange={event => { reset(); setRoute(event.target.value); }} disabled={!trails.length}>{!trails.length && <option value="">{t('Routes unavailable', 'Маршрути недоступні')}</option>}{trails.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
-        <label>{t('Booking category', 'Категорія бронювання')}<select value={category} onChange={event => setCategory(event.target.value as BookingCategory)}>{categories.map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
+        <label>{localize(t('Walking route', 'Маршрут'))}<select value={route} onChange={event => { reset(); setRoute(event.target.value); }} disabled={!trails.length}>{localize(!trails.length && <option value="">{localize(t('Routes unavailable', 'Маршрути недоступні'))}</option>)}{localize(trails.map(item => <option key={item.id} value={item.id}>{localize(item.name)}</option>))}</select></label>
+        <label>{localize(t('Booking category', 'Категорія бронювання'))}<select value={category} onChange={event => setCategory(event.target.value as BookingCategory)}>{localize(categories.map(([id, label]) => <option key={id} value={id}>{localize(label)}</option>))}</select></label>
       </div>
-      <div className={styles.shortcuts}><span>{t('From today:', 'Від сьогодні:')}</span>{[7, 14, 30, 60].map(count => <button key={count} type="button" aria-pressed={period === count} onClick={() => { reset(); setPeriod(count); }}>{count} {t('days', 'днів')}</button>)}</div>
+      <div className={styles.shortcuts}><span>{localize(t('From today:', 'Від сьогодні:'))}</span>{localize([7, 14, 30, 60].map(count => <button key={count} type="button" aria-pressed={period === count} onClick={() => { reset(); setPeriod(count); }}>{localize(count)} {localize(t('days', 'днів'))}</button>))}</div>
       <GroupTourCalendar today={today} uk={uk} onChange={setGroupRanges}/>
-      {groupOutside && <p className={styles.source}>{t('Some group dates fall outside the displayed period. Choose a longer period to see them.', 'Частина дат групи поза показаним періодом. Оберіть довший період, щоб побачити їх.')}</p>}
-      <div className={styles.filterBottom}><span className={styles.source}>{dateLabel(today)} – {dateLabel(addDays(today, period - 1))}</span><button className={styles.primary} disabled={!route || loading}>{loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →')}</button></div>
+      {localize(groupOutside && <p className={styles.source}>{localize(t('Some group dates fall outside the displayed period. Choose a longer period to see them.', 'Частина дат групи поза показаним періодом. Оберіть довший період, щоб побачити їх.'))}</p>)}
+      <div className={styles.filterBottom}><span className={styles.source}>{localize(dateLabel(today))}{localize(" \u2013 ")}{localize(dateLabel(addDays(today, period - 1)))}</span><button className={styles.primary} disabled={!route || loading}>{localize(loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →'))}</button></div>
     </form>
     <section className={styles.results}>
-      <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{searchedTrail?.name || t('Available time slots', 'Доступні тайм-слоти')}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)')}>{t('Book', 'Бронювати')}</a></div>
-      <div role="status" aria-live="polite">{search && <p className={styles.progress}>{t('Days checked:', 'Перевірено днів:')} {loaded}/{search.dates.length}{loading ? '…' : ''}{failed > 0 && ` · ${t('Unavailable:', 'Без даних:')} ${failed}`}</p>}{catalogUnavailable && <p className={styles.error}>{t('SIMplifica route list is unavailable. Reload or open the official portal.', 'Перелік маршрутів SIMplifica недоступний. Оновіть сторінку або відкрийте офіційний портал.')}</p>}</div>
-      {!search && <p className={styles.empty}>{t('Choose a route and period, then show time slots.', 'Оберіть маршрут і період та натисніть «Показати тайм-слоти».')}</p>}
-      {search && <>
-        <div className={styles.days} aria-label={t('Select day', 'Оберіть день')}>{search.dates.map(date => {
+      <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{localize(searchedTrail?.name || t('Available time slots', 'Доступні тайм-слоти'))}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={localize(t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)'))}>{localize(t('Book', 'Бронювати'))}</a></div>
+      <div role="status" aria-live="polite">{localize(search && <p className={styles.progress}>{localize(t('Days checked:', 'Перевірено днів:'))} {localize(loaded)}{localize("/")}{localize(search.dates.length)}{localize(loading ? '…' : '')}{localize(failed > 0 && ` · ${t('Unavailable:', 'Без даних:')} ${failed}`)}</p>)}{localize(catalogUnavailable && <p className={styles.error}>{localize(t('SIMplifica route list is unavailable. Reload or open the official portal.', 'Перелік маршрутів SIMplifica недоступний. Оновіть сторінку або відкрийте офіційний портал.'))}</p>)}</div>
+      {localize(!search && <p className={styles.empty}>{localize(t('Choose a route and period, then show time slots.', 'Оберіть маршрут і період та натисніть «Показати тайм-слоти».'))}</p>)}
+      {localize(search && <>
+        <div className={styles.days} aria-label={localize(t('Select day', 'Оберіть день'))}>{localize(search.dates.map(date => {
                 const day = days[date];
                 const count = day && !day.error ? availableSlots(day, category, now).length : null;
                 const unknown = day && !day.error && (!day.slots.length || day.slots.some(slot => slot.percentages[category] === null));
                 const label = !day ? t('Waiting', 'Очікуємо') : day.error ? t('No data', 'Без даних') : stale(day) ? t('Refresh needed', 'Час оновити') : unknown && !count ? t('Unknown', 'Невідомо') : timeSlotLabel(count ?? 0, uk);
                 const group = isGroupDay(date);
-                return <button type="button" key={date} aria-pressed={date === selected} className={`${styles.day} ${date === selected ? styles.selectedDay : ''} ${group ? lab.groupDay : ''}`} onClick={() => setSelected(date)}><span>{dateLabel(date)}</span><strong>{count === null || (unknown && !count) ? '—' : count}</strong><small>{label}</small>{group && <small className={lab.badge}>{t('Group tour', 'Груповий тур')}</small>}</button>;
-            })}</div>
-        <div className={styles.dayHeading}><h3>{dateLabel(selected)}{isGroupDay(selected) && <span className={lab.headingBadge}>{t('Group tour', 'Груповий тур')}</span>}</h3><p>{active?.checkedAt ? `${t('Checked', 'Перевірено')} ${new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(active.checkedAt))}` : t('No verified data yet', 'Перевірених даних ще немає')}</p></div>
-        {!active ? <p className={styles.empty}>{t('This date is waiting to be checked.', 'Ця дата очікує перевірки.')}</p> : active.error ? <p className={styles.error}>{t('Could not check this date. Run the search again.', 'Не вдалося перевірити цю дату. Запустіть пошук ще раз.')}</p> : <>
-          {stale(active) && <p className={styles.error}>{t('Data is more than five minutes old. Refresh the search.', 'Даним понад п’ять хвилин. Оновіть пошук.')}</p>}
-          {!slots.length && <p className={styles.empty}>{active.slots.length && active.slots.every(slot => slot.percentages[category] !== null) ? t('No available future time slots for this category on this day. Choose another date.', 'На цей день немає доступних майбутніх тайм-слотів для цієї категорії. Оберіть іншу дату.') : t('Availability could not be confirmed for this date. Try again or check SIMplifica.', 'Доступність на цю дату не підтверджена. Повторіть пошук або перевірте SIMplifica.')}</p>}
-          <TrailWeatherProvider route={search.route} date={selected} uk={uk}><div className={styles.slots} aria-label={t('Available time slots', 'Доступні тайм-слоти')}>{slots.map(slot => <article key={slot.start} className={styles.slot}><div className={`${styles.slotTop} ${lab.slotTop}`}><strong>{slot.start} <span>– {slot.end}</span></strong><TrailSlotWeather time={slot.start}/><span className={styles.percent}>{t("Tickets:", "\u041A\u0432\u0438\u0442\u043A\u0456\u0432:")} {new Intl.NumberFormat(uk ? 'uk-UA' : 'en-GB', { maximumFractionDigits: 2 }).format(slot.percentages[category]!)}%</span></div></article>)}</div></TrailWeatherProvider>
-        </>}
-      </>}
+                return <button type="button" key={date} aria-pressed={date === selected} className={`${styles.day} ${date === selected ? styles.selectedDay : ''} ${group ? lab.groupDay : ''}`} onClick={() => setSelected(date)}><span>{localize(dateLabel(date))}</span><strong>{localize(count === null || (unknown && !count) ? '—' : count)}</strong><small>{localize(label)}</small>{localize(group && <small className={lab.badge}>{localize(t('Group tour', 'Груповий тур'))}</small>)}</button>;
+            }))}</div>
+        <div className={styles.dayHeading}><h3>{localize(dateLabel(selected))}{localize(isGroupDay(selected) && <span className={lab.headingBadge}>{localize(t('Group tour', 'Груповий тур'))}</span>)}</h3><p>{localize(active?.checkedAt ? `${t('Checked', 'Перевірено')} ${new Intl.DateTimeFormat(translationLanguage, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(active.checkedAt))}` : t('No verified data yet', 'Перевірених даних ще немає'))}</p></div>
+        {localize(!active ? <p className={styles.empty}>{localize(t('This date is waiting to be checked.', 'Ця дата очікує перевірки.'))}</p> : active.error ? <p className={styles.error}>{localize(t('Could not check this date. Run the search again.', 'Не вдалося перевірити цю дату. Запустіть пошук ще раз.'))}</p> : <>
+          {localize(stale(active) && <p className={styles.error}>{localize(t('Data is more than five minutes old. Refresh the search.', 'Даним понад п’ять хвилин. Оновіть пошук.'))}</p>)}
+          {localize(!slots.length && <p className={styles.empty}>{localize(active.slots.length && active.slots.every(slot => slot.percentages[category] !== null) ? t('No available future time slots for this category on this day. Choose another date.', 'На цей день немає доступних майбутніх тайм-слотів для цієї категорії. Оберіть іншу дату.') : t('Availability could not be confirmed for this date. Try again or check SIMplifica.', 'Доступність на цю дату не підтверджена. Повторіть пошук або перевірте SIMplifica.'))}</p>)}
+          <TrailWeatherProvider route={search.route} date={selected} uk={uk}><div className={styles.slots} aria-label={localize(t('Available time slots', 'Доступні тайм-слоти'))}>{localize(slots.map(slot => <article key={slot.start} className={styles.slot}><div className={`${styles.slotTop} ${lab.slotTop}`}><strong>{localize(slot.start)} <span>{localize("\u2013 ")}{localize(slot.end)}</span></strong><TrailSlotWeather time={slot.start}/><span className={styles.percent}>{localize(t("Tickets:", "\u041A\u0432\u0438\u0442\u043A\u0456\u0432:"))} {localize(new Intl.NumberFormat(translationLanguage, { maximumFractionDigits: 2 }).format(slot.percentages[category]!))}{localize("%")}</span></div></article>))}</div></TrailWeatherProvider>
+        </>)}
+      </>)}
     </section>
-    <p className={styles.source}>{t('Source:', 'Джерело:')} <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SIMplifica / IFCN</a> · {t('Madeira local time', 'Місцевий час Мадейри')}</p>
+    <p className={styles.source}>{localize(t('Source:', 'Джерело:'))} <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{localize("SIMplifica / IFCN")}</a>{localize(" \u00B7 ")}{localize(t('Madeira local time', 'Місцевий час Мадейри'))}</p>
   </div></Layout>;
 }

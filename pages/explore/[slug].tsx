@@ -1,3 +1,6 @@
+import PlaceStructuredData from '../../components/PlaceStructuredData';
+import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../../lib/i18n/pageTranslations';
+import { useText } from '../../lib/i18n/TranslationProvider';
 import { useState } from 'react';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -38,13 +41,14 @@ const navigationDestinations: Record<string, Coordinates> = {
     }
 };
 function StandardLocationPage({ location }: Props) {
+    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
     const router = useRouter();
     const display = getLocalizedLocation(location, locale);
     const uk = locale === 'uk';
     const [routeOpen, setRouteOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-    const url = `https://madeiralivecams.com${uk ? '/uk' : ''}/explore/${display.slug}`;
+    const url = `https://madeiralivecams.com${translationLanguage === "en" ? "" : "/" + translationLanguage}/explore/${display.slug}`;
     const image = `https://madeiralivecams.com${display.image}`;
     const destination = navigationDestinations[display.slug];
     const navigationQuery = destination
@@ -69,9 +73,9 @@ function StandardLocationPage({ location }: Props) {
         try {
             if (navigator.share) {
                 await navigator.share({
-                    title: display.name,
-                    text: uk ? `Подивіться ${display.name} на Madeira Live Cams` : `See ${display.name} on Madeira Live Cams`,
-                    url,
+                    title: localize(display.name),
+                    text: localize(uk ? `Подивіться ${localize(display.name)} на Madeira Live Cams` : localizeFormat("See __VAR_0__ on Madeira Live Cams", localize(display.name))),
+                    url
                 });
                 return;
             }
@@ -82,76 +86,75 @@ function StandardLocationPage({ location }: Props) {
         catch (error) {
             if (error instanceof DOMException && error.name === 'AbortError')
                 return;
-            window.prompt(uk ? 'Скопіюйте це посилання:' : 'Copy this link:', url);
+            window.prompt(localize(uk ? 'Скопіюйте це посилання:' : 'Copy this link:'), url);
         }
     };
-    return (<Layout>
+    return (<Layout><PlaceStructuredData name={display.name} description={display.summary} url={url} mapUrl={mapsUrl} image={image}/>
       <Head>
-        <title>{display.name} | {messages.location.pageTitleSuffix}</title>
-        <meta name="description" content={display.summary}/>
-        <meta property="og:title" content={`${display.name} | ${messages.location.ogTitleSuffix}`}/>
-        <meta property="og:description" content={display.summary}/>
+        <title>{[localize(display.name), localize(" | "), localize(messages.location.pageTitleSuffix)].join("")}</title>
+        <meta name="description" content={localize(display.summary)}/>
+        <meta property="og:title" content={localize(`${localize(display.name)} | ${messages.location.ogTitleSuffix}`)}/>
+        <meta property="og:description" content={localize(display.summary)}/>
         <meta property="og:type" content="article"/>
         <meta property="og:url" content={url}/>
-        <meta property="og:locale" content={uk ? 'uk_UA' : 'en_GB'}/>
+        <meta property="og:locale" content={({ en: "en_GB", pt: "pt_PT", de: "de_DE", fr: "fr_FR", es: "es_ES", pl: "pl_PL", uk: "uk_UA" })[translationLanguage]}/>
         <meta property="og:image" content={image}/>
-        <meta property="og:image:alt" content={display.imageAlt}/>
+        <meta property="og:image:alt" content={localize(display.imageAlt)}/>
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:title" content={`${display.name} | Madeira Live Cams`}/>
-        <meta name="twitter:description" content={display.summary}/>
+        <meta name="twitter:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", localize(display.name)))}/>
+        <meta name="twitter:description" content={localize(display.summary)}/>
         <meta name="twitter:image" content={image}/>
       </Head>
       <main className="page-shell">
-        <button type="button" onClick={handleBack} className={actionClass}>← {uk ? 'Назад' : 'Back'}</button>
+        <button type="button" onClick={handleBack} className={actionClass}>{localize("\u2190 ")}{localize(uk ? 'Назад' : 'Back')}</button>
         <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="relative aspect-[16/9] bg-slate-100">
-            <Image src={display.image} alt={display.imageAlt} fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 768px"/>
+            <Image src={display.image} alt={localize(display.imageAlt)} fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 768px"/>
           </div>
           <div className="p-5 sm:p-8">
-            <p className="text-sm font-medium text-ocean">{display.category} · {display.area}</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-navy sm:text-4xl">{display.name}</h1>
+            <p className="text-sm font-medium text-ocean">{localize(display.category)}{localize(" \u00B7 ")}{localize(display.area)}</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-navy sm:text-4xl">{localize(display.name)}</h1>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Link href={`/trip-plan?addLocation=${encodeURIComponent(display.slug)}`} className={`${actionClass} bg-ocean text-white`}>+ {uk ? 'До плану' : 'Add to plan'}</Link>
+              <Link href={`/trip-plan?addLocation=${encodeURIComponent(display.slug)}`} className={`${actionClass} bg-ocean text-white`}>{localize("+ ")}{localize(uk ? 'До плану' : 'Add to plan')}</Link>
               <div className="relative">
-                <button type="button" onClick={() => setRouteOpen((current) => !current)} aria-expanded={routeOpen} aria-controls="location-route-options" className={`${actionClass} bg-ocean text-white`}>
-                  🗺️ {uk ? 'Маршрут' : 'Route'}
+                <button type="button" onClick={() => setRouteOpen((current) => !current)} aria-expanded={routeOpen} aria-controls="location-route-options" className={`${actionClass} bg-ocean text-white`}>{localize("\uD83D\uDDFA\uFE0F")}{localize(uk ? 'Маршрут' : 'Route')}
                 </button>
-                {routeOpen && (<div id="location-route-options" className="absolute left-0 top-12 z-20 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl">
-                    <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="block rounded-lg px-3 py-2 text-sm hover:bg-panel">Google Maps</a>
-                    <a href={wazeUrl} target="_blank" rel="noopener noreferrer" className="block rounded-lg px-3 py-2 text-sm hover:bg-panel">Waze</a>
-                    <button type="button" onClick={() => setRouteOpen(false)} className="block w-full px-3 py-2 text-left text-sm">{uk ? 'Закрити' : 'Close'}</button>
-                  </div>)}
+                {localize(routeOpen && (<div id="location-route-options" className="absolute left-0 top-12 z-20 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl">
+                    <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="block rounded-lg px-3 py-2 text-sm hover:bg-panel">{localize("Google Maps")}</a>
+                    <a href={wazeUrl} target="_blank" rel="noopener noreferrer" className="block rounded-lg px-3 py-2 text-sm hover:bg-panel">{localize("Waze")}</a>
+                    <button type="button" onClick={() => setRouteOpen(false)} className="block w-full px-3 py-2 text-left text-sm">{localize(uk ? 'Закрити' : 'Close')}</button>
+                  </div>))}
               </div>
-              <button type="button" onClick={share} className={actionClass}>{copied ? (uk ? 'Скопійовано' : 'Copied') : (uk ? 'Поділитися' : 'Share')}</button>
+              <button type="button" onClick={share} className={actionClass}>{localize(copied ? (uk ? 'Скопійовано' : 'Copied') : (uk ? 'Поділитися' : 'Share'))}</button>
             </div>
-            <p className="mt-5 text-base leading-7 text-slate-700">{display.article.intro}</p>
+            <p className="mt-5 text-base leading-7 text-slate-700">{localize(display.article.intro)}</p>
             <section className="mt-8">
-              <h2 className="text-xl font-semibold text-navy">{messages.location.history}</h2>
-              <p className="mt-3 leading-7 text-slate-600">{display.article.history}</p>
+              <h2 className="text-xl font-semibold text-navy">{localize(messages.location.history)}</h2>
+              <p className="mt-3 leading-7 text-slate-600">{localize(display.article.history)}</p>
             </section>
-            {display.slug === 'levada-nova-levada-do-moinho' ? (<LevadaNovaRoute locale={locale}/>) : (<section className="mt-8">
-                <h2 className="text-xl font-semibold text-navy">{messages.location.whyVisit}</h2>
+            {localize(display.slug === 'levada-nova-levada-do-moinho' ? (<LevadaNovaRoute locale={locale}/>) : (<section className="mt-8">
+                <h2 className="text-xl font-semibold text-navy">{localize(messages.location.whyVisit)}</h2>
                 <ul className="mt-3 space-y-2 text-slate-600">
-                  {display.article.highlights.map((highlight) => (<li key={highlight} className="flex gap-2 leading-6">
-                      <span className="font-bold text-ocean" aria-hidden="true">•</span><span>{highlight}</span>
-                    </li>))}
+                  {localize(display.article.highlights.map((highlight) => (<li key={highlight} className="flex gap-2 leading-6">
+                      <span className="font-bold text-ocean" aria-hidden="true">{localize("\u2022")}</span><span>{localize(highlight)}</span>
+                    </li>)))}
                 </ul>
-              </section>)}
+              </section>))}
             <section className="mt-8 rounded-xl bg-panel p-4">
-              <h2 className="font-semibold text-navy">{messages.location.practicalTip}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{display.article.practicalTip}</p>
+              <h2 className="font-semibold text-navy">{localize(messages.location.practicalTip)}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{localize(display.article.practicalTip)}</p>
             </section>
-            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>📍 {uk ? 'Відкрити точку на карті' : 'View location on map'}</a>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
         </article>
       </main>
     </Layout>);
 }
 export const getStaticPaths: GetStaticPaths = async () => ({
-    paths: locations.flatMap((location) => ['en', 'uk'].map((locale) => ({ params: { slug: location.slug }, locale }))),
+    paths: locations.flatMap((location) => ["en", "pt", "de", "fr", "es", "pl", "uk"].map((locale) => ({ params: { slug: location.slug }, locale }))),
     fallback: false,
 });
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props> = withStaticTranslations<Props>(async ({ params }) => {
     const slug = params?.slug;
     const location = typeof slug === 'string' ? getLocationBySlug(slug) : undefined;
     if (!location)
@@ -170,8 +173,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
         }
     }
     return { props: { location, restaurant, hasPhoto } };
-};
+}, "/explore/[slug]");
 export default function LocationPage(props: Props) {
+    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const activity = getActivity(props.location.slug);
     if (activity)
         return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)}/>;

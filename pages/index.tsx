@@ -1,3 +1,5 @@
+import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { useText } from '../lib/i18n/TranslationProvider';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -7,88 +9,74 @@ import { cameras, type CameraCategory } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 import { homePageText } from '../lib/i18n/homePage';
-
 const cameraFilters: CameraCategory[] = [
-  'Mountains',
-  'Beaches',
-  'Towns',
-  'North Coast',
-  'South Coast',
-  'East Coast',
-  'Sunrise spots',
+    'Mountains',
+    'Beaches',
+    'Towns',
+    'North Coast',
+    'South Coast',
+    'East Coast',
+    'Sunrise spots',
 ];
-
 const directoryCameras = cameras.filter((camera) => camera.id !== 'madeira-airport');
-
 export default function HomePage() {
-  const { siteLocale, messages } = useMessages();
-  const router = useRouter();
-  const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
-  const [flightNumber, setFlightNumber] = useState('');
-  const text = homePageText[siteLocale];
-
-  const saveHomeCameraView = () => {
-    window.sessionStorage.setItem(
-      'madeira-home-camera-view',
-      JSON.stringify({ activeFilter, scrollY: Math.round(window.scrollY) }),
-    );
-  };
-
-  useEffect(() => {
-    if (!router.isReady || router.query.restoreCameraFilter !== '1') return;
-    const rawView = window.sessionStorage.getItem('madeira-home-camera-view');
-    window.sessionStorage.removeItem('madeira-home-camera-view');
-    if (!rawView) {
-      router.replace('/', undefined, { shallow: true, scroll: false });
-      return;
-    }
-    try {
-      const savedView = JSON.parse(rawView) as {
-        activeFilter?: CameraCategory | 'All';
-        scrollY?: number;
-      };
-      if (savedView.activeFilter) setActiveFilter(savedView.activeFilter);
-      const timer = window.setTimeout(() => {
-        window.scrollTo({ top: savedView.scrollY ?? 0, behavior: 'auto' });
-        router.replace('/', undefined, { shallow: true, scroll: false });
-      }, 0);
-      return () => window.clearTimeout(timer);
-    } catch {
-      router.replace('/', undefined, { shallow: true, scroll: false });
-    }
-  }, [router.isReady, router.query.restoreCameraFilter]);
-
-  const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
-    if (!cleanFlightNumber) return;
-    window.open(
-      `https://www.flightradar24.com/${cleanFlightNumber.toLowerCase()}`,
-      '_blank',
-      'noopener,noreferrer',
-    );
-  };
-
-  const filtered = useMemo(
-    () => activeFilter === 'All'
-      ? directoryCameras
-      : directoryCameras.filter((camera) => camera.category.includes(activeFilter)),
-    [activeFilter],
-  );
-
-  return (
-    <Layout>
+    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
+    const { siteLocale, messages } = useMessages();
+    const router = useRouter();
+    const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
+    const [flightNumber, setFlightNumber] = useState('');
+    const text = homePageText[siteLocale];
+    const saveHomeCameraView = () => {
+        window.sessionStorage.setItem('madeira-home-camera-view', JSON.stringify({ activeFilter, scrollY: Math.round(window.scrollY) }));
+    };
+    useEffect(() => {
+        if (!router.isReady || router.query.restoreCameraFilter !== '1')
+            return;
+        const rawView = window.sessionStorage.getItem('madeira-home-camera-view');
+        window.sessionStorage.removeItem('madeira-home-camera-view');
+        if (!rawView) {
+            router.replace('/', undefined, { shallow: true, scroll: false });
+            return;
+        }
+        try {
+            const savedView = JSON.parse(rawView) as {
+                activeFilter?: CameraCategory | 'All';
+                scrollY?: number;
+            };
+            if (savedView.activeFilter)
+                setActiveFilter(savedView.activeFilter);
+            const timer = window.setTimeout(() => {
+                window.scrollTo({ top: savedView.scrollY ?? 0, behavior: 'auto' });
+                router.replace('/', undefined, { shallow: true, scroll: false });
+            }, 0);
+            return () => window.clearTimeout(timer);
+        }
+        catch {
+            router.replace('/', undefined, { shallow: true, scroll: false });
+        }
+    }, [router.isReady, router.query.restoreCameraFilter]);
+    const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
+        if (!cleanFlightNumber)
+            return;
+        window.open(`https://www.flightradar24.com/${cleanFlightNumber.toLowerCase()}`, '_blank', 'noopener,noreferrer');
+    };
+    const filtered = useMemo(() => activeFilter === 'All'
+        ? directoryCameras
+        : directoryCameras.filter((camera) => camera.category.includes(activeFilter)), [activeFilter]);
+    return (<Layout>
       <Head>
-        <title>{text.title}</title>
-        <meta name="description" content={text.description} />
-        <meta property="og:title" content={text.title} />
-        <meta property="og:description" content={text.description} />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary" />
-      </Head>
+        <title>{[localize(text.title)].join("")}</title>
+        <meta name="description" content={localize(text.description)}/>
+        <meta property="og:title" content={localize(text.title)}/>
+        <meta property="og:description" content={localize(text.description)}/>
+        <meta property="og:type" content="website"/>
+        <meta name="twitter:card" content="summary"/>
+      <meta name="twitter:title" content={localize(text.title)}/><meta name="twitter:description" content={localize(text.description)}/></Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
         <h1 className="text-center text-xl font-semibold tracking-tight text-navy sm:text-2xl">
-          {text.heading}
+          {localize(text.heading)}
         </h1>
 
         <section aria-labelledby="airport-camera-title">
@@ -97,50 +85,36 @@ export default function HomePage() {
               <div>
                 <h2 id="airport-camera-title" className="font-semibold text-navy">
                   <Link href="/cameras/madeira-airport" className="transition hover:text-ocean hover:underline">
-                    {messages.home.airportCameraTitle}
+                    {localize(messages.home.airportCameraTitle)}
                   </Link>
                 </h2>
                 <p className="mt-1 text-xs text-slate-500">
-                  {messages.home.airportCameraDescription}
+                  {localize(messages.home.airportCameraDescription)}
                 </p>
               </div>
               <span className="rounded-full bg-red-50 px-2 py-1 text-[11px] font-medium text-red-600">
-                {messages.home.live}
+                {localize(messages.home.live)}
               </span>
             </div>
             <div className="aspect-video overflow-hidden rounded-lg bg-slate-900">
-              <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed/8Drrabk3h6M?autoplay=1&mute=1"
-                title={messages.home.airportCameraTitle}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              <iframe className="h-full w-full" src="https://www.youtube.com/embed/8Drrabk3h6M?autoplay=1&mute=1" title={localize(messages.home.airportCameraTitle)} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
             </div>
             <form onSubmit={trackFlight} className="mt-1 rounded-lg border border-slate-200 bg-panel p-3">
               <div className="flex flex-col gap-2">
                 <div>
-                  <h3 className="text-sm font-semibold text-navy">{messages.home.flightTitle}</h3>
-                  <p className="mt-1 text-xs text-slate-500">{messages.home.flightDescription}</p>
+                  <h3 className="text-sm font-semibold text-navy">{localize(messages.home.flightTitle)}</h3>
+                  <p className="mt-1 text-xs text-slate-500">{localize(messages.home.flightDescription)}</p>
                 </div>
                 <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={flightNumber}
-                    onChange={(event) => setFlightNumber(event.target.value)}
-                    placeholder={messages.home.flightPlaceholder}
-                    className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-ocean focus:ring-2 focus:ring-ocean/20"
-                    aria-label={messages.home.flightAriaLabel}
-                  />
+                  <input type="text" value={flightNumber} onChange={(event) => setFlightNumber(event.target.value)} placeholder={localize(messages.home.flightPlaceholder)} className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-ocean focus:ring-2 focus:ring-ocean/20" aria-label={localize(messages.home.flightAriaLabel)}/>
                   <button type="submit" className="shrink-0 rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white hover:bg-ocean/90">
-                    {messages.home.trackFlight}
+                    {localize(messages.home.trackFlight)}
                   </button>
                 </div>
               </div>
             </form>
             <Link href="/cameras/madeira-airport" className="inline-flex min-h-10 items-center justify-center rounded-lg border border-ocean px-4 py-2 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white">
-              {text.airportCta}
+              {localize(text.airportCta)}
             </Link>
           </div>
         </section>
@@ -148,43 +122,25 @@ export default function HomePage() {
         <section className="flex flex-col gap-3" aria-labelledby="all-cameras-title">
           <div>
             <h2 id="all-cameras-title" className="text-lg font-semibold text-navy">
-              {messages.home.allCameras}
+              {localize(messages.home.allCameras)}
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              {text.showing(filtered.length, directoryCameras.length)}
+              {localize(text.showing(filtered.length, directoryCameras.length))}
             </p>
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-2" aria-label={text.filtersLabel}>
-            <button
-              type="button"
-              onClick={() => setActiveFilter('All')}
-              className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === 'All' ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
-            >
-              {text.all}
+          <div className="flex gap-2 overflow-x-auto pb-2" aria-label={localize(text.filtersLabel)}>
+            <button type="button" onClick={() => setActiveFilter('All')} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === 'All' ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>
+              {localize(text.all)}
             </button>
-            {cameraFilters.map((filter) => (
-              <button
-                key={filter}
-                type="button"
-                onClick={() => setActiveFilter(filter)}
-                className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}
-              >
-                {text.filters[filter]}
-              </button>
-            ))}
+            {localize(cameraFilters.map((filter) => (<button key={filter} type="button" onClick={() => setActiveFilter(filter)} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>
+                {localize(text.filters[filter])}
+              </button>)))}
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {filtered.map((camera) => (
-              <CameraCard
-                key={camera.id}
-                camera={camera}
-                returnToHome
-                onDetailsOpen={saveHomeCameraView}
-              />
-            ))}
+            {localize(filtered.map((camera) => (<CameraCard key={camera.id} camera={camera} returnToHome onDetailsOpen={saveHomeCameraView}/>)))}
           </div>
         </section>
       </div>
-    </Layout>
-  );
+    </Layout>);
 }
+export const getStaticProps = translatedStaticProps("/");

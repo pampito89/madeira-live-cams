@@ -1,53 +1,48 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { defaultLocale, isSupportedLocale, localePath, supportedLocales, type Locale } from '../lib/i18n/config';
-// @ts-ignore
+import { defaultLocale, isSupportedLocale, localePath } from '../lib/i18n/config';
+import { indexableLocales, isPrivateOrUtilityPath } from '../lib/i18n/coverage';
+import { TranslationProvider } from '../lib/i18n/TranslationProvider';
 import '../styles/globals.css';
-
 const SITE_URL = 'https://madeiralivecams.com';
-const fullyIndexedLocales: Locale[] = ['en', 'uk'];
-
+const EMPTY_CATALOG = {};
+const breadcrumbLabels = {
+  en: ['Home', 'Trail availability'],
+  pt: ['Início', 'Disponibilidade dos percursos'],
+  de: ['Startseite', 'Verfügbarkeit der Wanderwege'],
+  fr: ['Accueil', 'Disponibilité des sentiers'],
+  es: ['Inicio', 'Disponibilidad de los senderos'],
+  pl: ['Strona główna', 'Dostępność szlaków'],
+  uk: ['Головна', 'Завантаженість маршрутів'],
+};
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const locale = isSupportedLocale(router.locale) ? router.locale : defaultLocale;
-  const localePattern = /^\/(?:en|pt|de|fr|es|pl|uk)(?=\/|$)/;
   const rawPath = router.asPath.split(/[?#]/)[0] || '/';
-  const path = rawPath.replace(localePattern, '') || '/';
+  const path = rawPath.replace(/^\/(?:en|pt|de|fr|es|pl|uk)(?=\/|$)/, '') || '/';
   const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '');
   const canonicalUrl = `${SITE_URL}${localePath(locale, normalizedPath)}`;
-  const englishUrl = `${SITE_URL}${localePath('en', normalizedPath)}`;
-  const multilingualReady = normalizedPath === '/'
-    || normalizedPath === '/about'
-    || normalizedPath === '/parties'
-    || normalizedPath === '/privacy'
-    || normalizedPath === '/weather-guide'
-    || /^\/cameras\/[^/]+$/.test(normalizedPath);
-  const alternateLocales = multilingualReady ? supportedLocales : fullyIndexedLocales;
-  const mayIndex = multilingualReady || fullyIndexedLocales.includes(locale);
-  const trailBreadcrumbs = normalizedPath === '/trail-availability' ? {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+  const alternates = indexableLocales(normalizedPath);
+  const privateOrUtility = isPrivateOrUtilityPath(normalizedPath) || ['/404', '/500', '/_error'].includes(router.pathname);
+  const noindex = privateOrUtility || !alternates.includes(locale);
+  const trailBreadcrumbs = normalizedPath === '/trail-availability' && !noindex ? {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: locale === 'uk' ? 'Головна' : 'Home', item: `${SITE_URL}${localePath(locale, '/')}` },
-      { '@type': 'ListItem', position: 2, name: locale === 'uk' ? 'Завантаженість маршрутів' : 'Trail availability', item: canonicalUrl },
+      { '@type': 'ListItem', position: 1, name: breadcrumbLabels[locale][0], item: `${SITE_URL}${localePath(locale, '/')}` },
+      { '@type': 'ListItem', position: 2, name: breadcrumbLabels[locale][1], item: canonicalUrl },
     ],
   } : null;
-
-  return (
-    <>
-      <Head>
-        <link rel="canonical" href={canonicalUrl} />
-        {alternateLocales.map((alternateLocale) => (
-          <link key={alternateLocale} rel="alternate" hrefLang={alternateLocale} href={`${SITE_URL}${localePath(alternateLocale, normalizedPath)}`} />
-        ))}
-        <link rel="alternate" hrefLang="x-default" href={englishUrl} />
-        <meta name="robots" content={mayIndex ? 'index,follow' : 'noindex,follow'} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="Madeira Live Cams" />
-        {trailBreadcrumbs && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(trailBreadcrumbs).replace(/</g, '\\u003c') }} />}
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
+  return <TranslationProvider catalog={pageProps.translationCatalog ?? EMPTY_CATALOG}>
+    <Head>
+      <link rel="canonical" href={canonicalUrl} />
+      {!privateOrUtility && alternates.map(alternateLocale => <link key={alternateLocale} rel="alternate" hrefLang={alternateLocale} href={`${SITE_URL}${localePath(alternateLocale, normalizedPath)}`} />)}
+      {!privateOrUtility && <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${localePath('en', normalizedPath)}`} />}
+      <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:site_name" content="Madeira Live Cams" />
+      {trailBreadcrumbs && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(trailBreadcrumbs).replace(/</g, '\\u003c') }} />}
+    </Head>
+    <Component {...pageProps} />
+  </TranslationProvider>;
 }
