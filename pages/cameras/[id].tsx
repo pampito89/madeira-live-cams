@@ -74,7 +74,7 @@ export default function CameraPage({ camera }: CameraPageProps) {
                 <div><dt className="text-slate-500">{localize(messages.cameraCard.coordinates)}</dt><dd className="mt-1 font-medium text-navy">{displayCamera.latitude.toFixed(3)}, {displayCamera.longitude.toFixed(3)}</dd></div>
               </dl>
               {isAirport ? <a href="#airport-flights" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-ocean px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-forest">{localize(text.airportInfo)} ↓</a> : null}
-              <a href={displayCamera.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-4 py-3 text-sm font-semibold text-navy transition hover:bg-mist">{localize(messages.cameraCard.openOriginalSource)}</a>
+              {!isAirport ? <a href={displayCamera.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-slate-200 bg-panel px-4 py-3 text-sm font-semibold text-navy transition hover:bg-mist">{localize(messages.cameraCard.openOriginalSource)}</a> : null}
             </aside>
           </section>
           {isAirport ? <AirportFlightBoard locale={siteLocale} /> : null}
