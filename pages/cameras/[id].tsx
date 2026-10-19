@@ -51,9 +51,9 @@ export default function CameraPage({ camera }: CameraPageProps) {
         <article className="mt-5">
           <header className="max-w-3xl">
             <h1 className="text-2xl font-semibold tracking-tight text-navy md:text-3xl">{localize(heading)}</h1>
-            <p className="mt-3 text-base leading-7 text-slate-600">{localize(intro)}</p>
+            <p className={isAirport ? 'mt-2 text-xs leading-4 text-slate-500' : 'mt-3 text-base leading-7 text-slate-600'}>{localize(intro)}</p>
           </header>
-          <section className="mt-6 grid items-start gap-6 md:grid-cols-[2fr,1.2fr]">
+          <section className={`${isAirport ? 'mt-4' : 'mt-6'} grid items-start gap-6 md:grid-cols-[2fr,1.2fr]`}>
             <div className="flex min-w-0 flex-col gap-4">
               <div className="aspect-video overflow-hidden rounded-xl bg-slate-900">
                 {displayCamera.youtubeId ? (
