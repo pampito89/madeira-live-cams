@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { FlightSnapshot } from '../lib/aviationstack';
 import type { FlightDirection } from '../lib/airportFlights';
 import { remainingToday, flightSearchKey } from '../lib/todayFlights';
+import { boardNeedsRefresh, flightNeedsReview } from '../lib/flightFreshness';
 import { airportFlightText } from '../lib/i18n/airportFlights';
 import { flightSnapshotText } from '../lib/i18n/flightSnapshot';
 import type { Locale } from '../lib/i18n/config';
@@ -17,8 +18,10 @@ export default function AirportFlightBoard({ locale }: { locale: Locale }) {
   useEffect(() => () => { const controller = active.current; active.current = null; controller?.abort(); }, []);
   useEffect(() => {
     if (!data) return;
-    const timer = window.setInterval(() => setNow(Date.now()), 60_000);
-    return () => window.clearInterval(timer);
+    const tick = () => setNow(Date.now());
+    const timer = window.setInterval(tick, 60_000);
+    document.addEventListener('visibilitychange', tick);
+    return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', tick); };
   }, [data]);
   async function load() {
     if (active.current) return;
@@ -42,24 +45,29 @@ export default function AirportFlightBoard({ locale }: { locale: Locale }) {
       <div><h2 id="airport-flights-heading" className="text-lg font-semibold text-navy">{text.heading}</h2><p className="text-xs text-slate-500">{copy.today}</p></div>
       <button type="button" onClick={() => void load()} disabled={loading} className="min-h-11 rounded-lg bg-ocean px-4 py-2 text-sm font-semibold text-white hover:bg-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ocean disabled:opacity-60">{loading ? text.loading : data ? text.refresh : copy.show}</button>
     </div>
-    <div role="status" aria-live="polite" className="mt-1 text-xs text-slate-500">{failed ? text.unavailable : data ? `${text.fetched}: ${format(data.fetchedAt)}` : ''}</div>
+    <div role="status" aria-live="polite" className="mt-1 text-xs text-slate-500">{failed ? text.unavailable : data ? `${text.fetched}: ${format(data.fetchedAt)}${boardNeedsRefresh(data.fetchedAt, now) ? ` · ${copy.refreshNeeded}` : ''}` : ''}</div>
     {data ? <>
       <label className="mt-2 block"><span className="sr-only">{text.search}</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder={text.search} className="min-h-11 w-full rounded-lg border border-slate-300 px-3 text-base text-navy focus:border-ocean" /></label>
       <div className="mt-3 grid min-w-0 gap-3 lg:grid-cols-2">
         {(['arrivals', 'departures'] as FlightDirection[]).map(direction => {
-          const flights = remainingToday(data[direction], now).filter(flight => !search || flightSearchKey(flight.number).includes(search));
+          const flights = remainingToday(data[direction], now)
+            .filter(flight => !search || flightSearchKey(flight.number).includes(search))
+            .sort((a, b) => Number(flightNeedsReview(a, data.fetchedAt, now)) - Number(flightNeedsReview(b, data.fetchedAt, now)));
           return <section id={`fnc-${direction}`} key={direction} aria-labelledby={`fnc-${direction}-heading`} className="min-w-0 scroll-mt-24 overflow-hidden rounded-lg border border-slate-200">
             <h3 id={`fnc-${direction}-heading`} className="bg-panel px-2.5 py-1.5 text-sm font-semibold text-navy">{direction === 'arrivals' ? '↘ ' : '↗ '}{text[direction]} <span className="text-xs font-normal text-slate-500">({flights.length})</span></h3>
             <div role="region" aria-label={text[direction]} tabIndex={0} className="max-h-80 overflow-y-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean">
-              {flights.length ? <ul className="divide-y divide-slate-100">{flights.map((flight, index) => <li key={`${flight.number}:${flight.scheduled}:${index}`} className="px-2.5 py-1.5">
-                <div className="grid grid-cols-[2.75rem,minmax(0,1fr)] items-start gap-x-2 text-xs leading-4">
-                  <div className="font-semibold tabular-nums text-navy"><span aria-label={text.scheduled} className={flight.revised && flight.revised !== flight.scheduled ? 'font-normal text-slate-500 line-through' : ''}>{format(flight.scheduled)}</span>{flight.revised && flight.revised !== flight.scheduled ? <div aria-label={text.revised}>{format(flight.revised)}</div> : null}</div>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-baseline gap-x-2"><strong className="text-navy">{flight.number}</strong><span className="min-w-0 break-words font-medium text-navy">{flight.airport || flight.airportCode || '—'}</span></div>
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-2 text-slate-500"><span className="min-w-0 break-words">{flight.airline}</span><span className={['Canceled', 'Delayed', 'Diverted'].includes(flight.status) ? 'text-amber-800' : 'text-slate-600'}>{text.statuses[flight.status]}</span></div>
+              {flights.length ? <ul className="divide-y divide-slate-100">{flights.map((flight, index) => {
+                const unconfirmed = flightNeedsReview(flight, data.fetchedAt, now);
+                return <li key={`${flight.number}:${flight.scheduled}:${index}`} className="px-2.5 py-1.5">
+                  <div className="grid grid-cols-[2.75rem,minmax(0,1fr)] items-start gap-x-2 text-xs leading-4">
+                    <div className="font-semibold tabular-nums text-navy"><span aria-label={text.scheduled} className={flight.revised && flight.revised !== flight.scheduled ? 'font-normal text-slate-500 line-through' : ''}>{format(flight.scheduled)}</span>{flight.revised && flight.revised !== flight.scheduled ? <div aria-label={text.revised}>{format(flight.revised)}</div> : null}</div>
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-baseline gap-x-2"><strong className="text-navy">{flight.number}</strong><span className="min-w-0 break-words font-medium text-navy">{flight.airport || flight.airportCode || '—'}</span></div>
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-2 text-slate-500"><span className="min-w-0 break-words">{flight.airline}</span><span className={unconfirmed || ['Canceled', 'Delayed', 'Diverted'].includes(flight.status) ? 'text-amber-800' : 'text-slate-600'}>{unconfirmed ? copy.unconfirmed : text.statuses[flight.status]}</span></div>
+                    </div>
                   </div>
-                </div>
-              </li>)}</ul> : <p className="p-3 text-sm text-slate-500">{search ? text.noMatches : copy.empty}</p>}
+                </li>;
+              })}</ul> : <p className="p-3 text-sm text-slate-500">{search ? text.noMatches : copy.empty}</p>}
             </div>
           </section>;
         })}

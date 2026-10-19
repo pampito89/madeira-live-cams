@@ -16,8 +16,12 @@ export function normalizeStackFlights(rows: unknown[], direction: FlightDirectio
     if (movement?.iata !== 'FNC') throw new Error('Unexpected airport');
     const statusMap: Record<string, FlightStatus> = { scheduled: 'Expected', active: direction === 'arrivals' ? 'EnRoute' : 'Departed', landed: direction === 'arrivals' ? 'Arrived' : 'Departed', cancelled: 'Canceled', diverted: 'Diverted', incident: 'Unknown' };
     let status = statusMap[row.flight_status] ?? 'Unknown';
+    const actual = instant(movement.actual) || instant(movement.actual_runway);
+    // A recorded movement is stronger evidence than a lagging flight_status.
+    // Do not interpret a future or malformed actual timestamp as confirmation.
+    if (actual && Date.parse(actual) <= Date.now()) status = direction === 'arrivals' ? 'Arrived' : 'Departed';
     if (status === 'Expected' && typeof movement.delay === 'number' && movement.delay > 0) status = 'Delayed';
-    return { number: text(row.flight?.iata) || text(row.flight?.icao) || text(row.flight?.number) || '—', airline: text(row.airline?.name), airport: text(opposite?.airport), airportCode: text(opposite?.iata), scheduled: instant(movement.scheduled), revised: instant(movement.actual) || instant(movement.estimated), status };
+    return { number: text(row.flight?.iata) || text(row.flight?.icao) || text(row.flight?.number) || '—', airline: text(row.airline?.name), airport: text(opposite?.airport), airportCode: text(opposite?.iata), scheduled: instant(movement.scheduled), revised: actual || instant(movement.estimated) || instant(movement.estimated_runway), status };
   }).filter(row => {
     const id = JSON.stringify(row);
     if (seen.has(id)) return false;
