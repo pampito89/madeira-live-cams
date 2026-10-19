@@ -1,29 +1,23 @@
 .hero {
+  position: relative;
+  isolation: isolate;
   border-radius: 16px;
   overflow: hidden;
-  background: #173d2b url('/images/trip-plan-map.jpg') 65% center / cover no-repeat;
+  background-color: #173d2b;
   box-shadow: 0 10px 15px -3px rgba(23, 61, 43, .15);
 }
-
+.image { object-fit: cover; object-position: 65% center; z-index: -1; }
 .content {
+  position: relative;
   padding: 28px 20px;
+  background: linear-gradient(90deg, rgba(16, 41, 31, .65), rgba(16, 41, 31, .1));
   text-shadow: 0 1px 3px #10291f, 0 2px 8px #10291f;
 }
-
-.content > p:first-child {
-  color: #fff;
-  font-size: 12px;
-  letter-spacing: .2em;
-}
-
+.content > p:first-child { color: #fff; font-size: 12px; letter-spacing: .2em; }
 .content > h1 { color: #fff; max-width: 672px; }
 .content > p:last-child { color: #fff; max-width: 672px; font-size: 14px; line-height: 24px; }
-
 @media (min-width: 640px) {
   .content { padding: 36px 32px; }
   .content > p:last-child { font-size: 16px; }
 }
-
-@media (min-width: 1024px) {
-  .hero { background-position: center; }
-}
+@media (min-width: 1024px) { .image { object-position: center; } }
