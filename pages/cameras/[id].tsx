@@ -11,6 +11,7 @@ import { localePath, supportedLocales } from '../../lib/i18n/config';
 import Layout from '../../components/Layout';
 import AirportFlightBoard from '../../components/AirportFlightBoard';
 import AirportWeatherPanel from '../../components/AirportWeatherPanel';
+import AirportUpdatesPanel from '../../components/AirportUpdatesPanel';
 import { cameras, getLocalizedCamera, type Camera } from '../../components/cameraData';
 
 type CameraPageProps = { camera: Camera };
@@ -79,12 +80,13 @@ export default function CameraPage({ camera }: CameraPageProps) {
               </aside>
             )}
           </section>
-          {isAirport ? <AirportFlightBoard locale={siteLocale} /> : null}
-          <section className="mt-8 max-w-3xl rounded-xl border border-slate-200 bg-white p-5">
-            <h2 className="text-lg font-semibold text-navy">{localize(text.checkHeading)}</h2>
-            <p className="mt-2 leading-7 text-slate-600">{localize(isAirport ? text.airportCheck : text.cameraCheck)}</p>
-            <Link href="/weather-guide" className="mt-3 inline-flex text-sm font-semibold text-ocean hover:underline">{localize(text.weatherLink)} →</Link>
-          </section>
+          {isAirport ? <><AirportUpdatesPanel locale={siteLocale} /><AirportFlightBoard locale={siteLocale} /></> : (
+            <section className="mt-8 max-w-3xl rounded-xl border border-slate-200 bg-white p-5">
+              <h2 className="text-lg font-semibold text-navy">{localize(text.checkHeading)}</h2>
+              <p className="mt-2 leading-7 text-slate-600">{localize(text.cameraCheck)}</p>
+              <Link href="/weather-guide" className="mt-3 inline-flex text-sm font-semibold text-ocean hover:underline">{localize(text.weatherLink)} →</Link>
+            </section>
+          )}
         </article>
       </main>
     </Layout>
