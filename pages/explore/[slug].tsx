@@ -60,6 +60,7 @@ function StandardLocationPage({ location }: Props) {
         ? `https://www.waze.com/ul?ll=${encodeURIComponent(navigationQuery)}&navigate=yes`
         : `https://www.waze.com/ul?q=${encodeURIComponent(navigationQuery)}&navigate=yes`;
     const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
+    const ticketLabel = { en: 'Tickets', pt: 'Bilhetes', de: 'Tickets', fr: 'Billets', es: 'Entradas', pl: 'Bilety', uk: 'Квитки' }[translationLanguage];
     const handleBack = () => {
         if (router.query.returnTo === 'home')
             return void router.push('/?restoreCameraFilter=1');
@@ -125,6 +126,9 @@ function StandardLocationPage({ location }: Props) {
                     <button type="button" onClick={() => setRouteOpen(false)} className="block w-full px-3 py-2 text-left text-sm">{localize(uk ? 'Закрити' : 'Close')}</button>
                   </div>))}
               </div>
+              {display.slug === 'cabo-girao-skywalk' && (
+                <a href="https://simplifica.madeira.gov.pt/services/78-79-256/start" target="_blank" rel="noopener noreferrer" className={actionClass}>{ticketLabel}</a>
+              )}
               <button type="button" onClick={share} className={actionClass}>{localize(copied ? (uk ? 'Скопійовано' : 'Copied') : (uk ? 'Поділитися' : 'Share'))}</button>
             </div>
             <p className="mt-5 text-base leading-7 text-slate-700">{localize(display.article.intro)}</p>
