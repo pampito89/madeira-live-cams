@@ -193,7 +193,7 @@ export const cameras: Camera[] = [
     latitude: 32.633,
     longitude: -16.972,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/camara-de-lobos',
-    youtubeId: 'luCyJFxTDI0',
+    youtubeId: 'x4ZjtwDJX3g',
   },
   {
     id: 'ponta-delgada',
