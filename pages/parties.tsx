@@ -1,85 +1,98 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { withServerTranslations } from '../lib/i18n/pageTranslations';
 import { useMessages } from '../lib/i18n/useMessages';
-import { events, categories, municipalities, eventSources, type IslandEvent } from '../data/events';
-import { filterEvents, madeiraDate, monthDays, shiftMonth } from '../lib/events';
+import { isSupportedLocale } from '../lib/i18n/config';
+import { categories, municipalities } from '../data/events';
+import { filterEvents } from '../lib/events';
+import { eventText } from '../lib/events/text';
+import { getEventFeed } from '../lib/events/feed';
+import type { EventFeed, ImportedEvent } from '../lib/events/types';
 import styles from '../styles/events.module.css';
 
 const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Food: '♨', Culture: '◇', Talks: '◎' };
-export default function PartiesPage({ initialEvents, today }: { initialEvents: IslandEvent[]; today: string }) {
+function Poster({ event, label }: { event: ImportedEvent; label: string }) {
+  const [failed, setFailed] = useState(false);
+  if (event.image && !failed) return <figure className={styles.poster}><img src={event.image.src} alt={event.image.alt} loading="lazy" width="600" height="800" onError={() => setFailed(true)} /><figcaption>{event.image.credit}</figcaption></figure>;
+  return <div className={styles.art} data-category={event.category} aria-hidden="true"><span>{icons[event.category]}</span><div><small>MADEIRA · PORTO SANTO</small><strong>{label}</strong><small>{event.municipalities.join(' / ') || 'MADEIRA'}</small></div></div>;
+}
+export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed }) {
   const { siteLocale } = useMessages();
-  const uk = siteLocale === 'uk';
-  const t = (en: string, ua: string) => uk ? ua : en;
+  const text = eventText(siteLocale);
+  const [storedFeed, setFeed] = useState(initialFeed);
+  const feed = storedFeed.locale === siteLocale ? storedFeed : initialFeed;
+  const [connectionError, setConnectionError] = useState(false);
   const [query, setQuery] = useState('');
   const [municipality, setMunicipality] = useState('');
   const [category, setCategory] = useState('');
-  const [date, setDate] = useState('');
-  const [month, setMonth] = useState(today.slice(0, 7));
-  const [calendar, setCalendar] = useState(false);
-  const filtered = filterEvents(initialEvents, { today, query, municipality, category, date });
-  const calendarEvents = filterEvents(initialEvents, { today, query, municipality, category });
-  const formatDate = (value: string) => new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T12:00:00Z`));
-  const title = t('Madeira events, festivals & parties', 'Події, свята та вечірки Мадейри');
-  const description = t('Find festivals, concerts, rallies and local celebrations across Madeira and Porto Santo, with dates, sources and organiser links.', 'Свята, концерти, ралі та місцеві події Мадейри й Порту-Санту: дати, джерела та посилання на організаторів.');
-  const reset = () => { setQuery(''); setMunicipality(''); setCategory(''); setDate(''); };
-  const categoryName = (value: string) => uk ? ({ Festivals: 'Свята', Music: 'Музика', Nightlife: 'Вечірки', Sport: 'Спорт', Food: 'Гастрономія', Culture: 'Культура', Talks: 'Лекції' } as Record<string, string>)[value] : value;
+  useEffect(() => {
+    setFeed(initialFeed); setConnectionError(false);
+    const controller = new AbortController(); let timer: ReturnType<typeof setTimeout>;
+    const refresh = async () => {
+      if (controller.signal.aborted) return;
+      if (!document.hidden) {
+        try {
+          const response = await fetch(`/api/events?locale=${siteLocale}`, { signal: controller.signal });
+          if (!response.ok) throw new Error('Unavailable');
+          const data: EventFeed = await response.json();
+          if (data.locale !== siteLocale || !Array.isArray(data.events) || !Array.isArray(data.sources)) throw new Error('Invalid feed');
+          if (!controller.signal.aborted) { setFeed(data); setConnectionError(false); }
+        } catch { if (!controller.signal.aborted) setConnectionError(true); }
+      }
+      if (!controller.signal.aborted) timer = setTimeout(refresh, 60_000);
+    };
+    timer = setTimeout(refresh, 1500);
+    return () => { controller.abort(); clearTimeout(timer); };
+  }, [siteLocale, initialFeed]);
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+  const searched = feed.events.filter(event => !normalizedQuery || `${event.title} ${event.originalTitle} ${event.description} ${event.venue} ${event.municipalities.join(' ')}`.toLocaleLowerCase().includes(normalizedQuery));
+  const filtered = filterEvents(searched, { today: feed.today, municipality, category }) as ImportedEvent[];
+  const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
+  const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
+  const categoryName = (value: string) => text.categories[categories.indexOf(value as typeof categories[number])];
+  const reset = () => { setQuery(''); setMunicipality(''); setCategory(''); };
   return <Layout>
     <Head>
-      <title>{title} | Madeira Live Cams</title>
-      <meta name="description" content={description} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description, url: `https://madeiralivecams.com${siteLocale === 'en' ? '' : `/${siteLocale}`}/parties`, mainEntity: { '@type': 'ItemList', itemListElement: initialEvents.map((event, index) => ({ '@type': 'ListItem', position: index + 1, name: event.title, url: event.sourceUrl })) } }).replace(/</g, '\\u003c') }} />
+      <title>{text.title} | Madeira Live Cams</title>
+      <meta name="description" content={text.intro} />
+      <meta property="og:title" content={text.title} /><meta property="og:description" content={text.intro} /><meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={text.title} /><meta name="twitter:description" content={text.intro} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: text.title, description: text.intro, url: `https://madeiralivecams.com${siteLocale === 'en' ? '' : `/${siteLocale}`}/parties`, mainEntity: { '@type': 'ItemList', itemListElement: feed.events.map((event, index) => ({ '@type': 'ListItem', position: index + 1, name: event.title, url: event.sourceUrl })) } }).replace(/</g, '\\u003c') }} />
     </Head>
     <div className={`page-shell ${styles.page}`}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p>
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <div className={styles.heroBottom}><span>{t('11 municipalities. One island agenda.', '11 муніципалітетів. Одна афіша островів.')}</span><a href="#event-sources">{t('Explore sources', 'Джерела анонсів')} ↗</a></div>
+        <p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p><h1>{text.title}</h1><p>{text.intro}</p>
+        <a href="#event-sources">{text.sources} ↗</a>
       </header>
-      <section className={styles.controls} aria-label={t('Filter events', 'Фільтри подій')}>
-        <label>{t('Search', 'Пошук')}<input type="search" placeholder={t('Event, place or artist', 'Подія, місце або артист')} value={query} onChange={e => setQuery(e.target.value)} /></label>
-        <label>{t('Municipality', 'Муніципалітет')}<select value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{t('All municipalities', 'Усі муніципалітети')}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
-        <label>{t('Date', 'Дата')}<input type="date" min={today} value={date} onChange={e => { setDate(e.target.value); if (e.target.value) setMonth(e.target.value.slice(0, 7)); }} /></label>
-        <button type="button" onClick={reset}>{t('Clear filters', 'Скинути фільтри')}</button>
-        <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{t('Everything', 'Усе')}</button>{categories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
+      <section className={styles.controls} aria-label={text.search}>
+        <label htmlFor="event-query">{text.search}<input id="event-query" type="search" placeholder={text.placeholder} value={query} onChange={e => setQuery(e.target.value)} /></label>
+        <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
+        <button type="button" onClick={reset}>{text.clear}</button>
+        <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{categories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
       </section>
-      <div className={styles.toolbar}><p role="status">{filtered.length} {t('events', 'подій')}{date ? ` · ${formatDate(date)}` : ''}</p><div><button type="button" aria-pressed={!calendar} onClick={() => setCalendar(false)}>{t('Feed', 'Стрічка')}</button><button type="button" aria-pressed={calendar} onClick={() => setCalendar(true)}>{t('Calendar', 'Календар')}</button></div></div>
-      {calendar && <section className={styles.calendar} aria-label={t('Events calendar', 'Календар подій')}>
-        <div className={styles.month}><button type="button" aria-label={t('Previous month', 'Попередній місяць')} onClick={() => setMonth(shiftMonth(month, -1))}>←</button><h2>{new Intl.DateTimeFormat(uk ? 'uk-UA' : 'en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${month}-01T12:00:00Z`))}</h2><button type="button" aria-label={t('Next month', 'Наступний місяць')} onClick={() => setMonth(shiftMonth(month, 1))}>→</button></div>
-        <div className={styles.days}>{(uk ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']).map(day => <span className={styles.weekday} key={day}>{day}</span>)}{monthDays(month).map((day, index) => {
-          if (!day) return <span key={`empty-${index}`} />;
-          const count = calendarEvents.filter(event => event.start <= day && event.end >= day && day >= today).length;
-          return <button type="button" key={day} disabled={day < today} aria-pressed={date === day} aria-label={`${formatDate(day)}: ${count} ${t('events', 'подій')}`} onClick={() => setDate(date === day ? '' : day)}><span>{Number(day.slice(-2))}</span>{count > 0 && <small>{count}<span className={styles.dayLabel}> {t('events', 'подій')}</span></small>}</button>;
-        })}</div>
-      </section>}
-      <p className={styles.notice}>{t('Editorial selection · dates checked 23 October 2026. New announcements are added after review; this is not a complete live feed. Confirm times, admission and changes with the organiser.', 'Редакційна добірка · дати перевірено 23 жовтня 2026. Нові анонси додаються після перевірки; це не повна автоматична стрічка. Час, умови входу та зміни уточнюйте в організатора.')}</p>
-      <section className={styles.grid} aria-label={t('Upcoming events', 'Найближчі події')}>
+      <div className={styles.toolbar}><p role="status">{filtered.length} {text.count}</p><span>{text.confirm}</span></div>
+      {connectionError && <p className={styles.notice} role="status">{text.connection}</p>}
+      {feed.sources.some(source => source.status !== 'fresh') && <p className={styles.notice}>{feed.sources.filter(source => source.status !== 'fresh').map(source => `${source.name}: ${source.status === 'stale' ? text.stale : text.unavailable}`).join(' · ')}</p>}
+      <section className={styles.grid} aria-label={text.title}>
         {filtered.map(event => <article key={event.id} className={styles.card}>
-          {event.image ? <figure><img src={event.image.src} alt={event.image.alt} loading="lazy" width="640" height="320" onError={e => { e.currentTarget.style.display = 'none'; }} /><figcaption>{event.image.credit}</figcaption></figure> : <div className={styles.art} data-category={event.category} aria-hidden="true"><span>{icons[event.category]}</span><small>MADEIRA / {event.category.toUpperCase()}</small></div>}
+          <Poster key={`${event.id}:${event.image?.src || ''}`} event={event} label={categoryName(event.category)} />
           <div className={styles.cardBody}>
-            <div className={styles.tags}><span>{categoryName(event.category)}</span>{event.start <= today && <span>{t('Happening now', 'Триває зараз')}</span>}</div>
             <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
             <h2>{event.title}</h2><p>{event.description}</p>
-            <p className={styles.venue}>⌖ {event.venue}<br /><small>{event.municipalities.join(' · ')}</small></p>
-            <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{t('Programme & details', 'Програма та деталі')} ↗</a>{event.ticketUrl && <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{t('Tickets', 'Квитки')} ↗</a>}</div>
-            <p className={styles.source}>{event.source} · {t('Checked', 'Перевірено')} {formatDate(event.checkedAt)}</p>
+            <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
+            {event.translation !== 'source' && <div className={styles.translation}><span>{event.translation === 'machine' ? text.machine : text.pending}</span>{event.translation === 'machine' && <details><summary>{text.original}</summary><p lang={event.sourceLanguage}>{event.originalTitle}</p></details>}</div>}
+            <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
+            <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
           </div>
         </article>)}
       </section>
-      {filtered.length === 0 && <div className={styles.empty}><h2>{t('No verified events match these filters', 'За цими фільтрами перевірених подій немає')}</h2><p>{t('Try another date or browse the sources below for new announcements.', 'Оберіть іншу дату або перегляньте нові анонси в джерелах нижче.')}</p><button type="button" onClick={reset}>{t('Show all events', 'Показати всі події')}</button></div>}
-      <section id="event-sources" className={styles.sources}><h2>{t('More around the islands', 'Більше подій на островах')}</h2><p>{t('Official agendas, ticket services and organisers. Links open their websites; availability and prices are confirmed there.', 'Офіційні афіші, квиткові сервіси та організатори. Посилання ведуть на їхні сайти; наявність квитків і ціни перевіряйте там.')}</p><div>{eventSources.map(source => <a key={source.name} href={source.url} target="_blank" rel="noopener noreferrer"><strong>{source.name} ↗</strong><span>{source.description}</span></a>)}</div></section>
+      {!filtered.length && <div className={styles.empty}><h2>{text.empty}</h2><p>{text.emptyHelp}</p><button type="button" onClick={reset}>{text.showAll}</button></div>}
+      <section id="event-sources" className={styles.sources}><h2>{text.sources}</h2><div>{feed.sources.map(source => <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer"><strong>{source.name} ↗</strong><span>{source.status === 'fresh' ? text.updated : source.status === 'stale' ? text.stale : text.unavailable}{source.fetchedAt ? ` · ${formatUpdated(source.fetchedAt)}` : ''}</span></a>)}</div></section>
     </div>
   </Layout>;
 }
-export const getServerSideProps = withServerTranslations(async () => {
-  const today = madeiraDate();
-  return { props: { initialEvents: filterEvents(events, { today }), today } };
+export const getServerSideProps = withServerTranslations(async ({ locale }) => {
+  const initialFeed = await getEventFeed(isSupportedLocale(locale) ? locale : 'en');
+  return { props: { initialFeed } };
 }, '/parties');
