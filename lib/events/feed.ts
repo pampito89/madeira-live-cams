@@ -2,7 +2,7 @@ import { madeiraDate } from '../events';
 import type { Locale } from '../i18n/config';
 import { eventPosters } from '../../data/event-posters';
 import { parseEventsMadeira, parseAmak, safeUrl } from './adapters';
-import { parseEventbrite, mergeImportedEvents } from './eventbrite';
+import { loadEventbritePages, mergeImportedEvents } from './eventbrite';
 import { readCache, writeCache } from './cache';
 import { localizeEvents } from './translate';
 import { eventText } from './text';
@@ -14,6 +14,9 @@ export const SOURCES = [
  // Parties precede music so cross-listed club nights keep the nightlife category.
  { id: 'eventbrite-parties', name: 'Eventbrite · Parties', url: 'https://www.eventbrite.com/d/portugal--funchal/parties/', endpoint: 'https://www.eventbrite.com/d/portugal--funchal/parties/', format: 'parties' },
  { id: 'eventbrite-music', name: 'Eventbrite · Music', url: 'https://www.eventbrite.com/b/portugal--funchal/music/', endpoint: 'https://www.eventbrite.com/b/portugal--funchal/music/', format: 'music' },
+ { id: 'eventbrite-funchal', name: 'Eventbrite · Funchal · All events', url: 'https://www.eventbrite.com/d/portugal--funchal/all-events/', endpoint: 'https://www.eventbrite.com/d/portugal--funchal/all-events/', format: 'all' },
+ { id: 'eventbrite-madeira', name: 'Eventbrite · Madeira · All events', url: 'https://www.eventbrite.com/d/portugal--ilha-da-madeira--85687345/all-events/', endpoint: 'https://www.eventbrite.com/d/portugal--ilha-da-madeira--85687345/all-events/', format: 'all' },
+ { id: 'eventbrite-porto-santo', name: 'Eventbrite · Porto Santo · All events', url: 'https://www.eventbrite.com/d/portugal--ilha-de-porto-santo/all-events/', endpoint: 'https://www.eventbrite.com/d/portugal--ilha-de-porto-santo/all-events/', format: 'all' },
 ] as const;
 const FRESH_MS = 30 * 60_000;
 const STALE_MS = 7 * 24 * 60 * 60_000;
@@ -43,7 +46,7 @@ async function loadSource(source: typeof SOURCES[number]) {
        const fetchedAt = new Date().toISOString(); const body = await fetchText(source.endpoint);
        let events: ImportedEvent[];
        if (source.format === 'html') events = parseEventsMadeira(body, fetchedAt);
-       else if (source.format === 'music' || source.format === 'parties') events = parseEventbrite(body, fetchedAt, source.format);
+       else if (source.format === 'music' || source.format === 'parties' || source.format === 'all') events = await loadEventbritePages(source.endpoint, fetchedAt, source.format, source.id, fetchText, body);
        else {
          const payload = JSON.parse(body); events = parseAmak(payload, fetchedAt);
          const pages = Math.min(Number(payload.total_pages) || 1, 4);
