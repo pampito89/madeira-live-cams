@@ -12,10 +12,11 @@ import type { EventFeed, ImportedEvent } from '../lib/events/types';
 import styles from '../styles/events.module.css';
 
 const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Food: '♨', Culture: '◇', Talks: '◎' };
+const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festival', Food: 'madeira-festival' };
 function Poster({ event, label }: { event: ImportedEvent; label: string }) {
   const [failed, setFailed] = useState(false);
   if (event.image && !failed) return <figure className={styles.poster}><img src={event.image.src} alt={event.image.alt} loading="lazy" width="600" height="800" onError={() => setFailed(true)} /><figcaption>{event.image.credit}</figcaption></figure>;
-  return <div className={styles.art} data-category={event.category} aria-hidden="true"><span>{icons[event.category]}</span><div><small>MADEIRA · PORTO SANTO</small><strong>{label}</strong><small>{event.municipalities.join(' / ') || 'MADEIRA'}</small></div></div>;
+  return <div className={styles.art} aria-hidden="true"><img src={`/images/events/${artwork[event.category] || 'madeira-evening'}.jpg`} alt="" loading="lazy" decoding="async" width="960" height="640" /><div className={styles.artCaption}><strong>{label}</strong><small>{event.municipalities.join(' / ') || 'MADEIRA · PORTO SANTO'}</small></div></div>;
 }
 export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed }) {
   const { siteLocale } = useMessages();
@@ -62,7 +63,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
         <p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p><h1>{text.title}</h1><p>{text.intro}</p>
         <a href="#event-sources">{text.sources} ↗</a>
       </header>
-      <section className={styles.controls} style={{ gridTemplateColumns: 'minmax(0, 1fr) auto' }} aria-label={text.municipality}>
+      <section className={styles.controls} aria-label={text.municipality}>
         <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
         <button type="button" onClick={reset}>{text.clear}</button>
         <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{categories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
@@ -77,8 +78,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
             <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
             <h2>{event.title}</h2><p>{event.description}</p>
             <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
-            {event.translation !== 'source' && <div className={styles.translation}><span>{event.translation === 'machine' ? text.machine : text.pending}</span>{event.translation === 'machine' && <details><summary>{text.original}</summary><p lang={event.sourceLanguage}>{event.originalTitle}</p></details>}</div>}
-            <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
+            <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
             <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
           </div>
         </article>)}
