@@ -11,12 +11,13 @@ import { getEventFeed } from '../lib/events/feed';
 import type { EventFeed, ImportedEvent } from '../lib/events/types';
 import styles from '../styles/events.module.css';
 
-const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Food: '♨', Culture: '◇', Talks: '◎' };
-const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festival', Food: 'madeira-festival' };
-function Poster({ event, label }: { event: ImportedEvent; label: string }) {
+const visibleCategories = categories.filter(category => category !== 'Talks');
+const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Food: '♨', Culture: '◇' };
+const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festivals-day', Sport: 'madeira-sport', Food: 'madeira-food', Culture: 'madeira-culture' };
+function EventBackground({ event }: { event: ImportedEvent }) {
   const [failed, setFailed] = useState(false);
-  if (event.image && !failed) return <figure className={styles.poster}><img src={event.image.src} alt={event.image.alt} loading="lazy" width="600" height="800" onError={() => setFailed(true)} /><figcaption>{event.image.credit}</figcaption></figure>;
-  return <div className={styles.art} aria-hidden="true"><img src={`/images/events/${artwork[event.category] || 'madeira-evening'}.jpg`} alt="" loading="lazy" decoding="async" width="960" height="640" /><div className={styles.artCaption}><strong>{label}</strong><small>{event.municipalities.join(' / ') || 'MADEIRA · PORTO SANTO'}</small></div></div>;
+  const fallback = `/images/events/${artwork[event.category] || 'madeira-culture'}.jpg`;
+  return <img className={styles.cardImage} src={!failed && event.image ? event.image.src : fallback} alt="" aria-hidden="true" loading="lazy" decoding="async" width="960" height="640" onError={() => setFailed(true)} />;
 }
 export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed }) {
   const { siteLocale } = useMessages();
@@ -45,7 +46,8 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
     timer = setTimeout(refresh, 1500);
     return () => { controller.abort(); clearTimeout(timer); };
   }, [siteLocale, initialFeed]);
-  const filtered = filterEvents(feed.events, { today: feed.today, municipality, category }) as ImportedEvent[];
+  const visibleEvents = feed.events.filter(event => event.category !== 'Talks');
+  const filtered = filterEvents(visibleEvents, { today: feed.today, municipality, category }) as ImportedEvent[];
   const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
   const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
   const categoryName = (value: string) => text.categories[categories.indexOf(value as typeof categories[number])];
@@ -56,30 +58,34 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
       <meta name="description" content={text.intro} />
       <meta property="og:title" content={text.title} /><meta property="og:description" content={text.intro} /><meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={text.title} /><meta name="twitter:description" content={text.intro} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: text.title, description: text.intro, url: `https://madeiralivecams.com${siteLocale === 'en' ? '' : `/${siteLocale}`}/parties`, mainEntity: { '@type': 'ItemList', itemListElement: feed.events.map((event, index) => ({ '@type': 'ListItem', position: index + 1, name: event.title, url: event.sourceUrl })) } }).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: text.title, description: text.intro, url: `https://madeiralivecams.com${siteLocale === 'en' ? '' : `/${siteLocale}`}/parties`, mainEntity: { '@type': 'ItemList', itemListElement: visibleEvents.map((event, index) => ({ '@type': 'ListItem', position: index + 1, name: event.title, url: event.sourceUrl })) } }).replace(/</g, '\\u003c') }} />
     </Head>
     <div className={`page-shell ${styles.page}`}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p><h1>{text.title}</h1><p>{text.intro}</p>
-        <a href="#event-sources">{text.sources} ↗</a>
+        <img className={styles.heroImage} src="/images/events/madeira-festivals-day.jpg" alt="" width="960" height="640" fetchPriority="high" />
+        <div className={styles.heroContent}><p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p><h1>{text.title}</h1><p>{text.intro}</p><a href="#event-sources">{text.sources} ↗</a></div>
       </header>
       <section className={styles.controls} aria-label={text.municipality}>
         <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
         <button type="button" onClick={reset}>{text.clear}</button>
-        <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{categories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
+        <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{visibleCategories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
       </section>
       <div className={styles.toolbar}><p role="status">{filtered.length} {text.count}</p><span>{text.confirm}</span></div>
       {connectionError && <p className={styles.notice} role="status">{text.connection}</p>}
       {feed.sources.some(source => source.status !== 'fresh') && <p className={styles.notice}>{feed.sources.filter(source => source.status !== 'fresh').map(source => `${source.name}: ${source.status === 'stale' ? text.stale : text.unavailable}`).join(' · ')}</p>}
       <section className={styles.grid} aria-label={text.title}>
         {filtered.map(event => <article key={event.id} className={styles.card}>
-          <Poster key={`${event.id}:${event.image?.src || ''}`} event={event} label={categoryName(event.category)} />
+          <EventBackground key={`${event.id}:${event.image?.src || ''}`} event={event} />
           <div className={styles.cardBody}>
-            <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
-            <h2>{event.title}</h2><p>{event.description}</p>
-            <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
-            <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
-            <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
+            <p className={styles.badge}>{icons[event.category]} {categoryName(event.category)}</p>
+            <div className={styles.eventContent}>
+              <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
+              <h2>{event.title}</h2><p className={styles.description}>{event.description}</p>
+              <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
+              <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
+              <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
+              {event.image?.credit && <p className={styles.credit}>{event.image.credit}</p>}
+            </div>
           </div>
         </article>)}
       </section>
