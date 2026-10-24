@@ -23,7 +23,6 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
   const [storedFeed, setFeed] = useState(initialFeed);
   const feed = storedFeed.locale === siteLocale ? storedFeed : initialFeed;
   const [connectionError, setConnectionError] = useState(false);
-  const [query, setQuery] = useState('');
   const [municipality, setMunicipality] = useState('');
   const [category, setCategory] = useState('');
   useEffect(() => {
@@ -45,13 +44,11 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
     timer = setTimeout(refresh, 1500);
     return () => { controller.abort(); clearTimeout(timer); };
   }, [siteLocale, initialFeed]);
-  const normalizedQuery = query.trim().toLocaleLowerCase();
-  const searched = feed.events.filter(event => !normalizedQuery || `${event.title} ${event.originalTitle} ${event.description} ${event.venue} ${event.municipalities.join(' ')}`.toLocaleLowerCase().includes(normalizedQuery));
-  const filtered = filterEvents(searched, { today: feed.today, municipality, category }) as ImportedEvent[];
+  const filtered = filterEvents(feed.events, { today: feed.today, municipality, category }) as ImportedEvent[];
   const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
   const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
   const categoryName = (value: string) => text.categories[categories.indexOf(value as typeof categories[number])];
-  const reset = () => { setQuery(''); setMunicipality(''); setCategory(''); };
+  const reset = () => { setMunicipality(''); setCategory(''); };
   return <Layout>
     <Head>
       <title>{text.title} | Madeira Live Cams</title>
@@ -65,8 +62,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
         <p className={styles.eyebrow}>MADEIRA · PORTO SANTO</p><h1>{text.title}</h1><p>{text.intro}</p>
         <a href="#event-sources">{text.sources} ↗</a>
       </header>
-      <section className={styles.controls} aria-label={text.search}>
-        <label htmlFor="event-query">{text.search}<input id="event-query" type="search" placeholder={text.placeholder} value={query} onChange={e => setQuery(e.target.value)} /></label>
+      <section className={styles.controls} style={{ gridTemplateColumns: 'minmax(0, 1fr) auto' }} aria-label={text.municipality}>
         <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
         <button type="button" onClick={reset}>{text.clear}</button>
         <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{categories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
