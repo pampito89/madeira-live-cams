@@ -1,12 +1,12 @@
 import { madeiraDate } from '../events';
 import type { Locale } from '../i18n/config';
-import { categories } from '../../data/events';
 import { eventPosters } from '../../data/event-posters';
 import { parseEventsMadeira, parseAmak, safeUrl } from './adapters';
 import { parseEventbrite, mergeImportedEvents } from './eventbrite';
 import { readCache, writeCache } from './cache';
 import { localizeEvents } from './translate';
 import { eventText } from './text';
+import { classifyCompetition, eventCategoryName } from './classification';
 import type { EventFeed, ImportedEvent, SourceSnapshot, SourceState } from './types';
 export const SOURCES = [
  { id: 'eventsmadeira', name: 'Events Madeira', url: 'https://eventsmadeira.com/en/event-listing/', endpoint: 'https://eventsmadeira.com/en/event-listing/', format: 'html' },
@@ -61,10 +61,10 @@ async function loadSource(source: typeof SOURCES[number]) {
 }
 export async function getEventFeed(locale: Locale): Promise<EventFeed> {
  const today = madeiraDate(); const loaded = await Promise.all(SOURCES.map(loadSource));
- const imported = mergeImportedEvents(loaded.flatMap(item => item.events)).filter(event => event.end >= today).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
+ const imported = mergeImportedEvents(loaded.flatMap(item => item.events).map(classifyCompetition)).filter(event => event.end >= today).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
  const events = await localizeEvents(imported, locale); const text = eventText(locale);
  for (const event of events) {
-   const category = text.categories[categories.indexOf(event.category)];
+   const category = eventCategoryName(locale, event.category);
    event.description = `${category} · ${event.municipalities.join(' · ') || text.unknownVenue}. ${event.start !== event.end ? text.period : text.confirm}`;
    const poster = eventPosters[event.id];
    if (poster?.permission && poster.credit && (poster.src.startsWith('/images/events/') || safeUrl(poster.src))) event.image = poster;

@@ -7,13 +7,14 @@ import { isSupportedLocale } from '../lib/i18n/config';
 import { categories, municipalities } from '../data/events';
 import { filterEvents } from '../lib/events';
 import { eventText } from '../lib/events/text';
+import { eventCategoryName } from '../lib/events/classification';
 import { getEventFeed } from '../lib/events/feed';
 import type { EventFeed, ImportedEvent } from '../lib/events/types';
 import styles from '../styles/events.module.css';
 
 const visibleCategories = categories.filter(category => category !== 'Talks');
-const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Food: '♨', Culture: '◇' };
-const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festivals-day', Sport: 'madeira-sport', Food: 'madeira-food', Culture: 'madeira-culture' };
+const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Racing: '🏁', Food: '♨', Culture: '◇' };
+const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festivals-day', Sport: 'madeira-sport', Racing: 'madeira-racing', Food: 'madeira-food', Culture: 'madeira-culture' };
 function EventBackground({ event }: { event: ImportedEvent }) {
   const [failed, setFailed] = useState(false);
   const fallback = `/images/events/${artwork[event.category] || 'madeira-culture'}.jpg`;
@@ -50,7 +51,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
   const filtered = filterEvents(visibleEvents, { today: feed.today, municipality, category }) as ImportedEvent[];
   const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
   const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
-  const categoryName = (value: string) => text.categories[categories.indexOf(value as typeof categories[number])];
+  const categoryName = (value: typeof categories[number]) => eventCategoryName(siteLocale, value);
   const reset = () => { setMunicipality(''); setCategory(''); };
   return <Layout>
     <Head>
