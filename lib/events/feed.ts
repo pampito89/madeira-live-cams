@@ -2,7 +2,8 @@ import { madeiraDate } from '../events';
 import type { Locale } from '../i18n/config';
 import { categories } from '../../data/events';
 import { eventPosters } from '../../data/event-posters';
-import { parseEventsMadeira, parseAmak, deduplicate, safeUrl } from './adapters';
+import { parseEventsMadeira, parseAmak, safeUrl } from './adapters';
+import { parseEventbrite, mergeImportedEvents } from './eventbrite';
 import { readCache, writeCache } from './cache';
 import { localizeEvents } from './translate';
 import { eventText } from './text';
@@ -10,6 +11,9 @@ import type { EventFeed, ImportedEvent, SourceSnapshot, SourceState } from './ty
 export const SOURCES = [
  { id: 'eventsmadeira', name: 'Events Madeira', url: 'https://eventsmadeira.com/en/event-listing/', endpoint: 'https://eventsmadeira.com/en/event-listing/', format: 'html' },
  { id: 'amak', name: 'AMAK', url: 'https://amak.pt/proximos-eventos/', endpoint: 'https://amak.pt/wp-json/tribe/events/v1/events?per_page=50', format: 'json' },
+ // Parties precede music so cross-listed club nights keep the nightlife category.
+ { id: 'eventbrite-parties', name: 'Eventbrite · Parties', url: 'https://www.eventbrite.com/d/portugal--funchal/parties/', endpoint: 'https://www.eventbrite.com/d/portugal--funchal/parties/', format: 'parties' },
+ { id: 'eventbrite-music', name: 'Eventbrite · Music', url: 'https://www.eventbrite.com/b/portugal--funchal/music/', endpoint: 'https://www.eventbrite.com/b/portugal--funchal/music/', format: 'music' },
 ] as const;
 const FRESH_MS = 30 * 60_000;
 const STALE_MS = 7 * 24 * 60 * 60_000;
@@ -39,6 +43,7 @@ async function loadSource(source: typeof SOURCES[number]) {
        const fetchedAt = new Date().toISOString(); const body = await fetchText(source.endpoint);
        let events: ImportedEvent[];
        if (source.format === 'html') events = parseEventsMadeira(body, fetchedAt);
+       else if (source.format === 'music' || source.format === 'parties') events = parseEventbrite(body, fetchedAt, source.format);
        else {
          const payload = JSON.parse(body); events = parseAmak(payload, fetchedAt);
          const pages = Math.min(Number(payload.total_pages) || 1, 4);
@@ -56,7 +61,7 @@ async function loadSource(source: typeof SOURCES[number]) {
 }
 export async function getEventFeed(locale: Locale): Promise<EventFeed> {
  const today = madeiraDate(); const loaded = await Promise.all(SOURCES.map(loadSource));
- const imported = deduplicate(loaded.flatMap(item => item.events)).filter(event => event.end >= today).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
+ const imported = mergeImportedEvents(loaded.flatMap(item => item.events)).filter(event => event.end >= today).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
  const events = await localizeEvents(imported, locale); const text = eventText(locale);
  for (const event of events) {
    const category = text.categories[categories.indexOf(event.category)];

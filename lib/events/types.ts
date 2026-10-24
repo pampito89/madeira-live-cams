@@ -1,7 +1,8 @@
 import type { IslandEvent } from '../../data/events';
 import type { Locale } from '../i18n/config';
+export type EventSourceId = 'eventsmadeira' | 'amak' | 'eventbrite-parties' | 'eventbrite-music';
 export type ImportedEvent = IslandEvent & {
-  sourceId: 'eventsmadeira' | 'amak'; sourceLanguage: 'en' | 'pt';
+  sourceId: EventSourceId; sourceLanguage: 'en' | 'pt' | 'es';
   fetchedAt: string; originalTitle: string; translation: 'source' | 'machine' | 'original';
 };
 export type SourceState = { id: string; name: string; url: string; status: 'fresh' | 'stale' | 'unavailable'; fetchedAt: string | null; count: number };
