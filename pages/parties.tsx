@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import { withServerTranslations } from '../lib/i18n/pageTranslations';
+import { withStaticTranslations } from '../lib/i18n/pageTranslations';
 import { useMessages } from '../lib/i18n/useMessages';
 import { isSupportedLocale } from '../lib/i18n/config';
 import { categories, municipalities } from '../data/events';
-import { filterEvents } from '../lib/events';
+import { filterEvents, madeiraDate } from '../lib/events';
 import { eventText } from '../lib/events/text';
 import { eventCategoryName } from '../lib/events/classification';
 import { getEventFeed } from '../lib/events/feed';
@@ -25,9 +25,18 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
   const text = eventText(siteLocale);
   const [storedFeed, setFeed] = useState(initialFeed);
   const feed = storedFeed.locale === siteLocale ? storedFeed : initialFeed;
+  const [today, setToday] = useState(initialFeed.today);
   const [connectionError, setConnectionError] = useState(false);
   const [municipality, setMunicipality] = useState('');
   const [category, setCategory] = useState('');
+  useEffect(() => {
+    // Keep expired events hidden even when the cached page crosses Madeira midnight.
+    const updateDay = () => setToday(madeiraDate());
+    updateDay();
+    const timer = setInterval(updateDay, 30_000);
+    document.addEventListener('visibilitychange', updateDay);
+    return () => { clearInterval(timer); document.removeEventListener('visibilitychange', updateDay); };
+  }, []);
   useEffect(() => {
     setFeed(initialFeed); setConnectionError(false);
     const controller = new AbortController(); let timer: ReturnType<typeof setTimeout>;
@@ -47,8 +56,8 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
     timer = setTimeout(refresh, 1500);
     return () => { controller.abort(); clearTimeout(timer); };
   }, [siteLocale, initialFeed]);
-  const visibleEvents = feed.events.filter(event => event.category !== 'Talks');
-  const filtered = filterEvents(visibleEvents, { today: feed.today, municipality, category }) as ImportedEvent[];
+  const visibleEvents = feed.events.filter(event => event.category !== 'Talks' && event.end >= today);
+  const filtered = filterEvents(visibleEvents, { today, municipality, category }) as ImportedEvent[];
   const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
   const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
   const categoryName = (value: typeof categories[number]) => eventCategoryName(siteLocale, value);
@@ -95,7 +104,10 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
     </div>
   </Layout>;
 }
-export const getServerSideProps = withServerTranslations(async ({ locale }) => {
+// Generate all locales at build time; ISR serves existing HTML while refreshing it.
+export const getStaticProps = withStaticTranslations(async ({ locale }) => {
   const initialFeed = await getEventFeed(isSupportedLocale(locale) ? locale : 'en');
-  return { props: { initialFeed } };
+  // A complete upstream outage must not replace the last usable ISR page.
+  if (initialFeed.sources.every(source => source.status === 'unavailable')) throw new Error('All event sources unavailable');
+  return { props: { initialFeed }, revalidate: 300 };
 }, '/parties');
