@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useMessages } from '../lib/i18n/useMessages';
 import { layoutText } from '../lib/i18n/layoutText';
 import LanguageSwitcher from './LanguageSwitcher';
+import HistoryNavigation from './HistoryNavigation';
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -75,7 +76,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <button type="button" onClick={() => setIsMenuOpen(true)} aria-label={localize(text.openMenu)} aria-expanded={isMenuOpen} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-xl font-semibold text-navy transition hover:border-ocean hover:bg-panel hover:text-ocean focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">☰</button>
           <Link href="/" locale={translationLanguage} className="truncate text-base font-semibold text-navy transition hover:text-ocean sm:text-lg">Madeira Live Cams</Link>
         </div><LanguageSwitcher />
-      </div></div>
+      </div><HistoryNavigation /></div>
     </header>
     <div className={`fixed inset-0 z-50 transition ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`} aria-hidden={!isMenuOpen}>
       <button type="button" onClick={() => setIsMenuOpen(false)} aria-label={localize(text.closeMenu)} className={`absolute inset-0 bg-navy/40 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} />
