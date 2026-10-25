@@ -5,10 +5,14 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import { useMessages } from '../lib/i18n/useMessages';
 import { weatherUi } from '../lib/i18n/weatherUi';
+import { localePath, type Locale } from '../lib/i18n/config';
 import { MADEIRA_TIME_ZONE, clockChange, clockMessages, formatSunrise, sunriseDays, windyCloudUrl, type SunriseDay } from '../lib/sunriseTime';
 
 type ForecastState = { loading: boolean; error: string | null; days: SunriseDay[] };
-const CAMERA_URL = 'https://www.netmadeira.com/webcams-madeira/pico-do-arieiro';
+const availabilityLabels: Record<Locale, string> = {
+    en: 'Trail availability', pt: 'Disponibilidade do percurso', de: 'Verfügbarkeit der Wanderroute',
+    fr: 'Disponibilité du sentier', es: 'Disponibilidad de la ruta', pl: 'Dostępność szlaku', uk: 'Завантаженість маршруту',
+};
 
 export default function WeatherGuidePage() {
     const { translate: localize } = useText();
@@ -16,6 +20,7 @@ export default function WeatherGuidePage() {
     const [forecast, setForecast] = useState<ForecastState>({ loading: true, error: null, days: [] });
     const ui = weatherUi[siteLocale];
     const text = messages.weatherGuide;
+    const availabilityUrl = `${localePath(siteLocale, '/trail-availability')}?route=225&days=7&autoload=1#time-slots`;
 
     function sunriseRating(day: SunriseDay) {
         const clear = day.midClouds === 0 && day.highClouds === 0 && day.lowClouds <= 70 && day.rainChance === 0;
@@ -98,7 +103,7 @@ export default function WeatherGuidePage() {
                                 <div className="flex items-center justify-center gap-1 px-2 py-1.5" title={localize(text.windAtSunrise)}><span aria-hidden="true">💨</span><span className="text-sm font-semibold leading-4 text-navy">{localize(day.windSpeed)} {localize(ui.windUnit)}</span><span className="inline-flex h-4 w-4 items-center justify-center text-base font-bold leading-none text-ocean" style={{ transform: `rotate(${day.windDirection}deg)` }} aria-label={`${day.windDirection}°`} title={`${day.windDirection}°`}>↑</span></div>
                             </div>
                             <div className="mt-2 flex gap-1.5">
-                                <a href={CAMERA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center rounded-md border border-ocean bg-white px-2 py-1.5 text-xs font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">{localize(text.openCamera)}</a>
+                                <a href={availabilityUrl} className="inline-flex flex-1 items-center justify-center rounded-md border border-ocean bg-white px-2 py-1.5 text-xs font-semibold text-ocean transition hover:bg-ocean hover:text-white focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">{availabilityLabels[siteLocale]}</a>
                                 <a href={windyCloudUrl(day.sunrise)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center rounded-md bg-ocean px-2 py-1.5 text-xs font-semibold text-white transition hover:bg-forest focus:outline-none focus:ring-2 focus:ring-leaf focus:ring-offset-2">{localize(text.openWindy)}</a>
                             </div>
                         </article>;
