@@ -71,12 +71,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const showInstallButton = !isPwaInstalled && (isIosDevice || isAndroidDevice || deferredInstallPrompt);
   return <div className="flex min-h-screen flex-col bg-white">
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6 lg:px-8"><div className="flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-3 lg:px-8"><div className="flex items-center justify-between gap-1 sm:gap-3">
+        <div className="flex min-w-0 items-center gap-1 sm:gap-3">
           <button type="button" onClick={() => setIsMenuOpen(true)} aria-label={localize(text.openMenu)} aria-expanded={isMenuOpen} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-xl font-semibold text-navy transition hover:border-ocean hover:bg-panel hover:text-ocean focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">☰</button>
-          <Link href="/" locale={translationLanguage} className="truncate text-base font-semibold text-navy transition hover:text-ocean sm:text-lg">Madeira Live Cams</Link>
+          <Link href="/" locale={translationLanguage} className="truncate text-sm font-semibold text-navy transition hover:text-ocean sm:text-lg">Madeira Live Cams</Link>
+          <HistoryNavigation />
         </div><LanguageSwitcher />
-      </div><HistoryNavigation /></div>
+      </div></div>
     </header>
     <div className={`fixed inset-0 z-50 transition ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`} aria-hidden={!isMenuOpen}>
       <button type="button" onClick={() => setIsMenuOpen(false)} aria-label={localize(text.closeMenu)} className={`absolute inset-0 bg-navy/40 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} />

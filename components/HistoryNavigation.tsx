@@ -14,15 +14,13 @@ const labels: Record<Locale, { navigation: string; back: string; forward: string
 export default function HistoryNavigation() {
   const { siteLocale } = useMessages();
   const text = labels[siteLocale];
-  const buttonClass = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-navy transition hover:border-ocean hover:bg-panel hover:text-ocean focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2';
-  return <nav aria-label={text.navigation} className="flex gap-2 pt-2">
-    <button type="button" onClick={() => window.history.back()} className={buttonClass}>
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
-      <span>{text.back}</span>
+  const buttonClass = 'inline-flex h-11 w-7 shrink-0 items-center justify-center rounded-lg text-navy transition hover:bg-panel hover:text-ocean focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2 sm:w-11';
+  return <nav aria-label={text.navigation} className="flex shrink-0 items-center">
+    <button type="button" aria-label={text.back} title={text.back} onClick={() => window.history.back()} className={buttonClass}>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
     </button>
-    <button type="button" onClick={() => window.history.forward()} className={buttonClass}>
-      <span>{text.forward}</span>
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="m12 5 7 7-7 7M5 12h14" /></svg>
+    <button type="button" aria-label={text.forward} title={text.forward} onClick={() => window.history.forward()} className={buttonClass}>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="m12 5 7 7-7 7M5 12h14" /></svg>
     </button>
   </nav>;
 }
