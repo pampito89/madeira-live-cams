@@ -13,6 +13,7 @@ import type { EventFeed, ImportedEvent } from '../lib/events/types';
 import styles from '../styles/events.module.css';
 
 const visibleCategories = categories.filter(category => category !== 'Talks');
+const detailLabels = { en: 'Details', uk: 'Деталі', pt: 'Detalhes', de: 'Details', fr: 'Détails', es: 'Detalles', pl: 'Szczegóły' };
 const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Racing: '🏁', Food: '♨', Culture: '◇' };
 const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festivals-day', Sport: 'madeira-sport', Racing: 'madeira-racing', Food: 'madeira-food', Culture: 'madeira-culture' };
 function EventBackground({ event }: { event: ImportedEvent }) {
@@ -92,7 +93,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
               <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
               <h2>{event.title}</h2>
               <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
-              <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
+              <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{detailLabels[siteLocale]}</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets}</a>}</div>
               <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
               {event.image?.credit && <p className={styles.credit}>{event.image.credit}</p>}
             </div>
