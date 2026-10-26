@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
+import EventDateFilter from '../components/EventDateFilter';
 import { withStaticTranslations } from '../lib/i18n/pageTranslations';
 import { useMessages } from '../lib/i18n/useMessages';
 import { isSupportedLocale } from '../lib/i18n/config';
 import { categories, municipalities } from '../data/events';
-import { filterEvents, madeiraDate } from '../lib/events';
+import { filterEvents, madeiraDate, type EventDateRange } from '../lib/events';
 import { eventText } from '../lib/events/text';
 import { eventCategoryName } from '../lib/events/classification';
 import { getEventFeed } from '../lib/events/feed';
@@ -30,6 +31,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
   const [connectionError, setConnectionError] = useState(false);
   const [municipality, setMunicipality] = useState('');
   const [category, setCategory] = useState('');
+  const [dateRange, setDateRange] = useState<EventDateRange>({ from: '', to: '' });
   useEffect(() => {
     // Keep expired events hidden even when the cached page crosses Madeira midnight.
     const updateDay = () => setToday(madeiraDate());
@@ -58,11 +60,11 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
     return () => { controller.abort(); clearTimeout(timer); };
   }, [siteLocale, initialFeed]);
   const visibleEvents = feed.events.filter(event => event.category !== 'Talks' && event.end >= today);
-  const filtered = filterEvents(visibleEvents, { today, municipality, category }) as ImportedEvent[];
+  const filtered = filterEvents(visibleEvents, { today, municipality, category, dateRange }) as ImportedEvent[];
   const formatDate = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Atlantic/Madeira' }).format(new Date(value.length === 10 ? `${value}T12:00:00Z` : value));
   const formatUpdated = (value: string) => new Intl.DateTimeFormat(siteLocale === 'en' ? 'en-GB' : siteLocale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(new Date(value));
   const categoryName = (value: typeof categories[number]) => eventCategoryName(siteLocale, value);
-  const reset = () => { setMunicipality(''); setCategory(''); };
+  const reset = () => { setMunicipality(''); setCategory(''); setDateRange({ from: '', to: '' }); };
   return <Layout>
     <Head>
       <title>{text.title} | Madeira Live Cams</title>
@@ -78,6 +80,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
       </header>
       <section className={styles.controls} aria-label={text.municipality}>
         <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
+        <EventDateFilter locale={siteLocale} today={today} value={dateRange} onChange={setDateRange} />
         <button type="button" onClick={reset}>{text.clear}</button>
         <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{visibleCategories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
       </section>

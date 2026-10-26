@@ -7,7 +7,7 @@
 .hero h1{font-size:clamp(30px,5vw,46px);font-weight:750;line-height:1.12;margin:12px 0}
 .heroContent>p:not(.eyebrow){max-width:720px;line-height:1.6;color:#fff}
 .heroContent>a{display:inline-block;font-size:13px;margin-top:16px;text-decoration:underline;text-underline-offset:5px}
-.controls{background:white;border:1px solid #dce4e6;border-radius:18px;padding:20px;margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end}
+.controls{background:white;border:1px solid #dce4e6;border-radius:18px;padding:20px;margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:14px;align-items:end}
 .controls label{font-size:12px;font-weight:650;display:grid;gap:8px;min-width:0}
 .controls select{width:100%;min-width:0;min-height:44px;border:1px solid #c8d4d9;border-radius:9px;padding:10px;background:#fff;font-size:14px;font-weight:400;color:#142d3b}
 .page button{min-height:44px;border:1px solid #c8d4d9;border-radius:9px;padding:9px 14px;background:white;font-size:13px;font-weight:650}
@@ -45,4 +45,4 @@
 .sources strong{font-size:14px}
 .sources span{font-size:12px;color:#526574;line-height:1.5}
 @media(max-width:950px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.heroContent{padding:24px 22px}.hero:after{background:rgba(8,27,37,.72)}.controls{padding:16px;gap:12px}.controls label:first-child{grid-column:1/-1}.controls>button{justify-self:start}.grid,.sources>div{grid-template-columns:1fr}.categories{gap:6px}.categories button{font-size:12px;padding:8px 10px}.toolbar{align-items:flex-start}.toolbar>span{max-width:65%;line-height:1.5}.cardBody{min-height:280px;padding:18px;gap:16px}.links a{flex:1}}
+@media(max-width:600px){.heroContent{padding:24px 22px}.hero:after{background:rgba(8,27,37,.72)}.controls{padding:16px;gap:12px;grid-template-columns:minmax(0,1fr)}.controls>button{justify-self:start}.grid,.sources>div{grid-template-columns:1fr}.categories{gap:6px}.categories button{font-size:12px;padding:8px 10px}.toolbar{align-items:flex-start}.toolbar>span{max-width:65%;line-height:1.5}.cardBody{min-height:280px;padding:18px;gap:16px}.links a{flex:1}}
