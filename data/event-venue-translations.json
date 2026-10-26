@@ -1,0 +1,353 @@
+{
+  "Parque de Santa Catarina": {
+    "en": "Santa Catarina Park",
+    "pt": "Parque de Santa Catarina",
+    "de": "Santa-Catarina-Park",
+    "fr": "Parc Santa Catarina",
+    "es": "Parque de Santa Catarina",
+    "pl": "Park Santa Catarina",
+    "uk": "Парк Санта-Катаріна"
+  },
+  "Jardim Municipal do Funchal": {
+    "en": "Funchal Municipal Garden",
+    "pt": "Jardim Municipal do Funchal",
+    "de": "Stadtgarten Funchal",
+    "fr": "Jardin municipal de Funchal",
+    "es": "Jardín Municipal de Funchal",
+    "pl": "Ogród Miejski w Funchal",
+    "uk": "Міський сад Фуншала"
+  },
+  "To be announced": {
+    "en": "To be announced",
+    "pt": "A anunciar",
+    "de": "Wird noch bekannt gegeben",
+    "fr": "À annoncer",
+    "es": "Por anunciar",
+    "pl": "Miejsce zostanie ogłoszone",
+    "uk": "Місце оголосять пізніше"
+  },
+  "Funchal Guitar Quartet | Live Concerts in Madeira": {
+    "en": "Funchal Guitar Quartet | Live concerts in Madeira",
+    "pt": "Funchal Guitar Quartet | Concertos ao vivo na Madeira",
+    "de": "Funchal Guitar Quartet | Livekonzerte auf Madeira",
+    "fr": "Funchal Guitar Quartet | Concerts à Madère",
+    "es": "Funchal Guitar Quartet | Conciertos en Madeira",
+    "pl": "Funchal Guitar Quartet | Koncerty na Maderze",
+    "uk": "Funchal Guitar Quartet | Живі концерти на Мадейрі"
+  },
+  "MUDAS - Museu de Arte Contemporânea da Madeira": {
+    "en": "MUDAS – Madeira Museum of Contemporary Art",
+    "pt": "MUDAS – Museu de Arte Contemporânea da Madeira",
+    "de": "MUDAS – Museum für zeitgenössische Kunst Madeira",
+    "fr": "MUDAS – Musée d’art contemporain de Madère",
+    "es": "MUDAS – Museo de Arte Contemporáneo de Madeira",
+    "pl": "MUDAS – Muzeum Sztuki Współczesnej Madery",
+    "uk": "MUDAS — Музей сучасного мистецтва Мадейри"
+  },
+  "Monumento ao Jogador de Futebol": {
+    "en": "Monument to the Football Player",
+    "pt": "Monumento ao Jogador de Futebol",
+    "de": "Denkmal für den Fußballspieler",
+    "fr": "Monument au joueur de football",
+    "es": "Monumento al jugador de fútbol",
+    "pl": "Pomnik piłkarza",
+    "uk": "Пам’ятник футболісту"
+  },
+  "Estádio do Marítimo": {
+    "en": "Marítimo Stadium",
+    "pt": "Estádio do Marítimo",
+    "de": "Marítimo-Stadion",
+    "fr": "Stade du Marítimo",
+    "es": "Estadio del Marítimo",
+    "pl": "Stadion Marítimo",
+    "uk": "Стадіон «Марітіму»"
+  },
+  "Casa da Cultura de Câmara de Lobos": {
+    "en": "Câmara de Lobos Cultural Centre",
+    "pt": "Casa da Cultura de Câmara de Lobos",
+    "de": "Kulturhaus Câmara de Lobos",
+    "fr": "Maison de la culture de Câmara de Lobos",
+    "es": "Casa de la Cultura de Câmara de Lobos",
+    "pl": "Dom Kultury w Câmara de Lobos",
+    "uk": "Будинок культури Камара-де-Лобуш"
+  },
+  "Sala Bahia - Casino Da Madeira": {
+    "en": "Bahia Hall – Casino da Madeira",
+    "pt": "Sala Bahia – Casino da Madeira",
+    "de": "Bahia-Saal – Casino da Madeira",
+    "fr": "Salle Bahia – Casino da Madeira",
+    "es": "Sala Bahia – Casino da Madeira",
+    "pl": "Sala Bahia – Casino da Madeira",
+    "uk": "Зала Bahia — Casino da Madeira"
+  },
+  "Galeria Tratuário": {
+    "en": "Tratuário Gallery",
+    "pt": "Galeria Tratuário",
+    "de": "Galerie Tratuário",
+    "fr": "Galerie Tratuário",
+    "es": "Galería Tratuário",
+    "pl": "Galeria Tratuário",
+    "uk": "Галерея Tratuário"
+  },
+  "Calheta": {
+    "en": "Calheta",
+    "pt": "Calheta",
+    "de": "Calheta",
+    "fr": "Calheta",
+    "es": "Calheta",
+    "pl": "Calheta",
+    "uk": "Кальєта"
+  },
+  "Câmara de Lobos": {
+    "en": "Câmara de Lobos",
+    "pt": "Câmara de Lobos",
+    "de": "Câmara de Lobos",
+    "fr": "Câmara de Lobos",
+    "es": "Câmara de Lobos",
+    "pl": "Câmara de Lobos",
+    "uk": "Камара-де-Лобуш"
+  },
+  "Funchal": {
+    "en": "Funchal",
+    "pt": "Funchal",
+    "de": "Funchal",
+    "fr": "Funchal",
+    "es": "Funchal",
+    "pl": "Funchal",
+    "uk": "Фуншал"
+  },
+  "Machico": {
+    "en": "Machico",
+    "pt": "Machico",
+    "de": "Machico",
+    "fr": "Machico",
+    "es": "Machico",
+    "pl": "Machico",
+    "uk": "Машіку"
+  },
+  "Ponta do Sol": {
+    "en": "Ponta do Sol",
+    "pt": "Ponta do Sol",
+    "de": "Ponta do Sol",
+    "fr": "Ponta do Sol",
+    "es": "Ponta do Sol",
+    "pl": "Ponta do Sol",
+    "uk": "Понта-ду-Сол"
+  },
+  "Porto Moniz": {
+    "en": "Porto Moniz",
+    "pt": "Porto Moniz",
+    "de": "Porto Moniz",
+    "fr": "Porto Moniz",
+    "es": "Porto Moniz",
+    "pl": "Porto Moniz",
+    "uk": "Порту-Моніш"
+  },
+  "Porto Santo": {
+    "en": "Porto Santo",
+    "pt": "Porto Santo",
+    "de": "Porto Santo",
+    "fr": "Porto Santo",
+    "es": "Porto Santo",
+    "pl": "Porto Santo",
+    "uk": "Порту-Санту"
+  },
+  "Ribeira Brava": {
+    "en": "Ribeira Brava",
+    "pt": "Ribeira Brava",
+    "de": "Ribeira Brava",
+    "fr": "Ribeira Brava",
+    "es": "Ribeira Brava",
+    "pl": "Ribeira Brava",
+    "uk": "Рібейра-Брава"
+  },
+  "Santa Cruz": {
+    "en": "Santa Cruz",
+    "pt": "Santa Cruz",
+    "de": "Santa Cruz",
+    "fr": "Santa Cruz",
+    "es": "Santa Cruz",
+    "pl": "Santa Cruz",
+    "uk": "Санта-Круш"
+  },
+  "Santana": {
+    "en": "Santana",
+    "pt": "Santana",
+    "de": "Santana",
+    "fr": "Santana",
+    "es": "Santana",
+    "pl": "Santana",
+    "uk": "Сантана"
+  },
+  "São Vicente": {
+    "en": "São Vicente",
+    "pt": "São Vicente",
+    "de": "São Vicente",
+    "fr": "São Vicente",
+    "es": "São Vicente",
+    "pl": "São Vicente",
+    "uk": "Сан-Вісенте"
+  },
+  "Madeira": {
+    "en": "Madeira",
+    "pt": "Madeira",
+    "de": "Madeira",
+    "fr": "Madère",
+    "es": "Madeira",
+    "pl": "Madera",
+    "uk": "Мадейра"
+  },
+  "Sangha Cowork Funchal": {
+    "en": "Sangha Cowork Funchal",
+    "pt": "Sangha Cowork Funchal",
+    "de": "Sangha Cowork Funchal",
+    "fr": "Sangha Cowork Funchal",
+    "es": "Sangha Cowork Funchal",
+    "pl": "Sangha Cowork Funchal",
+    "uk": "Sangha Cowork Funchal"
+  },
+  "R. da Casa Branca 98": {
+    "en": "R. da Casa Branca 98",
+    "pt": "R. da Casa Branca 98",
+    "de": "R. da Casa Branca 98",
+    "fr": "R. da Casa Branca 98",
+    "es": "R. da Casa Branca 98",
+    "pl": "R. da Casa Branca 98",
+    "uk": "R. da Casa Branca 98"
+  },
+  "Dubai Club": {
+    "en": "Dubai Club",
+    "pt": "Dubai Club",
+    "de": "Dubai Club",
+    "fr": "Dubai Club",
+    "es": "Dubai Club",
+    "pl": "Dubai Club",
+    "uk": "Dubai Club"
+  },
+  "BrunchVille Marina": {
+    "en": "BrunchVille Marina",
+    "pt": "BrunchVille Marina",
+    "de": "BrunchVille Marina",
+    "fr": "BrunchVille Marina",
+    "es": "BrunchVille Marina",
+    "pl": "BrunchVille Marina",
+    "uk": "BrunchVille Marina"
+  },
+  "THREE HOUSE HOTEL": {
+    "en": "THREE HOUSE HOTEL",
+    "pt": "THREE HOUSE HOTEL",
+    "de": "THREE HOUSE HOTEL",
+    "fr": "THREE HOUSE HOTEL",
+    "es": "THREE HOUSE HOTEL",
+    "pl": "THREE HOUSE HOTEL",
+    "uk": "THREE HOUSE HOTEL"
+  },
+  "Dubai": {
+    "en": "Dubai",
+    "pt": "Dubai",
+    "de": "Dubai",
+    "fr": "Dubai",
+    "es": "Dubai",
+    "pl": "Dubai",
+    "uk": "Dubai"
+  },
+  "Palmeira Gardens": {
+    "en": "Palmeira Gardens",
+    "pt": "Palmeira Gardens",
+    "de": "Palmeira Gardens",
+    "fr": "Palmeira Gardens",
+    "es": "Palmeira Gardens",
+    "pl": "Palmeira Gardens",
+    "uk": "Palmeira Gardens"
+  },
+  "NEXT Hotel": {
+    "en": "NEXT Hotel",
+    "pt": "NEXT Hotel",
+    "de": "NEXT Hotel",
+    "fr": "NEXT Hotel",
+    "es": "NEXT Hotel",
+    "pl": "NEXT Hotel",
+    "uk": "NEXT Hotel"
+  },
+  "Madeira Creative House (Ribalta Ofuscante Associação Cultural)": {
+    "en": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "pt": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "de": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "fr": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "es": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "pl": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)",
+    "uk": "Madeira Creative House (Ribalta Ofuscante Associação Cultural)"
+  },
+  "Puro Yoga": {
+    "en": "Puro Yoga",
+    "pt": "Puro Yoga",
+    "de": "Puro Yoga",
+    "fr": "Puro Yoga",
+    "es": "Puro Yoga",
+    "pl": "Puro Yoga",
+    "uk": "Puro Yoga"
+  },
+  "Sai de Baixo & Alto Astral": {
+    "en": "Sai de Baixo & Alto Astral",
+    "pt": "Sai de Baixo & Alto Astral",
+    "de": "Sai de Baixo & Alto Astral",
+    "fr": "Sai de Baixo & Alto Astral",
+    "es": "Sai de Baixo & Alto Astral",
+    "pl": "Sai de Baixo & Alto Astral",
+    "uk": "Sai de Baixo & Alto Astral"
+  },
+  "Fórum Machico": {
+    "en": "Fórum Machico",
+    "pt": "Fórum Machico",
+    "de": "Fórum Machico",
+    "fr": "Fórum Machico",
+    "es": "Fórum Machico",
+    "pl": "Fórum Machico",
+    "uk": "Fórum Machico"
+  },
+  "MAMMA": {
+    "en": "MAMMA",
+    "pt": "MAMMA",
+    "de": "MAMMA",
+    "fr": "MAMMA",
+    "es": "MAMMA",
+    "pl": "MAMMA",
+    "uk": "MAMMA"
+  },
+  "Casa dos Amigos": {
+    "en": "Casa dos Amigos",
+    "pt": "Casa dos Amigos",
+    "de": "Casa dos Amigos",
+    "fr": "Casa dos Amigos",
+    "es": "Casa dos Amigos",
+    "pl": "Casa dos Amigos",
+    "uk": "Casa dos Amigos"
+  },
+  "Cowork Funchal": {
+    "en": "Cowork Funchal",
+    "pt": "Cowork Funchal",
+    "de": "Cowork Funchal",
+    "fr": "Cowork Funchal",
+    "es": "Cowork Funchal",
+    "pl": "Cowork Funchal",
+    "uk": "Cowork Funchal"
+  },
+  "VidaMar Resort Hotel Madeira": {
+    "en": "VidaMar Resort Hotel Madeira",
+    "pt": "VidaMar Resort Hotel Madeira",
+    "de": "VidaMar Resort Hotel Madeira",
+    "fr": "VidaMar Resort Hotel Madeira",
+    "es": "VidaMar Resort Hotel Madeira",
+    "pl": "VidaMar Resort Hotel Madeira",
+    "uk": "VidaMar Resort Hotel Madeira"
+  },
+  "Savoy Palace": {
+    "en": "Savoy Palace",
+    "pt": "Savoy Palace",
+    "de": "Savoy Palace",
+    "fr": "Savoy Palace",
+    "es": "Savoy Palace",
+    "pl": "Savoy Palace",
+    "uk": "Savoy Palace"
+  }
+}

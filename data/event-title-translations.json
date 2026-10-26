@@ -1,0 +1,821 @@
+{
+  "Waterline exhibition": {
+    "en": "Waterline exhibition",
+    "pt": "Exposição Waterline",
+    "de": "Ausstellung Waterline",
+    "fr": "Exposition Waterline",
+    "es": "Exposición Waterline",
+    "pl": "Wystawa Waterline",
+    "uk": "Виставка Waterline"
+  },
+  "Concert “Talk to Me About Music” – Duo Bandonica": {
+    "en": "Concert “Talk to Me About Music” – Duo Bandonica",
+    "pt": "Concerto «Fale-me de Música» – Duo Bandonica",
+    "de": "Konzert „Sprich mit mir über Musik“ – Duo Bandonica",
+    "fr": "Concert « Parle-moi de musique » – Duo Bandonica",
+    "es": "Concierto «Háblame de música» – Duo Bandonica",
+    "pl": "Koncert „Opowiedz mi o muzyce” – Duo Bandonica",
+    "uk": "Концерт «Поговори зі мною про музику» — Duo Bandonica"
+  },
+  "Madeira International Guitar Festival": {
+    "en": "Madeira International Guitar Festival",
+    "pt": "Festival Internacional de Guitarra da Madeira",
+    "de": "Internationales Gitarrenfestival Madeira",
+    "fr": "Festival international de guitare de Madère",
+    "es": "Festival Internacional de Guitarra de Madeira",
+    "pl": "Międzynarodowy Festiwal Gitarowy na Maderze",
+    "uk": "Міжнародний гітарний фестиваль Мадейри"
+  },
+  "Mandolin Orchestra Weekly Concerts": {
+    "en": "Mandolin Orchestra Weekly Concerts",
+    "pt": "Concertos semanais da Orquestra de Bandolins",
+    "de": "Wöchentliche Konzerte des Mandolinenorchesters",
+    "fr": "Concerts hebdomadaires de l’orchestre de mandolines",
+    "es": "Conciertos semanales de la orquesta de mandolinas",
+    "pl": "Cotygodniowe koncerty orkiestry mandolinowej",
+    "uk": "Щотижневі концерти мандолінного оркестру"
+  },
+  "Madeira Ukulele Club": {
+    "en": "Madeira Ukulele Club",
+    "pt": "Clube de Ukulele da Madeira",
+    "de": "Ukulele-Club Madeira",
+    "fr": "Club de ukulélé de Madère",
+    "es": "Club de Ukelele de Madeira",
+    "pl": "Klub Ukulele na Maderze",
+    "uk": "Клуб укулеле Мадейри"
+  },
+  "Temos o espaço ideal para organizar o seu evento! Venha conhecer.": {
+    "en": "We have the ideal space for your event! Come and see.",
+    "pt": "Temos o espaço ideal para organizar o seu evento! Venha conhecer.",
+    "de": "Der ideale Raum für Ihre Veranstaltung! Kommen Sie vorbei.",
+    "fr": "L’espace idéal pour votre événement ! Venez le découvrir.",
+    "es": "¡Tenemos el espacio ideal para tu evento! Ven a conocerlo.",
+    "pl": "Mamy idealną przestrzeń na Twoje wydarzenie! Przyjdź i zobacz.",
+    "uk": "Маємо ідеальний простір для вашої події! Завітайте й огляньте."
+  },
+  "Welcome to Sangha Cowork! Your coworking space in Funchal.": {
+    "en": "Welcome to Sangha Cowork! Your coworking space in Funchal.",
+    "pt": "Bem-vindo ao Sangha Cowork! O seu espaço de coworking no Funchal.",
+    "de": "Willkommen bei Sangha Cowork! Ihr Coworking-Space in Funchal.",
+    "fr": "Bienvenue chez Sangha Cowork ! Votre espace de coworking à Funchal.",
+    "es": "¡Bienvenido a Sangha Cowork! Tu espacio de coworking en Funchal.",
+    "pl": "Witaj w Sangha Cowork! Twoja przestrzeń coworkingowa w Funchal.",
+    "uk": "Ласкаво просимо до Sangha Cowork! Ваш коворкінг у Фуншалі."
+  },
+  "Madeira Guitar Nights: Funchal Guitar Quartet in Concert": {
+    "en": "Madeira Guitar Nights: Funchal Guitar Quartet in Concert",
+    "pt": "Noites de Guitarra da Madeira: Funchal Guitar Quartet em concerto",
+    "de": "Gitarrennächte auf Madeira: Funchal Guitar Quartet im Konzert",
+    "fr": "Nuits de la guitare à Madère : Funchal Guitar Quartet en concert",
+    "es": "Noches de guitarra en Madeira: Funchal Guitar Quartet en concierto",
+    "pl": "Gitarowe wieczory na Maderze: koncert Funchal Guitar Quartet",
+    "uk": "Гітарні вечори Мадейри: концерт Funchal Guitar Quartet"
+  },
+  "Madeira Mysteries - Isle of Myth Sunset Walking Tour": {
+    "en": "Madeira Mysteries - Isle of Myth Sunset Walking Tour",
+    "pt": "Mistérios da Madeira – passeio a pé ao pôr do sol pela ilha dos mitos",
+    "de": "Geheimnisse Madeiras – Spaziergang bei Sonnenuntergang auf der Insel der Mythen",
+    "fr": "Mystères de Madère – balade au coucher du soleil sur l’île des mythes",
+    "es": "Misterios de Madeira: paseo al atardecer por la isla de los mitos",
+    "pl": "Tajemnice Madery – spacer o zachodzie słońca po wyspie mitów",
+    "uk": "Таємниці Мадейри — прогулянка островом міфів на заході сонця"
+  },
+  "Thematic fairs – Fashion, Costume Jewelry and Decoration": {
+    "en": "Thematic fairs – Fashion, Costume Jewelry and Decoration",
+    "pt": "Feiras temáticas – moda, bijutaria e decoração",
+    "de": "Themenmärkte – Mode, Modeschmuck und Dekoration",
+    "fr": "Foires thématiques – mode, bijoux fantaisie et décoration",
+    "es": "Ferias temáticas: moda, bisutería y decoración",
+    "pl": "Targi tematyczne – moda, biżuteria i dekoracje",
+    "uk": "Тематичні ярмарки — мода, біжутерія та декор"
+  },
+  "XXVIII Madeira International Bridge Open": {
+    "en": "XXVIII Madeira International Bridge Open",
+    "pt": "XXVIII Open Internacional de Bridge da Madeira",
+    "de": "XXVIII. Internationales Bridge-Open Madeira",
+    "fr": "XXVIIIe Open international de bridge de Madère",
+    "es": "XXVIII Open Internacional de Bridge de Madeira",
+    "pl": "XXVIII Międzynarodowy Otwarty Turniej Brydżowy na Maderze",
+    "uk": "XXVIII міжнародний відкритий турнір із бриджу на Мадейрі"
+  },
+  "FREE SILENT DISCO WALKING TOUR FUNCHAL": {
+    "en": "Free silent disco walking tour in Funchal",
+    "pt": "Passeio a pé gratuito com silent disco no Funchal",
+    "de": "Kostenloser Silent-Disco-Spaziergang in Funchal",
+    "fr": "Balade silent disco gratuite à Funchal",
+    "es": "Paseo gratuito con silent disco por Funchal",
+    "pl": "Bezpłatny spacer silent disco po Funchal",
+    "uk": "Безкоштовна прогулянка Фуншалом із silent disco"
+  },
+  "Funchal City Sessions 2026": {
+    "en": "Funchal City Sessions 2026",
+    "pt": "Funchal City Sessions 2026",
+    "de": "Funchal City Sessions 2026",
+    "fr": "Funchal City Sessions 2026",
+    "es": "Funchal City Sessions 2026",
+    "pl": "Funchal City Sessions 2026",
+    "uk": "Funchal City Sessions 2026"
+  },
+  "ISLA DEL PERREO \"Noche de Halloween\" - Edición Halloween": {
+    "en": "ISLA DEL PERREO – Halloween Night",
+    "pt": "ISLA DEL PERREO – Noite de Halloween",
+    "de": "ISLA DEL PERREO – Halloween-Nacht",
+    "fr": "ISLA DEL PERREO – Nuit d’Halloween",
+    "es": "ISLA DEL PERREO \"Noche de Halloween\" - Edición Halloween",
+    "pl": "ISLA DEL PERREO – Noc Halloween",
+    "uk": "ISLA DEL PERREO — ніч Гелловіну"
+  },
+  "LATIN PARTY - Salsa, Bachata, Kizomba": {
+    "en": "Latin party – salsa, bachata, kizomba",
+    "pt": "Festa latina – salsa, bachata, kizomba",
+    "de": "Latin-Party – Salsa, Bachata, Kizomba",
+    "fr": "Soirée latino – salsa, bachata, kizomba",
+    "es": "Fiesta latina: salsa, bachata, kizomba",
+    "pl": "Impreza latynoska – salsa, bachata, kizomba",
+    "uk": "Латиноамериканська вечірка — сальса, бачата, кізомба"
+  },
+  "THE NIGHT BEFORE THE FRIGHT.": {
+    "en": "The Night Before the Fright",
+    "pt": "A noite antes do susto",
+    "de": "Die Nacht vor dem Schrecken",
+    "fr": "La nuit avant la frayeur",
+    "es": "La noche antes del susto",
+    "pl": "Noc przed strachem",
+    "uk": "Ніч перед переляком"
+  },
+  "A HAUNTING AT Favilla Street": {
+    "en": "A Haunting at Favilla Street",
+    "pt": "Assombração na Favilla Street",
+    "de": "Spuk in der Favilla Street",
+    "fr": "Hantise à Favilla Street",
+    "es": "Una aparición en Favilla Street",
+    "pl": "Nawiedzona Favilla Street",
+    "uk": "Привиди на Favilla Street"
+  },
+  "Albrecht Mayer Concert | OCM": {
+    "en": "Albrecht Mayer Concert | OCM",
+    "pt": "Concerto de Albrecht Mayer | OCM",
+    "de": "Konzert mit Albrecht Mayer | OCM",
+    "fr": "Concert d’Albrecht Mayer | OCM",
+    "es": "Concierto de Albrecht Mayer | OCM",
+    "pl": "Koncert Albrechta Mayera | OCM",
+    "uk": "Концерт Альбрехта Маєра | OCM"
+  },
+  "Alive — Halloween Dance & Music Gathering": {
+    "en": "Alive — Halloween Dance & Music Gathering",
+    "pt": "Alive — encontro de dança e música no Halloween",
+    "de": "Alive — Tanz- und Musiktreffen zu Halloween",
+    "fr": "Alive — rencontre danse et musique pour Halloween",
+    "es": "Alive: encuentro de danza y música en Halloween",
+    "pl": "Alive — spotkanie z tańcem i muzyką na Halloween",
+    "uk": "Alive — танцювально-музична зустріч на Гелловін"
+  },
+  "Chestnut Festival": {
+    "en": "Chestnut Festival",
+    "pt": "Festa da Castanha",
+    "de": "Kastanienfest",
+    "fr": "Fête de la châtaigne",
+    "es": "Fiesta de la Castaña",
+    "pl": "Święto Kasztanów",
+    "uk": "Свято каштанів"
+  },
+  "Concerto - Ilha Secreta – Fachos de Música": {
+    "en": "Concert – Ilha Secreta – Fachos de Música",
+    "pt": "Concerto - Ilha Secreta – Fachos de Música",
+    "de": "Konzert – Ilha Secreta – Fachos de Música",
+    "fr": "Concert – Ilha Secreta – Fachos de Música",
+    "es": "Concierto – Ilha Secreta – Fachos de Música",
+    "pl": "Koncert – Ilha Secreta – Fachos de Música",
+    "uk": "Концерт — Ilha Secreta — Fachos de Música"
+  },
+  "Leah Singer & Lee Ranaldo: Contre Jour": {
+    "en": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "pt": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "de": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "fr": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "es": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "pl": "Leah Singer & Lee Ranaldo: Contre Jour",
+    "uk": "Лія Сінґер і Лі Ранальдо: Contre Jour"
+  },
+  "Sushi Bondage | NEXT Hotel": {
+    "en": "Sushi Bondage | NEXT Hotel",
+    "pt": "Sushi Bondage | NEXT Hotel",
+    "de": "Sushi Bondage | NEXT Hotel",
+    "fr": "Sushi Bondage | NEXT Hotel",
+    "es": "Sushi Bondage | NEXT Hotel",
+    "pl": "Sushi Bondage | NEXT Hotel",
+    "uk": "Sushi Bondage | готель NEXT"
+  },
+  "THREE HOUSE HALLOWEEN.": {
+    "en": "Three House Halloween",
+    "pt": "Halloween no Three House",
+    "de": "Halloween im Three House",
+    "fr": "Halloween au Three House",
+    "es": "Halloween en Three House",
+    "pl": "Halloween w Three House",
+    "uk": "Гелловін у Three House"
+  },
+  "Концерт Дмитрия Романова": {
+    "en": "Dmitry Romanov in concert",
+    "pt": "Espetáculo de Dmitry Romanov",
+    "de": "Auftritt von Dmitry Romanov",
+    "fr": "Spectacle de Dmitry Romanov",
+    "es": "Espectáculo de Dmitry Romanov",
+    "pl": "Występ Dmitrija Romanowa",
+    "uk": "Концерт Дмитра Романова"
+  },
+  "Solo travellers: casual hangout in Funchal (4pm)": {
+    "en": "Solo travellers: casual hangout in Funchal (4pm)",
+    "pt": "Viajantes a solo: encontro informal no Funchal (16:00)",
+    "de": "Alleinreisende: zwangloses Treffen in Funchal (16 Uhr)",
+    "fr": "Voyageurs en solo : rencontre informelle à Funchal (16 h)",
+    "es": "Viajeros en solitario: encuentro informal en Funchal (16:00)",
+    "pl": "Podróżujący solo: luźne spotkanie w Funchal (16:00)",
+    "uk": "Мандрівники соло: неформальна зустріч у Фуншалі (16:00)"
+  },
+  "Sunday's Kundalini Activation group practice in Funchal": {
+    "en": "Sunday's Kundalini Activation group practice in Funchal",
+    "pt": "Prática de grupo de ativação Kundalini aos domingos no Funchal",
+    "de": "Kundalini-Aktivierung: Gruppenpraxis am Sonntag in Funchal",
+    "fr": "Pratique collective d’activation Kundalini le dimanche à Funchal",
+    "es": "Práctica grupal de activación Kundalini los domingos en Funchal",
+    "pl": "Niedzielna praktyka grupowa aktywacji Kundalini w Funchal",
+    "uk": "Недільна групова практика активації кундаліні у Фуншалі"
+  },
+  "Troféu Karting da Madeira 2026 – FAIAL 5": {
+    "en": "Madeira Karting Trophy 2026 – FAIAL 5",
+    "pt": "Troféu Karting da Madeira 2026 – FAIAL 5",
+    "de": "Madeira-Karting-Trophäe 2026 – FAIAL 5",
+    "fr": "Trophée de karting de Madère 2026 – FAIAL 5",
+    "es": "Trofeo de Karting de Madeira 2026 – FAIAL 5",
+    "pl": "Trofeum Kartingowe Madery 2026 – FAIAL 5",
+    "uk": "Картинговий трофей Мадейри 2026 — FAIAL 5"
+  },
+  "Rali de Porto Santo 2026": {
+    "en": "Porto Santo Rally 2026",
+    "pt": "Rali de Porto Santo 2026",
+    "de": "Rallye Porto Santo 2026",
+    "fr": "Rallye de Porto Santo 2026",
+    "es": "Rally de Porto Santo 2026",
+    "pl": "Rajd Porto Santo 2026",
+    "uk": "Ралі Порту-Санту 2026"
+  },
+  "Concert with Misha Katz & Dmitry Demyashkin | OCM": {
+    "en": "Concert with Misha Katz & Dmitry Demyashkin | OCM",
+    "pt": "Concerto com Misha Katz e Dmitry Demyashkin | OCM",
+    "de": "Konzert mit Misha Katz und Dmitry Demyashkin | OCM",
+    "fr": "Concert avec Misha Katz et Dmitry Demyashkin | OCM",
+    "es": "Concierto con Misha Katz y Dmitry Demyashkin | OCM",
+    "pl": "Koncert z Mishą Katzem i Dmitrijem Demiaszkinem | OCM",
+    "uk": "Концерт Міші Каца та Дмитра Демяшкіна | OCM"
+  },
+  "MADEIRA PIANO FEST": {
+    "en": "Madeira Piano Fest",
+    "pt": "Festival de Piano da Madeira",
+    "de": "Klavierfestival Madeira",
+    "fr": "Festival de piano de Madère",
+    "es": "Festival de Piano de Madeira",
+    "pl": "Festiwal Fortepianowy na Maderze",
+    "uk": "Фортепіанний фестиваль Мадейри"
+  },
+  "OMNI Fest": {
+    "en": "OMNI Fest",
+    "pt": "OMNI Fest",
+    "de": "OMNI Fest",
+    "fr": "OMNI Fest",
+    "es": "OMNI Fest",
+    "pl": "OMNI Fest",
+    "uk": "Фестиваль OMNI"
+  },
+  "Seventh Dimension": {
+    "en": "Seventh Dimension",
+    "pt": "Seventh Dimension",
+    "de": "Seventh Dimension",
+    "fr": "Seventh Dimension",
+    "es": "Seventh Dimension",
+    "pl": "Seventh Dimension",
+    "uk": "Seventh Dimension"
+  },
+  "Madeira Ladies Open – W50 Funchal": {
+    "en": "Madeira Ladies Open – W50 Funchal",
+    "pt": "Open Feminino da Madeira – W50 Funchal",
+    "de": "Damen-Open Madeira – W50 Funchal",
+    "fr": "Open féminin de Madère – W50 Funchal",
+    "es": "Open Femenino de Madeira – W50 Funchal",
+    "pl": "Otwarty Turniej Kobiet na Maderze – W50 Funchal",
+    "uk": "Відкритий жіночий турнір Мадейри — W50 Фуншал"
+  },
+  "Mountain Bike Madeira Meeting": {
+    "en": "Mountain Bike Madeira Meeting",
+    "pt": "Encontro de BTT da Madeira",
+    "de": "Mountainbike-Treffen Madeira",
+    "fr": "Rencontre VTT de Madère",
+    "es": "Encuentro de bicicleta de montaña de Madeira",
+    "pl": "Spotkanie kolarstwa górskiego na Maderze",
+    "uk": "Зустріч любителів гірського велоспорту на Мадейрі"
+  },
+  "Rampa Regional do Paul do Mar 2026": {
+    "en": "Paul do Mar Regional Hill Climb 2026",
+    "pt": "Rampa Regional do Paul do Mar 2026",
+    "de": "Regionales Bergrennen Paul do Mar 2026",
+    "fr": "Course de côte régionale de Paul do Mar 2026",
+    "es": "Subida Regional de Paul do Mar 2026",
+    "pl": "Regionalny Wyścig Górski Paul do Mar 2026",
+    "uk": "Регіональні гірські автоперегони Паул-ду-Мар 2026"
+  },
+  "Ser una Portu Venezolana es una Vaina Muito Arreicha": {
+    "en": "Being Portuguese-Venezuelan Is Quite Something",
+    "pt": "Ser luso-venezuelana é uma coisa muito incrível",
+    "de": "Portugiesisch-venezolanisch zu sein ist schon etwas Besonderes",
+    "fr": "Être luso-vénézuélienne, c’est toute une histoire",
+    "es": "Ser una Portu Venezolana es una Vaina Muito Arreicha",
+    "pl": "Być portugalską Wenezuelką to dopiero coś",
+    "uk": "Бути португальською венесуелкою — це щось неймовірне"
+  },
+  "Solo Wind Quintet | OCM": {
+    "en": "Solo Wind Quintet | OCM",
+    "pt": "Quinteto de Sopros Solo | OCM",
+    "de": "Bläserquintett Solo | OCM",
+    "fr": "Quintette à vent Solo | OCM",
+    "es": "Quinteto de Viento Solo | OCM",
+    "pl": "Kwintet dęty Solo | OCM",
+    "uk": "Духовий квінтет Solo | OCM"
+  },
+  "Atlântida Wind Quintet | OCM": {
+    "en": "Atlântida Wind Quintet | OCM",
+    "pt": "Quinteto de Sopros Atlântida | OCM",
+    "de": "Bläserquintett Atlântida | OCM",
+    "fr": "Quintette à vent Atlântida | OCM",
+    "es": "Quinteto de Viento Atlântida | OCM",
+    "pl": "Kwintet dęty Atlântida | OCM",
+    "uk": "Духовий квінтет Atlântida | OCM"
+  },
+  "Estreia da NOMADIS - Espetáculo de Dança Contemporânea": {
+    "en": "NOMADIS premiere – contemporary dance performance",
+    "pt": "Estreia da NOMADIS - Espetáculo de Dança Contemporânea",
+    "de": "NOMADIS-Premiere – zeitgenössischer Tanz",
+    "fr": "Première de NOMADIS – spectacle de danse contemporaine",
+    "es": "Estreno de NOMADIS: espectáculo de danza contemporánea",
+    "pl": "Premiera NOMADIS – spektakl tańca współczesnego",
+    "uk": "Прем’єра NOMADIS — вистава сучасного танцю"
+  },
+  "NOMADIS Dance Project": {
+    "en": "NOMADIS Dance Project",
+    "pt": "Projeto de dança NOMADIS",
+    "de": "Tanzprojekt NOMADIS",
+    "fr": "Projet de danse NOMADIS",
+    "es": "Proyecto de danza NOMADIS",
+    "pl": "Projekt taneczny NOMADIS",
+    "uk": "Танцювальний проєкт NOMADIS"
+  },
+  "Chamber Music Concert – Legno Duo | OCM": {
+    "en": "Chamber Music Concert – Legno Duo | OCM",
+    "pt": "Concerto de música de câmara – Legno Duo | OCM",
+    "de": "Kammermusikkonzert – Legno Duo | OCM",
+    "fr": "Concert de musique de chambre – Legno Duo | OCM",
+    "es": "Concierto de música de cámara: Legno Duo | OCM",
+    "pl": "Koncert muzyki kameralnej – Legno Duo | OCM",
+    "uk": "Концерт камерної музики — Legno Duo | OCM"
+  },
+  "ADN RACE Ponta do Sol": {
+    "en": "ADN RACE Ponta do Sol",
+    "pt": "ADN RACE Ponta do Sol",
+    "de": "ADN RACE Ponta do Sol",
+    "fr": "ADN RACE Ponta do Sol",
+    "es": "ADN RACE Ponta do Sol",
+    "pl": "ADN RACE Ponta do Sol",
+    "uk": "Забіг ADN RACE у Понта-ду-Сол"
+  },
+  "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA": {
+    "en": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "pt": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "de": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "fr": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "es": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "pl": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA",
+    "uk": "THE COLLECTION 001 | PUSH OFF STUDIOS × MAMMA"
+  },
+  "Christmas wreath workshop 15:00": {
+    "en": "Christmas wreath workshop 15:00",
+    "pt": "Oficina de coroas de Natal às 15:00",
+    "de": "Weihnachtskranz-Workshop um 15:00 Uhr",
+    "fr": "Atelier de couronnes de Noël à 15 h",
+    "es": "Taller de coronas navideñas a las 15:00",
+    "pl": "Warsztaty wianków bożonarodzeniowych o 15:00",
+    "uk": "Майстер-клас із різдвяних вінків о 15:00"
+  },
+  "GALA DE NAVIDAD 2026 - MADEIRA": {
+    "en": "Christmas Gala 2026 – Madeira",
+    "pt": "Gala de Natal 2026 – Madeira",
+    "de": "Weihnachtsgala 2026 – Madeira",
+    "fr": "Gala de Noël 2026 – Madère",
+    "es": "Gala de Navidad 2026 – Madeira",
+    "pl": "Gala Bożonarodzeniowa 2026 – Madera",
+    "uk": "Різдвяний гала-вечір 2026 — Мадейра"
+  },
+  "Christmas and NewYear’s Festivities": {
+    "en": "Christmas and New Year’s Festivities",
+    "pt": "Festas de Natal e de Fim do Ano",
+    "de": "Weihnachts- und Neujahrsfeierlichkeiten",
+    "fr": "Festivités de Noël et du Nouvel An",
+    "es": "Fiestas de Navidad y Año Nuevo",
+    "pl": "Obchody Bożego Narodzenia i Nowego Roku",
+    "uk": "Різдвяні та новорічні святкування"
+  },
+  "Christmas Market": {
+    "en": "Christmas Market",
+    "pt": "Mercado de Natal",
+    "de": "Weihnachtsmarkt",
+    "fr": "Marché de Noël",
+    "es": "Mercado de Navidad",
+    "pl": "Jarmark bożonarodzeniowy",
+    "uk": "Різдвяний ярмарок"
+  },
+  "Ethnographic Village": {
+    "en": "Ethnographic Village",
+    "pt": "Aldeia Etnográfica",
+    "de": "Ethnografisches Dorf",
+    "fr": "Village ethnographique",
+    "es": "Aldea etnográfica",
+    "pl": "Wioska etnograficzna",
+    "uk": "Етнографічне село"
+  },
+  "Christmas Workshops": {
+    "en": "Christmas Workshops",
+    "pt": "Oficinas de Natal",
+    "de": "Weihnachtsworkshops",
+    "fr": "Ateliers de Noël",
+    "es": "Talleres de Navidad",
+    "pl": "Warsztaty bożonarodzeniowe",
+    "uk": "Різдвяні майстер-класи"
+  },
+  "Christmas Village": {
+    "en": "Christmas Village",
+    "pt": "Aldeia de Natal",
+    "de": "Weihnachtsdorf",
+    "fr": "Village de Noël",
+    "es": "Aldea navideña",
+    "pl": "Wioska bożonarodzeniowa",
+    "uk": "Різдвяне містечко"
+  },
+  "Christmas Traditional Nights": {
+    "en": "Christmas Traditional Nights",
+    "pt": "Noites tradicionais de Natal",
+    "de": "Traditionelle Weihnachtsabende",
+    "fr": "Soirées traditionnelles de Noël",
+    "es": "Noches tradicionales de Navidad",
+    "pl": "Tradycyjne wieczory bożonarodzeniowe",
+    "uk": "Традиційні різдвяні вечори"
+  },
+  "Natal Hoje é Natal. Três Histórias, um Único Natal!": {
+    "en": "Christmas, Today Is Christmas. Three Stories, One Christmas!",
+    "pt": "Natal Hoje é Natal. Três Histórias, um Único Natal!",
+    "de": "Weihnachten, heute ist Weihnachten. Drei Geschichten, ein Weihnachtsfest!",
+    "fr": "Noël, aujourd’hui c’est Noël. Trois histoires, un seul Noël !",
+    "es": "Navidad, hoy es Navidad. ¡Tres historias, una sola Navidad!",
+    "pl": "Boże Narodzenie, dziś jest Boże Narodzenie. Trzy historie, jedne święta!",
+    "uk": "Різдво, сьогодні Різдво. Три історії, одне Різдво!"
+  },
+  "Traditional Christmas Delicacies Display": {
+    "en": "Traditional Christmas Delicacies Display",
+    "pt": "Mostra de iguarias tradicionais de Natal",
+    "de": "Ausstellung traditioneller Weihnachtsköstlichkeiten",
+    "fr": "Présentation de spécialités traditionnelles de Noël",
+    "es": "Muestra de delicias tradicionales de Navidad",
+    "pl": "Prezentacja tradycyjnych przysmaków bożonarodzeniowych",
+    "uk": "Виставка традиційних різдвяних смаколиків"
+  },
+  "Taça da Madeira de Karting 2026": {
+    "en": "Madeira Karting Cup 2026",
+    "pt": "Taça da Madeira de Karting 2026",
+    "de": "Madeira-Karting-Pokal 2026",
+    "fr": "Coupe de karting de Madère 2026",
+    "es": "Copa de Karting de Madeira 2026",
+    "pl": "Puchar Madery w Kartingu 2026",
+    "uk": "Кубок Мадейри з картингу 2026"
+  },
+  "Childbirth Masses (Missas do Parto)": {
+    "en": "Childbirth Masses (Missas do Parto)",
+    "pt": "Missas do Parto",
+    "de": "Adventsmessen „Missas do Parto“",
+    "fr": "Messes de l’Enfantement (Missas do Parto)",
+    "es": "Misas del Parto",
+    "pl": "Msze adwentowe Missas do Parto",
+    "uk": "Передріздвяні меси Missas do Parto"
+  },
+  "\"VOLTAS\" - Exhibition": {
+    "en": "\"VOLTAS\" - Exhibition",
+    "pt": "Exposição «VOLTAS»",
+    "de": "Ausstellung „VOLTAS“",
+    "fr": "Exposition « VOLTAS »",
+    "es": "Exposición «VOLTAS»",
+    "pl": "Wystawa „VOLTAS”",
+    "uk": "Виставка «VOLTAS»"
+  },
+  "A Descoberta da Cor": {
+    "en": "Discovering Colour",
+    "pt": "A Descoberta da Cor",
+    "de": "Die Entdeckung der Farbe",
+    "fr": "À la découverte de la couleur",
+    "es": "El descubrimiento del color",
+    "pl": "Odkrywanie koloru",
+    "uk": "Відкриття кольору"
+  },
+  "New Year’s Eve Show": {
+    "en": "New Year’s Eve Show",
+    "pt": "Espetáculo de Fim do Ano",
+    "de": "Silvestershow",
+    "fr": "Spectacle du réveillon du Nouvel An",
+    "es": "Espectáculo de Nochevieja",
+    "pl": "Widowisko sylwestrowe",
+    "uk": "Новорічне шоу"
+  },
+  "Chants of the Epiphany": {
+    "en": "Chants of the Epiphany",
+    "pt": "Cantar dos Reis",
+    "de": "Dreikönigsgesänge",
+    "fr": "Chants de l’Épiphanie",
+    "es": "Cantos de Reyes",
+    "pl": "Śpiewy na Trzech Króli",
+    "uk": "Співи на свято Богоявлення"
+  },
+  "XI Poncha and Honey Festival": {
+    "en": "XI Poncha and Honey Festival",
+    "pt": "XI Festa da Poncha e do Mel",
+    "de": "XI. Poncha- und Honigfest",
+    "fr": "XIe Fête de la poncha et du miel",
+    "es": "XI Fiesta de la Poncha y la Miel",
+    "pl": "XI Święto Ponchy i Miodu",
+    "uk": "XI фестиваль понші та меду"
+  },
+  "Compadres Feast": {
+    "en": "Compadres Feast",
+    "pt": "Festa dos Compadres",
+    "de": "Compadres-Fest",
+    "fr": "Fête des Compadres",
+    "es": "Fiesta de los Compadres",
+    "pl": "Święto Compadres",
+    "uk": "Свято Compadres"
+  },
+  "Funchal Marathon": {
+    "en": "Funchal Marathon",
+    "pt": "Maratona do Funchal",
+    "de": "Funchal-Marathon",
+    "fr": "Marathon de Funchal",
+    "es": "Maratón de Funchal",
+    "pl": "Maraton w Funchal",
+    "uk": "Фуншальський марафон"
+  },
+  "Carnival": {
+    "en": "Carnival",
+    "pt": "Carnaval",
+    "de": "Karneval",
+    "fr": "Carnaval",
+    "es": "Carnaval",
+    "pl": "Karnawał",
+    "uk": "Карнавал"
+  },
+  "Children’s Carnival": {
+    "en": "Children’s Carnival",
+    "pt": "Carnaval Infantil",
+    "de": "Kinderkarneval",
+    "fr": "Carnaval des enfants",
+    "es": "Carnaval infantil",
+    "pl": "Karnawał dziecięcy",
+    "uk": "Дитячий карнавал"
+  },
+  "Solidarity Carnival": {
+    "en": "Solidarity Carnival",
+    "pt": "Carnaval Solidário",
+    "de": "Solidaritätskarneval",
+    "fr": "Carnaval solidaire",
+    "es": "Carnaval solidario",
+    "pl": "Karnawał solidarności",
+    "uk": "Карнавал солідарності"
+  },
+  "the biggest Problem in the world • Victor Patrascan in Funchal": {
+    "en": "The Biggest Problem in the World • Victor Patrascan in Funchal",
+    "pt": "O maior problema do mundo • Victor Patrascan no Funchal",
+    "de": "Das größte Problem der Welt • Victor Patrascan in Funchal",
+    "fr": "Le plus grand problème du monde • Victor Patrascan à Funchal",
+    "es": "El mayor problema del mundo • Victor Patrascan en Funchal",
+    "pl": "Największy problem na świecie • Victor Patrascan w Funchal",
+    "uk": "Найбільша проблема у світі • Віктор Патраскан у Фуншалі"
+  },
+  "MIUT – Madeira Island Ultra Trail": {
+    "en": "MIUT – Madeira Island Ultra Trail",
+    "pt": "MIUT – ultratrail da ilha da Madeira",
+    "de": "MIUT – Ultratrail auf Madeira",
+    "fr": "MIUT – ultra-trail de l’île de Madère",
+    "es": "MIUT: ultratrail de la isla de Madeira",
+    "pl": "MIUT – ultramaraton terenowy na Maderze",
+    "uk": "MIUT — ультратрейл островом Мадейра"
+  },
+  "Flower Festival": {
+    "en": "Flower Festival",
+    "pt": "Festa da Flor",
+    "de": "Blumenfest",
+    "fr": "Fête de la fleur",
+    "es": "Fiesta de la Flor",
+    "pl": "Festiwal Kwiatów",
+    "uk": "Фестиваль квітів"
+  },
+  "Flower Market and Regional Flavours": {
+    "en": "Flower Market and Regional Flavours",
+    "pt": "Mercado das Flores e Sabores Regionais",
+    "de": "Blumenmarkt und regionale Spezialitäten",
+    "fr": "Marché aux fleurs et saveurs régionales",
+    "es": "Mercado de flores y sabores regionales",
+    "pl": "Targ kwiatowy i regionalne smaki",
+    "uk": "Квітковий ярмарок і регіональні смаки"
+  },
+  "Wall of Hope": {
+    "en": "Wall of Hope",
+    "pt": "Muro da Esperança",
+    "de": "Mauer der Hoffnung",
+    "fr": "Mur de l’espoir",
+    "es": "Muro de la Esperanza",
+    "pl": "Mur Nadziei",
+    "uk": "Стіна надії"
+  },
+  "Allegoric Parade": {
+    "en": "Allegoric Parade",
+    "pt": "Cortejo Alegórico",
+    "de": "Allegorischer Festumzug",
+    "fr": "Défilé allégorique",
+    "es": "Desfile alegórico",
+    "pl": "Parada alegoryczna",
+    "uk": "Алегорична хода"
+  },
+  "Wall of Solidarity": {
+    "en": "Wall of Solidarity",
+    "pt": "Muro da Solidariedade",
+    "de": "Mauer der Solidarität",
+    "fr": "Mur de la solidarité",
+    "es": "Muro de la Solidaridad",
+    "pl": "Mur Solidarności",
+    "uk": "Стіна солідарності"
+  },
+  "Performances by the Flower Groups": {
+    "en": "Performances by the Flower Groups",
+    "pt": "Atuações dos grupos da Festa da Flor",
+    "de": "Auftritte der Blumenfestgruppen",
+    "fr": "Spectacles des groupes de la Fête de la fleur",
+    "es": "Actuaciones de los grupos de la Fiesta de la Flor",
+    "pl": "Występy grup Festiwalu Kwiatów",
+    "uk": "Виступи колективів Фестивалю квітів"
+  },
+  "DevGAMM Madeira Games Summit 2027": {
+    "en": "DevGAMM Madeira Games Summit 2027",
+    "pt": "DevGAMM Madeira – cimeira de videojogos 2027",
+    "de": "DevGAMM Madeira – Spiele-Gipfel 2027",
+    "fr": "DevGAMM Madeira – sommet du jeu vidéo 2027",
+    "es": "DevGAMM Madeira: cumbre de videojuegos 2027",
+    "pl": "DevGAMM Madeira – szczyt branży gier 2027",
+    "uk": "DevGAMM Madeira — саміт ігрової індустрії 2027"
+  },
+  "Madeira Flower Collection": {
+    "en": "Madeira Flower Collection",
+    "pt": "Coleção Floral da Madeira",
+    "de": "Blumenkollektion Madeira",
+    "fr": "Collection florale de Madère",
+    "es": "Colección floral de Madeira",
+    "pl": "Kolekcja kwiatowa Madery",
+    "uk": "Квіткова колекція Мадейри"
+  },
+  "Madeira Classic Car Revival": {
+    "en": "Madeira Classic Car Revival",
+    "pt": "Madeira Classic Car Revival – encontro de automóveis clássicos",
+    "de": "Madeira Classic Car Revival – Oldtimertreffen",
+    "fr": "Madeira Classic Car Revival – rencontre de voitures anciennes",
+    "es": "Madeira Classic Car Revival: encuentro de coches clásicos",
+    "pl": "Madeira Classic Car Revival – spotkanie zabytkowych samochodów",
+    "uk": "Madeira Classic Car Revival — зустріч ретроавтомобілів"
+  },
+  "Competition Dressed for the occasion": {
+    "en": "“Dressed for the Occasion” competition",
+    "pt": "Concurso «Vestido a rigor»",
+    "de": "Wettbewerb „Passend gekleidet“",
+    "fr": "Concours « Habillés pour l’occasion »",
+    "es": "Concurso «Vestidos para la ocasión»",
+    "pl": "Konkurs „Ubrani na tę okazję”",
+    "uk": "Конкурс «Вбрання до нагоди»"
+  },
+  "DOC. Atlantic": {
+    "en": "DOC. Atlantic",
+    "pt": "DOC. Atlantic",
+    "de": "DOC. Atlantic",
+    "fr": "DOC. Atlantic",
+    "es": "DOC. Atlantic",
+    "pl": "DOC. Atlantic",
+    "uk": "DOC. Atlantic"
+  },
+  "Sixteenth Century Market": {
+    "en": "Sixteenth Century Market",
+    "pt": "Mercado Quinhentista",
+    "de": "Markt des 16. Jahrhunderts",
+    "fr": "Marché du XVIe siècle",
+    "es": "Mercado del siglo XVI",
+    "pl": "Jarmark XVI-wieczny",
+    "uk": "Ярмарок XVI століття"
+  },
+  "Atlantic Festival": {
+    "en": "Atlantic Festival",
+    "pt": "Festival do Atlântico",
+    "de": "Atlantikfestival",
+    "fr": "Festival de l’Atlantique",
+    "es": "Festival del Atlántico",
+    "pl": "Festiwal Atlantycki",
+    "uk": "Атлантичний фестиваль"
+  },
+  "Madeira International Fireworks Contest": {
+    "en": "Madeira International Fireworks Contest",
+    "pt": "Concurso Internacional de Fogo de Artifício da Madeira",
+    "de": "Internationaler Feuerwerkswettbewerb Madeira",
+    "fr": "Concours international de feux d’artifice de Madère",
+    "es": "Concurso Internacional de Fuegos Artificiales de Madeira",
+    "pl": "Międzynarodowy Konkurs Fajerwerków na Maderze",
+    "uk": "Міжнародний конкурс феєрверків Мадейри"
+  },
+  "Regional Arts Week": {
+    "en": "Regional Arts Week",
+    "pt": "Semana Regional das Artes",
+    "de": "Regionale Kunstwoche",
+    "fr": "Semaine régionale des arts",
+    "es": "Semana Regional de las Artes",
+    "pl": "Regionalny Tydzień Sztuki",
+    "uk": "Регіональний тиждень мистецтв"
+  },
+  "Funchal Jazz Festival": {
+    "en": "Funchal Jazz Festival",
+    "pt": "Festival de Jazz do Funchal",
+    "de": "Jazzfestival Funchal",
+    "fr": "Festival de jazz de Funchal",
+    "es": "Festival de Jazz de Funchal",
+    "pl": "Festiwal Jazzowy w Funchal",
+    "uk": "Джазовий фестиваль Фуншала"
+  },
+  "Madeira Gastronomic Festival – SAL": {
+    "en": "Madeira Gastronomic Festival – SAL",
+    "pt": "Festival Gastronómico da Madeira – SAL",
+    "de": "Gastronomiefestival Madeira – SAL",
+    "fr": "Festival gastronomique de Madère – SAL",
+    "es": "Festival Gastronómico de Madeira – SAL",
+    "pl": "Festiwal Gastronomiczny Madery – SAL",
+    "uk": "Гастрономічний фестиваль Мадейри — SAL"
+  },
+  "Classics at Magnolia": {
+    "en": "Classics at Magnolia",
+    "pt": "Clássicos na Magnólia",
+    "de": "Klassiker im Magnolia",
+    "fr": "Classiques à Magnolia",
+    "es": "Clásicos en Magnolia",
+    "pl": "Klasyki w Magnolia",
+    "uk": "Класика в Magnolia"
+  },
+  "Madeira Rally": {
+    "en": "Madeira Rally",
+    "pt": "Rali da Madeira",
+    "de": "Madeira-Rallye",
+    "fr": "Rallye de Madère",
+    "es": "Rally de Madeira",
+    "pl": "Rajd Madery",
+    "uk": "Ралі Мадейри"
+  },
+  "Columbus Festival": {
+    "en": "Columbus Festival",
+    "pt": "Festival Colombo",
+    "de": "Kolumbus-Festival",
+    "fr": "Festival Colomb",
+    "es": "Festival de Colón",
+    "pl": "Festiwal Kolumba",
+    "uk": "Фестиваль Колумба"
+  },
+  "X Colombo’s Golf Trophy Tournament": {
+    "en": "X Colombo’s Golf Trophy Tournament",
+    "pt": "X Torneio de Golfe Troféu Colombo",
+    "de": "X. Golfturnier um die Colombo-Trophäe",
+    "fr": "Xe tournoi de golf du Trophée Colombo",
+    "es": "X Torneo de Golf Trofeo Colombo",
+    "pl": "X Turniej Golfowy o Trofeum Kolumba",
+    "uk": "X турнір із гольфу за трофей Колумба"
+  },
+  "World Tourism Day": {
+    "en": "World Tourism Day",
+    "pt": "Dia Mundial do Turismo",
+    "de": "Welttourismustag",
+    "fr": "Journée mondiale du tourisme",
+    "es": "Día Mundial del Turismo",
+    "pl": "Światowy Dzień Turystyki",
+    "uk": "Всесвітній день туризму"
+  },
+  "Nature Festival": {
+    "en": "Nature Festival",
+    "pt": "Festival da Natureza",
+    "de": "Naturfestival",
+    "fr": "Festival de la nature",
+    "es": "Festival de la Naturaleza",
+    "pl": "Festiwal Przyrody",
+    "uk": "Фестиваль природи"
+  }
+}

@@ -2,9 +2,12 @@ import type { Locale } from '../i18n/config';
 import type { ImportedEvent } from './types';
 import { plainText } from './adapters';
 import { readCache, writeCache, reserveTranslation } from './cache';
+import { catalogTitle, localizedVenue } from './catalog';
 type Translation = { text: string | null; retryAfter: number };
 const pending = new Map<string, Promise<string | null>>();
 export async function translatedTitle(text: string, from: string, to: Locale, allowNetwork = true): Promise<string | null> {
+  const curated = catalogTitle(text, to);
+  if (curated) return curated;
   if (from === to) return text;
   const key = `title:${from}:${to}:${text}`;
   const saved = await readCache<Translation>(key);
@@ -34,8 +37,9 @@ export async function localizeEvents(events: ImportedEvent[], locale: Locale) {
   await Promise.all(Array.from({ length: 6 }, async () => {
     while (cursor < result.length) {
       const index = cursor++; const event = result[index];
-      const title = await translatedTitle(event.originalTitle, event.sourceLanguage, locale, Date.now() < deadline);
-      result[index] = { ...event, title: title || event.originalTitle, translation: event.sourceLanguage === locale ? 'source' : title ? 'machine' : 'original' };
+      const curated = catalogTitle(event.originalTitle, locale);
+      const title = curated || await translatedTitle(event.originalTitle, event.sourceLanguage, locale, Date.now() < deadline);
+      result[index] = { ...event, title: title || event.originalTitle, venue: localizedVenue(event.venue, locale), translation: curated ? 'catalog' : event.sourceLanguage === locale ? 'source' : title ? 'machine' : 'original' };
     }
   }));
   return result;
