@@ -5,7 +5,6 @@ import { useState } from 'react';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { useMessages } from '../../lib/i18n/useMessages';
 import { getStayBySlug, stays, type Stay } from '../../data/stays';
@@ -59,8 +58,8 @@ export default function StayPage({ stay }: Props) {
         <meta name="twitter:description" content={localize(description)}/>
       </Head>
       <main className="page-shell">
-        <Link href="/trip-plan" locale={translationLanguage} className={actionClass}>{localize("\u2190 ")}{localize(uk ? 'Назад' : 'Back')}</Link>
-        <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+        <article className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="relative aspect-[16/9] bg-slate-100">
             <Image src="/images/cameras/madeira-camera-2.png" alt={localize(uk ? 'Карта Мадейри' : 'Madeira map')} fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 768px"/>
           </div>

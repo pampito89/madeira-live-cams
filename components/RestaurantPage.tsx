@@ -91,8 +91,8 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizeStructuredData(schema, localize)).replace(/</g, '\\u003c') }}/>
       </Head>
       <main className="page-shell">
-        <Link href="/trip-plan" className={actionClass}>{localize("\u2190 ")}{localize(uk ? 'До планувальника' : 'Back to trip planner')}</Link>
-        <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+        <article className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <RestaurantPhoto src={r.image} name={r.name} locale={locale} available={hasPhoto}/>
           <div className="p-5 sm:p-8">
             <p className="text-sm font-medium text-ocean">{localize(uk ? 'Ресторан' : 'Restaurant')}{localize(" \u00B7 ")}{localize(r.area)}</p>

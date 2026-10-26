@@ -3,7 +3,6 @@ import { useText } from '../lib/i18n/TranslationProvider';
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Layout from './Layout';
 import ActivityPhoto from './ActivityPhoto';
 import type { Activity } from '../data/activities';
@@ -15,7 +14,6 @@ type Props = {
 const ORIGIN = 'https://madeiralivecams.com';
 export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
-    const router = useRouter();
     const { locale } = useMessages();
     const uk = locale === 'uk';
     const [routeOpen, setRouteOpen] = useState(false);
@@ -24,15 +22,6 @@ export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) 
     const description = activity.summary[locale];
     const position = `${activity.latitude},${activity.longitude}`;
     const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
-    const handleBack = () => {
-        if (router.query.returnTo === 'cameras')
-            return void router.push('/cameras?restore=1');
-        if (router.query.returnTo === 'home')
-            return void router.push('/?restoreCameraFilter=1');
-        if (window.history.length > 1)
-            return void router.back();
-        return void router.push('/cameras');
-    };
     const share = async () => {
         try {
             if (navigator.share) {
@@ -78,8 +67,8 @@ export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizeStructuredData(schema, localize)).replace(/</g, '\\u003c') }}/>
       </Head>
       <main className="page-shell">
-        <button type="button" onClick={handleBack} className={actionClass}>{localize("\u2190 ")}{localize(uk ? 'Назад' : 'Back')}</button>
-        <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+        <article className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <ActivityPhoto src={activity.image} name={activity.name} locale={locale} available={hasPhoto}/>
           <div className="p-5 sm:p-8">
             <p className="text-sm font-medium text-ocean">{localize(uk ? 'Активний відпочинок' : 'Outdoor activities')}{localize(" \u00B7 ")}{localize(activity.area)}</p>

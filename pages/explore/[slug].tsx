@@ -6,7 +6,6 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import LevadaNovaRoute from '../../components/LevadaNovaRoute';
 import RestaurantPage from '../../components/RestaurantPage';
@@ -43,7 +42,6 @@ const navigationDestinations: Record<string, Coordinates> = {
 function StandardLocationPage({ location }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
-    const router = useRouter();
     const display = getLocalizedLocation(location, locale);
     const uk = locale === 'uk';
     const [routeOpen, setRouteOpen] = useState(false);
@@ -61,15 +59,6 @@ function StandardLocationPage({ location }: Props) {
         : `https://www.waze.com/ul?q=${encodeURIComponent(navigationQuery)}&navigate=yes`;
     const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
     const ticketLabel = { en: 'Tickets', pt: 'Bilhetes', de: 'Tickets', fr: 'Billets', es: 'Entradas', pl: 'Bilety', uk: 'Квитки' }[translationLanguage];
-    const handleBack = () => {
-        if (router.query.returnTo === 'home')
-            return void router.push('/?restoreCameraFilter=1');
-        if (router.query.returnTo === 'cameras')
-            return void router.push('/cameras?restore=1');
-        if (window.history.length > 1)
-            return void router.back();
-        return void router.push('/cameras');
-    };
     const share = async () => {
         try {
             if (navigator.share) {
@@ -107,8 +96,8 @@ function StandardLocationPage({ location }: Props) {
         <meta name="twitter:image" content={image}/>
       </Head>
       <main className="page-shell">
-        <button type="button" onClick={handleBack} className={actionClass}>{localize("\u2190 ")}{localize(uk ? 'Назад' : 'Back')}</button>
-        <article className="mx-auto mt-5 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+        <article className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="relative aspect-[16/9] bg-slate-100">
             <Image src={display.image} alt={localize(display.imageAlt)} fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 768px"/>
           </div>
@@ -126,9 +115,7 @@ function StandardLocationPage({ location }: Props) {
                     <button type="button" onClick={() => setRouteOpen(false)} className="block w-full px-3 py-2 text-left text-sm">{localize(uk ? 'Закрити' : 'Close')}</button>
                   </div>))}
               </div>
-              {display.slug === 'cabo-girao-skywalk' && (
-                <a href="https://simplifica.madeira.gov.pt/services/78-79-256/start" target="_blank" rel="noopener noreferrer" className={actionClass}>{ticketLabel}</a>
-              )}
+              {display.slug === 'cabo-girao-skywalk' && (<a href="https://simplifica.madeira.gov.pt/services/78-79-256/start" target="_blank" rel="noopener noreferrer" className={actionClass}>{ticketLabel}</a>)}
               <button type="button" onClick={share} className={actionClass}>{localize(copied ? (uk ? 'Скопійовано' : 'Copied') : (uk ? 'Поділитися' : 'Share'))}</button>
             </div>
             <p className="mt-5 text-base leading-7 text-slate-700">{localize(display.article.intro)}</p>
