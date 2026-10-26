@@ -90,7 +90,7 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
             <p className={styles.badge}>{icons[event.category]} {categoryName(event.category)}</p>
             <div className={styles.eventContent}>
               <p className={styles.date}><time dateTime={event.start}>{formatDate(event.start)}</time>{event.end !== event.start && <> — <time dateTime={event.end}>{formatDate(event.end)}</time></>}</p>
-              <h2>{event.title}</h2><p className={styles.description}>{event.description}</p>
+              <h2>{event.title}</h2>
               <p className={styles.venue}>⌖ {event.municipalities.length ? event.venue : text.unknownVenue}</p>
               <div className={styles.links}><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{text.details} ↗</a>{event.ticketUrl && <a className={styles.ticketButton} href={event.ticketUrl} target="_blank" rel="noopener noreferrer">{text.tickets} ↗</a>}</div>
               <p className={styles.source}>{event.source} · {text.updated} <time dateTime={event.fetchedAt}>{formatUpdated(event.fetchedAt)}</time></p>
