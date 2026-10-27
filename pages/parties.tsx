@@ -81,8 +81,11 @@ export default function PartiesPage({ initialFeed }: { initialFeed: EventFeed })
       <section className={styles.controls} aria-label={text.municipality}>
         <label htmlFor="event-municipality">{text.municipality}<select id="event-municipality" value={municipality} onChange={e => setMunicipality(e.target.value)}><option value="">{text.allMunicipalities}</option>{municipalities.map(name => <option key={name}>{name}</option>)}</select></label>
         <EventDateFilter locale={siteLocale} today={today} value={dateRange} onChange={setDateRange} />
-        <button type="button" onClick={reset}>{text.clear}</button>
-        <div className={styles.categories}><button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>{visibleCategories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}</div>
+        <div className={styles.categories}>
+          <button type="button" aria-pressed={!category} onClick={() => setCategory('')}>{text.everything}</button>
+          {visibleCategories.map(name => <button key={name} type="button" aria-pressed={category === name} onClick={() => setCategory(category === name ? '' : name)}>{icons[name]} {categoryName(name)}</button>)}
+          <button type="button" className={styles.resetFilters} onClick={reset}>{text.clear}</button>
+        </div>
       </section>
       <div className={styles.toolbar}><p role="status">{filtered.length} {text.count}</p><span>{text.confirm}</span></div>
       {connectionError && <p className={styles.notice} role="status">{text.connection}</p>}
