@@ -37,11 +37,10 @@ export default function AirportUpdatesPanel({ locale }: { locale: Locale }) {
    <div><h3 className="text-xs font-semibold text-slate-600">IPMA · {text.weather}</h3>
     {!data.warningsAvailable ? <p className="mt-1 text-xs text-slate-500">{text.unavailable}</p> : warnings.length ? <ul className="mt-1 space-y-2">{warnings.map(w => <li key={`${w.type}:${w.start}:${w.end}`} className={`rounded-md border-l-4 px-2 py-1 ${w.level === 'red' ? 'border-red-600 bg-red-50' : w.level === 'orange' ? 'border-orange-500 bg-orange-50' : 'border-yellow-500 bg-yellow-50'}`}><a href="https://www.ipma.pt/en/otempo/prev-sam?p=MCS" target="_blank" rel="noopener noreferrer" className="text-sm font-medium underline">{text.type(w.type)} · {text.level(w.level)}</a><p className="text-xs text-slate-600">{format(w.start)} — {format(w.end)}</p></li>)}</ul> : <p className="mt-1 text-xs text-slate-500">{text.emptyWarnings}</p>}
    </div>
-   <div><h3 className="text-xs font-semibold text-slate-600">ANA · {text.original}</h3>
+   <div><h3 className="text-xs font-semibold text-slate-600">ANA · {text.news}</h3>
     {!data.newsAvailable ? <p className="mt-1 text-xs text-slate-500">{text.unavailable}</p> : data.news.length ? <ul className="mt-1 space-y-2">{data.news.map(n => <li key={n.url}><a lang="pt" href={n.url} target="_blank" rel="noopener noreferrer" className="text-sm text-ocean underline">{n.title}</a><p className="text-xs text-slate-500">{format(n.publishedAt)}</p></li>)}</ul> : <p className="mt-1 text-xs text-slate-500">{text.emptyNews}</p>}
    </div>
   </div>}
   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-ocean"><a className="underline" href="https://www.madeiraairport.pt/en/fnc/home" target="_blank" rel="noopener noreferrer">{text.official} ↗</a><a className="underline" href="https://pt.newsroom.ana.pt/news/" target="_blank" rel="noopener noreferrer">ANA ↗</a><a className="underline" href="https://www.ipma.pt/en/otempo/prev-sam?p=MCS" target="_blank" rel="noopener noreferrer">IPMA ↗</a><a className="underline" href="https://www.jm-madeira.pt/topic/-/meta/aeroporto-da-madeira" target="_blank" rel="noopener noreferrer">{text.local} · JM ↗</a></div>
-  <p className="mt-2 text-xs text-slate-500">{text.note}</p>
  </section>;
 }
