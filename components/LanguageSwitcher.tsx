@@ -19,6 +19,7 @@ export default function LanguageSwitcher({ fullWidth = false, placement = 'botto
   const [isOpen, setIsOpen] = useState(false);
   const currentLocale = isSupportedLocale(router.locale) ? router.locale : defaultLocale;
   const currentLanguage = localeDetails[currentLocale];
+  const destination = router.pathname === '/car-rental' ? '/' : router.asPath;
   useEffect(() => {
     const outside = (event: MouseEvent) => { if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false); };
     const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setIsOpen(false); };
@@ -43,7 +44,7 @@ export default function LanguageSwitcher({ fullWidth = false, placement = 'botto
       {isOpen && (
         <div role="menu" aria-label={labels[currentLocale].choose} className={`absolute right-0 z-[70] min-w-52 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl ${position} ${fullWidth ? 'w-full' : ''}`}>
           {supportedLocales.filter(locale => locale !== currentLocale).map(locale => (
-            <Link key={locale} href={router.asPath} locale={locale} role="menuitem" onClick={() => saveLocale(locale)}
+            <Link key={locale} href={destination} locale={locale} role="menuitem" onClick={() => saveLocale(locale)}
               className="flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm text-navy transition hover:bg-panel">
               <span className="text-xl leading-none" aria-hidden="true">{localeDetails[locale].flag}</span>
               <span className="font-semibold">{localeDetails[locale].name}</span>

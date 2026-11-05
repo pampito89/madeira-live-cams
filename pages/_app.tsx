@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { defaultLocale, isSupportedLocale, localePath } from '../lib/i18n/config';
-import { indexableLocales, isPrivateOrUtilityPath } from '../lib/i18n/coverage';
+import { defaultPageLocale, indexableLocales, isPrivateOrUtilityPath } from '../lib/i18n/coverage';
 import { TranslationProvider } from '../lib/i18n/TranslationProvider';
 import '../styles/globals.css';
 const SITE_URL = 'https://madeiralivecams.com';
@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Head>
       <link rel="canonical" href={canonicalUrl} />
       {!privateOrUtility && alternates.map(alternateLocale => <link key={alternateLocale} rel="alternate" hrefLang={alternateLocale} href={`${SITE_URL}${localePath(alternateLocale, normalizedPath)}`} />)}
-      {!privateOrUtility && <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${localePath('en', normalizedPath)}`} />}
+      {!privateOrUtility && <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${localePath(defaultPageLocale(normalizedPath), normalizedPath)}`} />}
       <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Madeira Live Cams" />

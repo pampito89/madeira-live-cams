@@ -6,6 +6,7 @@ import { useMessages } from '../lib/i18n/useMessages';
 import { layoutText } from '../lib/i18n/layoutText';
 import LanguageSwitcher from './LanguageSwitcher';
 import HistoryNavigation from './HistoryNavigation';
+
 type BeforeInstallPromptEvent = Event & {
     prompt: () => Promise<void>;
     userChoice: Promise<{
@@ -80,6 +81,7 @@ const Layout: React.FC<{
         { href: '/', label: text.home, icon: '⌂' },
         { href: '/cameras', label: text.locations, icon: '⌖' },
         { href: '/trip-plan', label: text.tripPlan, icon: '🗺️' },
+        ...(siteLocale === 'uk' ? [{ href: '/car-rental', label: 'Оренда авто', icon: '🚘' }] : []),
         { href: '/trail-availability', label: text.trails, icon: '📈' },
         { href: '/parties', label: eventLabels[siteLocale], icon: '♫' },
         { href: '/weather-guide', label: messages.nav.sunrise, icon: '☀' },
@@ -102,7 +104,7 @@ const Layout: React.FC<{
       <button type="button" onClick={() => setIsMenuOpen(false)} aria-label={localize(text.closeMenu)} className={`absolute inset-0 bg-navy/40 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}/>
       <aside className={`relative flex h-full w-[280px] max-w-[85vw] flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3"><p className="text-sm font-semibold text-navy">Madeira Live Cams</p><button type="button" onClick={() => setIsMenuOpen(false)} aria-label={localize(text.closeMenu)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-xl text-slate-500 transition hover:bg-panel hover:text-ocean focus:outline-none focus:ring-2 focus:ring-ocean">×</button></div>
-        <nav className="flex flex-col gap-1 p-3">{navItems.map(item => {
+        <nav className="flex flex-col gap-1 overflow-y-auto p-3">{navItems.map(item => {
             const active = isActivePage(item.href);
             return <Link key={item.href} href={item.href} locale={translationLanguage} onClick={() => setIsMenuOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? 'bg-ocean text-white shadow-sm' : 'text-navy hover:bg-panel hover:text-ocean'}`}><span className={`flex h-6 w-6 items-center justify-center text-lg ${active ? 'text-white' : 'text-ocean'}`} aria-hidden="true">{item.icon}</span><span>{localize(item.label)}</span></Link>;
         })}</nav>

@@ -3,7 +3,7 @@ import { cameras } from '../components/cameraData';
 import { locations } from '../data/plannerLocations';
 import { stays } from '../data/stays';
 import { localePath, type Locale } from '../lib/i18n/config';
-import { indexableLocales } from '../lib/i18n/coverage';
+import { defaultPageLocale, indexableLocales } from '../lib/i18n/coverage';
 
 const ORIGIN = 'https://madeiralivecams.com';
 function escapeXml(value: string) {
@@ -17,13 +17,13 @@ function urlEntry(path: string, locale: Locale, alternates: readonly Locale[]) {
     '  <url>',
     `    <loc>${escapeXml(`${ORIGIN}${localePath(locale, path)}`)}</loc>`,
     ...alternates.map(alternate => `    <xhtml:link rel="alternate" hreflang="${alternate}" href="${escapeXml(`${ORIGIN}${localePath(alternate, path)}`)}" />`),
-    `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${ORIGIN}${localePath('en', path)}`)}" />`,
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${ORIGIN}${localePath(defaultPageLocale(path), path)}`)}" />`,
     '  </url>',
   ].join('\n');
 }
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const paths = Array.from(new Set([
-    '/', '/about', '/parties', '/privacy', '/weather-guide', '/cameras', '/trip-plan', '/trail-availability',
+    '/', '/about', '/parties', '/privacy', '/weather-guide', '/cameras', '/trip-plan', '/trail-availability', '/car-rental',
     ...cameras.map(camera => `/cameras/${camera.id}`),
     ...locations.filter(location => !location.hiddenFromExplore).map(location => `/explore/${location.slug}`),
     ...stays.map(stay => `/stays/${stay.slug}`),

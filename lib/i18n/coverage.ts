@@ -1,8 +1,13 @@
 import { supportedLocales, type Locale } from './config';
 
-/** Public editorial content is available in every supported language. */
+/** The rental offer is authored exclusively for the Ukrainian site. */
 export function indexableLocales(path: string): readonly Locale[] {
-  return isPrivateOrUtilityPath(path) ? [] : supportedLocales;
+  if (isPrivateOrUtilityPath(path)) return [];
+  return path === '/car-rental' ? ['uk'] : supportedLocales;
+}
+
+export function defaultPageLocale(path: string): Locale {
+  return path === '/car-rental' ? 'uk' : 'en';
 }
 
 export function isPrivateOrUtilityPath(path: string): boolean {
