@@ -3,13 +3,14 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import Layout from '../components/Layout';
+import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } from '../components/RentalDateRange';
 
 const ORIGIN = 'https://madeiralivecams.com';
 const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | Madeira Live Cams';
-const DESCRIPTION = 'Оренда авто на Мадейрі: білий Nissan Qashqai e-Power — 65 €/добу, синій MINI Countryman S ALL4 — 55 €/добу. Уточніть дати та умови у WhatsApp.';
+const DESCRIPTION = 'Оренда авто на Мадейрі: білий Nissan Qashqai e-Power — 70 €/добу, синій MINI Countryman S ALL4 — 65 €/добу. Уточніть дати та умови у WhatsApp.';
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 65, image: '/images/car-rental/nissan.jpg', height: 575, author: 'Alexander-93', source: 'https://commons.wikimedia.org/wiki/File:2024_Nissan_Qashqai_e-Power_IMG_2187.jpg' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 55, image: '/images/car-rental/mini.jpg', height: 625, author: 'Elise240SX', source: 'https://commons.wikimedia.org/wiki/File:2018_MINI_Cooper_S_Countryman_ALL4_in_Island_Blue_Metallic,_Rear_Left,_06-12-2022.jpg' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 629, author: 'Charles', source: 'https://commons.wikimedia.org/wiki/File:Nissan_Qashqai_1.5_VC-T_e-Power_(2022)_(52923642819).jpg', license: 'CC BY 2.0', licenseUrl: 'https://creativecommons.org/licenses/by/2.0/' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini.jpg', height: 558, author: 'Vauxford', source: 'https://commons.wikimedia.org/wiki/File:2018_Mini_Cooper_Countryman_S_Front.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
@@ -19,22 +20,14 @@ const breadcrumbs = {
     { '@type': 'ListItem', position: 2, name: 'Оренда авто', item: `${ORIGIN}/uk/car-rental` },
   ],
 };
-function madeiraToday() {
-  const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Atlantic/Madeira', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
-  const get = (type: string) => parts.find(part => part.type === type)?.value;
-  return `${get('year')}-${get('month')}-${get('day')}`;
-}
-function displayDate(value: string) {
-  return value ? value.split('-').reverse().join('.') : 'ще не визначено';
-}
 export default function CarRentalPage() {
   const [carId, setCarId] = useState(cars[0].id);
+  const [period, setPeriod] = useState<RentalPeriod>({ start: '', end: '' });
   const [error, setError] = useState('');
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const fields = new FormData(event.currentTarget);
-    const start = String(fields.get('start') ?? '');
-    const end = String(fields.get('end') ?? '');
+    const { start, end } = period;
     const note = String(fields.get('note') ?? '').trim();
     const car = cars.find(item => item.id === fields.get('car')) ?? cars[0];
     if ((start && start < madeiraToday()) || (end && end < madeiraToday())) {
@@ -42,7 +35,7 @@ export default function CarRentalPage() {
       return;
     }
     if ((start && !end) || (!start && end)) {
-      setError('Вкажіть обидві дати або залиште їх порожніми, якщо ще плануєте подорож.');
+      setError('Оберіть дату повернення в календарі або очистіть дати, якщо ще плануєте подорож.');
       return;
     }
     if (start && end && end <= start) {
@@ -54,8 +47,8 @@ export default function CarRentalPage() {
       'Вітаю! Цікавить оренда авто на Мадейрі.',
       `Авто: ${car.name} (${car.color.toLowerCase()}).`,
       `Ціна на сайті: ${car.price} €/добу.`,
-      `Отримання: ${displayDate(start)}.`,
-      `Повернення: ${displayDate(end)}.`,
+      `Отримання: ${displayRentalDate(start)}.`,
+      `Повернення: ${displayRentalDate(end)}.`,
       note ? `Побажання: ${note}` : '',
       'Підкажіть, будь ласка, доступність, місце отримання та повні умови оренди.',
     ].filter(Boolean).join('\n');
@@ -85,7 +78,7 @@ export default function CarRentalPage() {
         <header className="mb-8 max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Мадейра у вашому темпі</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy sm:text-5xl">Оренда авто на Мадейрі</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Білий Nissan Qashqai e-Power за 65 €/добу або синій MINI Countryman S ALL4 за 55 €/добу. Оберіть авто та напишіть у WhatsApp, щоб уточнити доступність на ваші дати.</p>
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Білий Nissan Qashqai e-Power за 70 €/добу або синій MINI Countryman S ALL4 за 65 €/добу. Оберіть авто та напишіть у WhatsApp, щоб уточнити доступність на ваші дати.</p>
         </header>
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
@@ -95,7 +88,7 @@ export default function CarRentalPage() {
                 <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
               </div>
               <figcaption className="px-5 pt-3 text-xs leading-5 text-slate-500">
-                Фото: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer" className="underline">CC BY-SA 4.0</a>. Зменшено, без інших змін.
+                Фото: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено, без інших змін.
               </figcaption>
             </figure>
             <div className="p-5 sm:p-6">
@@ -119,19 +112,13 @@ export default function CarRentalPage() {
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Автомобіль
               <select name="car" value={carId} onChange={event => setCarId(event.target.value)} className={fieldClass}>{cars.map(item => <option key={item.id} value={item.id}>{item.name} — {item.price} €/добу</option>)}</select>
             </label>
-            <label className="block min-w-0 text-sm font-semibold text-navy">Дата отримання (необов’язково)
-              <input type="date" name="start" className={fieldClass} />
-            </label>
-            <label className="block min-w-0 text-sm font-semibold text-navy">Дата повернення (необов’язково)
-              <input type="date" name="end" className={fieldClass} />
-            </label>
+            <RentalDateRange value={period} onChange={next => { setPeriod(next); setError(''); }} />
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Побажання (необов’язково)
               <textarea name="note" rows={3} maxLength={1000} placeholder="Наприклад, місце отримання авто" className={fieldClass} />
             </label>
             {error && <p role="alert" className="text-sm font-medium text-red-700 sm:col-span-2">{error}</p>}
             <div className="sm:col-span-2">
               <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 sm:w-auto">Написати у WhatsApp</button>
-              <p className="mt-3 text-sm text-slate-600">WhatsApp: +351 932 006 352</p>
               <p className="mt-2 text-xs leading-5 text-slate-500">Сайт не зберігає дані цієї форми. Натискання кнопки передає текст у WhatsApp і не підтверджує бронювання.</p>
               <noscript><p className="mt-3"><a className="text-ocean underline" href="https://wa.me/351932006352">Відкрити WhatsApp без заповнення форми</a></p></noscript>
             </div>
