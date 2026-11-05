@@ -78,7 +78,7 @@ export default function CarRentalPage() {
         <header className="mb-8 max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Мадейра у вашому темпі</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy sm:text-5xl">Оренда авто на Мадейрі</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Білий Nissan Qashqai e-Power за 70 €/добу або синій MINI Countryman S ALL4 за 65 €/добу. Оберіть авто та напишіть у WhatsApp, щоб уточнити доступність на ваші дати.</p>
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Оберіть авто та уточніть доступність на ваші дати у WhatsApp.</p>
         </header>
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
@@ -87,16 +87,13 @@ export default function CarRentalPage() {
                 <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.name}`} width={960} height={item.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="aspect-[16/10] w-full object-contain" />
                 <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
               </div>
-              <figcaption className="px-5 pt-3 text-xs leading-5 text-slate-500">
-                Фото: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено, без інших змін.
-              </figcaption>
             </figure>
             <div className="p-5 sm:p-6">
               <p className="text-sm font-medium text-ocean">{item.color}</p>
               <h2 className="mt-1 text-xl font-bold text-navy sm:text-2xl">{item.name}</h2>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
                 <p className="text-slate-600"><span className="text-3xl font-bold text-navy">{item.price} €</span> / добу</p>
-                <a href="#rental-contact" onClick={() => { setCarId(item.id); setError(''); }} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-ocean px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2" aria-label={`Обрати ${item.name}`}>Обрати авто</a>
+                <a href="#rental-contact" onClick={() => { setCarId(item.id); setError(''); }} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-ocean px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2" aria-label={`Забронювати ${item.name}`}>Забронювати</a>
               </div>
             </div>
           </article>)}
@@ -118,12 +115,18 @@ export default function CarRentalPage() {
             </label>
             {error && <p role="alert" className="text-sm font-medium text-red-700 sm:col-span-2">{error}</p>}
             <div className="sm:col-span-2">
-              <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 sm:w-auto">Написати у WhatsApp</button>
+              <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 sm:w-auto">Забронювати</button>
               <p className="mt-2 text-xs leading-5 text-slate-500">Сайт не зберігає дані цієї форми. Натискання кнопки передає текст у WhatsApp і не підтверджує бронювання.</p>
               <noscript><p className="mt-3"><a className="text-ocean underline" href="https://wa.me/351932006352">Відкрити WhatsApp без заповнення форми</a></p></noscript>
             </div>
           </form>
         </section>
+        <details className="mt-6 text-xs leading-5 text-slate-500">
+          <summary className="w-fit cursor-pointer rounded py-2 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean">Джерела фото</summary>
+          <ul className="mt-2 space-y-2">
+            {cars.map(item => <li key={item.id}>{item.name}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено, без інших змін.</li>)}
+          </ul>
+        </details>
       </div>
     </Layout>
   </>;
