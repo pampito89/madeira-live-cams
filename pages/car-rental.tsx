@@ -7,10 +7,12 @@ import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } f
 
 const ORIGIN = 'https://madeiralivecams.com';
 const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | Madeira Live Cams';
-const DESCRIPTION = 'Оренда авто на Мадейрі: білий Nissan Qashqai e-Power — 70 €/добу, синій MINI Countryman S ALL4 — 65 €/добу. Уточніть дати та умови у WhatsApp.';
+const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Без передоплати. Оплата готівкою або карткою на місці.';
+const WHATSAPP_URL = 'https://wa.me/380632558450';
+const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 629, author: 'Charles', source: 'https://commons.wikimedia.org/wiki/File:Nissan_Qashqai_1.5_VC-T_e-Power_(2022)_(52923642819).jpg', license: 'CC BY 2.0', licenseUrl: 'https://creativecommons.org/licenses/by/2.0/' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini.jpg', height: 558, author: 'Vauxford', source: 'https://commons.wikimedia.org/wiki/File:2018_Mini_Cooper_Countryman_S_Front.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 533, photoModel: 'Nissan Qashqai', author: 'Harvey Bold', source: 'https://commons.wikimedia.org/wiki/File:2021_Nissan_Qashqai_Premiere_Edition_DIG-T_-_1332cc_1.3_(140PS)_Petrol_-_Arctic_White_-_04-2024,_Front.jpg', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini.jpg', height: 558, photoModel: 'MINI Countryman S ALL4', author: 'Vauxford', source: 'https://commons.wikimedia.org/wiki/File:2018_Mini_Cooper_Countryman_S_Front.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
@@ -27,6 +29,8 @@ export default function CarRentalPage() {
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const fields = new FormData(event.currentTarget);
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const channel = submitter?.value === 'telegram' ? 'telegram' : 'whatsapp';
     const { start, end } = period;
     const note = String(fields.get('note') ?? '').trim();
     const car = cars.find(item => item.id === fields.get('car')) ?? cars[0];
@@ -35,7 +39,7 @@ export default function CarRentalPage() {
       return;
     }
     if ((start && !end) || (!start && end)) {
-      setError('Оберіть дату повернення в календарі або очистіть дати, якщо ще плануєте подорож.');
+      setError('Розгорніть календар і оберіть дату повернення або очистіть дати, якщо ще плануєте подорож.');
       return;
     }
     if (start && end && end <= start) {
@@ -52,7 +56,7 @@ export default function CarRentalPage() {
       note ? `Побажання: ${note}` : '',
       'Підкажіть, будь ласка, доступність, місце отримання та повні умови оренди.',
     ].filter(Boolean).join('\n');
-    window.location.assign(`https://wa.me/351932006352?text=${encodeURIComponent(message)}`);
+    window.location.assign(`${channel === 'telegram' ? TELEGRAM_URL : WHATSAPP_URL}?text=${encodeURIComponent(message)}`);
   };
   return <>
     <Head>
@@ -63,7 +67,7 @@ export default function CarRentalPage() {
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="uk_UA" />
       <meta property="og:image" content={`${ORIGIN}${cars[0].image}`} />
-      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power" />
+      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={TITLE} />
       <meta name="twitter:description" content={DESCRIPTION} />
@@ -78,15 +82,13 @@ export default function CarRentalPage() {
         <header className="mb-8 max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Мадейра у вашому темпі</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy sm:text-5xl">Оренда авто на Мадейрі</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Оберіть авто та уточніть доступність на ваші дати у WhatsApp.</p>
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Оберіть авто та уточніть доступність на ваші дати у Telegram або WhatsApp.</p>
         </header>
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-            <figure>
-              <div className="relative bg-slate-100">
-                <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.name}`} width={960} height={item.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="aspect-[16/10] w-full object-contain" />
-                <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
-              </div>
+            <figure className="relative aspect-[16/9] overflow-hidden bg-slate-100">
+              <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={item.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+              <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
             </figure>
             <div className="p-5 sm:p-6">
               <p className="text-sm font-medium text-ocean">{item.color}</p>
@@ -103,7 +105,8 @@ export default function CarRentalPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Зв’язок українською</p>
             <h2 id="contact-title" className="mt-2 text-2xl font-bold text-navy sm:text-3xl">Запитайте про вільні дати</h2>
-            <p className="mt-3 leading-7 text-slate-600">Виберіть авто, додайте дати та побажання. Кнопка відкриє WhatsApp із готовим текстом — ви зможете перевірити його перед надсиланням.</p>
+            <p className="mt-3 leading-7 text-slate-600">Бронювання без передоплати. Оплата готівкою або карткою на місці.</p>
+            <p className="mt-2 leading-7 text-slate-600">Оберіть авто й дати та напишіть у Telegram або WhatsApp — підтвердимо доступність і домовимося про отримання.</p>
           </div>
           <form onSubmit={submit} onInput={() => setError('')} className="mt-6 grid gap-5 sm:grid-cols-2">
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Автомобіль
@@ -115,16 +118,19 @@ export default function CarRentalPage() {
             </label>
             {error && <p role="alert" className="text-sm font-medium text-red-700 sm:col-span-2">{error}</p>}
             <div className="sm:col-span-2">
-              <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 sm:w-auto">Забронювати</button>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Сайт не зберігає дані цієї форми. Натискання кнопки передає текст у WhatsApp і не підтверджує бронювання.</p>
-              <noscript><p className="mt-3"><a className="text-ocean underline" href="https://wa.me/351932006352">Відкрити WhatsApp без заповнення форми</a></p></noscript>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <button type="submit" name="channel" value="telegram" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-sky-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-700 focus:ring-offset-2">Забронювати в Telegram</button>
+                <button type="submit" name="channel" value="whatsapp" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2">Забронювати у WhatsApp</button>
+              </div>
+              <p className="mt-3 text-xs leading-5 text-slate-500">Сайт не зберігає дані цієї форми. Кнопка відкриває обраний месенджер із підготовленим текстом; повідомлення ви надсилаєте самі. Бронювання потребує підтвердження.</p>
+              <noscript><p className="mt-3 flex flex-wrap gap-4"><a className="text-ocean underline" href={TELEGRAM_URL}>Відкрити Telegram</a><a className="text-ocean underline" href={WHATSAPP_URL}>Відкрити WhatsApp</a></p></noscript>
             </div>
           </form>
         </section>
         <details className="mt-6 text-xs leading-5 text-slate-500">
           <summary className="w-fit cursor-pointer rounded py-2 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean">Джерела фото</summary>
           <ul className="mt-2 space-y-2">
-            {cars.map(item => <li key={item.id}>{item.name}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено, без інших змін.</li>)}
+            {cars.map(item => <li key={item.id}>{item.photoModel}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено; кадрування під розмір картки.</li>)}
           </ul>
         </details>
       </div>
