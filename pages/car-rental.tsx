@@ -16,8 +16,8 @@ const TELEGRAM_URL = 'https://t.me/thomasedison33';
 // MINI: https://www.press.bmwgroup.com/france/article/attachment/T0275586FR/396497
 // Luggage capacity is measured with rear seats upright; power uses metric horsepower (PS).
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.', 'Бензин / гібрид'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.', 'Бензин'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
