@@ -11,8 +11,8 @@ const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 540, photoModel: 'Nissan Qashqai e-Power', author: null, source: null, license: null, licenseUrl: null },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini.jpg', height: 558, photoModel: 'MINI Countryman S ALL4', author: 'Vauxford', source: 'https://commons.wikimedia.org/wiki/File:2018_Mini_Cooper_Countryman_S_Front.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
@@ -87,7 +87,7 @@ export default function CarRentalPage() {
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
             <figure className="relative aspect-[16/9] overflow-hidden bg-slate-100">
-              <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={item.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+              <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={540} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
               <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
             </figure>
             <div className="p-5 sm:p-6">
@@ -95,12 +95,12 @@ export default function CarRentalPage() {
               <h2 className="mt-1 text-xl font-bold text-navy sm:text-2xl">{item.name}</h2>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
                 <p className="text-slate-600"><span className="text-3xl font-bold text-navy">{item.price} €</span> / добу</p>
-                <a href="#rental-contact" onClick={() => { setCarId(item.id); setError(''); }} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-ocean px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2" aria-label={`Забронювати ${item.name}`}>Забронювати</a>
+                <a href="#rental-contact" onClick={() => { setCarId(item.id); setError(''); }} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-ocean px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2" aria-label={`Обрати ${item.name}`}>Обрати</a>
               </div>
             </div>
           </article>)}
         </section>
-        <p className="mt-4 text-sm leading-6 text-slate-600">Фото показують моделі авто; рік випуску та комплектація автомобіля в оренді можуть відрізнятися. Наявність, заставу, страхування, ліміт пробігу й місце отримання узгодьте перед бронюванням.</p>
+        <p className="mt-4 text-sm leading-6 text-slate-600">На фото показані моделі авто, доступні для оренди. Комплектація та незначні деталі можуть відрізнятися.</p>
         <section id="rental-contact" aria-labelledby="contact-title" className="mt-10 scroll-mt-24 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Зв’язок українською</p>
@@ -126,12 +126,6 @@ export default function CarRentalPage() {
             </div>
           </form>
         </section>
-        <details className="mt-6 text-xs leading-5 text-slate-500">
-          <summary className="w-fit cursor-pointer rounded py-2 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean">Джерела фото</summary>
-          <ul className="mt-2 space-y-2">
-            {cars.map(item => item.source && item.licenseUrl ? <li key={item.id}>{item.photoModel}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено; кадрування під розмір картки.</li> : null)}
-          </ul>
-        </details>
       </div>
     </Layout>
   </>;
