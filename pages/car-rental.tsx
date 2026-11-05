@@ -11,9 +11,13 @@ const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | 
 const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Або 50 €/добу зі страховим депозитом. Бронювання без передоплати.';
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
+// Model specifications: Qashqai e-Power Tekna+ (2023), MINI Cooper S Countryman ALL4 F60 (2017).
+// Nissan: https://www-europe.nissan-cdn.net/content/dam/Nissan/serbia/MAX-ponuda/MAX_QASHQAI_Cenovnik_OKT_2023.v2.pdf
+// MINI: https://www.press.bmwgroup.com/france/article/attachment/T0275586FR/396497
+// Luggage capacity is measured with rear seats upright; power uses metric horsepower (PS).
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
