@@ -1,5 +1,6 @@
 import type { GetStaticProps } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import Layout from '../components/Layout';
@@ -7,12 +8,12 @@ import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } f
 
 const ORIGIN = 'https://madeiralivecams.com';
 const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | Madeira Live Cams';
-const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Без передоплати. Оплата готівкою або карткою на місці.';
+const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Або 50 €/добу зі страховим депозитом. Бронювання без передоплати.';
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
@@ -50,7 +51,7 @@ export default function CarRentalPage() {
     const message = [
       'Вітаю! Цікавить оренда авто на Мадейрі.',
       `Авто: ${car.name} (${car.color.toLowerCase()}).`,
-      `Ціна на сайті: ${car.price} €/добу.`,
+      `Ціни на сайті: ${car.price} €/добу або ${car.depositPrice} €/добу + страховий депозит.`,
       `Отримання: ${displayRentalDate(start)}.`,
       `Повернення: ${displayRentalDate(end)}.`,
       note ? `Побажання: ${note}` : '',
@@ -79,10 +80,14 @@ export default function CarRentalPage() {
         <nav aria-label="Навігаційний шлях" className="mb-6 flex gap-2 text-sm text-slate-600">
           <Link href="/" locale="uk" className="text-ocean hover:underline">Головна</Link><span aria-hidden="true">/</span><span aria-current="page">Оренда авто</span>
         </nav>
-        <header className="mb-8 max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Мадейра у вашому темпі</p>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy sm:text-5xl">Оренда авто на Мадейрі</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">Оберіть авто та уточніть доступність на ваші дати у Telegram або WhatsApp.</p>
+        <header className="relative isolate mb-8 overflow-hidden rounded-2xl bg-forest px-5 py-6 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-7">
+          <Image src="/images/car-rental/madeira-road-trip.png" alt="" fill priority sizes="(max-width: 1152px) 100vw, 1152px" className="-z-20 object-cover object-[65%_65%]" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20" />
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-moss">Мадейра у вашому темпі</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Оренда авто на Мадейрі</h1>
+            <p className="mt-3 max-w-md text-sm leading-6 text-white/90 sm:text-base">Оберіть авто та уточніть доступність на ваші дати у Telegram або WhatsApp.</p>
+          </div>
         </header>
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
@@ -93,8 +98,14 @@ export default function CarRentalPage() {
             <div className="p-5 sm:p-6">
               <p className="text-sm font-medium text-ocean">{item.color}</p>
               <h2 className="mt-1 text-xl font-bold text-navy sm:text-2xl">{item.name}</h2>
+              <ul aria-label={`Характеристики ${item.name}`} className="mt-3 flex flex-wrap gap-2">
+                {item.features.map(feature => <li key={feature} className="rounded-full border border-moss/50 bg-mist px-3 py-1 text-xs font-medium text-forest">{feature}</li>)}
+              </ul>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                <p className="text-slate-600"><span className="text-3xl font-bold text-navy">{item.price} €</span> / добу</p>
+                <div>
+                  <p className="text-slate-600"><span className="text-3xl font-bold text-navy">{item.price} €</span> / добу</p>
+                  <p className="mt-1 text-sm leading-5 text-slate-600">або {item.depositPrice} €/добу + страховий депозит</p>
+                </div>
                 <a href="#rental-contact" onClick={() => { setCarId(item.id); setError(''); }} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-ocean px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2" aria-label={`Обрати ${item.name}`}>Обрати</a>
               </div>
             </div>

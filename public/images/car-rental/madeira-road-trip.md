@@ -1,0 +1,4 @@
+# Rental hero
+Generated with the built-in image_gen tool on 2026-11-05.
+Asset: /images/car-rental/madeira-road-trip.png
+Prompt: Use case: photorealistic-natural. Asset: wide website hero background for car rental on Madeira, 16:9. Premium natural travel photography: a white compact crossover on a scenic paved coastal road in Madeira, lush dramatic volcanic green mountains, Atlantic ocean, warm soft morning light, realistic beautiful landscape. Car on right third of composition, viewed from rear three-quarter as if exploring the island. Left half relatively quiet dark green hillside/landscape with room for white HTML heading overlay. Camera from roadside elevated viewpoint, realistic road geometry and safe driving. No text, no watermarks, no graphic overlays, no recognizable logos. Crisp photographic texture, restrained natural colors, inviting independent road trip mood.
