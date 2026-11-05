@@ -11,7 +11,7 @@ const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 533, photoModel: 'Nissan Qashqai', author: 'Harvey Bold', source: 'https://commons.wikimedia.org/wiki/File:2021_Nissan_Qashqai_Premiere_Edition_DIG-T_-_1332cc_1.3_(140PS)_Petrol_-_Arctic_White_-_04-2024,_Front.jpg', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, image: '/images/car-rental/nissan.jpg', height: 540, photoModel: 'Nissan Qashqai e-Power', author: null, source: null, license: null, licenseUrl: null },
   { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, image: '/images/car-rental/mini.jpg', height: 558, photoModel: 'MINI Countryman S ALL4', author: 'Vauxford', source: 'https://commons.wikimedia.org/wiki/File:2018_Mini_Cooper_Countryman_S_Front.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
@@ -67,7 +67,7 @@ export default function CarRentalPage() {
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="uk_UA" />
       <meta property="og:image" content={`${ORIGIN}${cars[0].image}`} />
-      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai" />
+      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={TITLE} />
       <meta name="twitter:description" content={DESCRIPTION} />
@@ -105,8 +105,7 @@ export default function CarRentalPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-widest text-ocean">Зв’язок українською</p>
             <h2 id="contact-title" className="mt-2 text-2xl font-bold text-navy sm:text-3xl">Запитайте про вільні дати</h2>
-            <p className="mt-3 leading-7 text-slate-600">Бронювання без передоплати. Оплата готівкою або карткою на місці.</p>
-            <p className="mt-2 leading-7 text-slate-600">Оберіть авто й дати та напишіть у Telegram або WhatsApp — підтвердимо доступність і домовимося про отримання.</p>
+            <p className="mt-3 leading-7 text-slate-600">Бронюйте без передоплати з оплатою готівкою або карткою на місці. Оберіть авто й дати та напишіть у Telegram або WhatsApp — підтвердимо доступність і домовимося про отримання.</p>
           </div>
           <form onSubmit={submit} onInput={() => setError('')} className="mt-6 grid gap-5 sm:grid-cols-2">
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Автомобіль
@@ -130,7 +129,7 @@ export default function CarRentalPage() {
         <details className="mt-6 text-xs leading-5 text-slate-500">
           <summary className="w-fit cursor-pointer rounded py-2 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean">Джерела фото</summary>
           <ul className="mt-2 space-y-2">
-            {cars.map(item => <li key={item.id}>{item.photoModel}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено; кадрування під розмір картки.</li>)}
+            {cars.map(item => item.source && item.licenseUrl ? <li key={item.id}>{item.photoModel}: <a href={item.source} target="_blank" rel="noreferrer" className="underline">{item.author} / Wikimedia Commons</a> · <a href={item.licenseUrl} target="_blank" rel="noreferrer" className="underline">{item.license}</a>. Зменшено; кадрування під розмір картки.</li> : null)}
           </ul>
         </details>
       </div>
