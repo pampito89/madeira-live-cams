@@ -1,6 +1,5 @@
 import type { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import Layout from '../components/Layout';
@@ -11,13 +10,16 @@ const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | 
 const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Або 50 €/добу зі страховим депозитом. Бронювання без передоплати.';
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
+const HERO_SIZES = '(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1151px) calc(100vw - 64px), 1088px';
+const HERO_SRCSET = '/images/car-rental/madeira-road-trip-640.webp 640w, /images/car-rental/madeira-road-trip-1280.webp 1280w';
+const CAR_SIZES = '(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 72px) / 2), (max-width: 1151px) calc((100vw - 88px) / 2), 532px';
 // Model specifications: Qashqai e-Power Tekna+ (2023), MINI Cooper S Countryman ALL4 F60 (2017).
 // Nissan: https://www-europe.nissan-cdn.net/content/dam/Nissan/serbia/MAX-ponuda/MAX_QASHQAI_Cenovnik_OKT_2023.v2.pdf
 // MINI: https://www.press.bmwgroup.com/france/article/attachment/T0275586FR/396497
 // Luggage capacity is measured with rear seats upright; power uses metric horsepower (PS).
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.', 'Бензин / гібрид'], image: '/images/car-rental/nissan.jpg', photoModel: 'Nissan Qashqai e-Power' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.', 'Бензин'], image: '/images/car-rental/mini-enhanced.png', photoModel: 'MINI Countryman S ALL4' },
+  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.', 'Бензин / гібрид'], image: '/images/car-rental/nissan-1080.webp', smallImage: '/images/car-rental/nissan-640.webp', photoModel: 'Nissan Qashqai e-Power' },
+  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.', 'Бензин'], image: '/images/car-rental/mini-1080.webp', smallImage: '/images/car-rental/mini-640.webp', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
@@ -71,12 +73,13 @@ export default function CarRentalPage() {
       <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="uk_UA" />
-      <meta property="og:image" content={`${ORIGIN}${cars[0].image}`} />
+      <meta property="og:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`} />
       <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={TITLE} />
       <meta name="twitter:description" content={DESCRIPTION} />
-      <meta name="twitter:image" content={`${ORIGIN}${cars[0].image}`} />
+      <meta name="twitter:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`} />
+      <link rel="preload" as="image" href="/images/car-rental/madeira-road-trip-1280.webp" imageSrcSet={HERO_SRCSET} imageSizes={HERO_SIZES} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
     </Head>
     <Layout>
@@ -85,7 +88,7 @@ export default function CarRentalPage() {
           <Link href="/" locale="uk" className="text-ocean hover:underline">Головна</Link><span aria-hidden="true">/</span><span aria-current="page">Оренда авто</span>
         </nav>
         <header className="relative isolate mb-8 overflow-hidden rounded-2xl bg-forest px-5 py-6 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-7">
-          <Image src="/images/car-rental/madeira-road-trip.png" alt="" fill priority sizes="(max-width: 1152px) 100vw, 1152px" className="-z-20 object-cover object-[65%_65%]" />
+          <img src="/images/car-rental/madeira-road-trip-1280.webp" srcSet={HERO_SRCSET} sizes={HERO_SIZES} alt="" width={1280} height={720} fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_65%]" />
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20" />
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-moss">Мадейра у вашому темпі</p>
@@ -96,7 +99,7 @@ export default function CarRentalPage() {
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
             <figure className="relative aspect-[16/9] overflow-hidden bg-slate-100">
-              <img src={item.image} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={540} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+              <img src={item.image} srcSet={`${item.smallImage} 640w, ${item.image} 1080w`} sizes={CAR_SIZES} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={540} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
               <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
             </figure>
             <div className="p-5 sm:p-6">
