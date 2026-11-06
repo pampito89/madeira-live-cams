@@ -58,20 +58,20 @@ export default function AirportWarningTimeline({ locale }: { locale: Locale }) {
   const ticks = Array.from({ length: 12 }, (_, i) => firstTick + i * 6 * hour).filter(tick => tick < end);
   const position = (value: number) => (value - start) / (end - start) * 100;
 
-  return <section aria-labelledby="airport-timeline-title" className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm md:col-span-2">
+  return <section aria-labelledby="airport-timeline-title" className="min-w-0 rounded-xl border border-slate-200 bg-white p-3 shadow-sm md:col-span-2 md:p-4">
     <div className="flex flex-wrap items-baseline justify-between gap-2">
       <h2 id="airport-timeline-title" className="text-base font-semibold text-navy">{text.heading}</h2>
       {available ? <p className="text-xs text-slate-500">{updates.checked}: <time dateTime={data.fetchedAt}>{format(start)} UTC</time></p> : null}
     </div>
     {!available ? <p role="status" className="mt-3 text-sm text-slate-500">{loading ? updates.loading : updates.unavailable}</p> : <>
       <p id="airport-timeline-scroll" className="mt-2 text-xs text-slate-500 md:sr-only">{text.scroll}</p>
-      <div className="mt-2 flex min-w-0 gap-2 rounded-lg border border-slate-200 p-2 sm:gap-4">
-        <div aria-hidden="true" className="w-24 shrink-0 pt-2 sm:w-32">
+      <div className="relative mt-2 flex min-w-0 rounded-lg border border-slate-200 p-1 md:gap-4 md:p-2">
+        <div aria-hidden="true" className="pointer-events-none absolute left-4 top-3 z-10 w-32 [text-shadow:0_1px_2px_white] md:static md:shrink-0 md:pt-2 md:[text-shadow:none]">
           <div className="h-10" />
-          {rows.map(type => <div key={type} className="flex h-9 items-center text-xs font-medium leading-4 text-slate-700">{updates.type(type)}</div>)}
+          {rows.map(type => <div key={type} className="flex h-9 items-center text-xs font-semibold leading-4 text-slate-900 md:font-medium md:text-slate-700">{updates.type(type)}</div>)}
         </div>
         <div role="region" aria-label={text.heading} aria-describedby="airport-timeline-scroll" tabIndex={0} className="min-w-0 flex-1 overflow-x-auto rounded focus:outline-none focus:ring-2 focus:ring-ocean">
-          <div className="min-w-[560px] px-5 py-2">
+          <div className="min-w-[560px] px-2 py-2 md:px-5">
             <div aria-hidden="true" className="relative h-10 text-[10px] text-slate-600">
               {ticks.map(tick => <span key={tick} className="absolute bottom-1 -translate-x-1/2 text-center" style={{ left: `${position(tick)}%` }}>{new Date(tick).getUTCHours() % 12 === 0 ? <span className="block whitespace-nowrap">{dateLabel(tick)}</span> : null}<span className="block">{hourLabel(tick)}</span></span>)}
             </div>
