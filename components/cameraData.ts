@@ -75,8 +75,8 @@ export const cameras: Camera[] = [
     category: ['Towns', 'East Coast'],
     latitude: 32.6979,
     longitude: -16.7745,
-    sourceUrl: 'https://www.youtube.com/watch?v=AhSeqyMYJkw',
-    youtubeId: 'AhSeqyMYJkw',
+    sourceUrl: 'https://www.youtube.com/watch?v=STpCvDHD__I',
+    youtubeId: 'STpCvDHD__I',
   },
   {
     id: 'pico-do-arieiro',
