@@ -58,38 +58,42 @@ export default function AirportWarningTimeline({ locale }: { locale: Locale }) {
   const ticks = Array.from({ length: 12 }, (_, i) => firstTick + i * 6 * hour).filter(tick => tick < end);
   const position = (value: number) => (value - start) / (end - start) * 100;
 
-  return <section aria-labelledby="airport-timeline-title" className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-    <h2 id="airport-timeline-title" className="text-base font-semibold text-navy">{text.heading}</h2>
-    <p className="mt-1 text-xs text-slate-600">{text.scope}</p>
-    <p className="mt-2 text-xs font-medium text-slate-600">{text.period}</p>
+  return <section aria-labelledby="airport-timeline-title" className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm md:col-span-2">
+    <div className="flex flex-wrap items-baseline justify-between gap-2">
+      <h2 id="airport-timeline-title" className="text-base font-semibold text-navy">{text.heading}</h2>
+      {available ? <p className="text-xs text-slate-500">{updates.checked}: <time dateTime={data.fetchedAt}>{format(start)} UTC</time></p> : null}
+    </div>
     {!available ? <p role="status" className="mt-3 text-sm text-slate-500">{loading ? updates.loading : updates.unavailable}</p> : <>
-      <p className="mt-1 text-xs text-slate-500">{updates.checked}: <time dateTime={data.fetchedAt}>{format(start)} UTC</time></p>
-      <p id="airport-timeline-scroll" className="mt-3 text-xs text-slate-500">{text.scroll}</p>
-      <div role="region" aria-label={text.heading} aria-describedby="airport-timeline-scroll" tabIndex={0} className="mt-2 overflow-x-auto rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-ocean">
-        <div className="min-w-[680px] px-5 py-2">
-          <div aria-hidden="true" className="relative ml-28 h-10 text-[10px] text-slate-600">
-            {ticks.map(tick => <span key={tick} className="absolute bottom-1 -translate-x-1/2 text-center" style={{ left: `${position(tick)}%` }}>{new Date(tick).getUTCHours() % 12 === 0 ? <span className="block whitespace-nowrap">{dateLabel(tick)}</span> : null}<span className="block">{hourLabel(tick)}</span></span>)}
-          </div>
-          {rows.map(type => <div key={type} className="flex items-center border-t border-white py-1">
-            <span className="sticky left-0 z-10 w-28 shrink-0 bg-white pr-2 text-xs font-medium text-slate-700">{updates.type(type)}</span>
-            <div role="img" aria-label={`${updates.type(type)}: ${warnings.filter(w => w.type === type).map(w => `${updates.level(w.level)} ${format(Date.parse(w.start))} – ${format(Date.parse(w.end))} UTC`).join('; ') || text.green}`} className="relative h-7 flex-1 overflow-hidden rounded bg-emerald-200">
-              {ticks.map(tick => <span key={tick} aria-hidden="true" className="absolute inset-y-0 border-l border-emerald-800/20" style={{ left: `${position(tick)}%` }} />)}
-              {warnings.filter(w => w.type === type).map(w => {
-                const left = Math.max(start, Date.parse(w.start));
-                const right = Math.min(end, Date.parse(w.end));
-                const label = `${updates.type(type)} · ${updates.level(w.level)} · ${format(Date.parse(w.start))} – ${format(Date.parse(w.end))} UTC`;
-                return <span key={`${w.type}:${w.level}:${w.start}:${w.end}`} title={label} aria-hidden="true" className={`absolute inset-y-0 flex items-center justify-center overflow-hidden border-x border-black/20 text-xs font-bold ${colors[w.level]}`} style={{ left: `${position(left)}%`, width: `${(right - left) / (end - start) * 100}%` }}>!</span>;
-              })}
+      <p id="airport-timeline-scroll" className="mt-2 text-xs text-slate-500 md:sr-only">{text.scroll}</p>
+      <div className="mt-2 flex min-w-0 gap-2 rounded-lg border border-slate-200 p-2 sm:gap-4">
+        <div aria-hidden="true" className="w-24 shrink-0 pt-2 sm:w-32">
+          <div className="h-10" />
+          {rows.map(type => <div key={type} className="flex h-9 items-center text-xs font-medium leading-4 text-slate-700">{updates.type(type)}</div>)}
+        </div>
+        <div role="region" aria-label={text.heading} aria-describedby="airport-timeline-scroll" tabIndex={0} className="min-w-0 flex-1 overflow-x-auto rounded focus:outline-none focus:ring-2 focus:ring-ocean">
+          <div className="min-w-[560px] px-5 py-2">
+            <div aria-hidden="true" className="relative h-10 text-[10px] text-slate-600">
+              {ticks.map(tick => <span key={tick} className="absolute bottom-1 -translate-x-1/2 text-center" style={{ left: `${position(tick)}%` }}>{new Date(tick).getUTCHours() % 12 === 0 ? <span className="block whitespace-nowrap">{dateLabel(tick)}</span> : null}<span className="block">{hourLabel(tick)}</span></span>)}
             </div>
-          </div>)}
+            {rows.map(type => <div key={type} className="flex h-9 items-center">
+              <div role="img" aria-label={`${updates.type(type)}: ${warnings.filter(w => w.type === type).map(w => `${updates.level(w.level)} ${format(Date.parse(w.start))} – ${format(Date.parse(w.end))} UTC`).join('; ') || text.green}`} className="relative h-7 w-full overflow-hidden rounded bg-emerald-200">
+                {ticks.map(tick => <span key={tick} aria-hidden="true" className="absolute inset-y-0 border-l border-emerald-800/20" style={{ left: `${position(tick)}%` }} />)}
+                {warnings.filter(w => w.type === type).map(w => {
+                  const left = Math.max(start, Date.parse(w.start));
+                  const right = Math.min(end, Date.parse(w.end));
+                  const label = `${updates.type(type)} · ${updates.level(w.level)} · ${format(Date.parse(w.start))} – ${format(Date.parse(w.end))} UTC`;
+                  return <span key={`${w.type}:${w.level}:${w.start}:${w.end}`} title={label} aria-hidden="true" className={`absolute inset-y-0 flex items-center justify-center overflow-hidden border-x border-black/20 text-xs font-bold ${colors[w.level]}`} style={{ left: `${position(left)}%`, width: `${(right - left) / (end - start) * 100}%` }}>!</span>;
+                })}
+              </div>
+            </div>)}
+          </div>
         </div>
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-xs text-slate-700" aria-label={text.heading}>
         <li className="flex items-center gap-1"><span aria-hidden="true" className="h-3 w-3 rounded-sm bg-emerald-200" />{text.green}</li>
         {(['yellow', 'orange', 'red'] as const).map(level => <li key={level} className="flex items-center gap-1"><span aria-hidden="true" className={`h-3 w-3 rounded-sm ${colors[level]}`} />{updates.level(level)}</li>)}
       </ul>
-      {warnings.length ? <details className="mt-3 text-xs text-slate-600"><summary className="cursor-pointer py-1 font-medium text-ocean">{updates.weather}</summary><ul className="mt-2 space-y-2">{warnings.map(w => <li key={`${w.type}:${w.level}:${w.start}:${w.end}`}><strong>{updates.type(w.type)} · {updates.level(w.level)}</strong><br />{format(Date.parse(w.start))} – {format(Date.parse(w.end))} UTC</li>)}</ul></details> : null}
     </>}
-    <a href="https://www.ipma.pt/en/otempo/prev-sam?p=MCS" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-xs text-ocean underline">IPMA · {updates.weather} ↗</a>
+    <a href="https://www.ipma.pt/en/otempo/prev-sam?p=MCS" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-xs text-ocean underline">IPMA ↗</a>
   </section>;
 }

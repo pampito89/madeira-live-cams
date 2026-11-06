@@ -40,8 +40,8 @@ export default function AirportWeatherPanel({ locale }: { locale: Locale }) {
   const decimal = (value: number) => new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value);
   const speed = (value: number | null | undefined) => value == null ? '—' : `${Math.round(value * 1.852)} ${text.speedUnit}`;
   const observed = data ? new Intl.DateTimeFormat(locale, { timeZone: 'Atlantic/Madeira', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(data.observedAt)) : '';
-  return <div className="flex min-w-0 flex-col gap-4 self-start">
-    <aside aria-labelledby="airport-weather-title" className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+  return <>
+    <aside aria-labelledby="airport-weather-title" className="min-w-0 self-start rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <h2 id="airport-weather-title" className="text-base font-semibold text-navy">{text.heading} <span className="text-xs font-normal text-slate-500">FNC</span></h2>
       <p role="status" aria-live="polite" className={`mt-2 flex items-center gap-2 text-xs font-medium ${colours[assessment.level]}`}><span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-current" />{loading ? text.loading : data ? text.levels[assessment.level] : text.unavailable}</p>
       {data ? <>
@@ -52,5 +52,5 @@ export default function AirportWeatherPanel({ locale }: { locale: Locale }) {
       </> : null}
     </aside>
     <AirportWarningTimeline locale={locale} />
-  </div>;
+  </>;
 }
