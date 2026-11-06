@@ -1,0 +1,1164 @@
+{
+  "/images/cameras/madeira-camera-2.png": {
+    "src": "/images/optimized/cameras/madeira-camera-2-a573d51ae4-711.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/cameras/madeira-camera-2-a573d51ae4-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/cameras/madeira-camera-2-a573d51ae4-640.webp"
+      },
+      {
+        "width": 711,
+        "src": "/images/optimized/cameras/madeira-camera-2-a573d51ae4-711.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-culture.jpg": {
+    "src": "/images/optimized/events/madeira-culture-3db5031118-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-culture-3db5031118-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-culture-3db5031118-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-culture-3db5031118-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-evening.jpg": {
+    "src": "/images/optimized/events/madeira-evening-2c27592021-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-evening-2c27592021-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-evening-2c27592021-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-evening-2c27592021-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-festival.jpg": {
+    "src": "/images/optimized/events/madeira-festival-ba5baf8665-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-festival-ba5baf8665-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-festival-ba5baf8665-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-festival-ba5baf8665-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-festivals-day.jpg": {
+    "src": "/images/optimized/events/madeira-festivals-day-05c4feb24a-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-festivals-day-05c4feb24a-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-festivals-day-05c4feb24a-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-festivals-day-05c4feb24a-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-food.jpg": {
+    "src": "/images/optimized/events/madeira-food-4b4d83691d-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-food-4b4d83691d-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-food-4b4d83691d-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-food-4b4d83691d-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-nightlife.jpg": {
+    "src": "/images/optimized/events/madeira-nightlife-b39f8a0844-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-nightlife-b39f8a0844-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-nightlife-b39f8a0844-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-nightlife-b39f8a0844-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-racing.jpg": {
+    "src": "/images/optimized/events/madeira-racing-8080754cf8-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-racing-8080754cf8-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-racing-8080754cf8-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-racing-8080754cf8-960.webp"
+      }
+    ]
+  },
+  "/images/events/madeira-sport.jpg": {
+    "src": "/images/optimized/events/madeira-sport-ee6ceb0a78-960.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/events/madeira-sport-ee6ceb0a78-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/events/madeira-sport-ee6ceb0a78-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/events/madeira-sport-ee6ceb0a78-960.webp"
+      }
+    ]
+  },
+  "/images/explore/activity-adrenaline-xtreme-adventures.webp": {
+    "src": "/images/optimized/explore/activity-adrenaline-xtreme-adventures-0189d5b48a-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/activity-adrenaline-xtreme-adventures-0189d5b48a-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/activity-adrenaline-xtreme-adventures-0189d5b48a-640.webp"
+      },
+      {
+        "width": 678,
+        "src": "/images/optimized/explore/activity-adrenaline-xtreme-adventures-0189d5b48a-678.webp"
+      }
+    ]
+  },
+  "/images/explore/activity-h2o-madeira.webp": {
+    "src": "/images/optimized/explore/activity-h2o-madeira-dc2faab93a-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/activity-h2o-madeira-dc2faab93a-320.webp"
+      },
+      {
+        "width": 580,
+        "src": "/images/optimized/explore/activity-h2o-madeira-dc2faab93a-580.webp"
+      }
+    ]
+  },
+  "/images/explore/activity-madeira-sea-emotions.webp": {
+    "src": "/images/optimized/explore/activity-madeira-sea-emotions-340864d6ed-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/activity-madeira-sea-emotions-340864d6ed-320.webp"
+      },
+      {
+        "width": 447,
+        "src": "/images/optimized/explore/activity-madeira-sea-emotions-340864d6ed-447.webp"
+      }
+    ]
+  },
+  "/images/explore/airport_madeira.jpg": {
+    "src": "/images/optimized/explore/airport_madeira-4eb0b4230e-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/airport_madeira-4eb0b4230e-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/airport_madeira-4eb0b4230e-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/airport_madeira-4eb0b4230e-720.webp"
+      }
+    ]
+  },
+  "/images/explore/anjos-waterfall.jpg": {
+    "src": "/images/optimized/explore/anjos-waterfall-a3a56eeae7-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/anjos-waterfall-a3a56eeae7-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/anjos-waterfall-a3a56eeae7-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/anjos-waterfall-a3a56eeae7-960.webp"
+      }
+    ]
+  },
+  "/images/explore/bica-da-cana.jpg": {
+    "src": "/images/optimized/explore/bica-da-cana-b017275057-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/bica-da-cana-b017275057-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/bica-da-cana-b017275057-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/bica-da-cana-b017275057-960.webp"
+      },
+      {
+        "width": 1080,
+        "src": "/images/optimized/explore/bica-da-cana-b017275057-1080.webp"
+      }
+    ]
+  },
+  "/images/explore/cabo-girao-skywalk.jpg": {
+    "src": "/images/optimized/explore/cabo-girao-skywalk-734beac420-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/cabo-girao-skywalk-734beac420-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/cabo-girao-skywalk-734beac420-640.webp"
+      },
+      {
+        "width": 669,
+        "src": "/images/optimized/explore/cabo-girao-skywalk-734beac420-669.webp"
+      }
+    ]
+  },
+  "/images/explore/calheta-beach.jpg": {
+    "src": "/images/optimized/explore/calheta-beach-a569f52499-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/calheta-beach-a569f52499-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/calheta-beach-a569f52499-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/calheta-beach-a569f52499-720.webp"
+      }
+    ]
+  },
+  "/images/explore/continente-modelo.jpg": {
+    "src": "/images/optimized/explore/continente-modelo-dd3105184b-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/continente-modelo-dd3105184b-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/continente-modelo-dd3105184b-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/continente-modelo-dd3105184b-720.webp"
+      }
+    ]
+  },
+  "/images/explore/cristo-rei.jpg": {
+    "src": "/images/optimized/explore/cristo-rei-92594b6e71-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/cristo-rei-92594b6e71-320.webp"
+      },
+      {
+        "width": 600,
+        "src": "/images/optimized/explore/cristo-rei-92594b6e71-600.webp"
+      }
+    ]
+  },
+  "/images/explore/eira-da-achada.jpg": {
+    "src": "/images/optimized/explore/eira-da-achada-cc0c654ec6-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/eira-da-achada-cc0c654ec6-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/eira-da-achada-cc0c654ec6-640.webp"
+      },
+      {
+        "width": 900,
+        "src": "/images/optimized/explore/eira-da-achada-cc0c654ec6-900.webp"
+      }
+    ]
+  },
+  "/images/explore/eira-do-serrado.jpg": {
+    "src": "/images/optimized/explore/eira-do-serrado-b4101ef135-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/eira-do-serrado-b4101ef135-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/eira-do-serrado-b4101ef135-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/eira-do-serrado-b4101ef135-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/eira-do-serrado-b4101ef135-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/faja-dos-padres.jpg": {
+    "src": "/images/optimized/explore/faja-dos-padres-b019db4de4-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/faja-dos-padres-b019db4de4-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/faja-dos-padres-b019db4de4-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/faja-dos-padres-b019db4de4-720.webp"
+      }
+    ]
+  },
+  "/images/explore/fanal-forest.jpg": {
+    "src": "/images/optimized/explore/fanal-forest-15d2c180fa-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/fanal-forest-15d2c180fa-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/fanal-forest-15d2c180fa-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/fanal-forest-15d2c180fa-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/fanal-forest-15d2c180fa-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/funchal.jpg": {
+    "src": "/images/optimized/explore/funchal-c5329d1ae9-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/funchal-c5329d1ae9-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/funchal-c5329d1ae9-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/funchal-c5329d1ae9-720.webp"
+      }
+    ]
+  },
+  "/images/explore/levada-do-furado.jpg": {
+    "src": "/images/optimized/explore/levada-do-furado-e4a0ea22f8-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/levada-do-furado-e4a0ea22f8-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/levada-do-furado-e4a0ea22f8-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/levada-do-furado-e4a0ea22f8-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/levada-do-furado-e4a0ea22f8-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/levada-nova-levada-do-moinho.jpg": {
+    "src": "/images/optimized/explore/levada-nova-levada-do-moinho-eb33ae1f1e-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/levada-nova-levada-do-moinho-eb33ae1f1e-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/levada-nova-levada-do-moinho-eb33ae1f1e-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/levada-nova-levada-do-moinho-eb33ae1f1e-720.webp"
+      }
+    ]
+  },
+  "/images/explore/machico-beach.jpg": {
+    "src": "/images/optimized/explore/machico-beach-a64bcfb61b-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/machico-beach-a64bcfb61b-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/machico-beach-a64bcfb61b-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/machico-beach-a64bcfb61b-720.webp"
+      }
+    ]
+  },
+  "/images/explore/mercado-dos-lavradores.jpg": {
+    "src": "/images/optimized/explore/mercado-dos-lavradores-bce6199907-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/mercado-dos-lavradores-bce6199907-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/mercado-dos-lavradores-bce6199907-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/mercado-dos-lavradores-bce6199907-720.webp"
+      }
+    ]
+  },
+  "/images/explore/miradouro-da-portela.jpg": {
+    "src": "/images/optimized/explore/miradouro-da-portela-0fc4c634e1-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/miradouro-da-portela-0fc4c634e1-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/miradouro-da-portela-0fc4c634e1-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/miradouro-da-portela-0fc4c634e1-720.webp"
+      }
+    ]
+  },
+  "/images/explore/miradouro-do-guindaste.jpg": {
+    "src": "/images/optimized/explore/miradouro-do-guindaste-edb8138147-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/miradouro-do-guindaste-edb8138147-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/miradouro-do-guindaste-edb8138147-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/miradouro-do-guindaste-edb8138147-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/miradouro-do-guindaste-edb8138147-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/miradouro-sao-cristovao.jpg": {
+    "src": "/images/optimized/explore/miradouro-sao-cristovao-9746bd112c-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/miradouro-sao-cristovao-9746bd112c-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/miradouro-sao-cristovao-9746bd112c-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/miradouro-sao-cristovao-9746bd112c-720.webp"
+      }
+    ]
+  },
+  "/images/explore/miradouro-terra-grande.jpg": {
+    "src": "/images/optimized/explore/miradouro-terra-grande-a2aabdd52e-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/miradouro-terra-grande-a2aabdd52e-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/miradouro-terra-grande-a2aabdd52e-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/miradouro-terra-grande-a2aabdd52e-720.webp"
+      }
+    ]
+  },
+  "/images/explore/monte-palace-tropical-garden.jpg": {
+    "src": "/images/optimized/explore/monte-palace-tropical-garden-88781df6ad-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/monte-palace-tropical-garden-88781df6ad-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/monte-palace-tropical-garden-88781df6ad-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/monte-palace-tropical-garden-88781df6ad-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pico-da-murta.jpg": {
+    "src": "/images/optimized/explore/pico-da-murta-c87107808a-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pico-da-murta-c87107808a-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pico-da-murta-c87107808a-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pico-da-murta-c87107808a-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pico-do-arieiro.jpg": {
+    "src": "/images/optimized/explore/pico-do-arieiro-5cf02fe1bb-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pico-do-arieiro-5cf02fe1bb-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pico-do-arieiro-5cf02fe1bb-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pico-do-arieiro-5cf02fe1bb-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pico-do-facho.jpg": {
+    "src": "/images/optimized/explore/pico-do-facho-d2115b9574-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pico-do-facho-d2115b9574-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pico-do-facho-d2115b9574-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pico-do-facho-d2115b9574-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pico-grande.jpg": {
+    "src": "/images/optimized/explore/pico-grande-b06485efbc-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pico-grande-b06485efbc-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pico-grande-b06485efbc-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/pico-grande-b06485efbc-960.webp"
+      },
+      {
+        "width": 1080,
+        "src": "/images/optimized/explore/pico-grande-b06485efbc-1080.webp"
+      }
+    ]
+  },
+  "/images/explore/pico-ruivo.jpg": {
+    "src": "/images/optimized/explore/pico-ruivo-e22543a11a-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pico-ruivo-e22543a11a-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pico-ruivo-e22543a11a-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pico-ruivo-e22543a11a-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pingo-doce.jpg": {
+    "src": "/images/optimized/explore/pingo-doce-90e8cd5feb-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pingo-doce-90e8cd5feb-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pingo-doce-90e8cd5feb-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pingo-doce-90e8cd5feb-720.webp"
+      }
+    ]
+  },
+  "/images/explore/placeholder.jpg": {
+    "src": "/images/optimized/explore/placeholder-b7b1e79355-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/placeholder-b7b1e79355-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/placeholder-b7b1e79355-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/placeholder-b7b1e79355-720.webp"
+      }
+    ]
+  },
+  "/images/explore/ponta-de-sao-lourenco.jpg": {
+    "src": "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-960.webp"
+      },
+      {
+        "width": 1200,
+        "src": "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-1200.webp"
+      }
+    ]
+  },
+  "/images/explore/ponta-do-pargo.jpg": {
+    "src": "/images/optimized/explore/ponta-do-pargo-6ca7eedd08-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/ponta-do-pargo-6ca7eedd08-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/ponta-do-pargo-6ca7eedd08-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/ponta-do-pargo-6ca7eedd08-720.webp"
+      }
+    ]
+  },
+  "/images/explore/ponta-do-rosto.jpg": {
+    "src": "/images/optimized/explore/ponta-do-rosto-e828a615c4-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/ponta-do-rosto-e828a615c4-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/ponta-do-rosto-e828a615c4-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/ponta-do-rosto-e828a615c4-720.webp"
+      }
+    ]
+  },
+  "/images/explore/porto-moniz-pools.jpg": {
+    "src": "/images/optimized/explore/porto-moniz-pools-9d5f599245-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/porto-moniz-pools-9d5f599245-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/porto-moniz-pools-9d5f599245-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/porto-moniz-pools-9d5f599245-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr11-vereda-dos-balcoes.jpg": {
+    "src": "/images/optimized/explore/pr11-vereda-dos-balcoes-7d6b42c405-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr11-vereda-dos-balcoes-7d6b42c405-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr11-vereda-dos-balcoes-7d6b42c405-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr11-vereda-dos-balcoes-7d6b42c405-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr13-vereda-do-fanal.jpg": {
+    "src": "/images/optimized/explore/pr13-vereda-do-fanal-fec080965d-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr13-vereda-do-fanal-fec080965d-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr13-vereda-do-fanal-fec080965d-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr13-vereda-do-fanal-fec080965d-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr14-levada-dos-cedros.jpg": {
+    "src": "/images/optimized/explore/pr14-levada-dos-cedros-8ccac25b59-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr14-levada-dos-cedros-8ccac25b59-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr14-levada-dos-cedros-8ccac25b59-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr14-levada-dos-cedros-8ccac25b59-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr17-pinaculo-folhadal.jpg": {
+    "src": "/images/optimized/explore/pr17-pinaculo-folhadal-1210594e4a-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr17-pinaculo-folhadal-1210594e4a-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr17-pinaculo-folhadal-1210594e4a-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr17-pinaculo-folhadal-1210594e4a-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr18-levada-do-rei.jpg": {
+    "src": "/images/optimized/explore/pr18-levada-do-rei-36797202dc-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr18-levada-do-rei-36797202dc-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr18-levada-do-rei-36797202dc-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr18-levada-do-rei-36797202dc-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr5-vereda-das-funduras.jpg": {
+    "src": "/images/optimized/explore/pr5-vereda-das-funduras-35c02ab316-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr5-vereda-das-funduras-35c02ab316-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr5-vereda-das-funduras-35c02ab316-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr5-vereda-das-funduras-35c02ab316-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr6-2-levada-do-alecrim.jpg": {
+    "src": "/images/optimized/explore/pr6-2-levada-do-alecrim-ae82461477-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr6-2-levada-do-alecrim-ae82461477-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr6-2-levada-do-alecrim-ae82461477-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr6-2-levada-do-alecrim-ae82461477-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr6-25-fontes.jpg": {
+    "src": "/images/optimized/explore/pr6-25-fontes-5ebc49acae-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr6-25-fontes-5ebc49acae-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr6-25-fontes-5ebc49acae-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr6-25-fontes-5ebc49acae-720.webp"
+      }
+    ]
+  },
+  "/images/explore/pr6-levada-do-risco.jpg": {
+    "src": "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/pr9.jpg": {
+    "src": "/images/optimized/explore/pr9-e10e7239a9-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/pr9-e10e7239a9-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/pr9-e10e7239a9-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/pr9-e10e7239a9-720.webp"
+      }
+    ]
+  },
+  "/images/explore/praia-do-porto-do-seixal.jpg": {
+    "src": "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/prainha-do-canical.jpg": {
+    "src": "/images/optimized/explore/prainha-do-canical-4e9a468af0-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/prainha-do-canical-4e9a468af0-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/prainha-do-canical-4e9a468af0-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/explore/prainha-do-canical-4e9a468af0-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/explore/prainha-do-canical-4e9a468af0-1440.webp"
+      }
+    ]
+  },
+  "/images/explore/ribeira-da-janela.jpg": {
+    "src": "/images/optimized/explore/ribeira-da-janela-35e6f2271c-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/ribeira-da-janela-35e6f2271c-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/ribeira-da-janela-35e6f2271c-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/ribeira-da-janela-35e6f2271c-720.webp"
+      }
+    ]
+  },
+  "/images/explore/santana-houses.jpg": {
+    "src": "/images/optimized/explore/santana-houses-c467083f42-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/santana-houses-c467083f42-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/santana-houses-c467083f42-640.webp"
+      },
+      {
+        "width": 800,
+        "src": "/images/optimized/explore/santana-houses-c467083f42-800.webp"
+      }
+    ]
+  },
+  "/images/explore/veu-da-noiva.jpg": {
+    "src": "/images/optimized/explore/veu-da-noiva-a64f9e6723-320.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/explore/veu-da-noiva-a64f9e6723-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/explore/veu-da-noiva-a64f9e6723-640.webp"
+      },
+      {
+        "width": 720,
+        "src": "/images/optimized/explore/veu-da-noiva-a64f9e6723-720.webp"
+      }
+    ]
+  },
+  "/images/locations-sao-lourenco.jpg": {
+    "src": "/images/optimized/locations-sao-lourenco-63a1247232-1440.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/locations-sao-lourenco-63a1247232-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/locations-sao-lourenco-63a1247232-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/locations-sao-lourenco-63a1247232-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/locations-sao-lourenco-63a1247232-1440.webp"
+      }
+    ]
+  },
+  "/images/oleksandr.png": {
+    "src": "/images/optimized/oleksandr-8f62867f11-200.webp",
+    "variants": [
+      {
+        "width": 200,
+        "src": "/images/optimized/oleksandr-8f62867f11-200.webp"
+      }
+    ]
+  },
+  "/images/pico-radar-desktop.png": {
+    "src": "/images/optimized/pico-radar-desktop-574c58c77f-1376.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/pico-radar-desktop-574c58c77f-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/pico-radar-desktop-574c58c77f-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/pico-radar-desktop-574c58c77f-960.webp"
+      },
+      {
+        "width": 1376,
+        "src": "/images/optimized/pico-radar-desktop-574c58c77f-1376.webp"
+      }
+    ]
+  },
+  "/images/pico-radar-mobile.png": {
+    "src": "/images/optimized/pico-radar-mobile-d570f317d3-768.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/pico-radar-mobile-d570f317d3-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/pico-radar-mobile-d570f317d3-640.webp"
+      },
+      {
+        "width": 768,
+        "src": "/images/optimized/pico-radar-mobile-d570f317d3-768.webp"
+      }
+    ]
+  },
+  "/images/trail-hikers-desktop.jpg": {
+    "src": "/images/optimized/trail-hikers-desktop-6c8d01de69-1440.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/trail-hikers-desktop-6c8d01de69-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/trail-hikers-desktop-6c8d01de69-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/trail-hikers-desktop-6c8d01de69-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/trail-hikers-desktop-6c8d01de69-1440.webp"
+      }
+    ]
+  },
+  "/images/trail-hikers-mobile.jpg": {
+    "src": "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-1086.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-960.webp"
+      },
+      {
+        "width": 1086,
+        "src": "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-1086.webp"
+      }
+    ]
+  },
+  "/images/trip-plan-map.jpg": {
+    "src": "/images/optimized/trip-plan-map-2a802a5bf4-1440.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/trip-plan-map-2a802a5bf4-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/trip-plan-map-2a802a5bf4-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/trip-plan-map-2a802a5bf4-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/trip-plan-map-2a802a5bf4-1440.webp"
+      }
+    ]
+  }
+}
