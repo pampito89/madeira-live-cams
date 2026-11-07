@@ -245,7 +245,7 @@ export const cameras: Camera[] = [
     latitude: 32.7222,
     longitude: -16.8039,
     sourceUrl: 'https://www.youtube.com/watch?v=xiQC5Qbi3qE',
-    youtubeId: 'xiQC5Qbi3qE',
+    youtubeId: 'N8uFk1TJOKA',
   },
   {
     id: 'boaventura',
