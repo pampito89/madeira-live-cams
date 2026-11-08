@@ -4,6 +4,7 @@ import { locations } from '../data/plannerLocations';
 import { stays } from '../data/stays';
 import { localePath, type Locale } from '../lib/i18n/config';
 import { defaultPageLocale, indexableLocales } from '../lib/i18n/coverage';
+import { getCivilProtectionNews } from '../lib/civilProtectionNews';
 
 const ORIGIN = 'https://madeiralivecams.com';
 function escapeXml(value: string) {
@@ -22,8 +23,10 @@ function urlEntry(path: string, locale: Locale, alternates: readonly Locale[]) {
   ].join('\n');
 }
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const news = await getCivilProtectionNews();
   const paths = Array.from(new Set([
-    '/', '/about', '/parties', '/privacy', '/weather-guide', '/cameras', '/trip-plan', '/trail-availability', '/car-rental',
+    '/', '/about', '/parties', '/privacy', '/weather-guide', '/cameras', '/trip-plan', '/trail-availability', '/car-rental', '/news',
+    ...news.articles.map(article => `/news/${article.id}`),
     ...cameras.map(camera => `/cameras/${camera.id}`),
     ...locations.filter(location => !location.hiddenFromExplore).map(location => `/explore/${location.slug}`),
     ...stays.map(stay => `/stays/${stay.slug}`),
