@@ -1,15 +1,11 @@
-# Civil Protection news
+# Новини та обмеження
 
-Routes: `/uk/news` and `/uk/news/{official numeric article ID}`. Other locale routes redirect to Ukrainian. News is an item in the shared left menu; history controls contain only Back and Forward.
+Сторінки /uk/news і /uk/news/[id] рендеряться на сервері. Категорії задаються ?category=trails|roads|weather|general. Новини відкриваються всередині сайту, першоджерело доступне окремим посиланням.
 
-The only news source is the official SRPC, IP-RAM RSS feed at https://procivmadeira.pt/pt/10-noticias.html?format=feed&type=rss. The feed supplies article text. Upstream markup is rendered as escaped text; remote media and scripts are not executed.
+Джерела: RSS SRPC, повідомлення IFCN у категорії Avisos, повідомлення Direção Regional de Estradas та офіційне зведення Informação de Estradas. Дозволені лише фіксовані HTTPS-домени та перевірені шляхи. Переадресації імпортера заборонені.
 
-The current five announcements have Ukrainian translations in `civil-protection-uk.json`. They are used only when the source title and paragraphs exactly match the bundled official snapshot, so a corrected notice cannot silently retain an outdated translation. New or changed announcements use the existing cached MyMemory translation adapter with its shared daily budget. If complete translation is unavailable, the original is retained and explicitly labelled. This never invents a translated safety instruction. Machine-translated content is labelled separately.
+Імпорт запускається серверним запитом, кешується на 10 хвилин, не потребує редакторського підтвердження. Це оновлення при відвідуванні, не фоновий cron. Збій окремого джерела зберігає його останній текст з позначкою застарілості; зникнення повідомлення не означає відкриття маршруту. Дата отримання не підміняє дату публікації. Матеріали DRE старші року не потрапляють до добірки. Повідомлення IFCN без дати публікації позначені відповідно.
 
-Refresh is request-driven, with a ten-minute cache and up to two minutes of HTTP cache. It is not a background scheduler. Feed errors retain the last successful data and timestamp and retry after a minute. The timestamp remains in the snapshot; the visible automatic-check information block was removed at the user's request.
+Українські виклади operational-news-uk.json застосовуються лише за збігом SHA256 заголовка й абзаців із першоджерелом. При зміні джерела використовується наявний машинний перекладач з обмеженням бюджету; якщо переклад недоступний, показується явно позначений португальський оригінал. Не можна без підтвердження приписувати обвали конкретному шторму або трактувати планову дату завершення робіт як підтверджене відкриття.
 
-UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN enable persistent shared archive storage. Without them, local runs use `backups/civil-protection-news.json`; serverless runs use temporary storage and cannot guarantee an archive across instance restarts. No secrets are stored here.
-
-The Ukrainian interface and content have matching language metadata, canonical URLs and sitemap entries. Article bodies explicitly identify their actual language when translation is unavailable.
-
-Checks: `node lib/civil-protection-news.test.cjs`, `node lib/civil-protection-uk.test.cjs`, `npm run build`. The existing lint command prompts for ESLint setup; no lint configuration was changed.
+Перевірка: node lib/operational-news.test.cjs; node lib/civil-protection-news.test.cjs; node lib/civil-protection-uk.test.cjs; npm run build. ESLint не налаштований у репозиторії.

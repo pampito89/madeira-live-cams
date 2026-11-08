@@ -1,0 +1,336 @@
+{
+  "checkedAt": "2026-11-08T10:39:52.488Z",
+  "articles": [
+    {
+      "id": "dre-status",
+      "title": "Informação de Estradas",
+      "paragraphs": [
+        "Última Atualização: 7 de novembro 2026",
+        "ESTRADAS REGIONAIS ENCERRADAS POR MOTIVOS DE OBRAS OU OUTROS:",
+        "OUTROS",
+        "Estrada Florestal que liga a Eira do Serrado ao Pico do Areeiro por motivo do aviso meteorológico previsto para o dia 8 de novembro.",
+        "4.ª SECÇÃO",
+        "ER105 – Entre a Encumeada e o Paúl da Serra (Lombo do Mouro).",
+        "ESTRADAS REGIONAIS CONDICIONADAS POR MOTIVOS DE OBRAS OU OUTROS:",
+        "1.ª SECÇÃO",
+        "ER 204 – No troço entre a nova rotunda onde entronca a antiga estrada da Camacha e a nova rotunda onde entronca e termina a Rua Conde de Carvalhal, em São Gonçalo.",
+        "3ª SECÇÃO",
+        "ER 211 – Entre o Caminho do Lombinho e o miradouro da Terra Chã, Ponta Delgada."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/srtc/Pesquisar/ctl/ReadInformcao/mid/5346/InformacaoId/136562/UnidadeOrganicaId/52",
+      "sourceName": "Дорожня служба — зведення уряду Мадейри",
+      "publishedAt": "2026-11-07",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER105 · ER 204 · ER 211",
+      "period": null
+    },
+    {
+      "id": "ifcn-640",
+      "title": "ENCERRAMENTO TEMPORÁRIO DOS PERCURSOS PEDESTRES CLASSIFICADOS",
+      "paragraphs": [
+        "O Instituto das Florestas e Conservação da Natureza informa que todos os percursos pedestres classificados da Região Autónoma da Madeira estarão encerrados no dia 8 de novembro de 2026, na sequência do aviso meteorológico emitido pelo Instituto Português do Mar e da Atmosfera (IPMA).",
+        "A medida pretende salvaguardar a segurança dos utilizadores, face às condições meteorológicas previstas e aos riscos associados à circulação em espaços naturais e florestais.",
+        "Durante o mesmo período, estará igualmente encerrada a Estrada Florestal que liga a Eira do Serrado ao Pico do Areeiro.",
+        "O IFCN recomenda o cumprimento rigoroso das orientações emitidas pelas autoridades de Proteção Civil e apela à adoção de comportamentos responsáveis. Nesse dia, não deverão ser realizadas quaisquer atividades lúdicas ou desportivas em espaços florestais.",
+        "O IFCN agradece a compreensão e a colaboração de todos."
+      ],
+      "sourceUrl": "https://ifcn.madeira.gov.pt/pt/?view=article&id=640:encerramento-temporario&catid=146:avisos",
+      "sourceName": "IFCN — Інститут лісів та охорони природи",
+      "publishedAt": null,
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "trails"
+      ],
+      "location": "Мадейра",
+      "period": null
+    },
+    {
+      "id": "ifcn-803",
+      "title": "ENCERRAMENTO estrada florestal Eira do serrado / Pico do Areeiro",
+      "paragraphs": [
+        "O Instituto das Florestas e Conservação da Natureza, IP-RAM vem, por este meio e para os devidos efeitos, informar que, devido à realização do evento Eco Rally Madeira, a Estrada Florestal que liga a Eira do Serrado ao Pico do Areeiro estará encerrada no dia 4 de outubro de 2026 entre as 07h55 e as 10h08.",
+        "Agradecemos, desse já, a vossa compreensão e colaboração."
+      ],
+      "sourceUrl": "https://ifcn.madeira.gov.pt/pt/?view=article&id=803:encerramento-estrada-florestal-areeiro-eira-do-serrado-barreira&catid=146:avisos",
+      "sourceName": "IFCN — Інститут лісів та охорони природи",
+      "publishedAt": null,
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "Мадейра",
+      "period": null
+    },
+    {
+      "id": "ifcn-981",
+      "title": "ENCERRAMENTO temporário da Estrada Florestal do Velho Gingão",
+      "paragraphs": [
+        "O Instituto das Florestas e Conservação da Natureza, IP-RAM, informa que, na sequência dos trabalhos de construção de um aqueduto no Caminho do Velho Gingão, a montante da Casa do Velho Gingão, será necessário proceder ao encerramento temporário de um troço da Estrada Florestal do Velho Gingão.",
+        "O condicionamento abrange o troço compreendido entre a entrada de acesso à Casa do Velho Gingão e a Estrada do Lombo do Mouro (Estrada Regional).",
+        "O encerramento terá início no dia 25 de setembro de 2026, estando previsto por um período de 60 dias, de forma a permitir a execução dos trabalhos em condições de segurança.",
+        "O IFCN agradece a compreensão de todos os utilizadores e apela ao cumprimento da sinalização existente no local."
+      ],
+      "sourceUrl": "https://ifcn.madeira.gov.pt/pt/?view=article&id=981:encerramento-velho-gingao&catid=146:avisos",
+      "sourceName": "IFCN — Інститут лісів та охорони природи",
+      "publishedAt": null,
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "Мадейра",
+      "period": null
+    },
+    {
+      "id": "ifcn-999",
+      "title": "Requalificação do PR8 – Vereda da Ponta de São Lourenço",
+      "paragraphs": [
+        "O Instituto das Florestas e Conservação da Natureza informa que, devido à execução dos trabalhos de recuperação do PR8 – Vereda da Ponta de São Lourenço, e com o objetivo de garantir a segurança dos utilizadores, será necessário introduzir pequenos desvios temporários ao traçado habitual do percurso. Estes desvios estarão devidamente sinalizados e identificados com setas de encaminhamento, mantendo-se o percurso aberto.",
+        "Esta situação terá início no dia 30 de setembro de 2026 e manter-se-á por um período mínimo de 270 dias.",
+        "Solicita-se a todos os utilizadores que respeitem a sinalização e sigam as indicações existentes no local.",
+        "O IFCN agradece a compreensão."
+      ],
+      "sourceUrl": "https://ifcn.madeira.gov.pt/pt/?view=article&id=999:requalificacao-pr8&catid=146:avisos",
+      "sourceName": "IFCN — Інститут лісів та охорони природи",
+      "publishedAt": null,
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "trails"
+      ],
+      "location": "PR8",
+      "period": null
+    },
+    {
+      "id": "ifcn-1014",
+      "title": "Encerramento Temporário do PR10 – Levada do Furado",
+      "paragraphs": [
+        "O Instituto das Florestas e Conservação da Natureza informa que o PR10 – Levada do Furado (Ribeiro Frio – Lamaceiros) se encontra temporariamente encerrado, por motivos de segurança, na sequência do desabamento de parte do pavimento do percurso.",
+        "O IFCN apela a todos os visitantes para que respeitem a sinalização de interdição e não utilizem o percurso enquanto se mantiver o encerramento, de modo a salvaguardar a sua segurança.",
+        "A reabertura será comunicada assim que estiverem reunidas as necessárias condições de segurança.",
+        "Agradecemos a compreensão de todos pelos eventuais constrangimentos causados."
+      ],
+      "sourceUrl": "https://ifcn.madeira.gov.pt/pt/?view=article&id=1014:pr-10-levada-do-furado-encerramento&catid=146:avisos",
+      "sourceName": "IFCN — Інститут лісів та охорони природи",
+      "publishedAt": null,
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "trails",
+        "weather"
+      ],
+      "location": "PR10",
+      "period": null
+    },
+    {
+      "id": "dre-254896",
+      "title": "Requalificação da ER 120 no Porto Santo incluindo sentido único e ciclovia entre os ribeiros Cochino e Salgado",
+      "paragraphs": [
+        "O Governo Regional, através da Secretaria Regional de Equipamentos e Infraestruturas, está a preparar o lançamento do concurso para a concretização da empreitada de requalificação da Estrada Regional 120 entre o Ribeiro Cochino e a Calheta visando a beneficiação das condições de circulação e de segurança rodoviária ao longo daquele troço.",
+        "Esta intervenção tem como principal objetivo melhorar as condições de circulação rodoviária, pedonal e da ciclovia, promovendo simultaneamente a segurança dos utilizadores, a funcionalidade da infraestrutura e a durabilidade dos seus diversos elementos constituintes.",
+        "No troço compreendido entre o Ribeiro Cochino e o Ribeiro Salgado, correspondente à zona com maior concentração habitacional, está prevista a criação de uma nova ciclovia, o alargamento dos passeios e a reorganização da circulação rodoviária, passando esta a processar-se num único sentido, contribuindo para uma melhor partilha do espaço público e para o reforço da segurança de todos os utilizadores.",
+        "A empreitada inclui a execução de trabalhos de demolição, beneficiação dos sistemas de drenagem, reabilitação e reconstrução de pavimentos, renovação da sinalização rodoviária, reparação das guardas de segurança, requalificação dos canteiros das palmeiras e demais intervenções necessárias à concretização das soluções preconizadas no presente projeto.",
+        "De salientar que está igualmente prevista a reformulação da interseção entre a Estrada Regional 262 e a Estrada Manuel Francisco Coelho, com o objetivo de melhorar as condições de visibilidade, aumentar a segurança da circulação e otimizar as condições de funcionamento da interseção, corrigindo as limitações da sua configuração atual.",
+        "A estimativa da Secretaria Regional de Equipamentos e Infraestruturas é que estas intervenções estejam concluídas até final de junho de 2027.",
+        "Planta da empreitada de requalificação da Estrada Regional 120 entre o Ribeiro Cochino e a Calheta visando a beneficiação das condições de circulação e de segurança rodoviária ao longo daquele troço."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/254896/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2026-07-06",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER 120",
+      "period": null
+    },
+    {
+      "id": "dre-253376",
+      "title": "Concluídos trabalhos de requalificação na Estrada Regional 103",
+      "paragraphs": [
+        "Já estão concluídos os trabalhos de requalificação da Estrada Regional 103 (ER103), no âmbito da empreitada &ldquo;PAMUS – Requalificação da Rede Viária Regional – Zona Centro – Fase II&rdquo;.",
+        "A empreitada, agora concluída, foi visitada esta semana pelo secretário regional de Equipamentos e Infraestruturas, Pedro Rodrigues, acompanhado pelo diretor regional de Estradas, José Martins e demais elementos desta Direção Regional.",
+        "De salientar que esta intervenção abrangeu uma extensão de 12 quilómetros, entre o Poiso e o Faial, representando um investimento do Governo Regional na ordem dos 2,7 milhões de euros.",
+        "Os trabalhos realizados incluíram fresagem, pavimentação, drenagem, muros de guarda, sinalização vertical e horizontal."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/253376/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2026-04-16",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER103",
+      "period": null
+    },
+    {
+      "id": "dre-253454",
+      "title": "Concluída empreitada que requalificou 28,3 km de rede viária da Ponta do Sol",
+      "paragraphs": [
+        "O Secretário Regional de Equipamentos e Infraestruturas, Pedro Rodrigues, esteve esta semana no concelho da Ponta do Sol para se inteitar dos trabalhos realizados na Estrada Regional 222 (ER222), no âmbito da empreitada &ldquo;PAMUS – Requalificação da Rede Viária Regional – Zona Oeste – Fase II&rdquo;.",
+        "Esta intervenção representa um investimento do Governo Regional na ordem dos 6,4 milhões de euros. De salientar que esta obra abrangeu um total de 28,3 km de rede viária, distribuída por vários troços, sendo que a ER222 (Ribeira Brava/Ponta do Sol) corresponde a 6,9km do total.",
+        "A empreitada contemplou ainda a requalificação e beneficiação do Miradouro do Cascalho, projetada e realizada pelos profissionais da Direção Regional de Estradas.",
+        "No decorrer da visita, o governante salientou que a melhoria da rede viária constitui um fator essencial para o desenvolvimento económico e social da Região. Sublinhou que, para além de assegurar uma maior mobilidade de pessoas e bens, o investimento nas infraestruturas rodoviárias contribui significativamente para o aumento da segurança nas estradas e para a qualidade de vida das populações."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/253454/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2025-10-07",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER222",
+      "period": null
+    },
+    {
+      "id": "dre-253453",
+      "title": "Concluídos trabalhos na Estrada Regional 206, no troço entre Gaula e o sítio das Águas Mansas",
+      "paragraphs": [
+        "Estão concluídos os trabalhos na Estrada Regional 206 (ER206), no troço entre Gaula e o sítio das Águas Mansas, no âmbito da empreitada &ldquo;PAMUS – Requalificação da Rede Viária Regional – Zona Leste – Fase II&rdquo;.",
+        "A empreitada de requalificação da ER 206 abrangeu um total de 8 quilómetros de extensão e teve como principal objetivo melhorar significativamente as condições de circulação e segurança rodoviária deste importante itinerário complementar.",
+        "Os trabalhos realizados incluíram a reposição do pavimento, construção e reparação de muros de guarda, construção e reparação de valetas, sinalização vertical e horizontal."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/253453/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2025-09-22",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER206 · ER 206",
+      "period": null
+    },
+    {
+      "id": "dre-51745",
+      "title": "Prevenção e Mitigação do Risco de Derrocadas nas Escarpas Sobranceiras à ER 223 - Troço Estreito da Calheta / Jardim do Mar",
+      "paragraphs": [
+        "A intervenção denominada \"Prevenção e Mitigação do Risco de Derrocadas nas Escarpas Sobranceiras à ER 223 - Troço Estreito da Calheta / Jardim do Mar\", a realizar no Concelho da Calheta, tem como objetivo o melhoramento das condições de segurança e operacionalidade desta ligação viária.",
+        "São conhecidas as recorrentes derrocadas com origem no talude sobranceiro à via que colocam em risco a vida de pessoas e bens pelo que se imponha encontrar uma solução alternativa para obviar este problema.",
+        "Está a decorrer o concurso público da designada \"Fase - A\" e que consiste na construção de uma variante à atual estrada, adotando-se a solução de túnel como forma de contornar a zona em que os taludes apresentam piores condições de estabilidade. Esta obra integra um novo túnel de acesso ao Jardim do Mar e ao Paul do Mar com uma extensão de 1.051 m integrando igualmente uma rotunda na zona terminal que permite uma melhor interligação com o atual Túnel para o Paul do Mar e com o Acesso ao centro do Jardim do Mar.",
+        "Ao Concurso Limitado por Prévia Qualificação, com preço base de &euro; 18.500.000,00, apresentaram-se 5 candidaturas, constituídas pelas seguintes empresas e agrupamentos:",
+        "– Teixeira Duarte - Engenharia e Construções, S.A.",
+        "– Tecnovia Madeira - Sociedade de Empreitadas, S.A. e AFAVIAS - Engenharia e Construções, S.A.",
+        "– OPWAY - Engenharia, S.A. e Alexandre Barbosa Borges, S.A.",
+        "– Zagope - Construções e Engenharia, S.A.",
+        "– MOTA-ENGIL - Engenharia e Construção, S.A.",
+        "Concluída esta fase inicial, qualificaram-se as seguintes empresas e agrupamentos:",
+        "– Teixeira Duarte - Engenharia e Construções, S.A.",
+        "– Tecnovia Madeira - Sociedade de Empreitadas, S.A. e AFAVIAS - Engenharia e Construções, S.A.",
+        "– Zagope - Construções e Engenharia, S.A.",
+        "que deverão apresentar as suas propostas de preço durante o próximo mês de outubro. O critério de adjudicação é o do mais baixo preço.",
+        "Importa também dar conta que será lançado durante o próximo mês de Outubro a empreitada correspondente à \"Fase - B\" e que completa a intervenção até ao Estreito da Calheta (entroncamento com o Caminho da Ribeira Funda), numa extensão aproximada de 828 metros. Para este troço, onde a escarpa sobranceira à via apresenta alturas entre 130 a 150 metros, a solução encontrada para proteção dos utentes consiste na construção de uma estrutura \"em consola\", em betão armado pré-esforçado (conforme imagens tridimensionais em anexo), com cerca de 570 metros, dividida em dois troços de 240 e 331 metros.",
+        "A faixa de rodagem terá uma largura de 6,50 m nas zonas com estrutura de betão armado, acrescido de um passeio com 1,00 m que assegurará uma maior segurança aos peões nas deslocações entre o Jardim do Mar e o Estreito da Calheta.",
+        "No âmbito da obra, será também beneficiado o pontão sobre a Ribeira Funda, cuja extensão é cerca de 15 metros, e na parte final do traçado será estabilizado o talude sobranceiro à ER 223, numa extensão de 114 metros, com recurso a betão projetado e pregagens.",
+        "A intervenção compreende ainda os trabalhos de pavimentação, iluminação pública, sinalização vertical e horizontal e equipamentos de segurança.",
+        "Estima-se que a presente intervenção tenha um prazo de execução de 12 meses e será colocada no mercado com um preço base de &euro; 11.200.00,00."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/51745/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2019-09-23",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads",
+        "weather"
+      ],
+      "location": "ER 223",
+      "period": null
+    },
+    {
+      "id": "dre-47527",
+      "title": "Requalificação de Estacionamentos Públicos na ER 103 - Ribeiro Frio",
+      "paragraphs": [
+        "Requalificação de Estacionamentos Públicos na ER 103 - Ribeiro Frio",
+        "A intervenção consistiu, numa primeira fase, na requalificação de um parque de estacionamento de modo a dotá-lo de melhores condições de utilização para os visitantes do Parque Florestal do Ribeiro Frio.",
+        "Os trabalhos consistiram na remoção do pavimento existente (em paralelepípedos), terraplenagem, execução de muro de guarda em pedra argamassada, reconstrução da boca de lobo de passagem hidráulica, repavimentação com paralelepípedos de basalto e colocação de sinalização vertical.",
+        "Numa segunda fase a intervenção consistiu na criação de um novo parque de estacionamento público, aumentando assim a oferta aos visitantes.",
+        "Os trabalhos basearam-se na escavação, terraplenagem, execução de muros de guarda em pedra argamassada, execução de pavimento em asfalto betuminoso, pintura de pavimento para marcação dos lugares de estacionamento e colocação de sinalização vertical.",
+        "Início da intervenção: junho de 2018;",
+        "Fim da intervenção: setembro de 2018."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/47527/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2019-01-29",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER 103",
+      "period": null
+    },
+    {
+      "id": "dre-47433",
+      "title": "Requalificação do Miradouro do Gambão na ER 110 - Porto da Cruz",
+      "paragraphs": [
+        "Requalificação do Miradouro do Gambão na ER 110 - Porto da Cruz",
+        "A intervenção consistiu na requalificação do miradouro do Gambão, na ER 110 - Porto da Cruz, por estar muito degradado e já não oferecer as condições mínimas de utilização.",
+        "Os trabalhos consistiram na demolição das guardas existentes em betão armado e colocação de novas em ferro galvanizado, pintado, unidas por pilaretes em betão armado, revestidos a pedra argamassada.",
+        "Reconstrução da zona de churrasco através de demolição da estrutura existente e construção de um novo poço, revestido a material cerâmico para fácil limpeza e tijolo refratário na zona apropriada.",
+        "Reparação pontual do pavimento do miradouro, revestimento em pedra argamassada dos muros de suporte do miradouro, confinantes com a ER 110, recuperação/reparação das mesas e bancos de apoio.",
+        "Início da intervenção: outubro de 2018;",
+        "Fim da intervenção: novembro de 2018."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/47433/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2019-01-29",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER 110",
+      "period": null
+    },
+    {
+      "id": "dre-253443",
+      "title": "Empreitada na Estrada Regional 211 concluída na sua totalidade no final de março de 2026",
+      "paragraphs": [
+        "A empreitada que está a ser concretizada na Estrada Regional 211, na sequência do temporal que assolou aquela freguesia no dia 25 de dezembro de 2020 ficará concluída na sua totalidade no final deste primeiro trimestre de 2026.",
+        "Após a passagem de um elevado caudal de água e arrastamento de material sólido, em três zonas de intervenção, nomeadamente em duas zonas do sítio das Quebradas e no Sítio do Lombinho, foi necessário proceder-se a uma empreitada de devolvesse à população as condições de segurança e de operacionalidade do respetivo troço viário.",
+        "No sítio das Quebradas, os trabalhos ficaram concluídos em setembro de 2024, enquanto no sítio do Lombinho as obras ainda estão a decorrer e consistem, essencialmente, no reperfilamento e drenagem do talude existente.",
+        "Ainda na Estrada Regional 211, prevê-se a execução de trabalhos de repavimentação, de sinalização horizontal e substituição da sinalização vertical, incluindo-se também a reposição e arranjo, em condições idênticas às existentes, do logradouro da moradia que se encontrava em equilíbrio precário sobre a zona.",
+        "De salientar que a execução dos trabalhos no Sítio do Lombinho corresponde a cerca de 27% da totalidade dos trabalhos da empreitada, no valor de 653 255,62&euro;, ao qual acresce IVA à taxa legal em vigor, prevendo-se a sua conclusão no final do primeiro trimestre deste ano."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/253443/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2026-01-30",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "Мадейра",
+      "period": null
+    },
+    {
+      "id": "dre-253435",
+      "title": "Avança nova fase das obras da Estrada do Aeroporto",
+      "paragraphs": [
+        "Até ao dia 6 de novembro vai começar uma nova fase da empreitada de &lsquo;Requalificação da ER 204 entre a Boa Nova e a Assomada&rsquo;, mais conhecida como Estrada do Aeroporto.",
+        "Esta fase corresponde à aplicação da camada final de asfalto, a chamada &ldquo;camada de desgaste&rdquo;, o que levará ao encerramento temporário da circulação rodoviária em alguns troços e rotundas da ER 204.",
+        "A Secretaria Regional de Equipamentos e Infraestruturas informa que o arranque dos trabalhos teve início no troço da rotunda da Via Expresso para a Camacha e o ramo de saída para a Estrada do Garajau."
+      ],
+      "sourceUrl": "https://www.madeira.gov.pt/drestradas/Estrutura/DRE/ctl/Read/mid/10535/InformacaoId/253435/UnidadeOrganicaId/22",
+      "sourceName": "Direção Regional de Estradas",
+      "publishedAt": "2025-10-29",
+      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "ER 204",
+      "period": null
+    }
+  ]
+}
