@@ -184,7 +184,7 @@ export const cameras: Camera[] = [
     latitude: 32.6353,
     longitude: -16.9481,
     sourceUrl: 'https://www.youtube.com/watch?v=8ZmLLUPqlPM',
-    youtubeId: '8ZmLLUPqlPM',
+    youtubeId: 'v-EXKlzjTW0',
   },
   {
     id: 'achada-do-teixeira',
