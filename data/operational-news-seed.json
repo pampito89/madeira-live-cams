@@ -5,10 +5,10 @@
       "id": "dre-status",
       "title": "Informação de Estradas",
       "paragraphs": [
-        "Última Atualização: 7 de novembro 2026",
+        "Última Atualização: 10 de novembro 2026",
         "ESTRADAS REGIONAIS ENCERRADAS POR MOTIVOS DE OBRAS OU OUTROS:",
         "OUTROS",
-        "Estrada Florestal que liga a Eira do Serrado ao Pico do Areeiro por motivo do aviso meteorológico previsto para o dia 8 de novembro.",
+        "Estrada Florestal que liga a Eira do Serrado ao Pico do Areeiro por motivo do aviso meteorológico previsto para o dia 11 de novembro.",
         "4.ª SECÇÃO",
         "ER105 – Entre a Encumeada e o Paúl da Serra (Lombo do Mouro).",
         "ESTRADAS REGIONAIS CONDICIONADAS POR MOTIVOS DE OBRAS OU OUTROS:",
@@ -19,8 +19,8 @@
       ],
       "sourceUrl": "https://www.madeira.gov.pt/srtc/Pesquisar/ctl/ReadInformcao/mid/5346/InformacaoId/136562/UnidadeOrganicaId/52",
       "sourceName": "Дорожня служба — зведення уряду Мадейри",
-      "publishedAt": "2026-11-07",
-      "checkedAt": "2026-11-08T10:39:52.488Z",
+      "publishedAt": "2026-11-10",
+      "checkedAt": "2026-11-10T21:51:22.029Z",
       "stale": false,
       "categories": [
         "roads"
