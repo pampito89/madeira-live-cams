@@ -7,7 +7,7 @@ export default function NewsArticlePage({ article }: { article: SiteNewsArticle 
 }
 export const getServerSideProps: GetServerSideProps = async ({ params, locale, res }) => {
   const id = params?.id;
-  if (typeof id !== 'string' || !/^(?:\d{1,12}|ifcn-\d{1,12}|dre-\d{1,12}|dre-status)$/.test(id)) return { notFound: true };
+  if (typeof id !== 'string' || !/^(?:\d{1,12}|ifcn-\d{1,12}|dre-\d{1,12}|dre-status)(?:-v-[a-f0-9]{12})?$/.test(id)) return { notFound: true };
   if (locale !== 'uk') return { redirect: { destination: `/uk/news/${id}`, permanent: false } };
   const snapshot = await getNewsSources();
   const source = snapshot.articles.find(item => item.id === id);

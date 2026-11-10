@@ -9,8 +9,7 @@ export function newsDate(date: string) {
 const languageNote = (item: SiteNewsArticle) => item.translationKind === 'original' ? 'Оригінал португальською · переклад недоступний' : item.translationKind === 'machine' ? 'Автоматичний переклад' : '';
 function Details({ item, overlay = false }: { item: SiteNewsArticle; overlay?: boolean }) {
   return <div className={`mt-3 space-y-2 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>
-    {item.id !== 'dre-status' && <><p>{item.location}</p>{item.period && <p>{item.period}</p>}{item.publishedAt && <time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time>}</>}
-    {item.stale && <p className={overlay ? 'text-amber-100' : 'text-amber-800'}>Збережене повідомлення · актуальність не підтверджено.</p>}
+    {!item.id.startsWith('dre-status') && <><p>{item.location}</p>{item.period && <p>{item.period}</p>}{item.publishedAt && <time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time>}</>}
   </div>;
 }
 function NewsBackground({ compact = false }: { compact?: boolean }) {
@@ -19,17 +18,57 @@ function NewsBackground({ compact = false }: { compact?: boolean }) {
     <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20" />
   </>;
 }
+function Status({ item }: { item: SiteNewsArticle }) {
+  if (!item.newsState || item.newsState === 'current') return null;
+  return <div className="mb-5 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+    <p className="font-semibold">{item.newsState === 'archived' ? 'Архівне повідомлення' : 'Потребує перевірки'}</p>
+    <p>{item.archiveReason}</p>
+    {item.replacementId && <Link href={`/news/${item.replacementId}`} locale="uk" className="font-semibold underline">Перейти до нового повідомлення →</Link>}
+  </div>;
+}
+function NewsCard({ item }: { item: SiteNewsArticle }) {
+  const overlay = item.id === 'dre-status';
+  return <article className={`relative isolate flex flex-col overflow-hidden rounded-2xl border shadow-sm ${overlay ? 'border-forest bg-forest text-white' : 'border-slate-200 bg-white'}`}>
+    {overlay && <NewsBackground compact />}
+    <div className="flex flex-1 flex-col p-6">
+      <p className={`text-xs font-semibold uppercase tracking-wide ${overlay ? 'text-white/90' : 'text-ocean'}`}>{item.sourceName}</p>
+      <h3 lang={item.contentLanguage} className={`mt-3 break-words text-xl font-bold leading-7 ${overlay ? 'text-white' : 'text-navy'}`}><Link href={`/news/${item.id}`} locale="uk" className="hover:underline">{item.title}</Link></h3>
+      <Details item={item} overlay={overlay} />
+      <p lang={item.contentLanguage} className={`mt-3 line-clamp-3 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>{item.paragraphs[0]}</p>
+      {languageNote(item) && <p className={`mt-3 text-xs ${overlay ? 'text-white/90' : 'text-slate-500'}`}>{languageNote(item)}</p>}
+      <Link href={`/news/${item.id}`} locale="uk" className={`mt-auto inline-flex min-h-11 items-center pt-4 font-semibold hover:underline ${overlay ? 'text-white' : 'text-ocean'}`} aria-label={`Читати: ${item.title}`}>Докладніше <span aria-hidden="true" className="ml-2">→</span></Link>
+    </div>
+  </article>;
+}
+function OlderNews({ items, archive }: { items: SiteNewsArticle[]; archive: boolean }) {
+  if (!items.length) return null;
+  return <details className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6" id={archive ? 'archive' : 'unverified'}>
+    <summary className="min-h-11 cursor-pointer text-lg font-bold text-navy">{archive ? 'Архів новин' : 'Потребують перевірки'} ({items.length})</summary>
+    <ul className="mt-3 divide-y divide-slate-200">
+      {items.map(item => <li key={item.id} className="py-4">
+        <Link href={`/news/${item.id}`} locale="uk" lang={item.contentLanguage} className="font-semibold leading-6 text-ocean hover:underline">{item.title}</Link>
+        {item.publishedAt && <p className="mt-1 text-xs text-slate-500"><time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time></p>}
+        <p className="mt-1 text-sm leading-6 text-slate-600">{item.archiveReason}</p>
+        {item.replacementId && <Link href={`/news/${item.replacementId}`} locale="uk" className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-ocean underline">Нове повідомлення →</Link>}
+      </li>)}
+    </ul>
+  </details>;
+}
 export default function CivilProtectionNews({ snapshot, article, category = 'all' }: { snapshot: SiteNewsSnapshot; article?: SiteNewsArticle; category?: keyof typeof newsCategories }) {
   const title = article?.title ?? 'Новини та обмеження на Мадейрі';
-  const description = article ? article.paragraphs.join(' ').slice(0, 155) : 'Закриття стежок, обвали, перекриття доріг і ремонтні роботи на Мадейрі. Офіційні повідомлення IFCN, DRE та SRPC українською.';
+  const description = article ? article.paragraphs.join(' ').slice(0, 155) : 'Закриття стежок, обвали, перекриття доріг і ремонтні роботи на Мадейрі. Актуальні офіційні повідомлення IFCN, DRE та SRPC і архів новин.';
   const url = `https://madeiralivecams.com/uk/news${article ? `/${article.id}` : ''}`;
-  const illustrated = !article || article.id === 'dre-status';
+  const illustrated = !article || article.id.startsWith('dre-status');
   const structured = article ? {
     '@context': 'https://schema.org', '@type': 'NewsArticle', headline: article.title,
     ...(article.publishedAt ? { datePublished: article.publishedAt } : {}), inLanguage: article.contentLanguage, mainEntityOfPage: url,
     author: { '@type': 'Organization', name: 'Madeira Live Cams' }, isBasedOn: article.sourceUrl,
   } : { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, inLanguage: 'uk', url };
-  const visible = snapshot.articles.filter(item => category === 'all' || item.categories.includes(category));
+  const active = snapshot.articles.filter(item => !item.newsState || item.newsState === 'current');
+  const matches = (item: SiteNewsArticle) => category === 'all' || item.categories.includes(category);
+  const visible = active.filter(matches);
+  const archived = snapshot.articles.filter(item => item.newsState === 'archived' && matches(item));
+  const unverified = snapshot.articles.filter(item => item.newsState === 'unverified' && matches(item));
   return <>
     <Head>
       <title>{title} | Madeira Live Cams</title><meta name="description" content={description} />
@@ -55,32 +94,20 @@ export default function CivilProtectionNews({ snapshot, article, category = 'all
           </div>
         </header>
         {article ? <article className="mt-5 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-          <Details item={article} />
+          <Status item={article} /><Details item={article} />
           <div lang={article.contentLanguage} className="space-y-3 break-words text-base leading-7 text-slate-700">{article.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
-          <footer className="mt-5 border-t border-slate-200 pt-4 text-sm">
-            <a className="font-semibold text-ocean underline" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">Джерело: {article.sourceName}</a>
-          </footer>
+          <footer className="mt-5 border-t border-slate-200 pt-4 text-sm"><a className="font-semibold text-ocean underline" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">Джерело: {article.sourceName}</a></footer>
         </article> : <>
           <nav aria-label="Категорії новин" className="mt-6 flex flex-wrap gap-2">
-            {(Object.keys(newsCategories) as (keyof typeof newsCategories)[]).map(key => <Link key={key} href={key === 'all' ? '/news' : `/news?category=${key}`} locale="uk" aria-current={category === key ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-semibold ${category === key ? 'border-navy bg-navy text-white' : 'border-slate-300 bg-white text-navy hover:bg-slate-100'}`}>{newsCategories[key]} ({snapshot.articles.filter(item => key === 'all' || item.categories.includes(key)).length})</Link>)}
+            {(Object.keys(newsCategories) as (keyof typeof newsCategories)[]).map(key => <Link key={key} href={key === 'all' ? '/news' : `/news?category=${key}`} locale="uk" aria-current={category === key ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-semibold ${category === key ? 'border-navy bg-navy text-white' : 'border-slate-300 bg-white text-navy hover:bg-slate-100'}`}>{newsCategories[key]} ({active.filter(item => key === 'all' || item.categories.includes(key)).length})</Link>)}
           </nav>
-          <section aria-label={newsCategories[category]} className="mt-6 grid gap-5 sm:grid-cols-2">
-            {visible.map(item => {
-              const overlay = item.id === 'dre-status';
-              return <article key={item.id} className={`relative isolate flex flex-col overflow-hidden rounded-2xl border shadow-sm ${overlay ? 'border-forest bg-forest text-white' : 'border-slate-200 bg-white'}`}>
-                {overlay && <NewsBackground compact />}
-                <div className="flex flex-1 flex-col p-6">
-                  <p className={`text-xs font-semibold uppercase tracking-wide ${overlay ? 'text-white/90' : 'text-ocean'}`}>{item.sourceName}</p>
-                  <h2 lang={item.contentLanguage} className={`mt-3 break-words text-xl font-bold leading-7 ${overlay ? 'text-white' : 'text-navy'}`}><Link href={`/news/${item.id}`} locale="uk" className="hover:underline">{item.title}</Link></h2>
-                  <Details item={item} overlay={overlay} />
-                  <p lang={item.contentLanguage} className={`mt-3 line-clamp-3 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>{item.paragraphs[0]}</p>
-                  {languageNote(item) && <p className={`mt-3 text-xs ${overlay ? 'text-white/90' : 'text-slate-500'}`}>{languageNote(item)}</p>}
-                  <Link href={`/news/${item.id}`} locale="uk" className={`mt-auto inline-flex min-h-11 items-center pt-4 font-semibold hover:underline ${overlay ? 'text-white' : 'text-ocean'}`} aria-label={`Читати: ${item.title}`}>Докладніше <span aria-hidden="true" className="ml-2">→</span></Link>
-                </div>
-              </article>;
-            })}
-            {!visible.length && <p className="py-8 text-slate-600">У цій категорії поки немає повідомлень.</p>}
+          <section aria-label="Актуальні повідомлення" className="mt-6">
+            <h2 className="mb-4 text-xl font-bold text-navy">Актуальні повідомлення</h2>
+            <div className="grid gap-5 sm:grid-cols-2">{visible.map(item => <NewsCard key={item.id} item={item} />)}</div>
+            {!visible.length && <p className="py-6 text-slate-600">Актуальних повідомлень у цій категорії немає. Це не підтверджує відсутності обмежень.</p>}
           </section>
+          <OlderNews items={unverified} archive={false} />
+          <OlderNews items={archived} archive />
         </>}
       </div>
     </Layout>
