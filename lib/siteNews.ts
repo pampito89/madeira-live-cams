@@ -3,6 +3,7 @@ import seed from '../data/operational-news-seed.json';
 import { getCivilProtectionNews } from './civilProtectionNews';
 import { ukrainianArticle } from './civilProtectionUkrainian';
 import { getOperationalNews, sourceFingerprint, type OperationalSource } from './operationalNews';
+import { getTrailPolicyNews } from './trailPolicyNews';
 import { newsCategories, type NewsCategory, type SiteNewsArticle } from './newsTypes';
 import { readCache, writeCache } from './events/cache';
 import { baseNewsId, classifyNews, mergeNewsLedger, type ManagedNews, type NewsLedger } from './newsLifecycle';
@@ -20,8 +21,8 @@ export function newsCategory(value: unknown): keyof typeof newsCategories {
 const ledgerKey = 'site-news-ledger:v1';
 let pending: Promise<{ articles: ManagedNews[] }> | null = null;
 async function refreshSources() {
-  const [civil, operational, saved] = await Promise.all([getCivilProtectionNews(), getOperationalNews(), readCache<NewsLedger>(ledgerKey)]);
-  const incoming: OperationalSource[] = [...operational, ...civil.articles.map(item => ({ ...item, sourceName: 'SRPC — Цивільний захист Мадейри', checkedAt: civil.checkedAt, stale: civil.stale, categories: ['general'] as NewsCategory[], location: 'Мадейра', period: null }))];
+  const [civil, operational, policy, saved] = await Promise.all([getCivilProtectionNews(), getOperationalNews(), getTrailPolicyNews(), readCache<NewsLedger>(ledgerKey)]);
+  const incoming: OperationalSource[] = [...operational, ...policy, ...civil.articles.map(item => ({ ...item, sourceName: 'SRPC — Цивільний захист Мадейри', checkedAt: civil.checkedAt, stale: civil.stale, categories: ['general'] as NewsCategory[], location: 'Мадейра', period: null }))];
   const initial = { latest: seed.articles as OperationalSource[], revisions: [] };
   const ledger = mergeNewsLedger(saved ?? initial, incoming);
   await writeCache(ledgerKey, ledger);

@@ -3,40 +3,49 @@ import Link from 'next/link';
 import Layout from './Layout';
 import { newsCategories, type SiteNewsArticle, type SiteNewsSnapshot } from '../lib/newsTypes';
 
-export function newsDate(date: string) {
+function newsDate(date: string) {
   return new Intl.DateTimeFormat('uk-UA', { dateStyle: 'long', ...(date.length > 10 ? { timeStyle: 'short' as const } : {}), timeZone: 'Atlantic/Madeira' }).format(new Date(date));
 }
 const languageNote = (item: SiteNewsArticle) => item.translationKind === 'original' ? 'Оригінал португальською · переклад недоступний' : item.translationKind === 'machine' ? 'Автоматичний переклад' : '';
+function artwork(item?: SiteNewsArticle) {
+  if (!item) return 'news-roads-madeira';
+  if (item.categories.includes('roads')) return 'news-roads-v2';
+  if (item.categories.includes('trails')) return 'news-trails-v2';
+  if (item.categories.includes('weather') || /aviso|meteorolog|depress|негод|погод|опад|шторм|депрес/i.test(item.title)) return 'news-weather-v2';
+  return 'news-general-v2';
+}
 function Details({ item, overlay = false }: { item: SiteNewsArticle; overlay?: boolean }) {
-  return <div className={`mt-3 space-y-2 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>
-    {!item.id.startsWith('dre-status') && <><p>{item.location}</p>{item.period && <p>{item.period}</p>}{item.publishedAt && <time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time>}</>}
+  if (item.id.startsWith('dre-status')) return null;
+  return <div className={`mt-3 space-y-1 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>
+    <p>{item.location}</p>{item.period && <p>{item.period}</p>}{item.publishedAt && <time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time>}
   </div>;
 }
-function NewsBackground({ compact = false }: { compact?: boolean }) {
+function NewsBackground({ item, compact = false }: { item?: SiteNewsArticle; compact?: boolean }) {
+  const image = artwork(item);
   return <>
-    <img src="/images/news-roads-madeira-960.jpg" srcSet="/images/news-roads-madeira-480.jpg 480w, /images/news-roads-madeira-960.jpg 960w" sizes={compact ? '(max-width: 640px) 100vw, 480px' : '(max-width: 640px) 100vw, 960px'} width={960} height={640} alt="" aria-hidden="true" loading={compact ? 'lazy' : 'eager'} decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_65%]" />
-    <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20" />
+    <img src={`/images/${image}-960.jpg`} srcSet={`/images/${image}-480.jpg 480w, /images/${image}-960.jpg 960w`} sizes={compact ? '(max-width: 640px) 100vw, 480px' : '(max-width: 640px) 100vw, 960px'} width={960} height={640} alt="" aria-hidden="true" loading={compact ? 'lazy' : 'eager'} decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+    <div aria-hidden="true" className={`absolute inset-0 -z-10 ${compact ? 'bg-gradient-to-b from-[#05141c]/35 via-[#05141c]/75 to-[#05141c]/95' : 'bg-gradient-to-r from-[#092b22]/90 via-[#092b22]/65 to-[#092b22]/20'}`} />
   </>;
 }
 function Status({ item }: { item: SiteNewsArticle }) {
   if (!item.newsState || item.newsState === 'current') return null;
   return <div className="mb-5 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-950">
-    <p className="font-semibold">{item.newsState === 'archived' ? 'Архівне повідомлення' : 'Потребує перевірки'}</p>
-    <p>{item.archiveReason}</p>
+    <p className="font-semibold">{item.newsState === 'archived' ? 'Архівне повідомлення' : 'Потребує перевірки'}</p><p>{item.archiveReason}</p>
     {item.replacementId && <Link href={`/news/${item.replacementId}`} locale="uk" className="font-semibold underline">Перейти до нового повідомлення →</Link>}
   </div>;
 }
 function NewsCard({ item }: { item: SiteNewsArticle }) {
-  const overlay = item.id === 'dre-status';
-  return <article className={`relative isolate flex flex-col overflow-hidden rounded-2xl border shadow-sm ${overlay ? 'border-forest bg-forest text-white' : 'border-slate-200 bg-white'}`}>
-    {overlay && <NewsBackground compact />}
-    <div className="flex flex-1 flex-col p-6">
-      <p className={`text-xs font-semibold uppercase tracking-wide ${overlay ? 'text-white/90' : 'text-ocean'}`}>{item.sourceName}</p>
-      <h3 lang={item.contentLanguage} className={`mt-3 break-words text-xl font-bold leading-7 ${overlay ? 'text-white' : 'text-navy'}`}><Link href={`/news/${item.id}`} locale="uk" className="hover:underline">{item.title}</Link></h3>
-      <Details item={item} overlay={overlay} />
-      <p lang={item.contentLanguage} className={`mt-3 line-clamp-3 text-sm leading-6 ${overlay ? 'text-white/90' : 'text-slate-600'}`}>{item.paragraphs[0]}</p>
-      {languageNote(item) && <p className={`mt-3 text-xs ${overlay ? 'text-white/90' : 'text-slate-500'}`}>{languageNote(item)}</p>}
-      <Link href={`/news/${item.id}`} locale="uk" className={`mt-auto inline-flex min-h-11 items-center pt-4 font-semibold hover:underline ${overlay ? 'text-white' : 'text-ocean'}`} aria-label={`Читати: ${item.title}`}>Докладніше <span aria-hidden="true" className="ml-2">→</span></Link>
+  return <article className="relative isolate flex min-w-0 flex-col overflow-hidden rounded-2xl bg-forest text-white shadow-sm">
+    <NewsBackground item={item} compact />
+    <div className="flex min-h-[300px] flex-1 flex-col gap-4 p-5 sm:p-6">
+      <p className="self-start rounded-full border border-white/35 bg-[#061821]/80 px-3 py-1.5 text-xs font-semibold text-white">{item.sourceName}</p>
+      <div className="mt-auto">
+        <h3 lang={item.contentLanguage} className="break-words text-xl font-bold leading-7 text-white"><Link href={`/news/${item.id}`} locale="uk" className="hover:underline">{item.title}</Link></h3>
+        <Details item={item} overlay />
+        <p lang={item.contentLanguage} className="mt-3 line-clamp-3 text-sm leading-6 text-white/90">{item.paragraphs[0]}</p>
+        {languageNote(item) && <p className="mt-3 text-xs text-white/90">{languageNote(item)}</p>}
+        <Link href={`/news/${item.id}`} locale="uk" className="mt-3 inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-navy hover:bg-slate-100" aria-label={`Читати: ${item.title}`}>Докладніше <span aria-hidden="true" className="ml-2">→</span></Link>
+      </div>
     </div>
   </article>;
 }
@@ -44,21 +53,19 @@ function OlderNews({ items, archive }: { items: SiteNewsArticle[]; archive: bool
   if (!items.length) return null;
   return <details className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6" id={archive ? 'archive' : 'unverified'}>
     <summary className="min-h-11 cursor-pointer text-lg font-bold text-navy">{archive ? 'Архів новин' : 'Потребують перевірки'} ({items.length})</summary>
-    <ul className="mt-3 divide-y divide-slate-200">
-      {items.map(item => <li key={item.id} className="py-4">
-        <Link href={`/news/${item.id}`} locale="uk" lang={item.contentLanguage} className="font-semibold leading-6 text-ocean hover:underline">{item.title}</Link>
-        {item.publishedAt && <p className="mt-1 text-xs text-slate-500"><time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time></p>}
-        <p className="mt-1 text-sm leading-6 text-slate-600">{item.archiveReason}</p>
-        {item.replacementId && <Link href={`/news/${item.replacementId}`} locale="uk" className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-ocean underline">Нове повідомлення →</Link>}
-      </li>)}
-    </ul>
+    <ul className="mt-3 divide-y divide-slate-200">{items.map(item => <li key={item.id} className="py-4">
+      <Link href={`/news/${item.id}`} locale="uk" lang={item.contentLanguage} className="font-semibold leading-6 text-ocean hover:underline">{item.title}</Link>
+      {item.publishedAt && <p className="mt-1 text-xs text-slate-500"><time dateTime={item.publishedAt}>{newsDate(item.publishedAt)}</time></p>}
+      <p className="mt-1 text-sm leading-6 text-slate-600">{item.archiveReason}</p>
+      {item.replacementId && <Link href={`/news/${item.replacementId}`} locale="uk" className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-ocean underline">Нове повідомлення →</Link>}
+    </li>)}</ul>
   </details>;
 }
 export default function CivilProtectionNews({ snapshot, article, category = 'all' }: { snapshot: SiteNewsSnapshot; article?: SiteNewsArticle; category?: keyof typeof newsCategories }) {
   const title = article?.title ?? 'Новини та обмеження на Мадейрі';
-  const description = article ? article.paragraphs.join(' ').slice(0, 155) : 'Закриття стежок, обвали, перекриття доріг і ремонтні роботи на Мадейрі. Актуальні офіційні повідомлення IFCN, DRE та SRPC і архів новин.';
+  const description = article ? article.paragraphs.join(' ').slice(0, 155) : 'Стежки, дороги, негода, тарифи та правила маршрутів Мадейри. Повідомлення IFCN, DRE, SRPC і RTP Madeira та архів новин.';
   const url = `https://madeiralivecams.com/uk/news${article ? `/${article.id}` : ''}`;
-  const illustrated = !article || article.id.startsWith('dre-status');
+  const image = `https://madeiralivecams.com/images/${artwork(article)}-960.jpg`;
   const structured = article ? {
     '@context': 'https://schema.org', '@type': 'NewsArticle', headline: article.title,
     ...(article.publishedAt ? { datePublished: article.publishedAt } : {}), inLanguage: article.contentLanguage, mainEntityOfPage: url,
@@ -74,8 +81,8 @@ export default function CivilProtectionNews({ snapshot, article, category = 'all
       <title>{title} | Madeira Live Cams</title><meta name="description" content={description} />
       <meta property="og:title" content={title} /><meta property="og:description" content={description} />
       <meta property="og:type" content={article ? 'article' : 'website'} /><meta property="og:locale" content="uk_UA" />
-      {illustrated && <meta property="og:image" content="https://madeiralivecams.com/images/news-roads-madeira-960.jpg" />}
-      <meta name="twitter:card" content={illustrated ? 'summary_large_image' : 'summary'} /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
+      <meta property="og:image" content={image} /><meta property="og:image:alt" content="Тематична ілюстрація розділу" />
+      <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content={image} /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structured).replace(/</g, '\\u003c') }} />
     </Head>
     <Layout>
@@ -86,10 +93,10 @@ export default function CivilProtectionNews({ snapshot, article, category = 'all
           {article && <><span aria-hidden="true">/</span><span aria-current="page">Повідомлення</span></>}
         </nav>
         <header className="relative isolate overflow-hidden rounded-2xl bg-forest px-5 py-6 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-7">
-          {illustrated && <NewsBackground />}
+          <NewsBackground item={article} />
           <div className="max-w-xl">
             <h1 lang={article?.contentLanguage ?? 'uk'} className="break-words text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
-            {!article && <p className="mt-3 max-w-md text-sm leading-6 text-white/90 sm:text-base">Стежки, дороги та негода · IFCN, DRE, SRPC</p>}
+            {!article && <p className="mt-3 max-w-md text-sm leading-6 text-white/90 sm:text-base">Стежки, дороги, негода та тарифи</p>}
             {article && languageNote(article) && <p className="mt-3 text-sm text-white/90">{languageNote(article)}</p>}
           </div>
         </header>
@@ -106,8 +113,7 @@ export default function CivilProtectionNews({ snapshot, article, category = 'all
             <div className="grid gap-5 sm:grid-cols-2">{visible.map(item => <NewsCard key={item.id} item={item} />)}</div>
             {!visible.length && <p className="py-6 text-slate-600">Актуальних повідомлень у цій категорії немає. Це не підтверджує відсутності обмежень.</p>}
           </section>
-          <OlderNews items={unverified} archive={false} />
-          <OlderNews items={archived} archive />
+          <OlderNews items={unverified} archive={false} /><OlderNews items={archived} archive />
         </>}
       </div>
     </Layout>
