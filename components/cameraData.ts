@@ -75,8 +75,8 @@ export const cameras: Camera[] = [
     category: ['Towns', 'East Coast'],
     latitude: 32.6979,
     longitude: -16.7745,
-    sourceUrl: 'https://www.youtube.com/watch?v=AhSeqyMYJkw',
-    youtubeId: 'AhSeqyMYJkw',
+    sourceUrl: 'https://www.youtube.com/watch?v=STpCvDHD__I',
+    youtubeId: 'STpCvDHD__I',
   },
   {
     id: 'pico-do-arieiro',
@@ -184,7 +184,7 @@ export const cameras: Camera[] = [
     latitude: 32.6353,
     longitude: -16.9481,
     sourceUrl: 'https://www.youtube.com/watch?v=8ZmLLUPqlPM',
-    youtubeId: '8ZmLLUPqlPM',
+    youtubeId: 'v-EXKlzjTW0',
   },
   {
     id: 'achada-do-teixeira',
@@ -245,7 +245,7 @@ export const cameras: Camera[] = [
     latitude: 32.7222,
     longitude: -16.8039,
     sourceUrl: 'https://www.youtube.com/watch?v=xiQC5Qbi3qE',
-    youtubeId: 'xiQC5Qbi3qE',
+    youtubeId: 'N8uFk1TJOKA',
   },
   {
     id: 'boaventura',
