@@ -12,5 +12,6 @@ export type SiteNewsArticle = NewsLifecycle & {
   publishedAt: string | null; checkedAt: string; stale: boolean;
   categories: NewsCategory[]; location: string; period: string | null;
   contentLanguage: Locale; translationKind: 'edited' | 'machine' | 'original';
+  additionalSources?: { name: string; url: string }[];
 };
 export type SiteNewsSnapshot = { articles: SiteNewsArticle[] };

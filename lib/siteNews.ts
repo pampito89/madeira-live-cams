@@ -10,6 +10,7 @@ import { baseNewsId, classifyNews, mergeNewsLedger, type ManagedNews, type NewsL
 import { translateNewsText } from './newsTranslation';
 import type { Locale } from './i18n/config';
 import { newsText } from './i18n/newsText';
+import { editorialNews } from './newsEditorial';
 type Edited = { fingerprint: string; title: string; paragraphs: string[]; location: string; period: string; categories: NewsCategory[] };
 export function editedOperational(article: OperationalSource): SiteNewsArticle | null {
   const edited = (catalog as Record<string, Edited>)[baseNewsId(article.id)];
@@ -35,9 +36,10 @@ export function getNewsSources() {
   return pending ??= refreshSources().finally(() => { pending = null; });
 }
 export async function localizeNews(source: ManagedNews, full = true, locale: Locale = 'uk'): Promise<SiteNewsArticle> {
+  const editorial = editorialNews(source, locale, full);
   const edited = editedOperational(source);
-  let base: SiteNewsArticle = edited ?? { ...source, contentLanguage: 'pt', translationKind: 'original' };
-  if (locale === 'uk' && !edited) {
+  let base: SiteNewsArticle = editorial ?? edited ?? { ...source, contentLanguage: 'pt', translationKind: 'original' };
+  if (locale === 'uk' && !edited && !editorial) {
     const ukrainian = await ukrainianArticle({ ...source, id: baseNewsId(source.id), publishedAt: source.publishedAt ?? '' }, full);
     if (ukrainian.contentLanguage === 'uk') base = { ...source, ...ukrainian, id: source.id, publishedAt: source.publishedAt };
   }
@@ -45,7 +47,7 @@ export async function localizeNews(source: ManagedNews, full = true, locale: Loc
   const translated = await Promise.all([base.title, ...paragraphs].map(value => translateNewsText(value, base.contentLanguage, locale)));
   const contentOK = translated.every(value => value !== null);
   const meta = async (value: string | null | undefined) => value ? await translateNewsText(value, /[а-яА-ЯіІїЇєЄ]/.test(value) ? 'uk' : 'pt', locale) : null;
-  const [location, period, sourceName, archiveReason] = await Promise.all([meta(base.location), meta(base.period), meta(source.sourceName), meta(source.archiveReason)]);
+  const [location, period, sourceName, archiveReason] = await Promise.all([editorial ? Promise.resolve(editorial.location) : meta(base.location), meta(base.period), meta(source.sourceName), meta(source.archiveReason)]);
   // Never label Portuguese fallback content as translated, or mix partial paragraph translations.
   return { ...base, ...(contentOK ? { title: translated[0]!, paragraphs: translated.slice(1) as string[], contentLanguage: locale, translationKind: base.contentLanguage === locale ? base.translationKind : 'machine' as const } : { title: source.title, paragraphs: full ? source.paragraphs : [source.paragraphs[0] ?? ''], contentLanguage: 'pt' as const, translationKind: 'original' as const }), location: location ?? newsText(locale).madeira, period, sourceName: sourceName ?? new URL(source.sourceUrl).hostname, archiveReason: archiveReason ?? (source.newsState === 'archived' ? newsText(locale).archived : source.newsState === 'unverified' ? newsText(locale).unverified : null) };
 }

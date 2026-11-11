@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from './Layout';
+import NewsArticleBody, { NewsEmphasis as Emphasis } from './NewsArticleBody';
 import { newsCategories, type SiteNewsArticle, type SiteNewsSnapshot } from '../lib/newsTypes';
 import { useMessages } from '../lib/i18n/useMessages';
 import { newsText } from '../lib/i18n/newsText';
@@ -13,17 +14,6 @@ function newsDate(date: string, locale: Locale) {
 function languageNote(item: SiteNewsArticle, locale: Locale) {
   const t = newsText(locale);
   return item.translationKind === 'original' && item.contentLanguage !== locale ? t.original : item.translationKind === 'machine' ? t.machine : '';
-}
-function Emphasis({ text }: { text: string }) {
-  const pattern = /(€\s*\d+(?:[.,]\d+)?|\d+(?:[.,]\d+)?\s*(?:€|євро)|\b(?:PR|ER)\s*\d+(?:\.\d+)?\b|\d{1,2}\s+(?:січня|лютого|березня|квітня|травня|червня|липня|серпня|вересня|жовтня|листопада|грудня)\s+\d{4}(?:\s+року)?)/g;
-  return <>{text.split(pattern).map((part, index) => index % 2 ? <strong key={index}>{part}</strong> : part)}</>;
-}
-function ArticleText({ item }: { item: SiteNewsArticle }) {
-  return <div lang={item.contentLanguage} className={styles.body}>{item.paragraphs.map((paragraph, index) => {
-    const entries = paragraph.split(/;\s+/);
-    if (entries.length >= 3) return <ul key={index}>{entries.map((entry, i) => <li key={i}><Emphasis text={entry + (i < entries.length - 1 ? ';' : '')} /></li>)}</ul>;
-    return <p key={index} className={index === 0 ? styles.lead : undefined}><Emphasis text={paragraph} /></p>;
-  })}</div>;
 }
 function artwork(item?: SiteNewsArticle) {
   if (!item) return 'news-roads-madeira';
@@ -123,8 +113,12 @@ export default function CivilProtectionNews({ snapshot, article, category = 'all
           </div>
         </header>
         {article ? <article className={styles.article}><div className={styles.reading}>
-          <Status item={article} /><Details item={article} /><ArticleText item={article} />
-          <footer className={styles.source}><a className="font-semibold text-ocean underline" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">{t.source}: {article.sourceName}</a></footer>
+          <Status item={article} /><Details item={article} /><NewsArticleBody item={article} />
+          <footer className={styles.source}>
+            <span>{t.source}</span>
+            <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer">{article.sourceName} ↗</a>
+            {article.additionalSources?.map(source => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.name} ↗</a>)}
+          </footer>
         </div></article> : <>
           <nav aria-label={t.news} className="mt-6 flex flex-wrap gap-2">
             {(Object.keys(newsCategories) as (keyof typeof newsCategories)[]).map(key => <Link key={key} href={key === 'all' ? '/news' : `/news?category=${key}`} locale={siteLocale} aria-current={category === key ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-semibold ${category === key ? 'border-navy bg-navy text-white' : 'border-slate-300 bg-white text-navy hover:bg-slate-100'}`}>{t.categories[key]} ({active.filter(item => key === 'all' || item.categories.includes(key)).length})</Link>)}
