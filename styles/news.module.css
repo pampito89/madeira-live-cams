@@ -1,0 +1,23 @@
+.page {font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+.title {font-size:clamp(28px,3.5vw,38px);font-weight:700;line-height:1.22;letter-spacing:-.025em;text-wrap:balance;overflow-wrap:anywhere}
+.cardTitle {font-size:clamp(21px,2vw,24px);font-weight:700;line-height:1.3;letter-spacing:-.015em;text-wrap:balance;color:#fff;overflow-wrap:anywhere}
+.meta {display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-size:12px;line-height:1.6;color:#dbe7e4}
+.meta time {font-variant-numeric:tabular-nums}
+.period {margin-top:12px;padding-left:12px;border-left:3px solid #e3c58d;font-size:13px;line-height:1.65;color:#fff;font-weight:600}
+.excerpt {margin-top:16px;font-size:15px;line-height:1.8;color:#f3f7f6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.excerpt strong {font-weight:700;color:#fff}
+.note {margin-top:12px;font-size:11px;line-height:1.5;color:#d1dedb}
+.article {margin-top:24px;border:1px solid #dce5e2;border-radius:22px;background:#fff;padding:32px 28px}
+.reading {max-width:66ch;margin:0 auto}
+.article .meta {margin-top:0;color:#60716c;font-size:13px;gap:8px 18px}
+.article .period {margin-top:18px;color:#285046;border-left-color:#779a8b;background:#f3f7f5;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;font-weight:500}
+.body {margin-top:28px;font-size:17px;line-height:1.9;color:#34483f;overflow-wrap:anywhere}
+.body p+p {margin-top:24px}
+.body .lead {font-size:20px;line-height:1.7;font-weight:500;color:#17382d;margin-bottom:28px}
+.body strong {font-weight:700;color:#17382d}
+.body ul {padding-left:24px;margin:20px 0;list-style:disc}
+.body li {padding-left:6px;margin:12px 0}
+.body li::marker {color:#6d9583}
+.source {margin-top:32px;padding-top:20px;border-top:1px solid #dce5e2;font-size:13px;line-height:1.7}
+.page a:focus-visible {outline:3px solid #caa96b;outline-offset:4px;border-radius:4px}
+@media(max-width:640px){.article{padding:24px 20px;border-radius:18px}.body{font-size:16px;line-height:1.85;margin-top:24px}.body .lead{font-size:18px;line-height:1.75}.cardTitle{font-size:22px}.excerpt{font-size:15px}.title{font-size:28px}}
