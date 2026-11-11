@@ -232,7 +232,7 @@ export const cameras: Camera[] = [
     latitude: 32.7224,
     longitude: -16.7648,
     sourceUrl: 'https://www.youtube.com/watch?v=Vr5lrM2oIHo',
-    youtubeId: 'Vr5lrM2oIHo',
+    youtubeId: 'deKoS3UnrcA',
   },
   {
     id: 'santo-da-serra-golf',
