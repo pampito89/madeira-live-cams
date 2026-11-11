@@ -142,7 +142,7 @@ function StandardLocationPage({ location }: Props) {
     </Layout>);
 }
 export const getStaticPaths: GetStaticPaths = async () => ({
-    paths: locations.flatMap((location) => ["en", "pt", "de", "fr", "es", "pl", "uk"].map((locale) => ({ params: { slug: location.slug }, locale }))),
+    paths: locations.filter(location => !location.tags.includes("Villas")).flatMap((location) => ["en", "pt", "de", "fr", "es", "pl", "uk"].map((locale) => ({ params: { slug: location.slug }, locale }))),
     fallback: false,
 });
 export const getStaticProps: GetStaticProps<Props> = withStaticTranslations<Props>(async ({ params }) => {

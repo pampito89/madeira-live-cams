@@ -58,5 +58,7 @@ export function plannerStopDuration(location: {
     slug: string;
     tags: string[];
 }) {
+    if (location.tags.includes("Villas"))
+        return 30;
     return location.tags.includes("Airport") ? 15 : standardLocationDurations[location.slug] ?? 90;
 }
