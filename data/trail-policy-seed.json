@@ -17,6 +17,23 @@
       ],
       "location": "Мадейра",
       "period": null
+    },
+    {
+      "id": "rtp-3efe3c48a8d0",
+      "title": "Vão ser instalados nove radares de velocidade na via rápida (vídeo)",
+      "paragraphs": [
+        "O anúncio foi feito pelo secretário regional dos Equipamentos e Infraestruturas, na assinatura de um protocolo entre o Instituto de Mobilidade e Transportes da Região e a Autoridade Nacional de Segurança Rodoviária."
+      ],
+      "sourceUrl": "https://madeira.rtp.pt/sociedade/vao-ser-instalados-nove-radares-de-velocidade-na-via-rapida-video/",
+      "sourceName": "RTP Madeira",
+      "publishedAt": "2026-11-09",
+      "checkedAt": "2026-11-11T21:07:32.527Z",
+      "stale": false,
+      "categories": [
+        "roads"
+      ],
+      "location": "Мадейра",
+      "period": null
     }
   ]
 }

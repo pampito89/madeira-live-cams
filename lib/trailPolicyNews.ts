@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { newsParagraphs } from './civilProtectionNews';
 import { readCache, writeCache } from './events/cache';
 import type { OperationalSource } from './operationalNews';
+import type { NewsCategory } from './newsTypes';
 import seed from '../data/trail-policy-seed.json';
 
 export const TRAIL_POLICY_HOME = 'https://madeira.rtp.pt/sociedade/';
@@ -16,9 +17,18 @@ export function allowedTrailPolicyUrl(value: string) {
     return url.protocol === 'https:' && url.hostname === 'madeira.rtp.pt' && !url.port && !url.username && !url.password && !url.search && !url.hash && /^\/sociedade\/[a-z0-9-]+\/$/.test(url.pathname);
   } catch { return false; }
 }
+export function policyCategories(value: string): NewsCategory[] {
+  const text = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/-/g, ' ');
+  const categories: NewsCategory[] = [];
+  if (/percurs|trilh|levada|vereda/.test(text) && /taxa|prec[oa]|reserv|bilhet|acesso|regras|regime/.test(text)) categories.push('trails');
+  const road = /\b(?:estradas?|transito|circulacao|rodoviari\w*|via rapida|vias? expresso|vr\s?1|er\s?\d+)\b/.test(text);
+  const transport = /\b(?:transportes?|autocarros?|automoveis?|condutores?|conducao|estacionamento)\b/.test(text);
+  const change = /radar|encerr|interdit|cortad|corte|condicion|reab|restabelec|desvio|obras|regras|regime|alterac|alterad|nov[oa]s?\b|limite|velocidade|fiscaliza|tarifa|bilhete|horario|taxa/.test(text);
+  if ((road || transport) && change) categories.push('roads');
+  return categories;
+}
 export function policyTopic(value: string) {
-  const text = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  return /percurs|trilh|levada|vereda/.test(text) && /taxa|prec[oa]|reserv|bilhet|acesso|regras|regime/.test(text);
+  return policyCategories(value).length > 0;
 }
 export function discoverTrailPolicies(html: string) {
   const urls = new Set<string>();
@@ -37,13 +47,14 @@ export function parseTrailPolicy(html: string, sourceUrl: string, checkedAt: str
   const lead = extract('p', 'main-article-lead');
   const rawDate = extract('span', 'main-article-date-info');
   const date = rawDate.match(/(\d{1,2})\s+(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez),?\s+(\d{4})/i);
-  if (!policyTopic(title) || !lead || !date) throw new Error('Missing policy article fields');
+  const categories = policyCategories(title);
+  if (!categories.length || !lead || !date) throw new Error('Missing policy article fields');
   const month = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'].indexOf(date[2].toLowerCase()) + 1;
   const publishedAt = `${date[3]}-${String(month).padStart(2, '0')}-${date[1].padStart(2, '0')}`;
   if (!Number.isFinite(Date.parse(publishedAt)) || new Date(publishedAt).toISOString().slice(0, 10) !== publishedAt) throw new Error('Invalid publication date');
   // Only the short publisher lead, never the full media article or its photos.
   const excerpt = lead.length <= 400 ? lead : `${lead.slice(0, 397).replace(/\s+\S*$/, '')}…`;
-  return { id: `rtp-${createHash('sha256').update(sourceUrl).digest('hex').slice(0, 12)}`, title, paragraphs: [excerpt], sourceUrl, sourceName: 'RTP Madeira — тарифи та правила маршрутів', publishedAt, checkedAt, stale: false, categories: ['trails'], location: 'Мадейра', period: null };
+  return { id: `rtp-${createHash('sha256').update(sourceUrl).digest('hex').slice(0, 12)}`, title, paragraphs: [excerpt], sourceUrl, sourceName: categories.includes('roads') ? 'RTP Madeira' : 'RTP Madeira — тарифи та правила маршрутів', publishedAt, checkedAt, stale: false, categories, location: 'Мадейра', period: null };
 }
 async function fetchHtml(url: string) {
   const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(8000) });
@@ -53,12 +64,14 @@ async function fetchHtml(url: string) {
   return html;
 }
 async function refresh(): Promise<OperationalSource[]> {
-  const previous = memory ?? await readCache<Store>(key) ?? seed as Store;
+  const saved = memory ?? await readCache<Store>(key);
+  // Newly bundled notices must also reach installations with an existing cache.
+  const previous: Store = { checkedAt: saved?.checkedAt ?? seed.checkedAt, articles: Array.from(new Map([...(seed as Store).articles, ...(saved?.articles ?? [])].map(item => [item.id, item])).values()) };
   if (Date.now() < retryAt) return previous.articles.map(item => ({ ...item, stale: true }));
-  if (memory && Date.now() - Date.parse(memory.checkedAt) < 600_000) return memory.articles;
+  if (memory && Date.now() - Date.parse(memory.checkedAt) < 600_000) return previous.articles;
   try {
     const checkedAt = new Date().toISOString();
-    const urls = new Set([...discoverTrailPolicies(await fetchHtml(TRAIL_POLICY_HOME)), ...previous.articles.slice(0, 12).map(item => item.sourceUrl).filter(allowedTrailPolicyUrl)]);
+    const urls = new Set([...discoverTrailPolicies(await fetchHtml(TRAIL_POLICY_HOME)), ...(seed as Store).articles.map(item => item.sourceUrl), ...previous.articles.slice(0, 12).map(item => item.sourceUrl)].filter(allowedTrailPolicyUrl));
     const results = await Promise.allSettled(Array.from(urls).map(async url => parseTrailPolicy(await fetchHtml(url), url, checkedAt)));
     const current = results.flatMap(result => result.status === 'fulfilled' ? [result.value] : []);
     if (!current.length) throw new Error('No policy news');
