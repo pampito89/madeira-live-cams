@@ -46,6 +46,12 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const { locale } = useMessages();
     const uk = locale === 'uk';
     const t = (en: string, ua: string) => localize(uk ? ua : en);
+
+    const trailName = (item: Trail | undefined) => {
+        if (item?.id === 225) return t('PR 1 · short return route (Pico do Areeiro ↔ Pedra Rija)', 'PR 1 · короткий маршрут туди й назад (Pico do Areeiro ↔ Pedra Rija)');
+        if (item?.id === 301) return t('PR 1 · full one-way route (Pico do Areeiro → Pico Ruivo)', 'PR 1 · повний маршрут в один бік (Pico do Areeiro → Pico Ruivo)');
+        return item ? localize(item.name) : t('Available time slots', 'Доступні тайм-слоти');
+    };
     const [route, setRoute] = useState(initialRoute);
     const [period, setPeriod] = useState(initialPeriod);
     const [category, setCategory] = useState<BookingCategory>('visitor');
@@ -148,7 +154,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
             <div className={styles.fields} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                 <label>{t('Walking route', 'Маршрут')}<select value={route} onChange={event => { reset(); setRoute(event.target.value); }} disabled={!trails.length}>
                     {!trails.length && <option value="">{t('Routes unavailable', 'Маршрути недоступні')}</option>}
-                    {trails.map(item => <option key={item.id} value={item.id}>{localize(item.name)}</option>)}
+                    {trails.map(item => <option key={item.id} value={item.id}>{trailName(item)}</option>)}
                 </select></label>
                 <label>{t('Booking category', 'Категорія бронювання')}<select value={category} onChange={event => setCategory(event.target.value as BookingCategory)}>{categories.map(([id, label]) => <option key={id} value={id}>{localize(label)}</option>)}</select></label>
             </div>
@@ -158,7 +164,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
             <div className={styles.filterBottom}><span className={styles.source}>{dateLabel(today)} – {dateLabel(addDays(today, period - 1))}</span><button className={styles.primary} disabled={!route || loading}>{loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →')}</button></div>
         </form>
         <section id="time-slots" className={styles.results} style={{ scrollMarginTop: '6rem' }}>
-            <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{localize(searchedTrail?.name || t('Available time slots', 'Доступні тайм-слоти'))}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)')}>{t('Book', 'Бронювати')}</a></div>
+            <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{trailName(searchedTrail)}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)')}>{t('Book', 'Бронювати')}</a></div>
             <div role="status" aria-live="polite">
                 {search && <p className={styles.progress}>{t('Days checked:', 'Перевірено днів:')} {localize(loaded)}/{localize(search.dates.length)}{loading ? '…' : ''}{failed > 0 && ` · ${t('Unavailable:', 'Без даних:')} ${failed}`}</p>}
                 {catalogUnavailable && <p className={styles.error}>{t('SIMplifica route list is unavailable. Reload or open the official portal.', 'Перелік маршрутів SIMplifica недоступний. Оновіть сторінку або відкрийте офіційний портал.')}</p>}

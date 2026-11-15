@@ -3,6 +3,11 @@ import { BOOKING_URL, normalizeSlots, Trail, TrailDay, addDays } from './trailAv
 const API = 'https://simplifica.madeira.gov.pt/api';
 const TIMEOUT = 12000;
 const CACHE_TTL = 60000;
+const PR1_ROUTES: Trail[] = [
+  { id: 225, name: 'PR 1 — Vereda do Areeiro (short return: Pico do Areeiro ↔ Pedra Rija)' },
+  { id: 301, name: 'PR 1 — Vereda do Areeiro (full one-way: Pico do Areeiro → Pico Ruivo)' },
+];
+const PR1_ROUTE_NAMES = new Map<number, string>(PR1_ROUTES.map(trail => [trail.id, trail.name] as const));
 type Session = { cookie: string; csrf: string };
 let catalog: { trails: Trail[]; expires: number } | undefined;
 let catalogPending: Promise<Trail[]> | undefined;
@@ -21,8 +26,28 @@ export async function getTrails(): Promise<Trail[]> {
   if (catalogPending) return catalogPending;
   catalogPending = (async () => {
     const rows = await readJson(await fetch(`${API}/infoProcess/259/resources`, { signal: AbortSignal.timeout(TIMEOUT) }));
-    if (!Array.isArray(rows) || !rows.length || rows.some(row => !Number.isInteger(row.id) || typeof row.name !== 'string')) throw new Error('Invalid catalog');
-    const trails: Trail[] = rows.map(({ id, name }) => ({ id, name: name.trim() }));
+    if (!Array.isArray(rows) || !rows.length) throw new Error('Invalid catalog');
+
+    const byId = new Map<number, Trail>();
+    for (const row of rows) {
+      const id = typeof row?.id === 'number'
+        ? row.id
+        : typeof row?.id === 'string' && row.id.trim()
+          ? Number(row.id)
+          : NaN;
+      const name = typeof row?.name === 'string' ? row.name.trim() : '';
+      if (!Number.isSafeInteger(id) || id <= 0 || !name) continue;
+      byId.set(id, { id, name: PR1_ROUTE_NAMES.get(id) ?? name });
+    }
+    if (!byId.size) throw new Error('Invalid catalog');
+
+    // SIMplifica exposes every current booking product; keep both verified PR1 products
+    // visible even if one is temporarily omitted from the resources response.
+    for (const trail of PR1_ROUTES) {
+      if (!byId.has(trail.id)) byId.set(trail.id, trail);
+    }
+
+    const trails = Array.from(byId.values());
     trails.sort((a, b) => a.name.localeCompare(b.name, 'pt', { numeric: true }));
     catalog = { trails, expires: Date.now() + 3600000 };
     return trails;
