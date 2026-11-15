@@ -105,7 +105,7 @@ export const cameras: Camera[] = [
     latitude: 32.738,
     longitude: -16.737,
     sourceUrl: 'https://www.netmadeira.com/webcams-madeira/canical',
-    youtubeId: 'cfJDZELr32U',
+    youtubeId: 'Tj2WhfjIOqo',
   },
   {
     id: 'seixal',
