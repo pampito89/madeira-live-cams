@@ -90,7 +90,7 @@ const Layout: React.FC<{
     const isActivePage = (href: string) => href === '/' ? router.pathname === '/' : router.pathname === href || router.pathname.startsWith(`${href}/`);
     const installButtonLabel = isIosDevice ? text.addIphone : text.installApp;
     const showInstallButton = !isPwaInstalled && (isIosDevice || isAndroidDevice || deferredInstallPrompt);
-    return <div className="flex min-h-screen flex-col bg-white">
+    return <div className="flex min-h-screen w-full min-w-0 flex-col bg-white">
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-3 lg:px-8"><div className="flex items-center justify-between gap-2 sm:gap-4">
         <div className="flex min-w-0 items-center gap-2 sm:gap-4">
@@ -124,7 +124,7 @@ const Layout: React.FC<{
         <button type="button" onClick={() => setIsInstallGuideOpen(false)} className="w-full rounded-xl bg-ocean px-4 py-3 text-sm font-semibold text-white transition hover:bg-navy focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-offset-2">{localize(text.gotIt)}</button>
       </div>
     </div> : null}
-    <main className="flex-1 bg-panel">{localize(children)}</main>
+    <main className="min-w-0 w-full flex-1 bg-panel">{localize(children)}</main>
     <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs text-slate-500">
       <p>{localize(text.webcamNotice)}</p><p>{localize(text.weatherNotice)}</p>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1"><span>© {new Date().getFullYear()} Madeira Live Cams.</span><span aria-hidden="true">·</span><Link href="/privacy" locale={translationLanguage} className="font-medium text-ocean transition hover:underline">{localize(text.privacy)}</Link></div>

@@ -48,8 +48,8 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const t = (en: string, ua: string) => localize(uk ? ua : en);
 
     const trailName = (item: Trail | undefined) => {
-        if (item?.id === 225) return t('PR 1 · short return route (Pico do Areeiro ↔ Pedra Rija)', 'PR 1 · короткий маршрут туди й назад (Pico do Areeiro ↔ Pedra Rija)');
-        if (item?.id === 301) return t('PR 1 · full one-way route (Pico do Areeiro → Pico Ruivo)', 'PR 1 · повний маршрут в один бік (Pico do Areeiro → Pico Ruivo)');
+        if (item?.id === 225) return t('PR 1 · short (Areeiro ↔ Pedra Rija)', 'PR 1 · короткий (Areeiro ↔ Pedra Rija)');
+        if (item?.id === 301) return t('PR 1 · full (Areeiro → Pico Ruivo)', 'PR 1 · повний (Areeiro → Pico Ruivo)');
         return item ? localize(item.name) : t('Available time slots', 'Доступні тайм-слоти');
     };
     const [route, setRoute] = useState(initialRoute);

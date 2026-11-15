@@ -3,6 +3,14 @@
 @import "tailwindcss/utilities";
 
 @layer base {
+  html,
+  body,
+  #__next {
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
   body {
     @apply bg-[#F2FAFC] text-[#123047];
   }
