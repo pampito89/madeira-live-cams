@@ -53,11 +53,9 @@ const standardLocationDurations: Record<string, number> = {
     "h2o-madeira": 150,
     "adrenaline-xtreme-adventures": 180,
     "ribeira-brava-beach": 120,
-    "miradouro-da-rocha-do-navio": 30,
     "miradouro-da-santinha": 30,
     "miradouro-do-parque-de-merendas-dos-lamaceiros": 30,
     "miradouro-do-pico-porto-moniz": 30,
-    "miradouro-do-teleferico-das-achadas-da-cruz": 30,
     "miradouro-do-porto-de-abrigo": 30,
     "miradouro-do-ribeiro-frio": 30,
     "miradouro-das-cruzinhas": 30,
@@ -126,7 +124,8 @@ const standardLocationDurations: Record<string, number> = {
     "botanical-garden-cable-car": 90,
     "garajau-cable-car": 90,
     "achadas-da-cruz-cable-car": 90,
-    "funchal-cable-car": 90
+    "funchal-cable-car": 90,
+    "miradouro-ponta-delgada": 30
 };
 export function plannerStopDuration(location: {
     slug: string;

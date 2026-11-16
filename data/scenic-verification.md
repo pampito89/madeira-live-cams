@@ -1,35 +1,38 @@
-# Viewpoints and cable cars — verification
+# Scenic catalogue verification — 2026-11-16
 
-Updated 2026-11-16; source research 2026-11-15.
+## Current coverage
 
-## Coverage and content
+- 85 Visit Madeira viewpoint-directory entries and seven cable-car entries are mapped to existing or new cards in scenic-coverage.json.
+- Achadas da Cruz and Rocha do Navio each have one card with both Viewpoints and Cable cars tags. Their separate viewpoint cards were removed; descriptions and source links were retained on the cable-car cards.
+- Fajã dos Padres uses its original card and photograph.
+- Added Miradouro de Ponta Delgada (ER102, two dragon trees) from Madeira Island Map with explicit coordinates and seven-language content. No unverified founding date or tree age is asserted.
+- 73 new cards remain, representing 511 language editions. Six are cable-car cards; the seventh cable car is the existing Fajã dos Padres card.
+- Photo requests list each new place once. No third-party photographs copied.
 
-- Covered 85 Visit Madeira viewpoint directory entries: 17 existing cards and 68 new cards.
-- Covered seven passenger cable cars: six new cards and the existing Fajã dos Padres card with the Cable cars tag.
-- Fajã dos Padres keeps its original URL, photo, description, history, beach and Lab Travel tags. The duplicate card and its auxiliary coordinates/duration were removed before deployment.
-- 74 new cards have seven language editions (EN, PT, DE, FR, ES, PL, UK), source links and explicit photo placeholders. Photos await owner submission; see scenic-photos-needed.md. No new photo is required for Fajã dos Padres.
-- Short historical notes use source-backed facts and disclose missing founding dates. Directory coverage does not imply all informal viewpoints or Porto Santo coverage, or live confirmation of access and safety.
-- Eira da Achada municipality/coordinates/history corrected; Pico Ruivo and Santana houses tagged as viewpoints. Distinct Pico viewpoints retain distinct coordinates. Funchal cable-car routing uses the waterfront station.
+## Duplicate audit
 
-## Validation
+Compared location names and all coordinate pairs within 350 m across the catalogue. Two same-site viewpoint/cable-car pairs were merged. Decisions for the remaining nearby pairs are recorded in scenic-duplicate-audit.json. Neighbouring attractions were retained when they represent distinct places, such as a garden and public square, beach and elevated lookout, or statue and boarding station. Ninho da Manta shares the Pico do Arieiro driving trailhead but is a separate walking destination.
 
-- Before and after builds passed. Latest npm run build generated 1,521 static pages.
+This is an audit of current catalogue data, not a guarantee that every possible alias or erroneous coordinate in older content has been identified. The regional directory is not an exhaustive inventory of informal lookouts.
+
+## Checks
+
+- Previous build passed before this change; final npm run build passed with 1,514 generated pages.
 - Explicit tsc --noEmit --incremental false passed.
-- Catalog regression checks cover 518 new static language editions, metadata, translations, source links, local coordinates, and seven cable cars with no duplicate Fajã dos Padres card.
-- Browser follow-up confirmed original Fajã dos Padres photo and text and exactly seven results in the cable-car filter. Desktop/mobile layout and add-to-plan behavior were verified during the initial implementation.
-- Original runtime sitemap verification passed; directory generation uses the current location data.
+- All 17 selected catalogue/planner tests passed, including static multilingual metadata/content and local coordinate resolution.
+- Browser: Ponta Delgada rendered on desktop and 390px mobile; cable-car filter showed seven cards, including Rocha do Navio — Santana and one Achadas da Cruz.
+- git diff --check passed.
 
 ## Existing limitations
 
-- npm run lint opens the ESLint setup wizard; no configured standalone lint check exists.
-- Older planner-coordinate-coverage.test.cjs has unrelated failures for villa-kent and an obsolete static sitemap assumption.
-- Next.js warns about trip-plan page data of approximately 152–181 kB.
-- Live paid route calculation was not performed; its usage endpoint was unavailable during initial inspection.
-- Other-language translations were generated offline and sampled, with corrections; no runtime translation service is used.
+- Standalone lint is not configured; npm run lint opens the setup wizard.
+- Existing coordinate coverage tests have unrelated villa-kent and obsolete static-sitemap assumptions; they were not modified.
+- Next.js warns that trip-plan data exceeds 128 kB (approximately 152–181 kB).
+- No paid live route calculation performed. Sources do not certify live operating/access conditions.
+- Earlier non-English catalogue translations were generated offline and sampled; new Ponta Delgada copy was translated directly in all supported languages.
 
-## Backups and delivery
+## Delivery
 
-- Initial backups: backups/scenic-2026-11-15.
-- Deduplication backups: backups/faja-deduplicate-2026-11-16.
-- Files written as complete replacements. Unrelated work excluded from commits.
-- Local implementation only; no production deployment performed.
+Full-file replacement backups: backups/scenic-dedup-2026-11-16. Prior backups remain in backups/scenic-2026-11-15 and backups/faja-deduplicate-2026-11-16.
+
+Local changes only; no production deployment. Unrelated dirty files excluded from the commit.

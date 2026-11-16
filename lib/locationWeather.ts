@@ -57,11 +57,9 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
         "latitude": 32.6722295,
         "longitude": -17.0681673
     },
-    "miradouro-da-rocha-do-navio": { "latitude": 32.814864568347986, "longitude": -16.87661760476914 },
     "miradouro-da-santinha": { "latitude": 32.862725431747734, "longitude": -17.173349347097115 },
     "miradouro-do-parque-de-merendas-dos-lamaceiros": { "latitude": 32.85172051047124, "longitude": -17.166137387432684 },
     "miradouro-do-pico-porto-moniz": { latitude: 32.864384413675616, longitude: -17.17950822131157 },
-    "miradouro-do-teleferico-das-achadas-da-cruz": { "latitude": 32.85301601365388, "longitude": -17.209983502920576 },
     "miradouro-do-porto-de-abrigo": { "latitude": 32.8667053193602, "longitude": -17.16570221641417 },
     "miradouro-do-ribeiro-frio": { "latitude": 32.74280024746848, "longitude": -16.878582470393212 },
     "miradouro-das-cruzinhas": { "latitude": 32.76157988622994, "longitude": -16.876875058194944 },
@@ -130,5 +128,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
     "botanical-garden-cable-car": { "latitude": 32.677477, "longitude": -16.897999 },
     "garajau-cable-car": { "latitude": 32.640065, "longitude": -16.8521261111 },
     "achadas-da-cruz-cable-car": { "latitude": 32.85301601365388, "longitude": -17.209983502920576 },
-    "funchal-cable-car": { "latitude": 32.647073, "longitude": -16.90225 }
+    "funchal-cable-car": { "latitude": 32.647073, "longitude": -16.90225 },
+    "miradouro-ponta-delgada": { latitude: 32.8238720444847, longitude: -16.994621095008362 }
 };

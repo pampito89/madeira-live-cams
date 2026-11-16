@@ -227,11 +227,9 @@ const locationCoordinates: Record<string, [
         32.6722295,
         -17.0681673
     ],
-    "miradouro-da-rocha-do-navio": [32.814864568347986, -16.87661760476914],
     "miradouro-da-santinha": [32.862725431747734, -17.173349347097115],
     "miradouro-do-parque-de-merendas-dos-lamaceiros": [32.85172051047124, -17.166137387432684],
     "miradouro-do-pico-porto-moniz": [32.864384413675616, -17.17950822131157],
-    "miradouro-do-teleferico-das-achadas-da-cruz": [32.85301601365388, -17.209983502920576],
     "miradouro-do-porto-de-abrigo": [32.8667053193602, -17.16570221641417],
     "miradouro-do-ribeiro-frio": [32.74280024746848, -16.878582470393212],
     "miradouro-das-cruzinhas": [32.76157988622994, -16.876875058194944],
@@ -300,7 +298,8 @@ const locationCoordinates: Record<string, [
     "botanical-garden-cable-car": [32.677477, -16.897999],
     "garajau-cable-car": [32.640065, -16.8521261111],
     "achadas-da-cruz-cable-car": [32.85301601365388, -17.209983502920576],
-    "funchal-cable-car": [32.647073, -16.90225]
+    "funchal-cable-car": [32.647073, -16.90225],
+    "miradouro-ponta-delgada": [32.8238720444847, -16.994621095008362]
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }

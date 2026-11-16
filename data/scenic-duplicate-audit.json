@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-11-16",
+  "merged": {
+    "miradouro-da-rocha-do-navio": "rocha-do-navio-cable-car",
+    "miradouro-do-teleferico-das-achadas-da-cruz": "achadas-da-cruz-cable-car"
+  },
+  "added": "miradouro-ponta-delgada",
+  "method": "Compared all location names and all coordinate pairs within 350 metres; reviewed same-site cable/viewpoint pairs against sources.",
+  "retainedDistinct": [
+    [
+      "cristo-rei",
+      "garajau-cable-car",
+      "Separate statue viewpoint and boarding station, approximately 306 m apart."
+    ],
+    [
+      "monte-palace-tropical-garden",
+      "miradouro-das-babosas",
+      "Garden attraction and public square viewpoint."
+    ],
+    [
+      "mercado-dos-lavradores",
+      "funchal-cable-car",
+      "Market and waterfront transport station."
+    ],
+    [
+      "pico-do-arieiro",
+      "miradouro-do-ninho-da-manta",
+      "Different viewpoints; Ninho driving destination intentionally uses the trailhead."
+    ],
+    [
+      "calheta-beach",
+      "miradouro-do-piarro",
+      "Beach and elevated viewpoint."
+    ],
+    [
+      "porto-moniz-natural-pools",
+      "miradouro-do-porto-de-abrigo",
+      "Bathing pools and harbour pier viewpoint."
+    ],
+    [
+      "levada-do-furado",
+      "miradouro-do-ribeiro-frio",
+      "Long trail and roadside lookout."
+    ],
+    [
+      "miradouro-do-castelo-do-pico",
+      "miradouro-da-quinta-das-cruzes",
+      "Fortress and separate museum garden."
+    ],
+    [
+      "miradouro-da-quinta-vigia",
+      "miradouro-do-parque-de-santa-catarina",
+      "Separate estate and public park."
+    ],
+    [
+      "miradouro-do-lombo-da-quinta",
+      "miradouro-do-palheiro-ferreiro",
+      "Roadside lookout and garden estate."
+    ],
+    [
+      "miradouro-das-babosas",
+      "botanical-garden-cable-car",
+      "Public square and transport line; the botanical cable card map pin is at the Monte end."
+    ]
+  ]
+}

@@ -3,66 +3,6 @@ import type { Location } from './locations';
 // Original descriptions, source links and owner-supplied photo workflow.
 export const scenicLocations: Location[] = [
   {
-    "slug": "miradouro-da-rocha-do-navio",
-    "name": {
-      "en": "Miradouro da Rocha do Navio",
-      "uk": "Miradouro da Rocha do Navio"
-    },
-    "area": {
-      "en": "Santana",
-      "uk": "Santana"
-    },
-    "category": {
-      "en": "Viewpoint",
-      "uk": "Оглядовий майданчик"
-    },
-    "tags": [
-      "Viewpoints"
-    ],
-    "summary": {
-      "en": "Look across the marine reserve towards Ilhéu da Viúva from Santana's cliffs.",
-      "uk": "Краєвид зі скель Santana на морський заповідник та острівець Ilhéu da Viúva."
-    },
-    "image": "/images/explore/scenic-photo-pending.svg",
-    "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
-    },
-    "mapQuery": "32.814864568347986,-16.87661760476914",
-    "article": {
-      "intro": {
-        "en": "Look across the marine reserve towards Ilhéu da Viúva from Santana's cliffs.",
-        "uk": "Краєвид зі скель Santana на морський заповідник та острівець Ilhéu da Viúva."
-      },
-      "history": {
-        "en": "The place name recalls a Dutch shipwreck in the nineteenth century.",
-        "uk": "Назва місця пов’язана з аварією голландського корабля у XIX столітті."
-      },
-      "highlights": {
-        "en": [
-          "Miradouro da Rocha do Navio",
-          "Santana"
-        ],
-        "uk": [
-          "Miradouro da Rocha do Navio",
-          "Santana"
-        ]
-      },
-      "practicalTip": {
-        "en": "Check local access, weather and signs before visiting. Use designated parking and continue on foot where required. A map pin marks the attraction, not a verified parking space.",
-        "uk": "Перед відвідуванням перевірте доступ, погоду й місцеві вказівники. Паркуйтеся у визначених місцях; за потреби продовжуйте пішки. Позначка на карті вказує локацію, а не перевірене місце для паркування."
-      }
-    },
-    "sources": [
-      {
-        "label": "Visit Madeira",
-        "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
-      }
-    ],
-    "checkedAt": "2026-11-15",
-    "imagePending": true
-  },
-  {
     "slug": "miradouro-da-santinha",
     "name": {
       "en": "Miradouro da Santinha",
@@ -237,66 +177,6 @@ export const scenicLocations: Location[] = [
       {
         "label": "Visit Madeira",
         "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/pico-viewpoint/"
-      }
-    ],
-    "checkedAt": "2026-11-15",
-    "imagePending": true
-  },
-  {
-    "slug": "miradouro-do-teleferico-das-achadas-da-cruz",
-    "name": {
-      "en": "Miradouro do Teleférico das Achadas da Cruz",
-      "uk": "Miradouro do Teleférico das Achadas da Cruz"
-    },
-    "area": {
-      "en": "Achadas da Cruz",
-      "uk": "Achadas da Cruz"
-    },
-    "category": {
-      "en": "Viewpoint",
-      "uk": "Оглядовий майданчик"
-    },
-    "tags": [
-      "Viewpoints"
-    ],
-    "summary": {
-      "en": "See the coastal fields of Fajã da Quebrada Nova below the cable-car station.",
-      "uk": "Краєвид на прибережні поля Fajã da Quebrada Nova під станцією канатної дороги."
-    },
-    "image": "/images/explore/scenic-photo-pending.svg",
-    "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
-    },
-    "mapQuery": "32.85301601365388,-17.209983502920576",
-    "article": {
-      "intro": {
-        "en": "See the coastal fields of Fajã da Quebrada Nova below the cable-car station.",
-        "uk": "Краєвид на прибережні поля Fajã da Quebrada Nova під станцією канатної дороги."
-      },
-      "history": {
-        "en": "The cable connection was developed to help farmers reach and transport their crops.",
-        "uk": "Канатну дорогу створили для доступу фермерів до полів і перевезення врожаю."
-      },
-      "highlights": {
-        "en": [
-          "Miradouro do Teleférico das Achadas da Cruz",
-          "Achadas da Cruz"
-        ],
-        "uk": [
-          "Miradouro do Teleférico das Achadas da Cruz",
-          "Achadas da Cruz"
-        ]
-      },
-      "practicalTip": {
-        "en": "Check local access, weather and signs before visiting. Use designated parking and continue on foot where required. A map pin marks the attraction, not a verified parking space.",
-        "uk": "Перед відвідуванням перевірте доступ, погоду й місцеві вказівники. Паркуйтеся у визначених місцях; за потреби продовжуйте пішки. Позначка на карті вказує локацію, а не перевірене місце для паркування."
-      }
-    },
-    "sources": [
-      {
-        "label": "Visit Madeira",
-        "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/"
       }
     ],
     "checkedAt": "2026-11-15",
@@ -4089,8 +3969,8 @@ export const scenicLocations: Location[] = [
   {
     "slug": "rocha-do-navio-cable-car",
     "name": {
-      "en": "Teleférico da Rocha do Navio",
-      "uk": "Teleférico da Rocha do Navio"
+      "en": "Teleférico da Rocha do Navio — Santana",
+      "uk": "Teleférico da Rocha do Navio — Santana"
     },
     "area": {
       "en": "Santana",
@@ -4101,7 +3981,8 @@ export const scenicLocations: Location[] = [
       "uk": "Канатна дорога"
     },
     "tags": [
-      "Cable cars"
+      "Cable cars",
+      "Viewpoints"
     ],
     "summary": {
       "en": "Descend from Santana's cliffs towards the coastal fields of Rocha do Navio.",
@@ -4125,11 +4006,15 @@ export const scenicLocations: Location[] = [
       "highlights": {
         "en": [
           "Teleférico da Rocha do Navio",
-          "Santana"
+          "Santana",
+          "Look across the marine reserve towards Ilhéu da Viúva from Santana's cliffs.",
+          "The place name recalls a Dutch shipwreck in the nineteenth century."
         ],
         "uk": [
           "Teleférico da Rocha do Navio",
-          "Santana"
+          "Santana",
+          "Краєвид зі скель Santana на морський заповідник та острівець Ilhéu da Viúva.",
+          "Назва місця пов’язана з аварією голландського корабля у XIX столітті."
         ]
       },
       "practicalTip": {
@@ -4141,6 +4026,10 @@ export const scenicLocations: Location[] = [
       {
         "label": "Visit Madeira",
         "url": "https://visitmadeira.com/en/means-of-transportation/rocha-do-navio-cable-car/"
+      },
+      {
+        "label": "Visit Madeira",
+        "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
       }
     ],
     "checkedAt": "2026-11-15",
@@ -4349,7 +4238,8 @@ export const scenicLocations: Location[] = [
       "uk": "Канатна дорога"
     },
     "tags": [
-      "Cable cars"
+      "Cable cars",
+      "Viewpoints"
     ],
     "summary": {
       "en": "A steep descent from Achadas da Cruz to the coast and agricultural plots.",
@@ -4373,11 +4263,15 @@ export const scenicLocations: Location[] = [
       "highlights": {
         "en": [
           "Teleférico das Achadas da Cruz",
-          "Achadas da Cruz"
+          "Achadas da Cruz",
+          "See the coastal fields of Fajã da Quebrada Nova below the cable-car station.",
+          "The cable connection was developed to help farmers reach and transport their crops."
         ],
         "uk": [
           "Teleférico das Achadas da Cruz",
-          "Achadas da Cruz"
+          "Achadas da Cruz",
+          "Краєвид на прибережні поля Fajã da Quebrada Nova під станцією канатної дороги.",
+          "Канатну дорогу створили для доступу фермерів до полів і перевезення врожаю."
         ]
       },
       "practicalTip": {
@@ -4389,6 +4283,10 @@ export const scenicLocations: Location[] = [
       {
         "label": "Visit Madeira",
         "url": "https://visitmadeira.com/en/means-of-transportation/achadas-da-cruz-cable-car/"
+      },
+      {
+        "label": "Visit Madeira",
+        "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/"
       }
     ],
     "checkedAt": "2026-11-15",
@@ -4460,6 +4358,64 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
+    "imagePending": true
+  },
+  {
+    "slug": "miradouro-ponta-delgada",
+    "name": {
+      "en": "Miradouro de Ponta Delgada",
+      "uk": "Miradouro de Ponta Delgada"
+    },
+    "area": {
+      "en": "Ponta Delgada, São Vicente",
+      "uk": "Ponta Delgada, São Vicente"
+    },
+    "category": {
+      "en": "Viewpoint",
+      "uk": "Оглядовий майданчик"
+    },
+    "tags": [
+      "Viewpoints"
+    ],
+    "summary": {
+      "en": "A roadside viewpoint in Ponta Delgada, with two dragon trees and views along the north coast.",
+      "uk": "Придорожній майданчик у Ponta Delgada з двома драконовими деревами та краєвидом на північне узбережжя."
+    },
+    "image": "/images/explore/scenic-photo-pending.svg",
+    "imageAlt": {
+      "en": "Photo coming soon",
+      "uk": "Фото незабаром"
+    },
+    "mapQuery": "32.8238720444847,-16.994621095008362",
+    "article": {
+      "intro": {
+        "en": "A roadside viewpoint in Ponta Delgada, with two dragon trees and views along the north coast.",
+        "uk": "Придорожній майданчик у Ponta Delgada з двома драконовими деревами та краєвидом на північне узбережжя."
+      },
+      "history": {
+        "en": "The two dragon trees are a distinctive feature of this lookout. The available source does not establish their age or the date the viewpoint was created.",
+        "uk": "Два драконові дерева — впізнавана особливість цього майданчика. Доступне джерело не підтверджує їхній вік або дату облаштування оглядової точки."
+      },
+      "highlights": {
+        "en": [
+          "ER102 · Ponta Delgada"
+        ],
+        "uk": [
+          "ER102 · Ponta Delgada"
+        ]
+      },
+      "practicalTip": {
+        "en": "Check local access, weather and signs before visiting. Use designated parking and continue on foot where required. A map pin marks the attraction, not a verified parking space.",
+        "uk": "Перед відвідуванням перевірте доступ, погоду й місцеві вказівники. Паркуйтеся у визначених місцях; за потреби продовжуйте пішки. Позначка на карті вказує локацію, а не перевірене місце для паркування."
+      }
+    },
+    "sources": [
+      {
+        "label": "Madeira Island Map",
+        "url": "https://www.madeiraislandmap.com/pt/content-hub/miradouro-ponta-delgada"
+      }
+    ],
+    "checkedAt": "2026-11-16",
     "imagePending": true
   }
 ];

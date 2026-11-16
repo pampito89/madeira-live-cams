@@ -5,6 +5,8 @@
   "cableDirectory": "https://visitmadeira.com/en/means-of-transportation?filters=Cable+cars",
   "existing": {
     "0": "eira-da-achada",
+    "1": "rocha-do-navio-cable-car",
+    "5": "achadas-da-cruz-cable-car",
     "6": "veu-da-noiva",
     "11": "pico-ruivo",
     "15": "miradouro-do-guindaste",
@@ -24,14 +26,6 @@
     "86": "faja-dos-padres"
   },
   "added": [
-    {
-      "sourceIndex": 1,
-      "slug": "miradouro-da-rocha-do-navio",
-      "name": "Miradouro da Rocha do Navio",
-      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/",
-      "mapQuery": "32.814864568347986,-16.87661760476914",
-      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
-    },
     {
       "sourceIndex": 2,
       "slug": "miradouro-da-santinha",
@@ -55,14 +49,6 @@
       "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/pico-viewpoint/",
       "mapQuery": "32.864384413675616,-17.17950822131157",
       "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/pico-viewpoint/"
-    },
-    {
-      "sourceIndex": 5,
-      "slug": "miradouro-do-teleferico-das-achadas-da-cruz",
-      "name": "Miradouro do Teleférico das Achadas da Cruz",
-      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/",
-      "mapQuery": "32.85301601365388,-17.209983502920576",
-      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/"
     },
     {
       "sourceIndex": 7,
@@ -615,6 +601,13 @@
       "source": "https://visitmadeira.com/en/means-of-transportation/funchal-cable-car/",
       "mapQuery": "32.647073,-16.90225",
       "mapSource": "https://discoverportugal2day.com/en/funchal-cable-car/"
+    }
+  ],
+  "additional": [
+    {
+      "slug": "miradouro-ponta-delgada",
+      "source": "https://www.madeiraislandmap.com/pt/content-hub/miradouro-ponta-delgada",
+      "mapQuery": "32.8238720444847,-16.994621095008362"
     }
   ]
 }

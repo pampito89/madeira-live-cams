@@ -2,6 +2,8 @@
   "checkedAt": "2026-11-15",
   "existing": {
     "0": "eira-da-achada",
+    "1": "rocha-do-navio-cable-car",
+    "5": "achadas-da-cruz-cable-car",
     "6": "veu-da-noiva",
     "11": "pico-ruivo",
     "15": "miradouro-do-guindaste",
@@ -22,12 +24,6 @@
   },
   "entries": [
     [
-      1,
-      "Miradouro da Rocha do Navio",
-      "Look across the marine reserve towards Ilhéu da Viúva from Santana's cliffs.",
-      "The place name recalls a Dutch shipwreck in the nineteenth century."
-    ],
-    [
       2,
       "Miradouro da Santinha",
       "A roadside panorama of Porto Moniz, its volcanic pools and Ilhéu Mole.",
@@ -44,12 +40,6 @@
       "Miradouro do Pico — Porto Moniz",
       "A clifftop lookout above Porto Moniz at the end of Caminho do Pico.",
       "This former royal road carried people and goods between local villages."
-    ],
-    [
-      5,
-      "Miradouro do Teleférico das Achadas da Cruz",
-      "See the coastal fields of Fajã da Quebrada Nova below the cable-car station.",
-      "The cable connection was developed to help farmers reach and transport their crops."
     ],
     [
       7,
