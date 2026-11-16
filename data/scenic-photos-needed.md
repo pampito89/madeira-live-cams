@@ -1,13 +1,12 @@
 # Фото для карток
 
-Додано 70 фото WebP 1200×675. Оригінали не змінено.
+Додано 71 фото WebP 1200×675. Оригінали не змінено.
 
 ## Ще потрібні фото
 
 - **Miradouro do Pico — Porto Moniz** — `miradouro-do-pico-porto-moniz.webp`
 - **Miradouro do Castelo do Pico** — `miradouro-do-castelo-do-pico.webp`
 - **Miradouro sobre a Ponta do Sol** — `miradouro-sobre-a-ponta-do-sol.webp`
-- **Levada do Norte** — `levada-do-norte.webp`
 
 ## Не прив’язано
 

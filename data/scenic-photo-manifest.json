@@ -703,6 +703,16 @@
       "quality": 72,
       "originalBytes": 555540,
       "bytes": 195392
+    },
+    {
+      "source": "levada-do-norte.webp",
+      "slug": "levada-do-norte",
+      "image": "/images/explore/levada-do-norte.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 515712,
+      "bytes": 160062
     }
   ],
   "unassigned": [

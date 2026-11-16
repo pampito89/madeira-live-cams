@@ -4440,10 +4440,10 @@ export const scenicLocations: Location[] = [
       "en": "Levada do Norte carries irrigation water from northern Madeira to farmland in Ribeira Brava and Câmara de Lobos. Its southern section passes through agricultural landscapes and settlements, offering a close view of the island’s working water channels. This card marks the point shared on Google Maps; it does not define a complete walking itinerary.",
       "uk": "Levada do Norte переносить воду для зрошення з півночі Мадейри до сільськогосподарських земель Ribeira Brava та Câmara de Lobos. Її південна ділянка проходить серед оброблюваних схилів і поселень, де можна побачити, як працюють водні канали острова. Картка позначає точку з наданого посилання Google Maps, а не повний пішохідний маршрут."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/levada-do-norte.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Levada do Norte",
+      "uk": "Levada do Norte"
     },
     "mapQuery": "32.6920062,-17.0388825",
     "article": {
@@ -4483,6 +4483,6 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-16",
-    "imagePending": true
+    "imagePending": false
   }
 ];
