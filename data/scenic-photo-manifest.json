@@ -1,0 +1,712 @@
+{
+  "format": "webp",
+  "width": 1200,
+  "height": 675,
+  "source": "User-supplied files; original filenames retained for provenance. No license inferred.",
+  "photos": [
+    {
+      "source": "13072022_094444_dji_0299.jpg",
+      "slug": "miradouro-de-nossa-senhora-dos-bons-caminhos",
+      "image": "/images/explore/miradouro-de-nossa-senhora-dos-bons-caminhos.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 367427,
+      "bytes": 170278
+    },
+    {
+      "source": "achadasdacruz_teleferico4.jpg",
+      "slug": "achadas-da-cruz-cable-car",
+      "image": "/images/explore/achadas-da-cruz-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 214031,
+      "bytes": 148672
+    },
+    {
+      "source": "dji_0959-hdr-1.jpg",
+      "slug": "botanical-garden-cable-car",
+      "image": "/images/explore/botanical-garden-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 764385,
+      "bytes": 183660
+    },
+    {
+      "source": "funchal_miradourodasneves3-francisco-correia.jpg",
+      "slug": "miradouro-das-neves",
+      "image": "/images/explore/miradouro-das-neves.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 365848,
+      "bytes": 187424
+    },
+    {
+      "source": "funchal_miradourodocurraldosromeiros2-francisco-correia.jpg",
+      "slug": "miradouro-do-curral-dos-romeiros",
+      "image": "/images/explore/miradouro-do-curral-dos-romeiros.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 288472,
+      "bytes": 184270
+    },
+    {
+      "source": "funchal_miradourodolombodaquinta.jpg",
+      "slug": "miradouro-do-lombo-da-quinta",
+      "image": "/images/explore/miradouro-do-lombo-da-quinta.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 132291,
+      "bytes": 74352
+    },
+    {
+      "source": "funchal_parquedestacatarina_jardim5-francisco-correia.jpg",
+      "slug": "miradouro-do-parque-de-santa-catarina",
+      "image": "/images/explore/miradouro-do-parque-de-santa-catarina.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 282797,
+      "bytes": 175914
+    },
+    {
+      "source": "funchal_quintavigia_miradouro3-francisco-correia.jpg",
+      "slug": "miradouro-da-quinta-vigia",
+      "image": "/images/explore/miradouro-da-quinta-vigia.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 271430,
+      "bytes": 165228
+    },
+    {
+      "source": "funchal_saogoncalo_vistamar-2.jpg",
+      "slug": "miradouro-do-largo-padre-pita-ferreira",
+      "image": "/images/explore/miradouro-do-largo-padre-pita-ferreira.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 159727,
+      "bytes": 97012
+    },
+    {
+      "source": "funchal_vilaguida_miradouro1-1-francisco-correia.jpg",
+      "slug": "miradouro-da-vila-guida",
+      "image": "/images/explore/miradouro-da-vila-guida.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 195675,
+      "bytes": 122682
+    },
+    {
+      "source": "gaula_-2-mirador-da-contenta-_-woodland-studio.jpg",
+      "slug": "miradouro-da-contenda",
+      "image": "/images/explore/miradouro-da-contenda.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 304244,
+      "bytes": 150984
+    },
+    {
+      "source": "largo-e-miradouro-das-babosas0001-francisco-correia.jpg",
+      "slug": "miradouro-das-babosas",
+      "image": "/images/explore/miradouro-das-babosas.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 949649,
+      "bytes": 191074
+    },
+    {
+      "source": "madeira_cable_car_2024-37-3.jpg",
+      "slug": "funchal-cable-car",
+      "image": "/images/explore/funchal-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 1271656,
+      "bytes": 157842
+    },
+    {
+      "source": "Miradouro da Achada — Funchal.jpg",
+      "slug": "miradouro-da-achada-funchal",
+      "image": "/images/explore/miradouro-da-achada-funchal.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 66,
+      "originalBytes": 881534,
+      "bytes": 188384
+    },
+    {
+      "source": "Miradouro da Encumeada.jpg",
+      "slug": "miradouro-da-encumeada",
+      "image": "/images/explore/miradouro-da-encumeada.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 1090440,
+      "bytes": 149376
+    },
+    {
+      "source": "Miradouro da Nazaré.jpg",
+      "slug": "miradouro-da-nazare",
+      "image": "/images/explore/miradouro-da-nazare.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 579730,
+      "bytes": 111708
+    },
+    {
+      "source": "Miradouro da Pousada dos Vinháticos.jpg",
+      "slug": "miradouro-da-pousada-dos-vinhaticos",
+      "image": "/images/explore/miradouro-da-pousada-dos-vinhaticos.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 304935,
+      "bytes": 194672
+    },
+    {
+      "source": "Miradouro da Queimada.jpg",
+      "slug": "miradouro-da-queimada",
+      "image": "/images/explore/miradouro-da-queimada.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 277997,
+      "bytes": 135750
+    },
+    {
+      "source": "Miradouro de São Roque.jpg",
+      "slug": "miradouro-de-sao-roque",
+      "image": "/images/explore/miradouro-de-sao-roque.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 60,
+      "originalBytes": 363580,
+      "bytes": 192614
+    },
+    {
+      "source": "Miradouro do Cabo Aéreo.jpg",
+      "slug": "miradouro-do-cabo-aereo",
+      "image": "/images/explore/miradouro-do-cabo-aereo.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 624459,
+      "bytes": 148038
+    },
+    {
+      "source": "Miradouro do Curtado.jpg",
+      "slug": "miradouro-do-curtado",
+      "image": "/images/explore/miradouro-do-curtado.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 240637,
+      "bytes": 116378
+    },
+    {
+      "source": "Miradouro do Fio — Fajã da Ovelha.jpg",
+      "slug": "miradouro-do-fio-faja-da-ovelha",
+      "image": "/images/explore/miradouro-do-fio-faja-da-ovelha.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 235228,
+      "bytes": 144994
+    },
+    {
+      "source": "Miradouro do Forte de São José.jpg",
+      "slug": "miradouro-do-forte-de-sao-jose",
+      "image": "/images/explore/miradouro-do-forte-de-sao-jose.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 356318,
+      "bytes": 101140
+    },
+    {
+      "source": "Miradouro do Jardim do Mar.jpg",
+      "slug": "miradouro-do-jardim-do-mar",
+      "image": "/images/explore/miradouro-do-jardim-do-mar.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 60,
+      "originalBytes": 323982,
+      "bytes": 191254
+    },
+    {
+      "source": "Miradouro do Massapez.jpg",
+      "slug": "miradouro-do-massapez",
+      "image": "/images/explore/miradouro-do-massapez.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 124686,
+      "bytes": 148240
+    },
+    {
+      "source": "Miradouro do Palheiro Ferreiro.jpg",
+      "slug": "miradouro-do-palheiro-ferreiro",
+      "image": "/images/explore/miradouro-do-palheiro-ferreiro.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 277393,
+      "bytes": 192472
+    },
+    {
+      "source": "Miradouro do Paredão.jpg",
+      "slug": "miradouro-do-paredao",
+      "image": "/images/explore/miradouro-do-paredao.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 308026,
+      "bytes": 107584
+    },
+    {
+      "source": "Miradouro do Parque de Merendas dos Lamaceiros.webp",
+      "slug": "miradouro-do-parque-de-merendas-dos-lamaceiros",
+      "image": "/images/explore/miradouro-do-parque-de-merendas-dos-lamaceiros.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 278774,
+      "bytes": 124334
+    },
+    {
+      "source": "Miradouro do Piarro.jpg",
+      "slug": "miradouro-do-piarro",
+      "image": "/images/explore/miradouro-do-piarro.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 687383,
+      "bytes": 98922
+    },
+    {
+      "source": "Miradouro do Picarouto.jpg",
+      "slug": "miradouro-do-picarouto",
+      "image": "/images/explore/miradouro-do-picarouto.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 333134,
+      "bytes": 173846
+    },
+    {
+      "source": "Miradouro do Pico — São Jorge.jpg",
+      "slug": "miradouro-do-pico-sao-jorge",
+      "image": "/images/explore/miradouro-do-pico-sao-jorge.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 271680,
+      "bytes": 133002
+    },
+    {
+      "source": "Miradouro do Precipício.jpg",
+      "slug": "miradouro-do-precipicio",
+      "image": "/images/explore/miradouro-do-precipicio.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 216332,
+      "bytes": 142432
+    },
+    {
+      "source": "miradouro-beira-da-quinta-6.jpg",
+      "slug": "miradouro-da-beira-da-quinta",
+      "image": "/images/explore/miradouro-da-beira-da-quinta.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 264625,
+      "bytes": 126216
+    },
+    {
+      "source": "miradouro-da-boa-morte0002-francisco-correia.jpg",
+      "slug": "miradouro-da-boa-morte",
+      "image": "/images/explore/miradouro-da-boa-morte.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 460522,
+      "bytes": 125244
+    },
+    {
+      "source": "miradouro-da-boca-da-corrida-4.jpg",
+      "slug": "miradouro-da-boca-da-corrida",
+      "image": "/images/explore/miradouro-da-boca-da-corrida.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 229870,
+      "bytes": 107736
+    },
+    {
+      "source": "miradouro-da-boca-das-voltas-4.jpg",
+      "slug": "miradouro-da-boca-das-voltas",
+      "image": "/images/explore/miradouro-da-boca-das-voltas.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 239335,
+      "bytes": 114202
+    },
+    {
+      "source": "miradouro-da-boca-dos-namorados_drone-1_-woodland-studio.jpg",
+      "slug": "miradouro-da-boca-dos-namorados",
+      "image": "/images/explore/miradouro-da-boca-dos-namorados.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 250597,
+      "bytes": 123464
+    },
+    {
+      "source": "miradouro-da-cova-da-roda-2.jpg",
+      "slug": "miradouro-da-cova-da-roda",
+      "image": "/images/explore/miradouro-da-cova-da-roda.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 301271,
+      "bytes": 154974
+    },
+    {
+      "source": "miradouro-da-lombada-dos-marinheiros-004-francisco-correia.jpg",
+      "slug": "miradouro-da-lombada-dos-marinheiros",
+      "image": "/images/explore/miradouro-da-lombada-dos-marinheiros.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 239617,
+      "bytes": 98138
+    },
+    {
+      "source": "miradouro-da-quinta-do-furão-1.jpg",
+      "slug": "miradouro-da-quinta-do-furao",
+      "image": "/images/explore/miradouro-da-quinta-do-furao.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 349755,
+      "bytes": 138528
+    },
+    {
+      "source": "miradouro-da-santinha-7.jpg",
+      "slug": "miradouro-da-santinha",
+      "image": "/images/explore/miradouro-da-santinha.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 262762,
+      "bytes": 131090
+    },
+    {
+      "source": "miradouro-da-vigia-1.jpg",
+      "slug": "miradouro-da-vigia-sao-jorge",
+      "image": "/images/explore/miradouro-da-vigia-sao-jorge.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 193280,
+      "bytes": 88624
+    },
+    {
+      "source": "miradouro-das-cruzes0007-francisco-correia.jpg",
+      "slug": "miradouro-da-quinta-das-cruzes",
+      "image": "/images/explore/miradouro-da-quinta-das-cruzes.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 504774,
+      "bytes": 182164
+    },
+    {
+      "source": "miradouro-das-cruzinhas-2.jpg",
+      "slug": "miradouro-das-cruzinhas",
+      "image": "/images/explore/miradouro-das-cruzinhas.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 411281,
+      "bytes": 193768
+    },
+    {
+      "source": "miradouro-das-eiras1-filipe-mendoca.jpg",
+      "slug": "miradouro-das-eiras",
+      "image": "/images/explore/miradouro-das-eiras.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 392171,
+      "bytes": 189354
+    },
+    {
+      "source": "miradouro-das-empenas-1.jpg",
+      "slug": "miradouro-das-empenas",
+      "image": "/images/explore/miradouro-das-empenas.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 229126,
+      "bytes": 106540
+    },
+    {
+      "source": "miradouro-de-santa-luzia0009-francisco-correia.jpg",
+      "slug": "miradouro-de-santa-luzia",
+      "image": "/images/explore/miradouro-de-santa-luzia.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 364105,
+      "bytes": 137934
+    },
+    {
+      "source": "miradouro-de-sao-sebastiao-1-francisco-correia.jpg",
+      "slug": "miradouro-de-sao-sebastiao-ribeira-brava",
+      "image": "/images/explore/miradouro-de-sao-sebastiao-ribeira-brava.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 727653,
+      "bytes": 179170
+    },
+    {
+      "source": "miradouro-do-jardim-botânico2-francisco-correia.jpg",
+      "slug": "miradouro-do-jardim-botanico",
+      "image": "/images/explore/miradouro-do-jardim-botanico.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 298887,
+      "bytes": 175588
+    },
+    {
+      "source": "miradouro-do-lido0003-francisco-correia.jpg",
+      "slug": "miradouro-do-lido",
+      "image": "/images/explore/miradouro-do-lido.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 700907,
+      "bytes": 144628
+    },
+    {
+      "source": "miradouro-do-lombo-dos-palheiros-1.jpg",
+      "slug": "miradouro-do-lombo-dos-palheiros",
+      "image": "/images/explore/miradouro-do-lombo-dos-palheiros.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 384770,
+      "bytes": 183426
+    },
+    {
+      "source": "miradouro-do-ninho-da-manta-5.jpg",
+      "slug": "miradouro-do-ninho-da-manta",
+      "image": "/images/explore/miradouro-do-ninho-da-manta.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 144224,
+      "bytes": 35252
+    },
+    {
+      "source": "miradouro-do-pico-alto0012-francisco-correia.jpg",
+      "slug": "miradouro-do-pico-alto",
+      "image": "/images/explore/miradouro-do-pico-alto.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 339288,
+      "bytes": 123820
+    },
+    {
+      "source": "miradouro-do-pico-dos-barcelos0012-francisco-correia.jpg",
+      "slug": "miradouro-do-pico-dos-barcelos",
+      "image": "/images/explore/miradouro-do-pico-dos-barcelos.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 491425,
+      "bytes": 193598
+    },
+    {
+      "source": "miradouro-do-pináculo2-francisco-corrria.jpg",
+      "slug": "miradouro-do-pinaculo",
+      "image": "/images/explore/miradouro-do-pinaculo.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 238563,
+      "bytes": 141674
+    },
+    {
+      "source": "miradouro-do-porto-de-abrigo-4.jpg",
+      "slug": "miradouro-do-porto-de-abrigo",
+      "image": "/images/explore/miradouro-do-porto-de-abrigo.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 200904,
+      "bytes": 95512
+    },
+    {
+      "source": "miradouro-do-ribeiro-frio-2.jpg",
+      "slug": "miradouro-do-ribeiro-frio",
+      "image": "/images/explore/miradouro-do-ribeiro-frio.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 227477,
+      "bytes": 106990
+    },
+    {
+      "source": "miradouro-do-socorro2-francisco-correia.jpg",
+      "slug": "miradouro-do-socorro",
+      "image": "/images/explore/miradouro-do-socorro.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 179146,
+      "bytes": 110456
+    },
+    {
+      "source": "miradouro-dos-marmeleiros2-francisco-correoa.jpg",
+      "slug": "miradouro-dos-marmeleiros",
+      "image": "/images/explore/miradouro-dos-marmeleiros.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 167958,
+      "bytes": 99038
+    },
+    {
+      "source": "miradouro_da-raposeira2-simonzino.jpg",
+      "slug": "miradouro-da-raposeira",
+      "image": "/images/explore/miradouro-da-raposeira.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 57,
+      "originalBytes": 494846,
+      "bytes": 196894
+    },
+    {
+      "source": "mirardouro-do-espiga-o-1-francisco-correia.jpg",
+      "slug": "miradouro-do-espigao",
+      "image": "/images/explore/miradouro-do-espigao.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 630154,
+      "bytes": 148580
+    },
+    {
+      "source": "miraroudo-de-sto-antonio3-filipe-mondoca.jpg",
+      "slug": "miradouro-de-santo-antonio-santana",
+      "image": "/images/explore/miradouro-de-santo-antonio-santana.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 311237,
+      "bytes": 166454
+    },
+    {
+      "source": "poi-miradouro-da-cabeça-do-resto3-filipe-mendonca.jpg",
+      "slug": "miradouro-do-cabeco-do-resto",
+      "image": "/images/explore/miradouro-do-cabeco-do-resto.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 251267,
+      "bytes": 125838
+    },
+    {
+      "source": "ponta-delgada-madeira-2.jpg",
+      "slug": "miradouro-ponta-delgada",
+      "image": "/images/explore/miradouro-ponta-delgada.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 1495317,
+      "bytes": 98352
+    },
+    {
+      "source": "santuario-do-terreiro-da-luta-0005-francisco-correia.jpg",
+      "slug": "miradouro-do-terreiro-da-luta",
+      "image": "/images/explore/miradouro-do-terreiro-da-luta.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 563348,
+      "bytes": 123820
+    },
+    {
+      "source": "simonzino_miradouro_da_achada_de-santo_antao_1.jpg",
+      "slug": "miradouro-da-achada-de-santo-antao",
+      "image": "/images/explore/miradouro-da-achada-de-santo-antao.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 296276,
+      "bytes": 144920
+    },
+    {
+      "source": "simonzino_miradouro_do_cascalho1.jpg",
+      "slug": "miradouro-do-cascalho",
+      "image": "/images/explore/miradouro-do-cascalho.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 224456,
+      "bytes": 108160
+    },
+    {
+      "source": "teleferico-da-rocha-do-navio1-ricardo-faria-paulino.jpg",
+      "slug": "rocha-do-navio-cable-car",
+      "image": "/images/explore/rocha-do-navio-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 329628,
+      "bytes": 119098
+    },
+    {
+      "source": "teleferico-do-cristo-rei_canico001-nuno-andrade.jpg",
+      "slug": "garajau-cable-car",
+      "image": "/images/explore/garajau-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 419136,
+      "bytes": 159720
+    },
+    {
+      "source": "teleferico-do-rancho001-francisco-correia.jpg",
+      "slug": "fajas-do-cabo-girao-rancho-cable-car",
+      "image": "/images/explore/fajas-do-cabo-girao-rancho-cable-car.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 72,
+      "originalBytes": 555540,
+      "bytes": 195392
+    }
+  ],
+  "unassigned": [
+    "muradouro-do-pico-castelo.jpg",
+    "simonzino_cais_da-ponta_do_sol_1.jpg"
+  ]
+}

@@ -23,10 +23,10 @@ export const scenicLocations: Location[] = [
       "en": "A roadside panorama of Porto Moniz, its volcanic pools and Ilhéu Mole.",
       "uk": "Придорожній майданчик із панорамою Porto Moniz, вулканічних басейнів та Ilhéu Mole."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-santinha.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Santinha",
+      "uk": "Miradouro da Santinha"
     },
     "mapQuery": "32.862725431747734,-17.173349347097115",
     "article": {
@@ -60,7 +60,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-parque-de-merendas-dos-lamaceiros",
@@ -83,10 +83,10 @@ export const scenicLocations: Location[] = [
       "en": "A picnic-park viewpoint above Ribeira da Janela, beside the start of its levada.",
       "uk": "Майданчик у парку для пікніків над Ribeira da Janela, біля початку однойменної левади."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-parque-de-merendas-dos-lamaceiros.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Parque de Merendas dos Lamaceiros",
+      "uk": "Miradouro do Parque de Merendas dos Lamaceiros"
     },
     "mapQuery": "32.85172051047124,-17.166137387432684",
     "article": {
@@ -120,7 +120,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-pico-porto-moniz",
@@ -203,10 +203,10 @@ export const scenicLocations: Location[] = [
       "en": "A low waterfront perspective from Porto Moniz's pier towards the Ribeira da Janela islets.",
       "uk": "Краєвид майже з рівня моря: від пірса Porto Moniz до острівців Ribeira da Janela."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-porto-de-abrigo.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Porto de Abrigo",
+      "uk": "Miradouro do Porto de Abrigo"
     },
     "mapQuery": "32.8667053193602,-17.16570221641417",
     "article": {
@@ -240,7 +240,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-ribeiro-frio",
@@ -263,10 +263,10 @@ export const scenicLocations: Location[] = [
       "en": "A forest panorama beside ER103 in São Roque do Faial, near popular walking routes.",
       "uk": "Лісова панорама біля ER103 у São Roque do Faial, поруч із пішохідними маршрутами."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-ribeiro-frio.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Ribeiro Frio",
+      "uk": "Miradouro do Ribeiro Frio"
     },
     "mapQuery": "32.74280024746848,-16.878582470393212",
     "article": {
@@ -300,7 +300,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-das-cruzinhas",
@@ -323,10 +323,10 @@ export const scenicLocations: Location[] = [
       "en": "Look into the upper Ribeira Seca valley from ER103 above Faial.",
       "uk": "Краєвид із дороги ER103 над Faial на верхню частину долини Ribeira Seca."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-das-cruzinhas.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro das Cruzinhas",
+      "uk": "Miradouro das Cruzinhas"
     },
     "mapQuery": "32.76157988622994,-16.876875058194944",
     "article": {
@@ -360,7 +360,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-lombo-dos-palheiros",
@@ -383,10 +383,10 @@ export const scenicLocations: Location[] = [
       "en": "A lookout beside São Roque do Faial's cemetery, facing mountain villages and Penha d'Águia.",
       "uk": "Майданчик біля цвинтаря São Roque do Faial із видом на гірські села та Penha d'Águia."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-lombo-dos-palheiros.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Lombo dos Palheiros",
+      "uk": "Miradouro do Lombo dos Palheiros"
     },
     "mapQuery": "32.77575997556672,-16.85029321826413",
     "article": {
@@ -420,7 +420,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-das-empenas",
@@ -443,10 +443,10 @@ export const scenicLocations: Location[] = [
       "en": "A mountain-road panorama stretching from São Jorge towards Ponta de São Lourenço.",
       "uk": "Панорама з гірської дороги простягається від São Jorge до Ponta de São Lourenço."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-das-empenas.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro das Empenas",
+      "uk": "Miradouro das Empenas"
     },
     "mapQuery": "32.77114011195072,-16.917256574087425",
     "article": {
@@ -480,7 +480,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-picarouto",
@@ -503,10 +503,10 @@ export const scenicLocations: Location[] = [
       "en": "A stop in Pico das Pedras Forest Park overlooking Penha d'Águia and the eastern coast.",
       "uk": "Зупинка в лісопарку Pico das Pedras із видом на Penha d'Águia та східне узбережжя."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-picarouto.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Picarouto",
+      "uk": "Miradouro do Picarouto"
     },
     "mapQuery": "32.77125497702047,-16.907812408914015",
     "article": {
@@ -540,7 +540,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-cova-da-roda",
@@ -563,10 +563,10 @@ export const scenicLocations: Location[] = [
       "en": "A north-coast lookout reached along an old cobbled approach, with Penha d'Águia ahead.",
       "uk": "Майданчик із видом на північне узбережжя та Penha d'Águia; підхід пролягає старою бруківкою."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-cova-da-roda.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Cova da Roda",
+      "uk": "Miradouro da Cova da Roda"
     },
     "mapQuery": "32.77840886793542,-16.88096241826408",
     "article": {
@@ -600,7 +600,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-de-nossa-senhora-dos-bons-caminhos",
@@ -623,10 +623,10 @@ export const scenicLocations: Location[] = [
       "en": "An ER101 lookout over Faial and the Atlantic, marked by a religious statue.",
       "uk": "Майданчик на ER101 із видом на Faial та Атлантику, позначений релігійною статуєю."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-de-nossa-senhora-dos-bons-caminhos.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de Nossa Senhora dos Bons Caminhos",
+      "uk": "Miradouro de Nossa Senhora dos Bons Caminhos"
     },
     "mapQuery": "32.7908127658149,-16.860108047099082",
     "article": {
@@ -660,7 +660,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-curtado",
@@ -683,10 +683,10 @@ export const scenicLocations: Location[] = [
       "en": "From Santana's road, look towards Faial's rugged coast and Penha d'Águia.",
       "uk": "Вид із дороги біля Santana на скелясте узбережжя Faial і Penha d'Águia."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-curtado.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Curtado",
+      "uk": "Miradouro do Curtado"
     },
     "mapQuery": "32.79506078896229,-16.86268310476968",
     "article": {
@@ -720,7 +720,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-de-santo-antonio-santana",
@@ -743,10 +743,10 @@ export const scenicLocations: Location[] = [
       "en": "Views take in Achada do Gramacho, vineyards and part of Rocha do Navio.",
       "uk": "Краєвид на Achada do Gramacho, виноградники та частину Rocha do Navio."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-de-santo-antonio-santana.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de Santo António — Santana",
+      "uk": "Miradouro de Santo António — Santana"
     },
     "mapQuery": "32.809946926990605,-16.872213833604654",
     "article": {
@@ -780,7 +780,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-quinta-do-furao",
@@ -803,10 +803,10 @@ export const scenicLocations: Location[] = [
       "en": "A hotel-estate lookout above Santana's northeast cliffs, overlooking Ilhéu da Viúva.",
       "uk": "Майданчик на території готельного маєтку над скелями Santana, навпроти Ilhéu da Viúva."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-quinta-do-furao.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Quinta do Furão",
+      "uk": "Miradouro da Quinta do Furão"
     },
     "mapQuery": "32.82421755043965,-16.884394145250656",
     "article": {
@@ -840,7 +840,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-cabeco-do-resto",
@@ -863,10 +863,10 @@ export const scenicLocations: Location[] = [
       "en": "A high viewpoint in Ilha overlooking Santana, São Jorge and the surrounding settlements.",
       "uk": "Високий майданчик у Ilha з видом на Santana, São Jorge та навколишні поселення."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-cabeco-do-resto.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Cabeço do Resto",
+      "uk": "Miradouro do Cabeço do Resto"
     },
     "mapQuery": "32.80638612820422,-16.9100909740865",
     "article": {
@@ -900,7 +900,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-das-eiras",
@@ -923,10 +923,10 @@ export const scenicLocations: Location[] = [
       "en": "Near Pico da Rainha, look into Ilha's densely wooded stream valleys.",
       "uk": "Біля Pico da Rainha відкривається вид на густо заліснені долини струмків Ilha."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-das-eiras.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro das Eiras",
+      "uk": "Miradouro das Eiras"
     },
     "mapQuery": "32.812142788360696,-16.912851372238823",
     "article": {
@@ -960,7 +960,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-pico-sao-jorge",
@@ -983,10 +983,10 @@ export const scenicLocations: Location[] = [
       "en": "Look across the mouth of Ribeira de São Jorge towards the surrounding mountains.",
       "uk": "Краєвид на гирло Ribeira de São Jorge та навколишні гори."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-pico-sao-jorge.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Pico — São Jorge",
+      "uk": "Miradouro do Pico — São Jorge"
     },
     "mapQuery": "32.823186047620766,-16.902603623098948",
     "article": {
@@ -1020,7 +1020,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-vigia-sao-jorge",
@@ -1043,10 +1043,10 @@ export const scenicLocations: Location[] = [
       "en": "A coastal lookout with views westwards from Arco de São Jorge towards Porto Moniz.",
       "uk": "Прибережний майданчик із видом на захід від Arco de São Jorge до Porto Moniz."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-vigia-sao-jorge.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Vigia — São Jorge",
+      "uk": "Miradouro da Vigia — São Jorge"
     },
     "mapQuery": "32.83468598038173,-16.911417218262535",
     "article": {
@@ -1080,7 +1080,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-ninho-da-manta",
@@ -1103,10 +1103,10 @@ export const scenicLocations: Location[] = [
       "en": "A walking viewpoint on PR1 near Pico do Areeiro, overlooking Fajã da Nogueira.",
       "uk": "Пішохідний майданчик на PR1 поблизу Pico do Areeiro з видом на Fajã da Nogueira."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-ninho-da-manta.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Ninho da Manta",
+      "uk": "Miradouro do Ninho da Manta"
     },
     "mapQuery": "32.7353,-16.9281",
     "article": {
@@ -1144,7 +1144,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-beira-da-quinta",
@@ -1167,10 +1167,10 @@ export const scenicLocations: Location[] = [
       "en": "Look over Arco de São Jorge and the northwest coast from a 469-metre-high vantage point.",
       "uk": "Краєвид на Arco de São Jorge та північно-західне узбережжя з висоти 469 метрів."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-beira-da-quinta.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Beira da Quinta",
+      "uk": "Miradouro da Beira da Quinta"
     },
     "mapQuery": "32.82675995528283,-16.93907590476886",
     "article": {
@@ -1204,7 +1204,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-boca-das-voltas",
@@ -1227,10 +1227,10 @@ export const scenicLocations: Location[] = [
       "en": "A secluded Boaventura lookout towards Falcas, Achada da Madeira and Lombo do Urzal.",
       "uk": "Затишний майданчик у Boaventura з видом на Falcas, Achada da Madeira та Lombo do Urzal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-boca-das-voltas.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Boca das Voltas",
+      "uk": "Miradouro da Boca das Voltas"
     },
     "mapQuery": "32.810142843883796,-16.95296547593385",
     "article": {
@@ -1264,7 +1264,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-cabo-aereo",
@@ -1287,10 +1287,10 @@ export const scenicLocations: Location[] = [
       "en": "A São Jorge coastal viewpoint overlooking Calhau and the remains of old mills.",
       "uk": "Прибережний майданчик у São Jorge з видом на Calhau та руїни старих млинів."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-cabo-aereo.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Cabo Aéreo",
+      "uk": "Miradouro do Cabo Aéreo"
     },
     "mapQuery": "32.83079364545404,-16.901101902921233",
     "article": {
@@ -1324,7 +1324,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-boca-dos-namorados",
@@ -1347,10 +1347,10 @@ export const scenicLocations: Location[] = [
       "en": "A Jardim da Serra lookout towards Curral das Freiras and Eira do Serrado.",
       "uk": "Майданчик у Jardim da Serra з видом на Curral das Freiras та Eira do Serrado."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-boca-dos-namorados.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Boca dos Namorados",
+      "uk": "Miradouro da Boca dos Namorados"
     },
     "mapQuery": "32.69571842213682,-16.978275219734137",
     "article": {
@@ -1384,7 +1384,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-boca-da-corrida",
@@ -1407,10 +1407,10 @@ export const scenicLocations: Location[] = [
       "en": "A high mountain viewpoint over Curral das Freiras, beside the PR12 trailhead.",
       "uk": "Високогірний майданчик над Curral das Freiras біля початку маршруту PR12."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-boca-da-corrida.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Boca da Corrida",
+      "uk": "Miradouro da Boca da Corrida"
     },
     "mapQuery": "32.71124370898839,-16.986784758747614",
     "article": {
@@ -1444,7 +1444,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-castelo-do-pico",
@@ -1527,10 +1527,10 @@ export const scenicLocations: Location[] = [
       "en": "A garden lookout on Estrada Dr. João Abel de Freitas, facing eastern Funchal.",
       "uk": "Майданчик у саду на Estrada Dr. João Abel de Freitas із видом на східну частину Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-achada-funchal.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Achada — Funchal",
+      "uk": "Miradouro da Achada — Funchal"
     },
     "mapQuery": "32.65754394853098,-16.919712552854538",
     "article": {
@@ -1564,7 +1564,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-nazare",
@@ -1587,10 +1587,10 @@ export const scenicLocations: Location[] = [
       "en": "A São Martinho viewpoint above western Funchal, linking city, coast and mountains in one panorama.",
       "uk": "Майданчик у São Martinho над західною частиною Funchal із панорамою міста, берега й гір."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-nazare.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Nazaré",
+      "uk": "Miradouro da Nazaré"
     },
     "mapQuery": "32.64215788006655,-16.932688383080205",
     "article": {
@@ -1624,7 +1624,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-quinta-vigia",
@@ -1647,10 +1647,10 @@ export const scenicLocations: Location[] = [
       "en": "A historic garden estate on Avenida do Infante, looking across Funchal Bay towards Garajau.",
       "uk": "Історичний садовий маєток на Avenida do Infante з видом через затоку Funchal до Garajau."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-quinta-vigia.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Quinta Vigia",
+      "uk": "Miradouro da Quinta Vigia"
     },
     "mapQuery": "32.646012794794515,-16.91583120082944",
     "article": {
@@ -1684,7 +1684,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-vila-guida",
@@ -1707,10 +1707,10 @@ export const scenicLocations: Location[] = [
       "en": "A garden terrace on Rua Conde Carvalhal framing Funchal Bay.",
       "uk": "Садова тераса на Rua Conde Carvalhal із краєвидом на затоку Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-vila-guida.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Vila Guida",
+      "uk": "Miradouro da Vila Guida"
     },
     "mapQuery": "32.64981763003395,-16.895686003512175",
     "article": {
@@ -1744,7 +1744,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-das-neves",
@@ -1767,10 +1767,10 @@ export const scenicLocations: Location[] = [
       "en": "An eastern Funchal lookout over the bay, with the Desertas visible in clear conditions.",
       "uk": "Майданчик на сході Funchal із видом на затоку та, за ясної погоди, острови Desertas."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-das-neves.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro das Neves",
+      "uk": "Miradouro das Neves"
     },
     "mapQuery": "32.65001916203768,-16.87373553469995",
     "article": {
@@ -1804,7 +1804,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-de-sao-roque",
@@ -1827,10 +1827,10 @@ export const scenicLocations: Location[] = [
       "en": "A church-front viewpoint above Funchal, with benches facing the bay and Atlantic.",
       "uk": "Майданчик перед церквою над Funchal із лавами, зверненими до затоки та Атлантики."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-de-sao-roque.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de São Roque",
+      "uk": "Miradouro de São Roque"
     },
     "mapQuery": "32.66858645377353,-16.923271410439114",
     "article": {
@@ -1864,7 +1864,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-curral-dos-romeiros",
@@ -1887,10 +1887,10 @@ export const scenicLocations: Location[] = [
       "en": "A wooded lookout on Caminho dos Pretos, above Funchal and the João Gomes valley.",
       "uk": "Оточений деревами майданчик на Caminho dos Pretos над Funchal і долиною João Gomes."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-curral-dos-romeiros.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Curral dos Romeiros",
+      "uk": "Miradouro do Curral dos Romeiros"
     },
     "mapQuery": "32.68047912204189,-16.890565650320607",
     "article": {
@@ -1924,7 +1924,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-forte-de-sao-jose",
@@ -1947,10 +1947,10 @@ export const scenicLocations: Location[] = [
       "en": "A harbour-edge viewpoint on a rocky islet beside Funchal's port.",
       "uk": "Майданчик на скелястому острівці біля порту Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-forte-de-sao-jose.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Forte de São José",
+      "uk": "Miradouro do Forte de São José"
     },
     "mapQuery": "32.64142325091824,-16.917745398224962",
     "article": {
@@ -1984,7 +1984,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-jardim-botanico",
@@ -2007,10 +2007,10 @@ export const scenicLocations: Location[] = [
       "en": "Garden terraces above the João Gomes valley offer a broad view of Funchal.",
       "uk": "Тераси саду над долиною João Gomes відкривають широку панораму Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-jardim-botanico.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Jardim Botânico",
+      "uk": "Miradouro do Jardim Botânico"
     },
     "mapQuery": "32.66260477173389,-16.894775853308555",
     "article": {
@@ -2044,7 +2044,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-lido",
@@ -2067,10 +2067,10 @@ export const scenicLocations: Location[] = [
       "en": "A low coastal viewpoint in Funchal's hotel district, facing the Atlantic and Lido Islet.",
       "uk": "Невисокий прибережний майданчик у готельному районі Funchal із видом на Атлантику та Ilhéu do Lido."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-lido.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Lido",
+      "uk": "Miradouro do Lido"
     },
     "mapQuery": "32.63633369539145,-16.934302082427177",
     "article": {
@@ -2104,7 +2104,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-lombo-da-quinta",
@@ -2127,10 +2127,10 @@ export const scenicLocations: Location[] = [
       "en": "A high Boa Nova roadside lookout over Funchal Bay, near Palheiro.",
       "uk": "Високий придорожній майданчик у Boa Nova над затокою Funchal, поблизу Palheiro."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-lombo-da-quinta.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Lombo da Quinta",
+      "uk": "Miradouro do Lombo da Quinta"
     },
     "mapQuery": "32.660234544313916,-16.874713524626948",
     "article": {
@@ -2164,7 +2164,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-palheiro-ferreiro",
@@ -2187,10 +2187,10 @@ export const scenicLocations: Location[] = [
       "en": "A garden-estate viewpoint on the hillside east of Funchal, overlooking the city.",
       "uk": "Майданчик у садовому маєтку на схилі на схід від Funchal із панорамою міста."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-palheiro-ferreiro.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Palheiro Ferreiro",
+      "uk": "Miradouro do Palheiro Ferreiro"
     },
     "mapQuery": "32.660718706109606,-16.876594710224555",
     "article": {
@@ -2224,7 +2224,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-parque-de-santa-catarina",
@@ -2247,10 +2247,10 @@ export const scenicLocations: Location[] = [
       "en": "A central park viewpoint over Funchal's harbour, with views extending towards Garajau.",
       "uk": "Майданчик у центральному парку над гаванню Funchal із видом у бік Garajau."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-parque-de-santa-catarina.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Parque de Santa Catarina",
+      "uk": "Miradouro do Parque de Santa Catarina"
     },
     "mapQuery": "32.64550869972514,-16.915101598448057",
     "article": {
@@ -2284,7 +2284,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-pico-dos-barcelos",
@@ -2307,10 +2307,10 @@ export const scenicLocations: Location[] = [
       "en": "At 355 metres, this Santo António lookout takes in Funchal's amphitheatre and bay.",
       "uk": "Майданчик у Santo António на висоті 355 метрів із видом на амфітеатр міста й затоку Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-pico-dos-barcelos.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Pico dos Barcelos",
+      "uk": "Miradouro do Pico dos Barcelos"
     },
     "mapQuery": "32.65892207898638,-16.939463908805852",
     "article": {
@@ -2344,7 +2344,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-pinaculo",
@@ -2367,10 +2367,10 @@ export const scenicLocations: Location[] = [
       "en": "A São Gonçalo lookout on Rua Conde Carvalhal, framing Funchal's coast from the east.",
       "uk": "Майданчик у São Gonçalo на Rua Conde Carvalhal із краєвидом на узбережжя Funchal зі сходу."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-pinaculo.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Pináculo",
+      "uk": "Miradouro do Pináculo"
     },
     "mapQuery": "32.645301747572496,-16.870577426769962",
     "article": {
@@ -2404,7 +2404,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-socorro",
@@ -2427,10 +2427,10 @@ export const scenicLocations: Location[] = [
       "en": "A viewpoint in Funchal's old town, above Barreirinha and facing the port.",
       "uk": "Майданчик у старому місті Funchal, над Barreirinha, з видом на порт."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-socorro.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Socorro",
+      "uk": "Miradouro do Socorro"
     },
     "mapQuery": "32.64704943866033,-16.897670121877926",
     "article": {
@@ -2464,7 +2464,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-terreiro-da-luta",
@@ -2487,10 +2487,10 @@ export const scenicLocations: Location[] = [
       "en": "A Monte hillside panorama beside the Nossa Senhora da Paz sanctuary.",
       "uk": "Панорама зі схилів Monte біля санктуарію Nossa Senhora da Paz."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-terreiro-da-luta.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Terreiro da Luta",
+      "uk": "Miradouro do Terreiro da Luta"
     },
     "mapQuery": "32.68439624258004,-16.898807907891786",
     "article": {
@@ -2524,7 +2524,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-dos-marmeleiros",
@@ -2547,10 +2547,10 @@ export const scenicLocations: Location[] = [
       "en": "A shaded lookout near Marmeleiros Hospital, overlooking Funchal from the Monte hillside.",
       "uk": "Затінений майданчик біля лікарні Marmeleiros із краєвидом на Funchal зі схилів Monte."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-dos-marmeleiros.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro dos Marmeleiros",
+      "uk": "Miradouro dos Marmeleiros"
     },
     "mapQuery": "32.6693298315244,-16.909353927540597",
     "article": {
@@ -2584,7 +2584,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-largo-padre-pita-ferreira",
@@ -2607,10 +2607,10 @@ export const scenicLocations: Location[] = [
       "en": "A viewpoint below São Gonçalo church, looking west across Funchal Bay.",
       "uk": "Майданчик нижче церкви São Gonçalo з видом на захід через затоку Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-largo-padre-pita-ferreira.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Largo Padre Pita Ferreira",
+      "uk": "Miradouro do Largo Padre Pita Ferreira"
     },
     "mapQuery": "32.64934186570772,-16.88293548082222",
     "article": {
@@ -2644,7 +2644,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-quinta-das-cruzes",
@@ -2667,10 +2667,10 @@ export const scenicLocations: Location[] = [
       "en": "A historic São Pedro lookout over central Funchal, surrounded by mature garden trees.",
       "uk": "Історичний майданчик у São Pedro над центром Funchal, оточений великими садовими деревами."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-quinta-das-cruzes.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Quinta das Cruzes",
+      "uk": "Miradouro da Quinta das Cruzes"
     },
     "mapQuery": "32.650582497857066,-16.913977125077395",
     "article": {
@@ -2704,7 +2704,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-das-babosas",
@@ -2727,10 +2727,10 @@ export const scenicLocations: Location[] = [
       "en": "A Monte square lookout over the João Gomes valley, near the cable-car stations.",
       "uk": "Майданчик на площі в Monte над долиною João Gomes, поруч зі станціями канатних доріг."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-das-babosas.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro das Babosas",
+      "uk": "Miradouro das Babosas"
     },
     "mapQuery": "32.67641650125869,-16.898945521644144",
     "article": {
@@ -2764,7 +2764,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-de-santa-luzia",
@@ -2787,10 +2787,10 @@ export const scenicLocations: Location[] = [
       "en": "A hillside viewpoint on Rua da Levada de Santa Luzia, overlooking Funchal.",
       "uk": "Майданчик на схилі на Rua da Levada de Santa Luzia з видом на Funchal."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-de-santa-luzia.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de Santa Luzia",
+      "uk": "Miradouro de Santa Luzia"
     },
     "mapQuery": "32.66087980513386,-16.908816323511218",
     "article": {
@@ -2824,7 +2824,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-pico-alto",
@@ -2847,10 +2847,10 @@ export const scenicLocations: Location[] = [
       "en": "A mountain lookout inside Funchal Ecological Park, facing the city and Chão da Lagoa.",
       "uk": "Гірський майданчик в екологічному парку Funchal із видом на місто та Chão da Lagoa."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-pico-alto.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Pico Alto",
+      "uk": "Miradouro do Pico Alto"
     },
     "mapQuery": "32.69314906176053,-16.9029960950542",
     "article": {
@@ -2884,7 +2884,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-paredao",
@@ -2907,10 +2907,10 @@ export const scenicLocations: Location[] = [
       "en": "Two mountain vantage points reveal Curral das Freiras on one side and Funchal on the other.",
       "uk": "Дві оглядові точки відкривають Curral das Freiras з одного боку та Funchal з іншого."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-paredao.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Paredão",
+      "uk": "Miradouro do Paredão"
     },
     "mapQuery": "32.716118797078224,-16.95547562855132",
     "article": {
@@ -2944,7 +2944,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-queimada",
@@ -2967,10 +2967,10 @@ export const scenicLocations: Location[] = [
       "en": "An Água de Pena lookout over Machico Bay, the airport and Madeira's eastern peninsula.",
       "uk": "Майданчик у Água de Pena з видом на затоку Machico, аеропорт і східний півострів Мадейри."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-queimada.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Queimada",
+      "uk": "Miradouro da Queimada"
     },
     "mapQuery": "32.71407054835316,-16.764898147101153",
     "article": {
@@ -3004,7 +3004,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-contenda",
@@ -3027,10 +3027,10 @@ export const scenicLocations: Location[] = [
       "en": "A quiet Gaula viewpoint towards Santa Cruz, Ponta de São Lourenço and the Desertas.",
       "uk": "Тихий майданчик у Gaula з видом на Santa Cruz, Ponta de São Lourenço та Desertas."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-contenda.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Contenda",
+      "uk": "Miradouro da Contenda"
     },
     "mapQuery": "32.674420401547955,-16.81805613176076",
     "article": {
@@ -3064,7 +3064,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-de-sao-sebastiao-ribeira-brava",
@@ -3087,10 +3087,10 @@ export const scenicLocations: Location[] = [
       "en": "A clifftop panorama over Ribeira Brava and the south coast towards Ponta do Sol.",
       "uk": "Панорама зі скелі над Ribeira Brava вздовж південного узбережжя до Ponta do Sol."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-de-sao-sebastiao-ribeira-brava.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de São Sebastião — Ribeira Brava",
+      "uk": "Miradouro de São Sebastião — Ribeira Brava"
     },
     "mapQuery": "32.669864253288814,-17.062719945254862",
     "article": {
@@ -3124,7 +3124,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-espigao",
@@ -3147,10 +3147,10 @@ export const scenicLocations: Location[] = [
       "en": "A São Paulo lookout across Ribeira Brava's valley towards the Serra d'Água peaks.",
       "uk": "Майданчик у São Paulo з видом через долину Ribeira Brava на вершини Serra d'Água."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-espigao.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Espigão",
+      "uk": "Miradouro do Espigão"
     },
     "mapQuery": "32.70905816979428,-17.030695428619257",
     "article": {
@@ -3184,7 +3184,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-pousada-dos-vinhaticos",
@@ -3207,10 +3207,10 @@ export const scenicLocations: Location[] = [
       "en": "A Serra d'Água viewpoint surrounded by forested slopes and the Cruz, Cedro and Pico Grande peaks.",
       "uk": "Майданчик у Serra d'Água серед заліснених схилів і вершин Cruz, Cedro та Pico Grande."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-pousada-dos-vinhaticos.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Pousada dos Vinháticos",
+      "uk": "Miradouro da Pousada dos Vinháticos"
     },
     "mapQuery": "32.736080613271575,-17.025620785734812",
     "article": {
@@ -3244,7 +3244,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-encumeada",
@@ -3267,10 +3267,10 @@ export const scenicLocations: Location[] = [
       "en": "From the mountain pass, look into the Ribeira Brava and São Vicente valleys.",
       "uk": "Із гірського перевалу відкриваються долини Ribeira Brava та São Vicente."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-encumeada.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Encumeada",
+      "uk": "Miradouro da Encumeada"
     },
     "mapQuery": "32.75455755594404,-17.02033450292326",
     "article": {
@@ -3304,7 +3304,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-sobre-a-ponta-do-sol",
@@ -3387,10 +3387,10 @@ export const scenicLocations: Location[] = [
       "en": "A Lombada lookout on ER222, facing Lugar de Baixo, Tabua and Ribeira Brava.",
       "uk": "Майданчик у Lombada на ER222 із видом на Lugar de Baixo, Tabua та Ribeira Brava."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-cascalho.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Cascalho",
+      "uk": "Miradouro do Cascalho"
     },
     "mapQuery": "32.683513013276496,-17.09163094525445",
     "article": {
@@ -3424,7 +3424,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-achada-de-santo-antao",
@@ -3447,10 +3447,10 @@ export const scenicLocations: Location[] = [
       "en": "Also called Farol Verde, this clifftop viewpoint overlooks Arco da Calheta and Madalena do Mar.",
       "uk": "Майданчик на скелі, відомий також як Farol Verde, із видом на Arco da Calheta та Madalena do Mar."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-achada-de-santo-antao.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Achada de Santo Antão",
+      "uk": "Miradouro da Achada de Santo Antão"
     },
     "mapQuery": "32.711341758978726,-17.14051776222595",
     "article": {
@@ -3484,7 +3484,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-piarro",
@@ -3507,10 +3507,10 @@ export const scenicLocations: Location[] = [
       "en": "A Lombo do Doutor lookout above Calheta's beach, marina and Casa das Mudas.",
       "uk": "Майданчик у Lombo do Doutor над пляжем Calheta, мариною та Casa das Mudas."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-piarro.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Piarro",
+      "uk": "Miradouro do Piarro"
     },
     "mapQuery": "32.72111573337686,-17.173968802924175",
     "article": {
@@ -3544,7 +3544,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-jardim-do-mar",
@@ -3567,10 +3567,10 @@ export const scenicLocations: Location[] = [
       "en": "Look over Jardim do Mar, where the village occupies a coastal fajã.",
       "uk": "Вид на Jardim do Mar — село на прибережній терасі біля підніжжя скель."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-jardim-do-mar.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Jardim do Mar",
+      "uk": "Miradouro do Jardim do Mar"
     },
     "mapQuery": "32.73668367509638,-17.20850544793985",
     "article": {
@@ -3604,7 +3604,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-raposeira",
@@ -3627,10 +3627,10 @@ export const scenicLocations: Location[] = [
       "en": "A high Fajã da Ovelha lookout over Paul do Mar, Jardim do Mar and Prazeres.",
       "uk": "Високий майданчик у Fajã da Ovelha над Paul do Mar, Jardim do Mar та Prazeres."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-raposeira.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Raposeira",
+      "uk": "Miradouro da Raposeira"
     },
     "mapQuery": "32.759411374356844,-17.223161860593805",
     "article": {
@@ -3664,7 +3664,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-precipicio",
@@ -3687,10 +3687,10 @@ export const scenicLocations: Location[] = [
       "en": "A steep-cliff lookout on the descent towards Paul do Mar from Fajã da Ovelha.",
       "uk": "Майданчик над урвищем на спуску з Fajã da Ovelha до Paul do Mar."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-precipicio.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Precipício",
+      "uk": "Miradouro do Precipício"
     },
     "mapQuery": "32.770432007146425,-17.234494358746066",
     "article": {
@@ -3724,7 +3724,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-massapez",
@@ -3747,10 +3747,10 @@ export const scenicLocations: Location[] = [
       "en": "A Fajã da Ovelha panorama spanning Paul do Mar, Jardim do Mar and Prazeres.",
       "uk": "Панорама з Fajã da Ovelha охоплює Paul do Mar, Jardim do Mar та Prazeres."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-massapez.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Massapez",
+      "uk": "Miradouro do Massapez"
     },
     "mapQuery": "32.77110485855856,-17.238451360256295",
     "article": {
@@ -3784,7 +3784,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-lombada-dos-marinheiros",
@@ -3807,10 +3807,10 @@ export const scenicLocations: Location[] = [
       "en": "A west-coast lookout towards Fajã da Ovelha and Ponta do Pargo lighthouse.",
       "uk": "Майданчик на західному узбережжі з видом на Fajã da Ovelha та маяк Ponta do Pargo."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-lombada-dos-marinheiros.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Lombada dos Marinheiros",
+      "uk": "Miradouro da Lombada dos Marinheiros"
     },
     "mapQuery": "32.7875308813615,-17.23352086389161",
     "article": {
@@ -3844,7 +3844,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-fio-faja-da-ovelha",
@@ -3867,10 +3867,10 @@ export const scenicLocations: Location[] = [
       "en": "A clifftop outlook over Paul do Mar, near the Fajã Grande path.",
       "uk": "Краєвид зі скелі над Paul do Mar біля стежки Fajã Grande."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-fio-faja-da-ovelha.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Fio — Fajã da Ovelha",
+      "uk": "Miradouro do Fio — Fajã da Ovelha"
     },
     "mapQuery": "32.8096537408969,-17.25650531641566",
     "article": {
@@ -3904,7 +3904,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-da-boa-morte",
@@ -3927,10 +3927,10 @@ export const scenicLocations: Location[] = [
       "en": "A Ponta do Pargo lookout over western cliffs towards Calhau das Achadas da Cruz.",
       "uk": "Майданчик у Ponta do Pargo над західними скелями, з видом на Calhau das Achadas da Cruz."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-da-boa-morte.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro da Boa Morte",
+      "uk": "Miradouro da Boa Morte"
     },
     "mapQuery": "32.83350776755614,-17.236953711274044",
     "article": {
@@ -3964,7 +3964,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "rocha-do-navio-cable-car",
@@ -3988,10 +3988,10 @@ export const scenicLocations: Location[] = [
       "en": "Descend from Santana's cliffs towards the coastal fields of Rocha do Navio.",
       "uk": "Спуск зі скель Santana до прибережних полів Rocha do Navio."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/rocha-do-navio-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico da Rocha do Navio — Santana",
+      "uk": "Teleférico da Rocha do Navio — Santana"
     },
     "mapQuery": "32.814864568347986,-16.87661760476914",
     "article": {
@@ -4033,7 +4033,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "fajas-do-cabo-girao-rancho-cable-car",
@@ -4056,10 +4056,10 @@ export const scenicLocations: Location[] = [
       "en": "Travel from Sítio do Rancho down to the cultivated terraces below Cabo Girão.",
       "uk": "Поїздка із Sítio do Rancho до оброблюваних прибережних терас під Cabo Girão."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/fajas-do-cabo-girao-rancho-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico das Fajãs do Cabo Girão — Rancho",
+      "uk": "Teleférico das Fajãs do Cabo Girão — Rancho"
     },
     "mapQuery": "32.6525833333,-16.9926666667",
     "article": {
@@ -4097,7 +4097,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "botanical-garden-cable-car",
@@ -4120,10 +4120,10 @@ export const scenicLocations: Location[] = [
       "en": "A separate cable-car line joins Monte's Largo das Babosas with the Botanical Garden.",
       "uk": "Окрема канатна дорога з’єднує Largo das Babosas у Monte з ботанічним садом."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/botanical-garden-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico do Jardim Botânico",
+      "uk": "Teleférico do Jardim Botânico"
     },
     "mapQuery": "32.677477,-16.897999",
     "article": {
@@ -4161,7 +4161,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "garajau-cable-car",
@@ -4184,10 +4184,10 @@ export const scenicLocations: Location[] = [
       "en": "Descend from Ponta do Garajau, near Cristo Rei, to the beach below.",
       "uk": "Спуск із Ponta do Garajau біля Cristo Rei до пляжу під скелею."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/garajau-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico do Garajau",
+      "uk": "Teleférico do Garajau"
     },
     "mapQuery": "32.640065,-16.8521261111",
     "article": {
@@ -4221,7 +4221,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "achadas-da-cruz-cable-car",
@@ -4245,10 +4245,10 @@ export const scenicLocations: Location[] = [
       "en": "A steep descent from Achadas da Cruz to the coast and agricultural plots.",
       "uk": "Крутий спуск з Achadas da Cruz до узбережжя й сільськогосподарських ділянок."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/achadas-da-cruz-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico das Achadas da Cruz",
+      "uk": "Teleférico das Achadas da Cruz"
     },
     "mapQuery": "32.85301601365388,-17.209983502920576",
     "article": {
@@ -4290,7 +4290,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "funchal-cable-car",
@@ -4313,10 +4313,10 @@ export const scenicLocations: Location[] = [
       "en": "Board on Funchal's waterfront for the cable-car journey uphill to Monte.",
       "uk": "Посадка на набережній Funchal для підйому канатною дорогою до Monte."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/funchal-cable-car.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Teleférico do Funchal — Monte",
+      "uk": "Teleférico do Funchal — Monte"
     },
     "mapQuery": "32.647073,-16.90225",
     "article": {
@@ -4358,7 +4358,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-ponta-delgada",
@@ -4381,10 +4381,10 @@ export const scenicLocations: Location[] = [
       "en": "A roadside viewpoint in Ponta Delgada, with two dragon trees and views along the north coast.",
       "uk": "Придорожній майданчик у Ponta Delgada з двома драконовими деревами та краєвидом на північне узбережжя."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-ponta-delgada.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro de Ponta Delgada",
+      "uk": "Miradouro de Ponta Delgada"
     },
     "mapQuery": "32.8238720444847,-16.994621095008362",
     "article": {
@@ -4416,7 +4416,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-16",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "levada-do-norte",
