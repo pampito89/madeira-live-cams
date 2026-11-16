@@ -28,11 +28,15 @@ export const getServerSideProps: GetServerSideProps<Props> = withServerTranslati
     const initialDate = madeiraDate();
     try {
         const trails = await getTrails();
-        const requestedRoute = typeof query.route === 'string' ? trails.find(item => String(item.id) === query.route) : undefined;
+        const requestedRoute = typeof query.route === 'string'
+            ? trails.find(item => String(item.id) === query.route && item.available !== false)
+            : undefined;
+        const defaultRoute = trails.find(item => item.id === 301 && item.available !== false)
+            ?? trails.find(item => item.available !== false);
         const requestedPeriod = typeof query.days === 'string' && ['7', '14', '30', '60'].includes(query.days) ? Number(query.days) : 30;
         return { props: {
             trails, initialDate, catalogUnavailable: false,
-            initialRoute: String(requestedRoute?.id ?? trails.find(item => item.id === 301)?.id ?? trails[0]?.id ?? ''),
+            initialRoute: String(requestedRoute?.id ?? defaultRoute?.id ?? ''),
             initialPeriod: requestedPeriod,
             autoLoad: Boolean(requestedRoute && query.autoload === '1'),
         } };
@@ -46,6 +50,12 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const { locale } = useMessages();
     const uk = locale === 'uk';
     const t = (en: string, ua: string) => localize(uk ? ua : en);
+
+    const trailName = (item: Trail | undefined) => {
+        if (item?.id === 225) return t('PR 1 · short (Areeiro ↔ Pedra Rija)', 'PR 1 · короткий (Areeiro ↔ Pedra Rija)');
+        if (item?.id === 301) return t('PR 1 · full (Areeiro → Pico Ruivo)', 'PR 1 · повний (Areeiro → Pico Ruivo)');
+        return item ? localize(item.name) : t('Available time slots', 'Доступні тайм-слоти');
+    };
     const [route, setRoute] = useState(initialRoute);
     const [period, setPeriod] = useState(initialPeriod);
     const [category, setCategory] = useState<BookingCategory>('visitor');
@@ -133,6 +143,8 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const active = days[selected];
     const slots = active ? availableSlots(active, category, now) : [];
     const searchedTrail = trails.find(item => item.id === search?.route);
+    const selectedTrail = trails.find(item => String(item.id) === route);
+    const routeAvailable = selectedTrail !== undefined && selectedTrail.available !== false;
     const categories: [BookingCategory, string][] = [['visitor', t('Non-resident visitor', 'Відвідувач / нерезидент')], ['operator', t('Economic operator', 'Туроператор')], ['resident', t('Madeira resident', 'Резидент Мадейри')]];
     const today = now ? madeiraDate(new Date(now)) : initialDate;
     const calendarDates = search?.dates ?? planningDates(today, addDays(today, period - 1));
@@ -148,17 +160,19 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
             <div className={styles.fields} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
                 <label>{t('Walking route', 'Маршрут')}<select value={route} onChange={event => { reset(); setRoute(event.target.value); }} disabled={!trails.length}>
                     {!trails.length && <option value="">{t('Routes unavailable', 'Маршрути недоступні')}</option>}
-                    {trails.map(item => <option key={item.id} value={item.id}>{localize(item.name)}</option>)}
-                </select></label>
+                    {trails.map(item => <option key={item.id} value={item.id} disabled={item.available === false}>{trailName(item)}</option>)}
+                </select>
+                {trails.some(item => item.available === false) && <small className={styles.source}>{t('PR1 options are disabled because SIMplifica currently returns no calendar resources for them; this does not confirm the trails are closed.', 'Варіанти PR1 вимкнені: SIMplifica зараз не повертає для них ресурси календаря. Це не підтверджує, що маршрути закриті.')}</small>}
+                </label>
                 <label>{t('Booking category', 'Категорія бронювання')}<select value={category} onChange={event => setCategory(event.target.value as BookingCategory)}>{categories.map(([id, label]) => <option key={id} value={id}>{localize(label)}</option>)}</select></label>
             </div>
             <div className={styles.shortcuts}><span>{t('From today:', 'Від сьогодні:')}</span>{[7, 14, 30, 60].map(count => <button key={count} type="button" aria-pressed={period === count} onClick={() => { reset(); setPeriod(count); }}>{localize(count)} {t('days', 'днів')}</button>)}</div>
             <GroupTourCalendar today={today} uk={uk} onChange={setGroupRanges} />
             {groupOutside && <p className={styles.source}>{t('Some group dates fall outside the displayed period. Choose a longer period to see them.', 'Частина дат групи поза показаним періодом. Оберіть довший період, щоб побачити їх.')}</p>}
-            <div className={styles.filterBottom}><span className={styles.source}>{dateLabel(today)} – {dateLabel(addDays(today, period - 1))}</span><button className={styles.primary} disabled={!route || loading}>{loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →')}</button></div>
+            <div className={styles.filterBottom}><span className={styles.source}>{dateLabel(today)} – {dateLabel(addDays(today, period - 1))}</span><button className={styles.primary} disabled={!routeAvailable || loading}>{loading ? t('Checking…', 'Перевіряємо…') : t('Show time slots →', 'Показати тайм-слоти →')}</button></div>
         </form>
         <section id="time-slots" className={styles.results} style={{ scrollMarginTop: '6rem' }}>
-            <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{localize(searchedTrail?.name || t('Available time slots', 'Доступні тайм-слоти'))}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)')}>{t('Book', 'Бронювати')}</a></div>
+            <div className={`${styles.resultHeading} ${lab.resultHeading}`}><h2>{trailName(searchedTrail)}</h2><a className={lab.bookingButton} href={`${BOOKING_URL}/start`} target="_blank" rel="noopener noreferrer" aria-label={t('Book on SIMplifica (opens in a new tab)', 'Бронювати в SIMplifica (у новій вкладці)')}>{t('Book', 'Бронювати')}</a></div>
             <div role="status" aria-live="polite">
                 {search && <p className={styles.progress}>{t('Days checked:', 'Перевірено днів:')} {localize(loaded)}/{localize(search.dates.length)}{loading ? '…' : ''}{failed > 0 && ` · ${t('Unavailable:', 'Без даних:')} ${failed}`}</p>}
                 {catalogUnavailable && <p className={styles.error}>{t('SIMplifica route list is unavailable. Reload or open the official portal.', 'Перелік маршрутів SIMplifica недоступний. Оновіть сторінку або відкрийте офіційний портал.')}</p>}

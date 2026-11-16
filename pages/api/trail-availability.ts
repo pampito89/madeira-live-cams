@@ -12,7 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   try {
     const trails = await getTrails();
-    if (!trails.some(trail => trail.id === Number(route))) return res.status(400).json({ error: 'unknown_route' });
+    const selectedTrail = trails.find(trail => trail.id === Number(route));
+    if (!selectedTrail) return res.status(400).json({ error: 'unknown_route' });
+    if (selectedTrail.available === false) return res.status(409).json({ error: 'route_unavailable' });
     const days = await getWeek(Number(route), start);
     return res.status(days.every(day => day.error) ? 503 : 200).json({ days, source: BOOKING_URL });
   } catch {

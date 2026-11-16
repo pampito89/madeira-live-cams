@@ -1,5 +1,5 @@
 export type BookingCategory = 'visitor' | 'operator' | 'resident';
-export type Trail = { id: number; name: string };
+export type Trail = { id: number; name: string; available?: boolean };
 export type TrailSlot = {
   date: string;
   start: string;
