@@ -811,8 +811,8 @@ export const locations: Location[] = [
     {
         slug: 'faja-dos-padres',
         name: {
-            en: 'Fajã dos Padres',
-            uk: 'Fajã dos Padres',
+            en: "Telef\u00E9rico da Faj\u00E3 dos Padres",
+            uk: "Telef\u00E9rico da Faj\u00E3 dos Padres"
         },
         area: {
             en: 'South coast',
