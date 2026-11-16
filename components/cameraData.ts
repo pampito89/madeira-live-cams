@@ -76,7 +76,7 @@ export const cameras: Camera[] = [
     latitude: 32.6979,
     longitude: -16.7745,
     sourceUrl: 'https://www.youtube.com/watch?v=STpCvDHD__I',
-    youtubeId: 'STpCvDHD__I',
+    youtubeId: 'RFEGOudkDEc',
   },
   {
     id: 'pico-do-arieiro',
