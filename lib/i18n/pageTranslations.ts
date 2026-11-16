@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { defaultLocale, isSupportedLocale } from './config';
 import type { TranslationCatalog } from './translation';
 import scopes from './catalogs/scopes.json';
+import scenicCatalogs from './catalogs/scenic.json';
 
 const normalize = (value: string) => value.replace(/\s+/g, ' ').trim();
 function collectPropText(value: unknown, keys: Set<string>) {
@@ -13,7 +14,9 @@ function collectPropText(value: unknown, keys: Set<string>) {
 }
 async function loadCatalog(locale: string | undefined, page: string, props: unknown): Promise<TranslationCatalog> {
   const language = isSupportedLocale(locale) ? locale : defaultLocale;
-  const catalog: TranslationCatalog = JSON.parse(await readFile(join(process.cwd(), 'lib', 'i18n', 'catalogs', `${language}.json`), 'utf8'));
+  const base: TranslationCatalog = JSON.parse(await readFile(join(process.cwd(), 'lib', 'i18n', 'catalogs', `${language}.json`), 'utf8'));
+  const scenic = (scenicCatalogs as Record<string, TranslationCatalog>)[language] ?? {};
+  const catalog = { ...base, ...scenic };
   const keys = new Set((scopes as Record<string, string[]>)[page] ?? []);
   collectPropText(props, keys);
   return Object.fromEntries(Object.entries(catalog).filter(([key]) => keys.has(normalize(key))));

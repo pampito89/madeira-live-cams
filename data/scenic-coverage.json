@@ -1,0 +1,627 @@
+{
+  "checkedAt": "2026-11-15",
+  "scope": "85 entries in Visit Madeira viewpoint directory on Madeira island; 7 passenger cable cars in its transport directory. Not a claim that every informal lookout or Porto Santo viewpoint is included.",
+  "viewpointDirectory": "https://visitmadeira.com/en/what-to-do/nature-seekers/viewpoints/",
+  "cableDirectory": "https://visitmadeira.com/en/means-of-transportation?filters=Cable+cars",
+  "existing": {
+    "0": "eira-da-achada",
+    "6": "veu-da-noiva",
+    "11": "pico-ruivo",
+    "15": "miradouro-do-guindaste",
+    "19": "santana-typical-houses",
+    "29": "pr11-vereda-dos-balcoes",
+    "30": "miradouro-sao-cristovao",
+    "31": "cabo-girao-skywalk",
+    "32": "eira-do-serrado",
+    "60": "pico-do-facho",
+    "63": "cristo-rei",
+    "64": "ponta-do-rosto",
+    "65": "miradouro-da-portela",
+    "79": "ponta-do-pargo-lighthouse",
+    "82": "pico-da-murta",
+    "83": "pico-do-arieiro",
+    "84": "bica-da-cana"
+  },
+  "added": [
+    {
+      "sourceIndex": 1,
+      "slug": "miradouro-da-rocha-do-navio",
+      "name": "Miradouro da Rocha do Navio",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/",
+      "mapQuery": "32.814864568347986,-16.87661760476914",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
+    },
+    {
+      "sourceIndex": 2,
+      "slug": "miradouro-da-santinha",
+      "name": "Miradouro da Santinha",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/santinha-viewpoint/",
+      "mapQuery": "32.862725431747734,-17.173349347097115",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/santinha-viewpoint/"
+    },
+    {
+      "sourceIndex": 3,
+      "slug": "miradouro-do-parque-de-merendas-dos-lamaceiros",
+      "name": "Miradouro do Parque de Merendas dos Lamaceiros",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/parque-de-merendas-viewpoint/",
+      "mapQuery": "32.85172051047124,-17.166137387432684",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/parque-de-merendas-viewpoint/"
+    },
+    {
+      "sourceIndex": 4,
+      "slug": "miradouro-do-pico-porto-moniz",
+      "name": "Miradouro do Pico — Porto Moniz",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/pico-viewpoint/",
+      "mapQuery": "32.864384413675616,-17.17950822131157",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/pico-viewpoint/"
+    },
+    {
+      "sourceIndex": 5,
+      "slug": "miradouro-do-teleferico-das-achadas-da-cruz",
+      "name": "Miradouro do Teleférico das Achadas da Cruz",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/",
+      "mapQuery": "32.85301601365388,-17.209983502920576",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/"
+    },
+    {
+      "sourceIndex": 7,
+      "slug": "miradouro-do-porto-de-abrigo",
+      "name": "Miradouro do Porto de Abrigo",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/porto-de-abrigo-viewpoint/",
+      "mapQuery": "32.8667053193602,-17.16570221641417",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/porto-de-abrigo-viewpoint/"
+    },
+    {
+      "sourceIndex": 8,
+      "slug": "miradouro-do-ribeiro-frio",
+      "name": "Miradouro do Ribeiro Frio",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/ribeiro-frio-viewpoint/",
+      "mapQuery": "32.74280024746848,-16.878582470393212",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/ribeiro-frio-viewpoint/"
+    },
+    {
+      "sourceIndex": 9,
+      "slug": "miradouro-das-cruzinhas",
+      "name": "Miradouro das Cruzinhas",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cruzinhas-viewpoint/",
+      "mapQuery": "32.76157988622994,-16.876875058194944",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cruzinhas-viewpoint/"
+    },
+    {
+      "sourceIndex": 10,
+      "slug": "miradouro-do-lombo-dos-palheiros",
+      "name": "Miradouro do Lombo dos Palheiros",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/lombo-dos-palheiros-viewpoint/",
+      "mapQuery": "32.77575997556672,-16.85029321826413",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/lombo-dos-palheiros-viewpoint/"
+    },
+    {
+      "sourceIndex": 12,
+      "slug": "miradouro-das-empenas",
+      "name": "Miradouro das Empenas",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/empenas-viewpoint/",
+      "mapQuery": "32.77114011195072,-16.917256574087425",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/empenas-viewpoint/"
+    },
+    {
+      "sourceIndex": 13,
+      "slug": "miradouro-do-picarouto",
+      "name": "Miradouro do Picarouto",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/picarouto-viewpoint/",
+      "mapQuery": "32.77125497702047,-16.907812408914015",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/picarouto-viewpoint/"
+    },
+    {
+      "sourceIndex": 14,
+      "slug": "miradouro-da-cova-da-roda",
+      "name": "Miradouro da Cova da Roda",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cova-da-roda-viewpoint/",
+      "mapQuery": "32.77840886793542,-16.88096241826408",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cova-da-roda-viewpoint/"
+    },
+    {
+      "sourceIndex": 16,
+      "slug": "miradouro-de-nossa-senhora-dos-bons-caminhos",
+      "name": "Miradouro de Nossa Senhora dos Bons Caminhos",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/nossa-senhora-dos-bons-caminhos-viewpoint/",
+      "mapQuery": "32.7908127658149,-16.860108047099082",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/nossa-senhora-dos-bons-caminhos-viewpoint/"
+    },
+    {
+      "sourceIndex": 17,
+      "slug": "miradouro-do-curtado",
+      "name": "Miradouro do Curtado",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/curtado-viewpoint/",
+      "mapQuery": "32.79506078896229,-16.86268310476968",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/curtado-viewpoint/"
+    },
+    {
+      "sourceIndex": 18,
+      "slug": "miradouro-de-santo-antonio-santana",
+      "name": "Miradouro de Santo António — Santana",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/santo-antonio-viewpoint/",
+      "mapQuery": "32.809946926990605,-16.872213833604654",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/santo-antonio-viewpoint/"
+    },
+    {
+      "sourceIndex": 20,
+      "slug": "miradouro-da-quinta-do-furao",
+      "name": "Miradouro da Quinta do Furão",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/quinta-do-furao-viewpoint/",
+      "mapQuery": "32.82421755043965,-16.884394145250656",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/quinta-do-furao-viewpoint/"
+    },
+    {
+      "sourceIndex": 21,
+      "slug": "miradouro-do-cabeco-do-resto",
+      "name": "Miradouro do Cabeço do Resto",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cabeco-do-resto-viewpoint/",
+      "mapQuery": "32.80638612820422,-16.9100909740865",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cabeco-do-resto-viewpoint/"
+    },
+    {
+      "sourceIndex": 22,
+      "slug": "miradouro-das-eiras",
+      "name": "Miradouro das Eiras",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/eiras-viewpoint/",
+      "mapQuery": "32.812142788360696,-16.912851372238823",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/eiras-viewpoint/"
+    },
+    {
+      "sourceIndex": 23,
+      "slug": "miradouro-do-pico-sao-jorge",
+      "name": "Miradouro do Pico — São Jorge",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/pico-viewpoint/",
+      "mapQuery": "32.823186047620766,-16.902603623098948",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/pico-viewpoint/"
+    },
+    {
+      "sourceIndex": 24,
+      "slug": "miradouro-da-vigia-sao-jorge",
+      "name": "Miradouro da Vigia — São Jorge",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/vigia-viewpoint/",
+      "mapQuery": "32.83468598038173,-16.911417218262535",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/vigia-viewpoint/"
+    },
+    {
+      "sourceIndex": 25,
+      "slug": "miradouro-do-ninho-da-manta",
+      "name": "Miradouro do Ninho da Manta",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/ninho-da-manta-viewpoint/",
+      "mapQuery": "32.7353,-16.9281",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/ninho-da-manta-viewpoint/"
+    },
+    {
+      "sourceIndex": 26,
+      "slug": "miradouro-da-beira-da-quinta",
+      "name": "Miradouro da Beira da Quinta",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/beira-da-quinta-viewpoint/",
+      "mapQuery": "32.82675995528283,-16.93907590476886",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/beira-da-quinta-viewpoint/"
+    },
+    {
+      "sourceIndex": 27,
+      "slug": "miradouro-da-boca-das-voltas",
+      "name": "Miradouro da Boca das Voltas",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/boca-das-voltas-viewpoint/",
+      "mapQuery": "32.810142843883796,-16.95296547593385",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/boca-das-voltas-viewpoint/"
+    },
+    {
+      "sourceIndex": 28,
+      "slug": "miradouro-do-cabo-aereo",
+      "name": "Miradouro do Cabo Aéreo",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cabo-aereo-viewpoint/",
+      "mapQuery": "32.83079364545404,-16.901101902921233",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/cabo-aereo-viewpoint/"
+    },
+    {
+      "sourceIndex": 33,
+      "slug": "miradouro-da-boca-dos-namorados",
+      "name": "Miradouro da Boca dos Namorados",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/boca-dos-namorados-viewpoint/",
+      "mapQuery": "32.69571842213682,-16.978275219734137",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/boca-dos-namorados-viewpoint/"
+    },
+    {
+      "sourceIndex": 34,
+      "slug": "miradouro-da-boca-da-corrida",
+      "name": "Miradouro da Boca da Corrida",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/boca-da-corrida-viewpoint/",
+      "mapQuery": "32.71124370898839,-16.986784758747614",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/boca-da-corrida-viewpoint/"
+    },
+    {
+      "sourceIndex": 35,
+      "slug": "miradouro-do-castelo-do-pico",
+      "name": "Miradouro do Castelo do Pico",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/castelo-do-pico-viewpoint/",
+      "mapQuery": "32.65080783008401,-16.91656632852977",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/castelo-do-pico-viewpoint/"
+    },
+    {
+      "sourceIndex": 36,
+      "slug": "miradouro-da-achada-funchal",
+      "name": "Miradouro da Achada — Funchal",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/achada-viewpoint/",
+      "mapQuery": "32.65754394853098,-16.919712552854538",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/achada-viewpoint/"
+    },
+    {
+      "sourceIndex": 37,
+      "slug": "miradouro-da-nazare",
+      "name": "Miradouro da Nazaré",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/nazare-viewpoint/",
+      "mapQuery": "32.64215788006655,-16.932688383080205",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/nazare-viewpoint/"
+    },
+    {
+      "sourceIndex": 38,
+      "slug": "miradouro-da-quinta-vigia",
+      "name": "Miradouro da Quinta Vigia",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/quinta-vigia-viewpoint/",
+      "mapQuery": "32.646012794794515,-16.91583120082944",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/quinta-vigia-viewpoint/"
+    },
+    {
+      "sourceIndex": 39,
+      "slug": "miradouro-da-vila-guida",
+      "name": "Miradouro da Vila Guida",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/vila-guida-viewpoint/",
+      "mapQuery": "32.64981763003395,-16.895686003512175",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/vila-guida-viewpoint/"
+    },
+    {
+      "sourceIndex": 40,
+      "slug": "miradouro-das-neves",
+      "name": "Miradouro das Neves",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/neves-viewpoint/",
+      "mapQuery": "32.65001916203768,-16.87373553469995",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/neves-viewpoint/"
+    },
+    {
+      "sourceIndex": 41,
+      "slug": "miradouro-de-sao-roque",
+      "name": "Miradouro de São Roque",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/sao-roque-viewpoint/",
+      "mapQuery": "32.66858645377353,-16.923271410439114",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/sao-roque-viewpoint/"
+    },
+    {
+      "sourceIndex": 42,
+      "slug": "miradouro-do-curral-dos-romeiros",
+      "name": "Miradouro do Curral dos Romeiros",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/curral-dos-romeiros-viewpoint/",
+      "mapQuery": "32.68047912204189,-16.890565650320607",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/curral-dos-romeiros-viewpoint/"
+    },
+    {
+      "sourceIndex": 43,
+      "slug": "miradouro-do-forte-de-sao-jose",
+      "name": "Miradouro do Forte de São José",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/sao-jose-fort-viewpoint/",
+      "mapQuery": "32.64142325091824,-16.917745398224962",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/sao-jose-fort-viewpoint/"
+    },
+    {
+      "sourceIndex": 44,
+      "slug": "miradouro-do-jardim-botanico",
+      "name": "Miradouro do Jardim Botânico",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/botanical-garden-viewpoint/",
+      "mapQuery": "32.66260477173389,-16.894775853308555",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/botanical-garden-viewpoint/"
+    },
+    {
+      "sourceIndex": 45,
+      "slug": "miradouro-do-lido",
+      "name": "Miradouro do Lido",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/lido-viewpoint/",
+      "mapQuery": "32.63633369539145,-16.934302082427177",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/lido-viewpoint/"
+    },
+    {
+      "sourceIndex": 46,
+      "slug": "miradouro-do-lombo-da-quinta",
+      "name": "Miradouro do Lombo da Quinta",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/lombo-da-quinta-viewpoint/",
+      "mapQuery": "32.660234544313916,-16.874713524626948",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/lombo-da-quinta-viewpoint/"
+    },
+    {
+      "sourceIndex": 47,
+      "slug": "miradouro-do-palheiro-ferreiro",
+      "name": "Miradouro do Palheiro Ferreiro",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/palheiro-ferreiro-viewpoint/",
+      "mapQuery": "32.660718706109606,-16.876594710224555",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/palheiro-ferreiro-viewpoint/"
+    },
+    {
+      "sourceIndex": 48,
+      "slug": "miradouro-do-parque-de-santa-catarina",
+      "name": "Miradouro do Parque de Santa Catarina",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/santa-catarina-park-viewpoint/",
+      "mapQuery": "32.64550869972514,-16.915101598448057",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/santa-catarina-park-viewpoint/"
+    },
+    {
+      "sourceIndex": 49,
+      "slug": "miradouro-do-pico-dos-barcelos",
+      "name": "Miradouro do Pico dos Barcelos",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pico-dos-barcelos-viewpoint/",
+      "mapQuery": "32.65892207898638,-16.939463908805852",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pico-dos-barcelos-viewpoint/"
+    },
+    {
+      "sourceIndex": 50,
+      "slug": "miradouro-do-pinaculo",
+      "name": "Miradouro do Pináculo",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pinaculo-viewpoint/",
+      "mapQuery": "32.645301747572496,-16.870577426769962",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pinaculo-viewpoint/"
+    },
+    {
+      "sourceIndex": 51,
+      "slug": "miradouro-do-socorro",
+      "name": "Miradouro do Socorro",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/socorro-viewpoint/",
+      "mapQuery": "32.64704943866033,-16.897670121877926",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/socorro-viewpoint/"
+    },
+    {
+      "sourceIndex": 52,
+      "slug": "miradouro-do-terreiro-da-luta",
+      "name": "Miradouro do Terreiro da Luta",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/terreiro-da-luta-viewpoint/",
+      "mapQuery": "32.68439624258004,-16.898807907891786",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/terreiro-da-luta-viewpoint/"
+    },
+    {
+      "sourceIndex": 53,
+      "slug": "miradouro-dos-marmeleiros",
+      "name": "Miradouro dos Marmeleiros",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/marmeleiros-viewpoint/",
+      "mapQuery": "32.6693298315244,-16.909353927540597",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/marmeleiros-viewpoint/"
+    },
+    {
+      "sourceIndex": 54,
+      "slug": "miradouro-do-largo-padre-pita-ferreira",
+      "name": "Miradouro do Largo Padre Pita Ferreira",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/largo-padre-pita-ferreira-viewpoint/",
+      "mapQuery": "32.64934186570772,-16.88293548082222",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/largo-padre-pita-ferreira-viewpoint/"
+    },
+    {
+      "sourceIndex": 55,
+      "slug": "miradouro-da-quinta-das-cruzes",
+      "name": "Miradouro da Quinta das Cruzes",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/quinta-das-cruzes-viewpoint/",
+      "mapQuery": "32.650582497857066,-16.913977125077395",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/quinta-das-cruzes-viewpoint/"
+    },
+    {
+      "sourceIndex": 56,
+      "slug": "miradouro-das-babosas",
+      "name": "Miradouro das Babosas",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/babosas-viewpoint/",
+      "mapQuery": "32.67641650125869,-16.898945521644144",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/babosas-viewpoint/"
+    },
+    {
+      "sourceIndex": 57,
+      "slug": "miradouro-de-santa-luzia",
+      "name": "Miradouro de Santa Luzia",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/santa-luzia-viewpoint/",
+      "mapQuery": "32.66087980513386,-16.908816323511218",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/santa-luzia-viewpoint/"
+    },
+    {
+      "sourceIndex": 58,
+      "slug": "miradouro-do-pico-alto",
+      "name": "Miradouro do Pico Alto",
+      "source": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pico-alto-viewpoint/",
+      "mapQuery": "32.69314906176053,-16.9029960950542",
+      "mapSource": "https://visitmadeira.com/en/what-to-do/experiencing-the-city-of-funchal/exploring-the-city/viewpoints-in-funchal/pico-alto-viewpoint/"
+    },
+    {
+      "sourceIndex": 59,
+      "slug": "miradouro-do-paredao",
+      "name": "Miradouro do Paredão",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/paredao-viewpoint/",
+      "mapQuery": "32.716118797078224,-16.95547562855132",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/south-coast/camara-de-lobos/paredao-viewpoint/"
+    },
+    {
+      "sourceIndex": 61,
+      "slug": "miradouro-da-queimada",
+      "name": "Miradouro da Queimada",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/east-coast/machico/queimada-viewpoint/",
+      "mapQuery": "32.71407054835316,-16.764898147101153",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/east-coast/machico/queimada-viewpoint/"
+    },
+    {
+      "sourceIndex": 62,
+      "slug": "miradouro-da-contenda",
+      "name": "Miradouro da Contenda",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/east-coast/santa-cruz/contenda-viewpoint/",
+      "mapQuery": "32.674420401547955,-16.81805613176076",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/east-coast/santa-cruz/contenda-viewpoint/"
+    },
+    {
+      "sourceIndex": 66,
+      "slug": "miradouro-de-sao-sebastiao-ribeira-brava",
+      "name": "Miradouro de São Sebastião — Ribeira Brava",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/sao-sebastiao-viewpoint/",
+      "mapQuery": "32.669864253288814,-17.062719945254862",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/sao-sebastiao-viewpoint/"
+    },
+    {
+      "sourceIndex": 67,
+      "slug": "miradouro-do-espigao",
+      "name": "Miradouro do Espigão",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/espigao-viewpoint/",
+      "mapQuery": "32.70905816979428,-17.030695428619257",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/espigao-viewpoint/"
+    },
+    {
+      "sourceIndex": 68,
+      "slug": "miradouro-da-pousada-dos-vinhaticos",
+      "name": "Miradouro da Pousada dos Vinháticos",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/pousada-dos-vinhaticos-viewpoint/",
+      "mapQuery": "32.736080613271575,-17.025620785734812",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/pousada-dos-vinhaticos-viewpoint/"
+    },
+    {
+      "sourceIndex": 69,
+      "slug": "miradouro-da-encumeada",
+      "name": "Miradouro da Encumeada",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/encumeada-viewpoint/",
+      "mapQuery": "32.75455755594404,-17.02033450292326",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ribeira-brava/encumeada-viewpoint/"
+    },
+    {
+      "sourceIndex": 70,
+      "slug": "miradouro-sobre-a-ponta-do-sol",
+      "name": "Miradouro sobre a Ponta do Sol",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ponta-do-sol/viewpoint-over-ponta-do-sol/",
+      "mapQuery": "32.68104045779384,-17.10367674525453",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ponta-do-sol/viewpoint-over-ponta-do-sol/"
+    },
+    {
+      "sourceIndex": 71,
+      "slug": "miradouro-do-cascalho",
+      "name": "Miradouro do Cascalho",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ponta-do-sol/cascalho-viewpoint/",
+      "mapQuery": "32.683513013276496,-17.09163094525445",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/ponta-do-sol/cascalho-viewpoint/"
+    },
+    {
+      "sourceIndex": 72,
+      "slug": "miradouro-da-achada-de-santo-antao",
+      "name": "Miradouro da Achada de Santo Antão",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/achada-de-santo-antao-viewpoint/",
+      "mapQuery": "32.711341758978726,-17.14051776222595",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/achada-de-santo-antao-viewpoint/"
+    },
+    {
+      "sourceIndex": 73,
+      "slug": "miradouro-do-piarro",
+      "name": "Miradouro do Piarro",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/piarro-viewpoint/",
+      "mapQuery": "32.72111573337686,-17.173968802924175",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/piarro-viewpoint/"
+    },
+    {
+      "sourceIndex": 74,
+      "slug": "miradouro-do-jardim-do-mar",
+      "name": "Miradouro do Jardim do Mar",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/jardim-do-mar-viewpoint/",
+      "mapQuery": "32.73668367509638,-17.20850544793985",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/jardim-do-mar-viewpoint/"
+    },
+    {
+      "sourceIndex": 75,
+      "slug": "miradouro-da-raposeira",
+      "name": "Miradouro da Raposeira",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/raposeira-viewpoint/",
+      "mapQuery": "32.759411374356844,-17.223161860593805",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/raposeira-viewpoint/"
+    },
+    {
+      "sourceIndex": 76,
+      "slug": "miradouro-do-precipicio",
+      "name": "Miradouro do Precipício",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/precipice-viewpoint/",
+      "mapQuery": "32.770432007146425,-17.234494358746066",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/precipice-viewpoint/"
+    },
+    {
+      "sourceIndex": 77,
+      "slug": "miradouro-do-massapez",
+      "name": "Miradouro do Massapez",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/massapez-viewpoint/",
+      "mapQuery": "32.77110485855856,-17.238451360256295",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/massapez-viewpoint/"
+    },
+    {
+      "sourceIndex": 78,
+      "slug": "miradouro-da-lombada-dos-marinheiros",
+      "name": "Miradouro da Lombada dos Marinheiros",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/lombada-dos-marinheiros-viewpoint/",
+      "mapQuery": "32.7875308813615,-17.23352086389161",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/lombada-dos-marinheiros-viewpoint/"
+    },
+    {
+      "sourceIndex": 80,
+      "slug": "miradouro-do-fio-faja-da-ovelha",
+      "name": "Miradouro do Fio — Fajã da Ovelha",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/fio-viewpoint/",
+      "mapQuery": "32.8096537408969,-17.25650531641566",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/fio-viewpoint/"
+    },
+    {
+      "sourceIndex": 81,
+      "slug": "miradouro-da-boa-morte",
+      "name": "Miradouro da Boa Morte",
+      "source": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/boa-morte-viewpoint/",
+      "mapQuery": "32.83350776755614,-17.236953711274044",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/west-coast/calheta/boa-morte-viewpoint/"
+    },
+    {
+      "sourceIndex": 85,
+      "slug": "rocha-do-navio-cable-car",
+      "name": "Teleférico da Rocha do Navio",
+      "source": "https://visitmadeira.com/en/means-of-transportation/rocha-do-navio-cable-car/",
+      "mapQuery": "32.814864568347986,-16.87661760476914",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
+    },
+    {
+      "sourceIndex": 86,
+      "slug": "faja-dos-padres-cable-car",
+      "name": "Teleférico da Fajã dos Padres",
+      "source": "https://visitmadeira.com/en/means-of-transportation/faja-dos-padres-cable-car/",
+      "mapQuery": "32.65702,-17.02144",
+      "mapSource": "https://portugal.worldplaces.me/review/244890194-teleferico-da-faja-dos-padres.html"
+    },
+    {
+      "sourceIndex": 87,
+      "slug": "fajas-do-cabo-girao-rancho-cable-car",
+      "name": "Teleférico das Fajãs do Cabo Girão — Rancho",
+      "source": "https://visitmadeira.com/en/means-of-transportation/fajas-do-cabo-girao-rancho-cable-car/",
+      "mapQuery": "32.6525833333,-16.9926666667",
+      "mapSource": "https://areaprotegidadocabogirao.pt/file/roteiro-da-area-protegida-do-cabo-girao.pdf"
+    },
+    {
+      "sourceIndex": 88,
+      "slug": "botanical-garden-cable-car",
+      "name": "Teleférico do Jardim Botânico",
+      "source": "https://visitmadeira.com/en/means-of-transportation/botanical-garden-cable-car/",
+      "mapQuery": "32.677477,-16.897999",
+      "mapSource": "https://pt.gancarczyk.com/funchal-plan-zwiedzania-mapa-atrakcje-zabytki-noclegi-ciekawostki/"
+    },
+    {
+      "sourceIndex": 89,
+      "slug": "garajau-cable-car",
+      "name": "Teleférico do Garajau",
+      "source": "https://visitmadeira.com/en/means-of-transportation/garajau-cable-car/",
+      "mapQuery": "32.640065,-16.8521261111",
+      "mapSource": "https://commons.wikimedia.org/wiki/File:Garajau_cableway-upper_station.JPG"
+    },
+    {
+      "sourceIndex": 90,
+      "slug": "achadas-da-cruz-cable-car",
+      "name": "Teleférico das Achadas da Cruz",
+      "source": "https://visitmadeira.com/en/means-of-transportation/achadas-da-cruz-cable-car/",
+      "mapQuery": "32.85301601365388,-17.209983502920576",
+      "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/achadas-da-cruz-viewpoint/"
+    },
+    {
+      "sourceIndex": 91,
+      "slug": "funchal-cable-car",
+      "name": "Teleférico do Funchal — Monte",
+      "source": "https://visitmadeira.com/en/means-of-transportation/funchal-cable-car/",
+      "mapQuery": "32.647073,-16.90225",
+      "mapSource": "https://discoverportugal2day.com/en/funchal-cable-car/"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { cableCarLabels } from "../lib/scenicLabels";
 import { plannerLocationPath } from "../data/plannerLocations";
 import { formatDuration } from '../lib/i18n/duration';
 import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
@@ -214,7 +215,7 @@ const locationCoordinates: Record<string, [
     "miradouro-sao-cristovao": [32.8225, -17.0368],
     "miradouro-terra-grande": [32.7356, -17.0122],
     "bica-da-cana": [32.7544, -17.0387],
-    "eira-da-achada": [32.8124, -17.0725],
+    "eira-da-achada": [32.848451520692365, -17.152944463369373],
     "pico-da-murta": [32.7399, -16.9905],
     "pr14-levada-dos-cedros": [32.8111, -17.1582],
     "pr13-vereda-do-fanal": [32.7938, -17.1422],
@@ -225,7 +226,82 @@ const locationCoordinates: Record<string, [
     "ribeira-brava-beach": [
         32.6722295,
         -17.0681673
-    ]
+    ],
+    "miradouro-da-rocha-do-navio": [32.814864568347986, -16.87661760476914],
+    "miradouro-da-santinha": [32.862725431747734, -17.173349347097115],
+    "miradouro-do-parque-de-merendas-dos-lamaceiros": [32.85172051047124, -17.166137387432684],
+    "miradouro-do-pico-porto-moniz": [32.864384413675616, -17.17950822131157],
+    "miradouro-do-teleferico-das-achadas-da-cruz": [32.85301601365388, -17.209983502920576],
+    "miradouro-do-porto-de-abrigo": [32.8667053193602, -17.16570221641417],
+    "miradouro-do-ribeiro-frio": [32.74280024746848, -16.878582470393212],
+    "miradouro-das-cruzinhas": [32.76157988622994, -16.876875058194944],
+    "miradouro-do-lombo-dos-palheiros": [32.77575997556672, -16.85029321826413],
+    "miradouro-das-empenas": [32.77114011195072, -16.917256574087425],
+    "miradouro-do-picarouto": [32.77125497702047, -16.907812408914015],
+    "miradouro-da-cova-da-roda": [32.77840886793542, -16.88096241826408],
+    "miradouro-de-nossa-senhora-dos-bons-caminhos": [32.7908127658149, -16.860108047099082],
+    "miradouro-do-curtado": [32.79506078896229, -16.86268310476968],
+    "miradouro-de-santo-antonio-santana": [32.809946926990605, -16.872213833604654],
+    "miradouro-da-quinta-do-furao": [32.82421755043965, -16.884394145250656],
+    "miradouro-do-cabeco-do-resto": [32.80638612820422, -16.9100909740865],
+    "miradouro-das-eiras": [32.812142788360696, -16.912851372238823],
+    "miradouro-do-pico-sao-jorge": [32.823186047620766, -16.902603623098948],
+    "miradouro-da-vigia-sao-jorge": [32.83468598038173, -16.911417218262535],
+    "miradouro-do-ninho-da-manta": [32.7353, -16.9281],
+    "miradouro-da-beira-da-quinta": [32.82675995528283, -16.93907590476886],
+    "miradouro-da-boca-das-voltas": [32.810142843883796, -16.95296547593385],
+    "miradouro-do-cabo-aereo": [32.83079364545404, -16.901101902921233],
+    "miradouro-da-boca-dos-namorados": [32.69571842213682, -16.978275219734137],
+    "miradouro-da-boca-da-corrida": [32.71124370898839, -16.986784758747614],
+    "miradouro-do-castelo-do-pico": [32.65080783008401, -16.91656632852977],
+    "miradouro-da-achada-funchal": [32.65754394853098, -16.919712552854538],
+    "miradouro-da-nazare": [32.64215788006655, -16.932688383080205],
+    "miradouro-da-quinta-vigia": [32.646012794794515, -16.91583120082944],
+    "miradouro-da-vila-guida": [32.64981763003395, -16.895686003512175],
+    "miradouro-das-neves": [32.65001916203768, -16.87373553469995],
+    "miradouro-de-sao-roque": [32.66858645377353, -16.923271410439114],
+    "miradouro-do-curral-dos-romeiros": [32.68047912204189, -16.890565650320607],
+    "miradouro-do-forte-de-sao-jose": [32.64142325091824, -16.917745398224962],
+    "miradouro-do-jardim-botanico": [32.66260477173389, -16.894775853308555],
+    "miradouro-do-lido": [32.63633369539145, -16.934302082427177],
+    "miradouro-do-lombo-da-quinta": [32.660234544313916, -16.874713524626948],
+    "miradouro-do-palheiro-ferreiro": [32.660718706109606, -16.876594710224555],
+    "miradouro-do-parque-de-santa-catarina": [32.64550869972514, -16.915101598448057],
+    "miradouro-do-pico-dos-barcelos": [32.65892207898638, -16.939463908805852],
+    "miradouro-do-pinaculo": [32.645301747572496, -16.870577426769962],
+    "miradouro-do-socorro": [32.64704943866033, -16.897670121877926],
+    "miradouro-do-terreiro-da-luta": [32.68439624258004, -16.898807907891786],
+    "miradouro-dos-marmeleiros": [32.6693298315244, -16.909353927540597],
+    "miradouro-do-largo-padre-pita-ferreira": [32.64934186570772, -16.88293548082222],
+    "miradouro-da-quinta-das-cruzes": [32.650582497857066, -16.913977125077395],
+    "miradouro-das-babosas": [32.67641650125869, -16.898945521644144],
+    "miradouro-de-santa-luzia": [32.66087980513386, -16.908816323511218],
+    "miradouro-do-pico-alto": [32.69314906176053, -16.9029960950542],
+    "miradouro-do-paredao": [32.716118797078224, -16.95547562855132],
+    "miradouro-da-queimada": [32.71407054835316, -16.764898147101153],
+    "miradouro-da-contenda": [32.674420401547955, -16.81805613176076],
+    "miradouro-de-sao-sebastiao-ribeira-brava": [32.669864253288814, -17.062719945254862],
+    "miradouro-do-espigao": [32.70905816979428, -17.030695428619257],
+    "miradouro-da-pousada-dos-vinhaticos": [32.736080613271575, -17.025620785734812],
+    "miradouro-da-encumeada": [32.75455755594404, -17.02033450292326],
+    "miradouro-sobre-a-ponta-do-sol": [32.68104045779384, -17.10367674525453],
+    "miradouro-do-cascalho": [32.683513013276496, -17.09163094525445],
+    "miradouro-da-achada-de-santo-antao": [32.711341758978726, -17.14051776222595],
+    "miradouro-do-piarro": [32.72111573337686, -17.173968802924175],
+    "miradouro-do-jardim-do-mar": [32.73668367509638, -17.20850544793985],
+    "miradouro-da-raposeira": [32.759411374356844, -17.223161860593805],
+    "miradouro-do-precipicio": [32.770432007146425, -17.234494358746066],
+    "miradouro-do-massapez": [32.77110485855856, -17.238451360256295],
+    "miradouro-da-lombada-dos-marinheiros": [32.7875308813615, -17.23352086389161],
+    "miradouro-do-fio-faja-da-ovelha": [32.8096537408969, -17.25650531641566],
+    "miradouro-da-boa-morte": [32.83350776755614, -17.236953711274044],
+    "rocha-do-navio-cable-car": [32.814864568347986, -16.87661760476914],
+    "faja-dos-padres-cable-car": [32.65702, -17.02144],
+    "fajas-do-cabo-girao-rancho-cable-car": [32.6525833333, -16.9926666667],
+    "botanical-garden-cable-car": [32.677477, -16.897999],
+    "garajau-cable-car": [32.640065, -16.8521261111],
+    "achadas-da-cruz-cable-car": [32.85301601365388, -17.209983502920576],
+    "funchal-cable-car": [32.647073, -16.90225]
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }
@@ -321,7 +397,7 @@ export default function TripPlanPage() {
     } : {
         title: localize("Trip plan"), intro: localize("Create a simple day itinerary: choose a starting point, add locations, a restaurant stop and timing for each point."), dayDetails: localize("Day details"), date: localize('Date'), startVilla: localize("Starting point"), endPoint: localize("End point"), endAtStart: localize("Start equals finish"), customPoint: localize("Google Maps link or coordinates"), whatToTry: localize("What to try"), departure: localize("Departure time"), addStop: localize("Add a stop"), location: localize('Location'), locationFilters: localize("Location filters"), chooseLocation: localize("Choose a location"), addLocation: localize("Add location"), addRestaurant: localize("Add restaurant"), addVilla: localize("Add villa return"), selectedStops: localize("Day route"), noStops: localize("Add your first location or restaurant to build the route."), arrival: localize('Arrival'), duration: localize('Duration'), sunrise: localize('Sunrise'), bar: localize('Bar'), restaurantOption: localize('Restaurant'), meal: localize('Meal'), breakfast: localize('Breakfast'), lunch: localize('Lunch'), dinner: localize('Dinner'), up: localize("Move up"), down: localize("Move down"), remove: localize('Remove'), restaurant: localize('Restaurant'), output: localize("Ready programme"), share: localize('Share'), copied: localize('Copied'), clear: localize("Clear route"), return: localize("Return to"), departureFrom: localize("departure from"), defaultProgram: localize("Add route stops and a ready-to-copy programme will appear here."), endVillaRequired: localize("Choose a valid end point to complete the route."), recommendations: localize("Day recommendations"), weather: localize('Weather'), beach: localize('Beach'), levada: localize('Levada'), trekking: localize('Trekking'), weatherUnavailable: localize("A current forecast is unavailable for the selected date. Check the weather before departure."),
     };
-    const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }, ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" }), ({ value: "Villas", label: locale === "uk" ? "\u0412\u0456\u043B\u043B\u0438" : "Villas" })];
+    const locationFilters = [{ value: 'All', label: messages.exploreList.filters.all }, { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints }, { value: 'Hiking', label: messages.exploreList.filters.hiking }, { value: 'Beaches', label: messages.exploreList.filters.beaches }, { value: 'City & culture', label: messages.exploreList.filters.cityCulture }, { value: 'Levada walks', label: messages.exploreList.filters.levadaWalks }, { value: 'Airport', label: locale === 'uk' ? 'Аеропорт' : 'Airport' }, { value: 'Restaurants', label: locale === 'uk' ? 'Ресторани' : 'Restaurants' }, { value: 'Lab Travel', label: 'Lab Travel' }, { value: 'Supermarkets', label: locale === 'uk' ? 'Супермаркети' : 'Supermarkets' }, ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" }), ({ value: "Villas", label: locale === "uk" ? "\u0412\u0456\u043B\u043B\u0438" : "Villas" }), ({ value: "Cable cars", label: cableCarLabels[translationLanguage] })];
     const availableLocations = useMemo(() => locations.filter((location) => locationFilter === 'All' || location.tags.includes(locationFilter)).map((location) => getLocalizedLocation(location, locale)).sort((a, b) => a.name.localeCompare(b.name, locale)), [locale, locationFilter]);
     const locationBySlug = useMemo(() => new Map(locations.map((location) => [location.slug, getLocalizedLocation(location, locale)])), [locale]);
     const routeLocations = useMemo(() => stops.filter((stop) => stop.type === 'location' && stop.slug).map((stop) => locationBySlug.get(stop.slug as string)).filter(Boolean), [stops, locationBySlug]);

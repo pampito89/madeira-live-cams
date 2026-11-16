@@ -1,3 +1,4 @@
+import { scenicLocations } from "./scenicLocations";
 import { activityLocations } from "./activities";
 export type Locale = 'en' | 'uk';
 export type LocalizedText = {
@@ -25,6 +26,12 @@ export type Location = {
     imageAlt: LocalizedText;
     mapQuery: string;
     article: LocalizedArticle;
+    sources?: {
+        label: string;
+        url: string;
+    }[];
+    checkedAt?: string;
+    imagePending?: boolean;
 };
 export type DisplayLocation = {
     slug: string;
@@ -753,7 +760,7 @@ export const locations: Location[] = [
             en: 'Hiking',
             uk: 'Хайкінг',
         },
-        tags: ['Hiking'],
+        tags: ['Hiking', "Viewpoints"],
         summary: {
             en: 'Madeira’s highest peak, reached by mountain trails with expansive views in clear weather.',
             uk: 'Найвища вершина Мадейри, до якої ведуть гірські стежки з широкими видами в ясну погоду.',
@@ -799,7 +806,7 @@ export const locations: Location[] = [
                 en: 'Check the official trail status and mountain forecast before travelling. PR1.2 from Achada do Teixeira is the usual shorter approach, but it still involves uphill walking at high altitude. Wear layers, waterproof clothing and shoes with good grip, carry water and food, and do not start PR1 from Pico do Arieiro unless its full current status and access conditions have been confirmed.',
                 uk: 'Перед поїздкою перевірте офіційний статус стежок і гірський прогноз. PR1.2 з Achada do Teixeira — звичний коротший шлях, але він все одно передбачає підйом пішки на великій висоті. Одягайтеся шарами, візьміть водонепроникний одяг, взуття з хорошим зчепленням, воду та їжу; не починайте PR1 із Pico do Arieiro, доки не підтвердите повний актуальний статус маршруту та умови доступу.',
             },
-        },
+        }
     },
     {
         slug: 'faja-dos-padres',
@@ -1796,22 +1803,39 @@ export const locations: Location[] = [
     {
         slug: 'eira-da-achada',
         name: { en: 'Miradouro da Eira da Achada', uk: 'Оглядовий майданчик Eira da Achada' },
-        area: { en: 'São Vicente', uk: 'São Vicente' },
+        area: {
+            "en": "Ribeira da Janela, Porto Moniz",
+            "uk": "Ribeira da Janela, Porto Moniz"
+        },
         category: { en: 'Viewpoint', uk: 'Оглядовий майданчик' },
         tags: ['Viewpoints', 'North coast'],
-        summary: { en: 'A north-coast viewpoint above São Vicente with expansive ocean views and a quiet rural atmosphere.', uk: 'Оглядовий майданчик над São Vicente на північному узбережжі з широкими видами на океан і тихою сільською атмосферою.' },
+        summary: {
+            "en": "Eira da Achada overlooks the north coast from Ribeira da Janela towards Seixal and S\u00E3o Vicente.",
+            "uk": "Eira da Achada \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0454 \u043A\u0440\u0430\u0454\u0432\u0438\u0434 \u0456\u0437 Ribeira da Janela \u0432\u0437\u0434\u043E\u0432\u0436 \u043F\u0456\u0432\u043D\u0456\u0447\u043D\u043E\u0433\u043E \u0443\u0437\u0431\u0435\u0440\u0435\u0436\u0436\u044F \u0434\u043E Seixal \u0442\u0430 S\u00E3o Vicente."
+        },
         image: '/images/explore/eira-da-achada.jpg',
         imageAlt: { en: 'Miradouro da Eira da Achada in Madeira', uk: 'Оглядовий майданчик Eira da Achada на Мадейрі' },
-        mapQuery: 'Miradouro da Eira da Achada Madeira',
+        mapQuery: "32.848451520692365,-17.152944463369373",
         article: {
-            intro: { en: 'Eira da Achada overlooks the green northern slopes of Madeira, where rain and steep terrain created deep valleys facing the Atlantic.', uk: 'Eira da Achada виходить на зелені північні схили Мадейри, де дощі та крутий рельєф створили глибокі долини, звернені до Атлантики.' },
-            history: { en: 'It is a quieter alternative to the island’s busiest viewpoints and reflects the rural character of the north coast.', uk: 'Це спокійніша альтернатива найвідвідуванішим оглядовим майданчикам острова, що передає сільський характер північного узбережжя.' },
+            intro: {
+                "en": "Eira da Achada overlooks the north coast from Ribeira da Janela towards Seixal and S\u00E3o Vicente.",
+                "uk": "Eira da Achada \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0454 \u043A\u0440\u0430\u0454\u0432\u0438\u0434 \u0456\u0437 Ribeira da Janela \u0432\u0437\u0434\u043E\u0432\u0436 \u043F\u0456\u0432\u043D\u0456\u0447\u043D\u043E\u0433\u043E \u0443\u0437\u0431\u0435\u0440\u0435\u0436\u0436\u044F \u0434\u043E Seixal \u0442\u0430 S\u00E3o Vicente."
+            },
+            history: {
+                "en": "The viewpoint opened in 2009 with picnic areas and visitor facilities.",
+                "uk": "\u041C\u0430\u0439\u0434\u0430\u043D\u0447\u0438\u043A \u0432\u0456\u0434\u043A\u0440\u0438\u043B\u0438 2009 \u0440\u043E\u043A\u0443, \u043E\u0431\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u0432\u0448\u0438 \u0437\u043E\u043D\u0438 \u0434\u043B\u044F \u043F\u0456\u043A\u043D\u0456\u043A\u0456\u0432 \u0442\u0430 \u0456\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0443 \u0434\u043B\u044F \u0432\u0456\u0434\u0432\u0456\u0434\u0443\u0432\u0430\u0447\u0456\u0432."
+            },
             highlights: {
                 en: ['North-coast ocean panorama', 'Rural mountain roads', 'Quiet photography stop'],
                 uk: ['Океанська панорама північного узбережжя', 'Сільські гірські дороги', 'Тиха зупинка для фотографій'],
             },
-            practicalTip: { en: 'Bring a light waterproof layer and take care on narrow mountain roads, particularly after rain.', uk: 'Візьміть легкий водонепроникний одяг і будьте обережні на вузьких гірських дорогах, особливо після дощу.' },
+            practicalTip: { en: 'Bring a light waterproof layer and take care on narrow mountain roads, particularly after rain.', uk: 'Візьміть легкий водонепроникний одяг і будьте обережні на вузьких гірських дорогах, особливо після дощу.' }
         },
+        sources: [{
+                "label": "Visit Madeira",
+                "url": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/porto-moniz/ribeira-da-janela-viewpoint/"
+            }],
+        checkedAt: "2026-11-15"
     },
     {
         slug: 'pico-da-murta',
@@ -1938,7 +1962,7 @@ export const locations: Location[] = [
         name: { en: 'Traditional Santana Houses', uk: 'Традиційні будиночки Santana' },
         area: { en: 'Santana, North Coast', uk: 'Santana, Північне узбережжя' },
         category: { en: 'Culture & heritage', uk: 'Культура й спадщина' },
-        tags: ['City & culture', 'North coast', 'Lab Travel'],
+        tags: ['City & culture', 'North coast', 'Lab Travel', "Viewpoints"],
         summary: {
             en: 'Madeira’s iconic triangular thatched houses in Santana, with colourful façades, gardens and local craft displays.',
             uk: 'Знакові трикутні будиночки Мадейри із солом’яними дахами в Santana, з кольоровими фасадами, садами та місцевими ремісничими виробами.',
@@ -1963,7 +1987,7 @@ export const locations: Location[] = [
                 en: 'Visit during the day for the best photographs and combine the houses with Santana town, Queimadas or nearby north-coast viewpoints. Respect any restricted areas and houses used as shops or exhibitions.',
                 uk: 'Відвідуйте вдень для найкращих фотографій і поєднайте будиночки з Santana, Queimadas або близькими оглядовими майданчиками північного узбережжя. Поважайте обмежені зони та будинки, які використовують як магазини чи виставкові простори.',
             },
-        },
+        }
     },
     {
         slug: 'anjos-waterfall',
@@ -2272,7 +2296,8 @@ export const locations: Location[] = [
                 "uk": "\u041A\u043D\u043E\u043F\u043A\u0430 \u00AB\u041C\u0430\u0440\u0448\u0440\u0443\u0442\u00BB \u0432\u0435\u0434\u0435 \u0434\u043E \u043E\u0431\u0440\u0430\u043D\u043E\u0433\u043E \u043F\u0430\u0440\u043A\u0443\u0432\u0430\u043D\u043D\u044F (32.6722295, -17.0681673), \u0430 \u043D\u0435 \u0443 \u0432\u043E\u0434\u0443. \u0414\u0430\u043B\u0456 \u043F\u0440\u043E\u0439\u0434\u0456\u0442\u044C \u0434\u043E \u043F\u043B\u044F\u0436\u0443 \u043F\u0456\u0448\u043A\u0438; \u0443\u043C\u043E\u0432\u0438 \u043F\u0430\u0440\u043A\u0443\u0432\u0430\u043D\u043D\u044F \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u0442\u0435 \u043D\u0430 \u043C\u0456\u0441\u0446\u0456. \u0423 \u043F\u043B\u0430\u043D\u0443\u0432\u0430\u043B\u044C\u043D\u0438\u043A\u0443 \u0437\u0430\u043A\u043B\u0430\u0434\u0435\u043D\u043E 2 \u0433\u043E\u0434\u0438\u043D\u0438, \u044F\u043A\u0456 \u043C\u043E\u0436\u043D\u0430 \u0437\u043C\u0456\u043D\u0438\u0442\u0438. \u041F\u0435\u0440\u0435\u0434 \u043A\u0443\u043F\u0430\u043D\u043D\u044F\u043C \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u0442\u0435 \u043F\u043B\u044F\u0436\u043D\u0456 \u043F\u0440\u0430\u043F\u043E\u0440\u0438 \u0442\u0430 \u043F\u043E\u0442\u043E\u0447\u043D\u0456 \u0443\u043C\u043E\u0432\u0438. \u041E\u043F\u0438\u0441 \u0437\u0432\u0456\u0440\u0435\u043D\u043E \u0437 Visit Madeira 1 \u0436\u043E\u0432\u0442\u043D\u044F 2026 \u0440\u043E\u043A\u0443."
             }
         }
-    }
+    },
+    ...scenicLocations
 ];
 locations.push(...continenteModeloLocations);
 locations.push(...pingoDoceLocations);

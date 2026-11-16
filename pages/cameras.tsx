@@ -1,3 +1,4 @@
+import { cableCarLabels } from "../lib/scenicLabels";
 import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import heroStyles from "../styles/locationsHero.module.css";
@@ -227,7 +228,8 @@ export default function CamerasPage() {
             value: 'Lab Travel',
             label: 'Lab Travel',
         },
-        ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" })
+        ({ value: "Outdoor activities", label: locale === "uk" ? "\u0410\u043A\u0442\u0438\u0432\u043D\u0438\u0439 \u0432\u0456\u0434\u043F\u043E\u0447\u0438\u043D\u043E\u043A" : "Outdoor activities" }),
+        ({ value: "Cable cars", label: cableCarLabels[translationLanguage] })
     ];
     const filteredLocations = useMemo(() => {
         if (activeFilter === 'All') {
