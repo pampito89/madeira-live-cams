@@ -1,38 +1,32 @@
 # Scenic catalogue verification — 2026-11-16
 
-## Current coverage
+## Current catalogue
 
-- 85 Visit Madeira viewpoint-directory entries and seven cable-car entries are mapped to existing or new cards in scenic-coverage.json.
-- Achadas da Cruz and Rocha do Navio each have one card with both Viewpoints and Cable cars tags. Their separate viewpoint cards were removed; descriptions and source links were retained on the cable-car cards.
-- Fajã dos Padres uses its original card and photograph.
-- Added Miradouro de Ponta Delgada (ER102, two dragon trees) from Madeira Island Map with explicit coordinates and seven-language content. No unverified founding date or tree age is asserted.
-- 73 new cards remain, representing 511 language editions. Six are cable-car cards; the seventh cable car is the existing Fajã dos Padres card.
-- Photo requests list each new place once. No third-party photographs copied.
+74 new cards, including Levada do Norte, with 518 language editions (EN, UK, PT, DE, FR, ES, PL). The official viewpoint/cable directory coverage remains unchanged: 85 viewpoint entries and seven cable cars map to existing or added cards.
 
-## Duplicate audit
+Achadas da Cruz and Rocha do Navio each use a single card with both tags. Fajã dos Padres retains its original card and photo. Prior duplicate decisions are recorded in scenic-duplicate-audit.json. Ponta Delgada and Levada do Norte are additional researched locations outside the original directory manifest.
 
-Compared location names and all coordinate pairs within 350 m across the catalogue. Two same-site viewpoint/cable-car pairs were merged. Decisions for the remaining nearby pairs are recorded in scenic-duplicate-audit.json. Neighbouring attractions were retained when they represent distinct places, such as a garden and public square, beach and elevated lookout, or statue and boarding station. Ninho da Manta shares the Pico do Arieiro driving trailhead but is a separate walking destination.
+## Levada do Norte
 
-This is an audit of current catalogue data, not a guarantee that every possible alias or erroneous coordinate in older content has been identified. The regional directory is not an exhaustive inventory of informal lookouts.
+- User map link resolves to Levada do Norte at 32.6920062, -17.0388825. The same coordinates are used in the card, planner and weather lookup.
+- Searched the existing location data before adding; no existing Levada do Norte card found.
+- Original description and historical account translated into all seven supported languages. Historical sources: Junta de Freguesia do Estreito de Câmara de Lobos and RTP.
+- Construction began in 1947; inauguration on 1 June 1952. Distances and hiking duration are not inferred from a point on the channel. The 90-minute planner default is explicitly an editable allowance.
+- Tags: Levada walks and Hiking. Shared photo placeholder retained pending owner photo. Requested filename: levada-do-norte.webp.
+- Sources and review date are displayed. No claim of currently open/safe access.
 
-## Checks
+## Validation
 
-- Previous build passed before this change; final npm run build passed with 1,514 generated pages.
+- Previous build passed before the change. Final npm run build passed: 1,521 static pages.
 - Explicit tsc --noEmit --incremental false passed.
-- All 17 selected catalogue/planner tests passed, including static multilingual metadata/content and local coordinate resolution.
-- Browser: Ponta Delgada rendered on desktop and 390px mobile; cable-car filter showed seven cards, including Rocha do Navio — Santana and one Achadas da Cruz.
-- git diff --check passed.
+- Catalogue and planner-draft regression tests verify multilingual static pages, metadata, coordinates and adding catalogue locations to the plan.
+- Browser verified Levada do Norte in Ukrainian on desktop and at 390px mobile width.
+- git diff --check passed. All modified files fully rewritten after backup under backups/levada-do-norte-2026-11-16.
 
 ## Existing limitations
 
-- Standalone lint is not configured; npm run lint opens the setup wizard.
-- Existing coordinate coverage tests have unrelated villa-kent and obsolete static-sitemap assumptions; they were not modified.
-- Next.js warns that trip-plan data exceeds 128 kB (approximately 152–181 kB).
-- No paid live route calculation performed. Sources do not certify live operating/access conditions.
-- Earlier non-English catalogue translations were generated offline and sampled; new Ponta Delgada copy was translated directly in all supported languages.
+Standalone lint is not configured (npm run lint opens setup). Next.js reports large trip-plan data payloads (152–181 kB). Older coordinate tests have unrelated villa-kent/static-sitemap assumptions. No live paid route calculation performed.
 
-## Delivery
+Earlier catalogue translations were generated offline and sampled; Levada do Norte translations were authored directly. Sources are not live operational status checks. No external photographs copied or generated.
 
-Full-file replacement backups: backups/scenic-dedup-2026-11-16. Prior backups remain in backups/scenic-2026-11-15 and backups/faja-deduplicate-2026-11-16.
-
-Local changes only; no production deployment. Unrelated dirty files excluded from the commit.
+Local implementation only; no production deployment. Unrelated work is excluded from the commit.

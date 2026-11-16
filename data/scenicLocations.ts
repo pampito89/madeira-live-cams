@@ -4417,5 +4417,72 @@ export const scenicLocations: Location[] = [
     ],
     "checkedAt": "2026-11-16",
     "imagePending": true
+  },
+  {
+    "slug": "levada-do-norte",
+    "name": {
+      "en": "Levada do Norte",
+      "uk": "Levada do Norte"
+    },
+    "area": {
+      "en": "Ribeira Brava · Câmara de Lobos",
+      "uk": "Ribeira Brava · Câmara de Lobos"
+    },
+    "category": {
+      "en": "Levada walk",
+      "uk": "Прогулянка левадою"
+    },
+    "tags": [
+      "Levada walks",
+      "Hiking"
+    ],
+    "summary": {
+      "en": "Levada do Norte carries irrigation water from northern Madeira to farmland in Ribeira Brava and Câmara de Lobos. Its southern section passes through agricultural landscapes and settlements, offering a close view of the island’s working water channels. This card marks the point shared on Google Maps; it does not define a complete walking itinerary.",
+      "uk": "Levada do Norte переносить воду для зрошення з півночі Мадейри до сільськогосподарських земель Ribeira Brava та Câmara de Lobos. Її південна ділянка проходить серед оброблюваних схилів і поселень, де можна побачити, як працюють водні канали острова. Картка позначає точку з наданого посилання Google Maps, а не повний пішохідний маршрут."
+    },
+    "image": "/images/explore/scenic-photo-pending.svg",
+    "imageAlt": {
+      "en": "Photo coming soon",
+      "uk": "Фото незабаром"
+    },
+    "mapQuery": "32.6920062,-17.0388825",
+    "article": {
+      "intro": {
+        "en": "Levada do Norte carries irrigation water from northern Madeira to farmland in Ribeira Brava and Câmara de Lobos. Its southern section passes through agricultural landscapes and settlements, offering a close view of the island’s working water channels. This card marks the point shared on Google Maps; it does not define a complete walking itinerary.",
+        "uk": "Levada do Norte переносить воду для зрошення з півночі Мадейри до сільськогосподарських земель Ribeira Brava та Câmara de Lobos. Її південна ділянка проходить серед оброблюваних схилів і поселень, де можна побачити, як працюють водні канали острова. Картка позначає точку з наданого посилання Google Maps, а не повний пішохідний маршрут."
+      },
+      "history": {
+        "en": "Construction began in 1947, and the levada was inaugurated on 1 June 1952. It fulfilled a long-standing ambition to bring northern water to the south, following earlier attempts, including one in 1924. Besides supplying farms, the channel created a new access path across the upper slopes of Quinta Grande and Câmara de Lobos. Known as Vereda da Levada do Norte, this path also helped connect nearby homes and communities.",
+        "uk": "Будівництво почалося 1947 року, а урочисте відкриття левади відбулося 1 червня 1952 року. Так здійснили давній задум доставляти воду з півночі на південь після попередніх спроб, зокрема 1924 року. Крім зрошення полів, канал створив нову стежку через верхні схили Quinta Grande та Câmara de Lobos. Відома як Vereda da Levada do Norte, вона також поліпшила сполучення між навколишніми будинками й поселеннями."
+      },
+      "highlights": {
+        "en": [
+          "Levada do Norte · Vereda da Levada do Norte"
+        ],
+        "uk": [
+          "Levada do Norte · Vereda da Levada do Norte"
+        ]
+      },
+      "practicalTip": {
+        "en": "Choose your walking section and return arrangements before setting out; distance and duration depend on that choice. Check local access, weather and signs. The shared map pin is not a verified car park or trailhead. The planner’s initial 90 minutes is an editable allowance, not a measured route time.",
+        "uk": "Заздалегідь оберіть ділянку прогулянки та спосіб повернення: від цього залежать відстань і тривалість. Перевірте місцевий доступ, погоду й вказівники. Надана точка не є перевіреною парковкою або початком маршруту. Початкові 90 хвилин у планувальнику можна змінити; це не виміряний час проходження."
+      }
+    },
+    "sources": [
+      {
+        "label": "Junta de Freguesia do Estreito de Câmara de Lobos",
+        "url": "https://jf-estreitodecamaradelobos.pt/visitar/percursos"
+      },
+      {
+        "label": "RTP — Levada do Norte",
+        "url": "https://www.rtp.pt/programa/tv/p14679"
+      },
+      {
+        "label": "Google Maps",
+        "url": "https://maps.app.goo.gl/Bjd7MhwmzzmHEkz27"
+      }
+    ],
+    "checkedAt": "2026-11-16",
+    "imagePending": true
   }
 ];

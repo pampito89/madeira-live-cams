@@ -608,6 +608,12 @@
       "slug": "miradouro-ponta-delgada",
       "source": "https://www.madeiraislandmap.com/pt/content-hub/miradouro-ponta-delgada",
       "mapQuery": "32.8238720444847,-16.994621095008362"
+    },
+    {
+      "slug": "levada-do-norte",
+      "source": "https://jf-estreitodecamaradelobos.pt/visitar/percursos",
+      "mapQuery": "32.6920062,-17.0388825",
+      "mapSource": "https://maps.app.goo.gl/Bjd7MhwmzzmHEkz27"
     }
   ]
 }

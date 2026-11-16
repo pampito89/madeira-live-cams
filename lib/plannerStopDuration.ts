@@ -125,7 +125,8 @@ const standardLocationDurations: Record<string, number> = {
     "garajau-cable-car": 90,
     "achadas-da-cruz-cable-car": 90,
     "funchal-cable-car": 90,
-    "miradouro-ponta-delgada": 30
+    "miradouro-ponta-delgada": 30,
+    "levada-do-norte": 90
 };
 export function plannerStopDuration(location: {
     slug: string;

@@ -299,7 +299,8 @@ const locationCoordinates: Record<string, [
     "garajau-cable-car": [32.640065, -16.8521261111],
     "achadas-da-cruz-cable-car": [32.85301601365388, -17.209983502920576],
     "funchal-cable-car": [32.647073, -16.90225],
-    "miradouro-ponta-delgada": [32.8238720444847, -16.994621095008362]
+    "miradouro-ponta-delgada": [32.8238720444847, -16.994621095008362],
+    "levada-do-norte": [32.6920062, -17.0388825]
 };
 function todayValue() { const date = new Date(); const offset = date.getTimezoneOffset(); return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10); }
 function addMinutes(time: string, minutes: number) { const [hours, mins] = time.split(':').map(Number); const total = hours * 60 + mins + minutes; return `${Math.floor((total % 1440) / 60).toString().padStart(2, '0')}:${(total % 60).toString().padStart(2, '0')}`; }

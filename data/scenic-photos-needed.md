@@ -1,6 +1,10 @@
 # Фото для карток
 
-73 нові картки. Fajã dos Padres уже має фото. Для Achadas da Cruz та Rocha do Navio потрібне лише одне фото на місце: канатна дорога й оглядовий майданчик мають спільну картку.
+74 нові картки. Fajã dos Padres уже має фото. Для об’єднаних канаток та оглядових майданчиків потрібне одне фото на місце.
+
+## Левади
+
+- **Levada do Norte** — `levada-do-norte.webp`
 
 ## Канатні дороги
 
@@ -11,7 +15,7 @@
 - **Teleférico das Achadas da Cruz** — `achadas-da-cruz-cable-car.webp`
 - **Teleférico do Funchal — Monte** — `funchal-cable-car.webp`
 
-## Решта оглядових майданчиків
+## Оглядові майданчики
 
 - **Miradouro da Santinha** — `miradouro-da-santinha.webp`
 - **Miradouro do Parque de Merendas dos Lamaceiros** — `miradouro-do-parque-de-merendas-dos-lamaceiros.webp`

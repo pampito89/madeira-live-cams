@@ -129,5 +129,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
     "garajau-cable-car": { "latitude": 32.640065, "longitude": -16.8521261111 },
     "achadas-da-cruz-cable-car": { "latitude": 32.85301601365388, "longitude": -17.209983502920576 },
     "funchal-cable-car": { "latitude": 32.647073, "longitude": -16.90225 },
-    "miradouro-ponta-delgada": { latitude: 32.8238720444847, longitude: -16.994621095008362 }
+    "miradouro-ponta-delgada": { latitude: 32.8238720444847, longitude: -16.994621095008362 },
+    "levada-do-norte": { latitude: 32.6920062, longitude: -17.0388825 }
 };
