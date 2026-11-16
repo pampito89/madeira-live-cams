@@ -122,7 +122,6 @@ const standardLocationDurations: Record<string, number> = {
     "miradouro-do-fio-faja-da-ovelha": 30,
     "miradouro-da-boa-morte": 30,
     "rocha-do-navio-cable-car": 90,
-    "faja-dos-padres-cable-car": 90,
     "fajas-do-cabo-girao-rancho-cable-car": 90,
     "botanical-garden-cable-car": 90,
     "garajau-cable-car": 90,

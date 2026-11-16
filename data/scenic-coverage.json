@@ -20,7 +20,8 @@
     "79": "ponta-do-pargo-lighthouse",
     "82": "pico-da-murta",
     "83": "pico-do-arieiro",
-    "84": "bica-da-cana"
+    "84": "bica-da-cana",
+    "86": "faja-dos-padres"
   },
   "added": [
     {
@@ -574,14 +575,6 @@
       "source": "https://visitmadeira.com/en/means-of-transportation/rocha-do-navio-cable-car/",
       "mapQuery": "32.814864568347986,-16.87661760476914",
       "mapSource": "https://visitmadeira.com/en/where-to-go/madeira/north-coast/santana/rocha-do-navio-viewpoint/"
-    },
-    {
-      "sourceIndex": 86,
-      "slug": "faja-dos-padres-cable-car",
-      "name": "Teleférico da Fajã dos Padres",
-      "source": "https://visitmadeira.com/en/means-of-transportation/faja-dos-padres-cable-car/",
-      "mapQuery": "32.65702,-17.02144",
-      "mapSource": "https://portugal.worldplaces.me/review/244890194-teleferico-da-faja-dos-padres.html"
     },
     {
       "sourceIndex": 87,

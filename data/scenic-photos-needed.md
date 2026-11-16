@@ -1,11 +1,10 @@
 # Фото для нових карток
 
-75 карток: 68 оглядових майданчиків і 7 канатних доріг. Фото ще не додані. Надішліть зображення з назвою місця або номером нижче; поточна заглушка не є фотографією локації.
+74 нові картки: 68 оглядових майданчиків і 6 канатних доріг. Fajã dos Padres уже має фото: її наявна картка також позначена тегом «Канатні дороги», новий знімок не потрібний.
 
 ## Канатні дороги
 
 - **Teleférico da Rocha do Navio** — `rocha-do-navio-cable-car.webp`
-- **Teleférico da Fajã dos Padres** — `faja-dos-padres-cable-car.webp`
 - **Teleférico das Fajãs do Cabo Girão — Rancho** — `fajas-do-cabo-girao-rancho-cable-car.webp`
 - **Teleférico do Jardim Botânico** — `botanical-garden-cable-car.webp`
 - **Teleférico do Garajau** — `garajau-cable-car.webp`
@@ -85,4 +84,4 @@
 
 ## Після отримання фото
 
-Зберегти оптимізований WebP у `public/images/explore/`, змінити image та imageAlt відповідної картки у data/scenicLocations.ts, встановити imagePending: false. Перед повною заміною файлу створити backup. Не підмінювати спільний SVG фотографією: його використовують усі нові картки.
+Зберегти оптимізований WebP у public/images/explore/, змінити image та imageAlt відповідної картки у data/scenicLocations.ts, встановити imagePending: false. Перед повною заміною файлу створити backup. Спільний SVG не замінювати фотографією: його використовують усі нові картки.

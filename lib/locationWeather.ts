@@ -126,7 +126,6 @@ export const locationCoordinates: Record<string, LocationCoordinates> = {
     "miradouro-do-fio-faja-da-ovelha": { "latitude": 32.8096537408969, "longitude": -17.25650531641566 },
     "miradouro-da-boa-morte": { "latitude": 32.83350776755614, "longitude": -17.236953711274044 },
     "rocha-do-navio-cable-car": { "latitude": 32.814864568347986, "longitude": -16.87661760476914 },
-    "faja-dos-padres-cable-car": { "latitude": 32.65702, "longitude": -17.02144 },
     "fajas-do-cabo-girao-rancho-cable-car": { "latitude": 32.6525833333, "longitude": -16.9926666667 },
     "botanical-garden-cable-car": { "latitude": 32.677477, "longitude": -16.897999 },
     "garajau-cable-car": { "latitude": 32.640065, "longitude": -16.8521261111 },

@@ -822,7 +822,7 @@ export const locations: Location[] = [
             en: 'Coast',
             uk: 'Узбережжя',
         },
-        tags: ['Beaches', 'Lab Travel'],
+        tags: ['Beaches', 'Lab Travel', "Cable cars"],
         summary: {
             en: 'A quiet coastal estate below towering cliffs, reached by cable car or boat.',
             uk: 'Тихий прибережний маєток під високими скелями, куди можна дістатися канатною дорогою або човном.',
@@ -868,7 +868,7 @@ export const locations: Location[] = [
                 en: 'Check the cable-car timetable before travelling, especially in winter or in strong wind. Allow time to walk through the gardens and have lunch by the sea. The cable car is the normal access route; it is also used to transport farm produce, so treat it as part of the working life of Fajã dos Padres, not only as an attraction.',
                 uk: 'Перед поїздкою перевірте розклад канатної дороги, особливо взимку або за сильного вітру. Виділіть час на прогулянку садами та обід біля моря. Канатна дорога — основний спосіб дістатися сюди; нею також перевозять фермерську продукцію, тож це частина повсякденного життя Fajã dos Padres, а не лише туристична атракція.',
             },
-        },
+        }
     },
     {
         slug: 'cabo-girao-skywalk',
