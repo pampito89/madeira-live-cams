@@ -1,3 +1,4 @@
+import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -24,38 +25,12 @@ export default function HomePage() {
     const { translate: localize } = useText();
     const { siteLocale, messages } = useMessages();
     const router = useRouter();
-    const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
+    const [activeFilter, setActiveFilter] = useNavigationState<CameraCategory | 'All'>("index:activeFilter", 'All');
     const [flightNumber, setFlightNumber] = useState('');
     const text = homePageText[siteLocale];
     const saveHomeCameraView = () => {
-        window.sessionStorage.setItem('madeira-home-camera-view', JSON.stringify({ activeFilter, scrollY: Math.round(window.scrollY) }));
+        rememberNavigationPosition();
     };
-    useEffect(() => {
-        if (!router.isReady || router.query.restoreCameraFilter !== '1')
-            return;
-        const rawView = window.sessionStorage.getItem('madeira-home-camera-view');
-        window.sessionStorage.removeItem('madeira-home-camera-view');
-        if (!rawView) {
-            router.replace('/', undefined, { shallow: true, scroll: false });
-            return;
-        }
-        try {
-            const savedView = JSON.parse(rawView) as {
-                activeFilter?: CameraCategory | 'All';
-                scrollY?: number;
-            };
-            if (savedView.activeFilter)
-                setActiveFilter(savedView.activeFilter);
-            const timer = window.setTimeout(() => {
-                window.scrollTo({ top: savedView.scrollY ?? 0, behavior: 'auto' });
-                router.replace('/', undefined, { shallow: true, scroll: false });
-            }, 0);
-            return () => window.clearTimeout(timer);
-        }
-        catch {
-            router.replace('/', undefined, { shallow: true, scroll: false });
-        }
-    }, [router.isReady, router.query.restoreCameraFilter]);
     const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
@@ -77,15 +52,8 @@ export default function HomePage() {
       <meta name="twitter:title" content={localize(text.title)}/><meta name="twitter:description" content={localize(text.description)}/></Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
         <header className="relative isolate overflow-hidden rounded-xl bg-navy px-5 py-5 text-white sm:px-7 sm:py-6">
-          <Image
-            src="/images/madeira-coast-heading-v1.png"
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 1152px) calc(100vw - 32px), 1120px"
-            className="pointer-events-none -z-20 object-cover object-right"
-          />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-navy/90 via-navy/65 to-navy/20" />
+          <Image src="/images/madeira-coast-heading-v1.png" alt="" fill priority sizes="(max-width: 1152px) calc(100vw - 32px), 1120px" className="pointer-events-none -z-20 object-cover object-right"/>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-navy/90 via-navy/65 to-navy/20"/>
           <div className="max-w-3xl sm:pr-16">
             <h1 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl lg:text-4xl">
               {localize(text.heading)}

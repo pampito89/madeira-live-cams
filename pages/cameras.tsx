@@ -1,3 +1,4 @@
+import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { cableCarLabels } from "../lib/scenicLabels";
 import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
@@ -94,17 +95,14 @@ export default function CamerasPage() {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
     const router = useRouter();
-    const [activeFilter, setActiveFilter] = useState('All');
+    const [activeFilter, setActiveFilter] = useNavigationState("cameras:activeFilter", 'All');
     const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
     const handleFilterChange = (filter: string) => {
         setActiveFilter(filter);
     };
     const handleLocationOpen = (event: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
         event.preventDefault();
-        window.sessionStorage.setItem('madeira-location-list-view', JSON.stringify({
-            activeFilter,
-            scrollY: Math.round(window.scrollY),
-        }));
+        rememberNavigationPosition();
         router.push({
             pathname: "/explore/" + slug,
             query: { returnTo: 'cameras' },
@@ -164,40 +162,6 @@ export default function CamerasPage() {
             cancelled = true;
         };
     }, []);
-    useEffect(() => {
-        if (!router.isReady)
-            return;
-        if (router.query.restore !== '1') {
-            window.sessionStorage.removeItem('madeira-location-list-view');
-            return;
-        }
-        const rawView = window.sessionStorage.getItem('madeira-location-list-view');
-        window.sessionStorage.removeItem('madeira-location-list-view');
-        if (!rawView) {
-            router.replace('/cameras', undefined, { shallow: true, scroll: false });
-            return;
-        }
-        try {
-            const savedView = JSON.parse(rawView) as {
-                activeFilter?: unknown;
-                scrollY?: unknown;
-            };
-            if (typeof savedView.activeFilter === 'string') {
-                setActiveFilter(savedView.activeFilter);
-            }
-            const scrollY = typeof savedView.scrollY === 'number' && Number.isFinite(savedView.scrollY)
-                ? savedView.scrollY
-                : 0;
-            const timer = window.setTimeout(() => {
-                window.scrollTo({ top: scrollY, behavior: 'auto' });
-                router.replace('/cameras', undefined, { shallow: true, scroll: false });
-            }, 0);
-            return () => window.clearTimeout(timer);
-        }
-        catch {
-            router.replace('/cameras', undefined, { shallow: true, scroll: false });
-        }
-    }, [router.isReady, router.query.restore]);
     const filters = [
         { value: 'All', label: messages.exploreList.filters.all },
         {
