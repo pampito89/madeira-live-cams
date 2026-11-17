@@ -713,6 +713,16 @@
       "quality": 78,
       "originalBytes": 515712,
       "bytes": 160062
+    },
+    {
+      "source": "miradouro-do-pico-1.jpg",
+      "slug": "miradouro-do-pico-porto-moniz",
+      "image": "/images/explore/miradouro-do-pico-porto-moniz.webp",
+      "width": 1200,
+      "height": 675,
+      "quality": 78,
+      "originalBytes": 238277,
+      "bytes": 116174
     }
   ],
   "unassigned": [

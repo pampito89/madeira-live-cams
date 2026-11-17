@@ -125,8 +125,8 @@ export const scenicLocations: Location[] = [
   {
     "slug": "miradouro-do-pico-porto-moniz",
     "name": {
-      "en": "Miradouro do Pico — Porto Moniz",
-      "uk": "Miradouro do Pico — Porto Moniz"
+      "en": "Miradouro do Caminho do Pico",
+      "uk": "Miradouro do Caminho do Pico"
     },
     "area": {
       "en": "Porto Moniz",
@@ -143,10 +143,10 @@ export const scenicLocations: Location[] = [
       "en": "A clifftop lookout above Porto Moniz at the end of Caminho do Pico.",
       "uk": "Майданчик на скелі над Porto Moniz наприкінці Caminho do Pico."
     },
-    "image": "/images/explore/scenic-photo-pending.svg",
+    "image": "/images/explore/miradouro-do-pico-porto-moniz.webp",
     "imageAlt": {
-      "en": "Photo coming soon",
-      "uk": "Фото незабаром"
+      "en": "Miradouro do Caminho do Pico",
+      "uk": "Miradouro do Caminho do Pico"
     },
     "mapQuery": "32.864384413675616,-17.17950822131157",
     "article": {
@@ -160,11 +160,11 @@ export const scenicLocations: Location[] = [
       },
       "highlights": {
         "en": [
-          "Miradouro do Pico — Porto Moniz",
+          "Miradouro do Caminho do Pico",
           "Porto Moniz"
         ],
         "uk": [
-          "Miradouro do Pico — Porto Moniz",
+          "Miradouro do Caminho do Pico",
           "Porto Moniz"
         ]
       },
@@ -180,7 +180,7 @@ export const scenicLocations: Location[] = [
       }
     ],
     "checkedAt": "2026-11-15",
-    "imagePending": true
+    "imagePending": false
   },
   {
     "slug": "miradouro-do-porto-de-abrigo",
