@@ -1,4 +1,3 @@
-import LocationSources from "../../components/LocationSources";
 import PlaceStructuredData from '../../components/PlaceStructuredData';
 import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../../lib/i18n/pageTranslations';
 import { useText } from '../../lib/i18n/TranslationProvider';
@@ -138,7 +137,7 @@ function StandardLocationPage({ location }: Props) {
             </section>
             <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
-        <LocationSources location={location}/></article>
+        </article>
       </main>
     </Layout>);
 }
