@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import Layout from '../components/Layout';
 import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } from '../components/RentalDateRange';
-
 const ORIGIN = 'https://madeiralivecams.com';
 const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | Madeira Live Cams';
-const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 70 €/добу, MINI Countryman S ALL4 — 65 €/добу. Або 50 €/добу зі страховим депозитом. Бронювання без передоплати.';
+const DESCRIPTION = '\u041E\u0440\u0435\u043D\u0434\u0430 \u0430\u0432\u0442\u043E \u043D\u0430 \u041C\u0430\u0434\u0435\u0439\u0440\u0456: Nissan Qashqai e-Power \u2014 60 \u20AC/\u0434\u043E\u0431\u0443, MINI Countryman S ALL4 \u2014 60 \u20AC/\u0434\u043E\u0431\u0443. \u0410\u0431\u043E 50 \u20AC/\u0434\u043E\u0431\u0443 \u0437\u0456 \u0441\u0442\u0440\u0430\u0445\u043E\u0432\u0438\u043C \u0434\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u043C. \u0411\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0431\u0435\u0437 \u043F\u0435\u0440\u0435\u0434\u043E\u043F\u043B\u0430\u0442\u0438.';
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const HERO_SIZES = '(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1151px) calc(100vw - 64px), 1088px';
@@ -18,69 +17,69 @@ const CAR_SIZES = '(max-width: 639px) calc(100vw - 32px), (max-width: 767px) cal
 // MINI: https://www.press.bmwgroup.com/france/article/attachment/T0275586FR/396497
 // Luggage capacity is measured with rear seats upright; power uses metric horsepower (PS).
 const cars = [
-  { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 70, depositPrice: 50, features: ['SUV', 'Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.', 'Бензин / гібрид'], image: '/images/car-rental/nissan-1080.webp', smallImage: '/images/car-rental/nissan-640.webp', photoModel: 'Nissan Qashqai e-Power' },
-  { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 65, depositPrice: 50, features: ['SUV', 'Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.', 'Бензин'], image: '/images/car-rental/mini-1080.webp', smallImage: '/images/car-rental/mini-640.webp', photoModel: 'MINI Countryman S ALL4' },
+    { id: 'nissan', name: 'Nissan Qashqai e-Power', color: 'Білий', price: 60, depositPrice: 50, features: ['SUV', 'Автомат', 'Передній привід', 'Панорама', 'Багажник: 455 л', 'Потужність: 190 к. с.', 'Бензин / гібрид'], image: '/images/car-rental/nissan-1080.webp', smallImage: '/images/car-rental/nissan-640.webp', photoModel: 'Nissan Qashqai e-Power' },
+    { id: 'mini', name: 'MINI Countryman S ALL4', color: 'Синій', price: 60, depositPrice: 50, features: ['SUV', 'Автомат', 'Повний привід', 'Панорама', 'Багажник: 450 л', 'Потужність: 192 к. с.', 'Бензин'], image: '/images/car-rental/mini-1080.webp', smallImage: '/images/car-rental/mini-640.webp', photoModel: 'MINI Countryman S ALL4' },
 ];
 const fieldClass = 'mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-base text-navy focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean';
 const breadcrumbs = {
-  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Головна', item: `${ORIGIN}/uk` },
-    { '@type': 'ListItem', position: 2, name: 'Оренда авто', item: `${ORIGIN}/uk/car-rental` },
-  ],
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Головна', item: `${ORIGIN}/uk` },
+        { '@type': 'ListItem', position: 2, name: 'Оренда авто', item: `${ORIGIN}/uk/car-rental` },
+    ],
 };
 export default function CarRentalPage() {
-  const [carId, setCarId] = useState(cars[0].id);
-  const [period, setPeriod] = useState<RentalPeriod>({ start: '', end: '' });
-  const [error, setError] = useState('');
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const fields = new FormData(event.currentTarget);
-    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
-    const channel = submitter?.value === 'telegram' ? 'telegram' : 'whatsapp';
-    const { start, end } = period;
-    const note = String(fields.get('note') ?? '').trim();
-    const car = cars.find(item => item.id === fields.get('car')) ?? cars[0];
-    if ((start && start < madeiraToday()) || (end && end < madeiraToday())) {
-      setError('Оберіть сьогоднішню або майбутню дату.');
-      return;
-    }
-    if ((start && !end) || (!start && end)) {
-      setError('Розгорніть календар і оберіть дату повернення або очистіть дати, якщо ще плануєте подорож.');
-      return;
-    }
-    if (start && end && end <= start) {
-      setError('Дата повернення має бути пізнішою за дату отримання.');
-      return;
-    }
-    setError('');
-    const message = [
-      'Вітаю! Цікавить оренда авто на Мадейрі.',
-      `Авто: ${car.name} (${car.color.toLowerCase()}).`,
-      `Ціни на сайті: ${car.price} €/добу або ${car.depositPrice} €/добу + страховий депозит.`,
-      `Отримання: ${displayRentalDate(start)}.`,
-      `Повернення: ${displayRentalDate(end)}.`,
-      note ? `Побажання: ${note}` : '',
-      'Підкажіть, будь ласка, доступність, місце отримання та повні умови оренди.',
-    ].filter(Boolean).join('\n');
-    window.location.assign(`${channel === 'telegram' ? TELEGRAM_URL : WHATSAPP_URL}?text=${encodeURIComponent(message)}`);
-  };
-  return <>
+    const [carId, setCarId] = useState(cars[0].id);
+    const [period, setPeriod] = useState<RentalPeriod>({ start: '', end: '' });
+    const [error, setError] = useState('');
+    const submit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const fields = new FormData(event.currentTarget);
+        const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+        const channel = submitter?.value === 'telegram' ? 'telegram' : 'whatsapp';
+        const { start, end } = period;
+        const note = String(fields.get('note') ?? '').trim();
+        const car = cars.find(item => item.id === fields.get('car')) ?? cars[0];
+        if ((start && start < madeiraToday()) || (end && end < madeiraToday())) {
+            setError('Оберіть сьогоднішню або майбутню дату.');
+            return;
+        }
+        if ((start && !end) || (!start && end)) {
+            setError('Розгорніть календар і оберіть дату повернення або очистіть дати, якщо ще плануєте подорож.');
+            return;
+        }
+        if (start && end && end <= start) {
+            setError('Дата повернення має бути пізнішою за дату отримання.');
+            return;
+        }
+        setError('');
+        const message = [
+            'Вітаю! Цікавить оренда авто на Мадейрі.',
+            `Авто: ${car.name} (${car.color.toLowerCase()}).`,
+            `Ціни на сайті: ${car.price} €/добу або ${car.depositPrice} €/добу + страховий депозит.`,
+            `Отримання: ${displayRentalDate(start)}.`,
+            `Повернення: ${displayRentalDate(end)}.`,
+            note ? `Побажання: ${note}` : '',
+            'Підкажіть, будь ласка, доступність, місце отримання та повні умови оренди.',
+        ].filter(Boolean).join('\n');
+        window.location.assign(`${channel === 'telegram' ? TELEGRAM_URL : WHATSAPP_URL}?text=${encodeURIComponent(message)}`);
+    };
+    return <>
     <Head>
       <title>{TITLE}</title>
-      <meta name="description" content={DESCRIPTION} />
-      <meta property="og:title" content={TITLE} />
-      <meta property="og:description" content={DESCRIPTION} />
-      <meta property="og:type" content="website" />
-      <meta property="og:locale" content="uk_UA" />
-      <meta property="og:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`} />
-      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={TITLE} />
-      <meta name="twitter:description" content={DESCRIPTION} />
-      <meta name="twitter:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`} />
-      <link rel="preload" as="image" href="/images/car-rental/madeira-road-trip-1280.webp" imageSrcSet={HERO_SRCSET} imageSizes={HERO_SIZES} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
+      <meta name="description" content={DESCRIPTION}/>
+      <meta property="og:title" content={TITLE}/>
+      <meta property="og:description" content={DESCRIPTION}/>
+      <meta property="og:type" content="website"/>
+      <meta property="og:locale" content="uk_UA"/>
+      <meta property="og:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
+      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power"/>
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:title" content={TITLE}/>
+      <meta name="twitter:description" content={DESCRIPTION}/>
+      <meta name="twitter:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
+      <link rel="preload" as="image" href="/images/car-rental/madeira-road-trip-1280.webp" imageSrcSet={HERO_SRCSET} imageSizes={HERO_SIZES}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}/>
     </Head>
     <Layout>
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -88,8 +87,8 @@ export default function CarRentalPage() {
           <Link href="/" locale="uk" className="text-ocean hover:underline">Головна</Link><span aria-hidden="true">/</span><span aria-current="page">Оренда авто</span>
         </nav>
         <header className="relative isolate mb-8 overflow-hidden rounded-2xl bg-forest px-5 py-6 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-7">
-          <img src="/images/car-rental/madeira-road-trip-1280.webp" srcSet={HERO_SRCSET} sizes={HERO_SIZES} alt="" width={1280} height={720} fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_65%]" />
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20" />
+          <img src="/images/car-rental/madeira-road-trip-1280.webp" srcSet={HERO_SRCSET} sizes={HERO_SIZES} alt="" width={1280} height={720} fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_65%]"/>
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20"/>
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-moss">Мадейра у вашому темпі</p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Оренда авто на Мадейрі</h1>
@@ -99,7 +98,7 @@ export default function CarRentalPage() {
         <section aria-label="Авто для оренди" className="grid gap-6 md:grid-cols-2">
           {cars.map((item, index) => <article key={item.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
             <figure className="relative aspect-[16/9] overflow-hidden bg-slate-100">
-              <img src={item.image} srcSet={`${item.smallImage} 640w, ${item.image} 1080w`} sizes={CAR_SIZES} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={540} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+              <img src={item.image} srcSet={`${item.smallImage} 640w, ${item.image} 1080w`} sizes={CAR_SIZES} alt={`Ілюстративне фото: ${item.color.toLowerCase()} ${item.photoModel}`} width={960} height={540} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="absolute inset-0 h-full w-full object-cover"/>
               <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-slate-700">Ілюстративне фото</span>
             </figure>
             <div className="p-5 sm:p-6">
@@ -129,9 +128,9 @@ export default function CarRentalPage() {
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Автомобіль
               <select name="car" value={carId} onChange={event => setCarId(event.target.value)} className={fieldClass}>{cars.map(item => <option key={item.id} value={item.id}>{item.name} — {item.price} €/добу</option>)}</select>
             </label>
-            <RentalDateRange value={period} onChange={next => { setPeriod(next); setError(''); }} />
+            <RentalDateRange value={period} onChange={next => { setPeriod(next); setError(''); }}/>
             <label className="block text-sm font-semibold text-navy sm:col-span-2">Побажання (необов’язково)
-              <textarea name="note" rows={3} maxLength={1000} placeholder="Наприклад, місце отримання авто" className={fieldClass} />
+              <textarea name="note" rows={3} maxLength={1000} placeholder="Наприклад, місце отримання авто" className={fieldClass}/>
             </label>
             {error && <p role="alert" className="text-sm font-medium text-red-700 sm:col-span-2">{error}</p>}
             <div className="sm:col-span-2">
