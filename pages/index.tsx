@@ -1,7 +1,8 @@
-import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
@@ -20,7 +21,7 @@ const cameraFilters: CameraCategory[] = [
 ];
 const directoryCameras = cameras.filter((camera) => camera.id !== 'madeira-airport');
 export default function HomePage() {
-    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
+    const { translate: localize } = useText();
     const { siteLocale, messages } = useMessages();
     const router = useRouter();
     const [activeFilter, setActiveFilter] = useState<CameraCategory | 'All'>('All');
@@ -75,9 +76,25 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary"/>
       <meta name="twitter:title" content={localize(text.title)}/><meta name="twitter:description" content={localize(text.description)}/></Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
-        <h1 className="text-center text-xl font-semibold tracking-tight text-navy sm:text-2xl">
-          {localize(text.heading)}
-        </h1>
+        <header className="relative isolate overflow-hidden rounded-xl bg-navy px-5 py-5 text-white sm:px-7 sm:py-6">
+          <Image
+            src="/images/madeira-coast-heading-v1.png"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 1152px) calc(100vw - 32px), 1120px"
+            className="pointer-events-none -z-20 object-cover object-right"
+          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-navy/90 via-navy/65 to-navy/20" />
+          <div className="max-w-3xl sm:pr-16">
+            <h1 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl lg:text-4xl">
+              {localize(text.heading)}
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/95 sm:text-base">
+              {localize(text.description)}
+            </p>
+          </div>
+        </header>
 
         <section aria-labelledby="airport-camera-title">
           <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
