@@ -1,8 +1,9 @@
 import LocationStatusBadge from "../components/LocationStatusBadge";
+import LocationQuickSearch from '../components/LocationQuickSearch';
 import { useLocationStatuses } from "../lib/useLocationStatuses";
 import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { cableCarLabels } from "../lib/scenicLabels";
-import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import heroStyles from "../styles/locationsHero.module.css";
 import ActivityPhoto from "../components/ActivityPhoto";
@@ -240,6 +241,8 @@ export default function CamerasPage() {
                 </button>);
         }))}
           </div>
+
+          <LocationQuickSearch />
 
           <p className="mt-2 text-sm text-slate-500">
             {localize(messages.exploreList.showing)} {localize(filteredLocations.length)}{localize(' ')}
