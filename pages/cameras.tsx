@@ -1,3 +1,5 @@
+import LocationStatusBadge from "../components/LocationStatusBadge";
+import { useLocationStatuses } from "../lib/useLocationStatuses";
 import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { cableCarLabels } from "../lib/scenicLabels";
 import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
@@ -92,6 +94,7 @@ function getWindArrow(degrees: number) {
 }
 function formatUpdatedTime(time: string, locale: string) { const date = new Date(time); return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", timeZone: "Atlantic/Madeira" }).format(date); }
 export default function CamerasPage() {
+    const locationStatuses = useLocationStatuses();
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
     const router = useRouter();
@@ -206,7 +209,7 @@ export default function CamerasPage() {
       <Head>
         <title>{[localize(messages.exploreList.pageTitle)].join("")}</title>
         <meta name="description" content={localize(messages.exploreList.pageDescription)}/>
-        
+
       <meta property="og:title" content={[localize(messages.exploreList.pageTitle)].join("")}/><meta property="og:description" content={localize(messages.exploreList.pageDescription)}/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={[localize(messages.exploreList.pageTitle)].join("")}/><meta name="twitter:description" content={localize(messages.exploreList.pageDescription)}/></Head>
 
       <main className="page-shell">
@@ -295,7 +298,7 @@ export default function CamerasPage() {
                         {localize(formatUpdatedTime(weather.time, translationLanguage))}
                       </p>
                     </div>) : (<div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100"/>))}
-                </div>
+                {!location.tags.some(tag => ["Restaurants", "Villas", "Supermarkets"].includes(tag)) && <LocationStatusBadge status={locationStatuses[location.slug]}/>}</div>
               </Link>);
         }))}
         </section>
