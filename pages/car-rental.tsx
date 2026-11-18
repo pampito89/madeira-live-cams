@@ -1,6 +1,5 @@
 import type { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import Layout from '../components/Layout';
 import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } from '../components/RentalDateRange';
@@ -83,9 +82,7 @@ export default function CarRentalPage() {
     </Head>
     <Layout>
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <nav aria-label="Навігаційний шлях" className="mb-6 flex gap-2 text-sm text-slate-600">
-          <Link href="/" locale="uk" className="text-ocean hover:underline">Головна</Link><span aria-hidden="true">/</span><span aria-current="page">Оренда авто</span>
-        </nav>
+
         <header className="relative isolate mb-8 overflow-hidden rounded-2xl bg-forest px-5 py-6 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-7">
           <img src="/images/car-rental/madeira-road-trip-1280.webp" srcSet={HERO_SRCSET} sizes={HERO_SIZES} alt="" width={1280} height={720} fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_65%]"/>
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#092b22]/95 via-[#092b22]/75 to-[#092b22]/20"/>
