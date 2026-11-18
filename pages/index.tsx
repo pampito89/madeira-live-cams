@@ -57,7 +57,7 @@ export default function HomePage() {
             <div className="aspect-video overflow-hidden rounded-lg bg-slate-900">
               <iframe className="h-full w-full" src="https://www.youtube.com/embed/RFEGOudkDEc?autoplay=1&mute=1" title={localize(messages.home.airportCameraTitle)} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
             </div>
-            <form onSubmit={trackFlight} className="mt-1 rounded-lg border border-slate-200 bg-panel p-3">
+            <form onSubmit={trackFlight} className="mt-1">
               <div className="flex flex-col gap-2">
                 <div>
                   <h3 className="text-sm font-semibold text-navy">{localize(messages.home.flightTitle)}</h3>
