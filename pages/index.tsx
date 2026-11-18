@@ -9,20 +9,19 @@ import { cameras, type CameraCategory } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 import { homePageText } from '../lib/i18n/homePage';
-
-const cameraFilters: CameraCategory[] = ['Mountains', 'Beaches', 'Towns', 'North Coast', 'South Coast', 'East Coast', 'Sunrise spots'];
+const cameraFilters: CameraCategory[] = ['Mountains', 'Beaches', 'Towns', 'North Coast', 'South Coast', 'East Coast'];
 const directoryCameras = cameras.filter(camera => camera.id !== 'madeira-airport' && !camera.hiddenFromHome);
-
 export default function HomePage() {
     const { translate: localize } = useText();
     const { siteLocale, messages } = useMessages();
-    const [activeFilter, setActiveFilter] = useNavigationState<CameraCategory | 'All'>('index:activeFilter', 'All');
+    const [activeFilter, setActiveFilter] = useNavigationState<CameraCategory | 'All'>("index:cameraFilter:v2", 'All');
     const [flightNumber, setFlightNumber] = useState('');
     const text = homePageText[siteLocale];
     const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
-        if (!cleanFlightNumber) return;
+        if (!cleanFlightNumber)
+            return;
         window.open(`https://www.flightradar24.com/${cleanFlightNumber.toLowerCase()}`, '_blank', 'noopener,noreferrer');
     };
     const filtered = useMemo(() => activeFilter === 'All' ? directoryCameras : directoryCameras.filter(camera => camera.category.includes(activeFilter)), [activeFilter]);
@@ -62,7 +61,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-2">
                 <div>
                   <h3 className="text-sm font-semibold text-navy">{localize(messages.home.flightTitle)}</h3>
-                  <p className="mt-1 text-xs text-slate-500">{localize(messages.home.flightDescription)}</p>
+
                 </div>
                 <div className="flex gap-2">
                   <input type="text" value={flightNumber} onChange={event => setFlightNumber(event.target.value)} placeholder={localize(messages.home.flightPlaceholder)} className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-ocean focus:ring-2 focus:ring-ocean/20" aria-label={localize(messages.home.flightAriaLabel)}/>
@@ -79,7 +78,7 @@ export default function HomePage() {
           </div>
           <div className="flex gap-2 overflow-x-auto pb-2" aria-label={localize(text.filtersLabel)}>
             <button type="button" aria-pressed={activeFilter === 'All'} onClick={() => setActiveFilter('All')} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === 'All' ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{localize(text.all)}</button>
-            {cameraFilters.map(filter => <button key={filter} type="button" aria-pressed={activeFilter === filter} onClick={() => setActiveFilter(filter)} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{localize(text.filters[filter])}</button>)}
+            {cameraFilters.map(filter => <button key={filter} type="button" aria-pressed={activeFilter === filter} onClick={() => setActiveFilter(filter)} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${activeFilter === filter ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{text.filters[filter]}</button>)}
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {filtered.map(camera => <CameraCard key={camera.id} camera={camera}/>)}
