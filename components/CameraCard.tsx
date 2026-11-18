@@ -1,10 +1,12 @@
+import tileStyles from "../styles/catalogTiles.module.css";
 import { useText } from '../lib/i18n/TranslationProvider';
 import { useEffect, useState } from 'react';
 import { useMessages } from '../lib/i18n/useMessages';
 import { cameraPreviewLabel, translateCameraLabel } from '../lib/i18n/cameraUi';
 import { getLocalizedCamera, type Camera } from './cameraData';
-
-export default function CameraCard({ camera }: { camera: Camera }) {
+export default function CameraCard({ camera }: {
+    camera: Camera;
+}) {
     const { translate: localize } = useText();
     const { locale, siteLocale, messages } = useMessages();
     const displayCamera = getLocalizedCamera(camera, locale);
@@ -12,7 +14,8 @@ export default function CameraCard({ camera }: { camera: Camera }) {
     const [snapshotFailed, setSnapshotFailed] = useState(false);
     const isSnapshotCamera = !camera.youtubeId && (camera.sourceUrl.includes('netmadeira.com/webcams-madeira/') || camera.sourceUrl.includes('worldcam.eu/'));
     useEffect(() => {
-        if (!isSnapshotCamera) return;
+        if (!isSnapshotCamera)
+            return;
         const interval = window.setInterval(() => {
             setSnapshotFailed(false);
             setSnapshotVersion(Math.floor(Date.now() / 60000));
@@ -23,7 +26,7 @@ export default function CameraCard({ camera }: { camera: Camera }) {
     const snapshotUrl = `/api/camera-snapshot?id=${encodeURIComponent(camera.id)}&v=${snapshotVersion}`;
     const previewLabel = cameraPreviewLabel(siteLocale);
     const region = translateCameraLabel(siteLocale, displayCamera.region);
-    return <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    return <article className={tileStyles.camera + " flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"}>
       <div className="h-48 overflow-hidden bg-slate-900">
         {camera.youtubeId ? <iframe className="h-full w-full" src={`https://www.youtube.com/embed/${camera.youtubeId}?autoplay=0&mute=1`} title={localize(`${localize(displayCamera.name)} ${messages.cameraCard.liveStreamTitleSuffix}`)} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/> : <div className="relative h-full overflow-hidden">
           <img src={isSnapshotCamera && !snapshotFailed ? snapshotUrl : fallbackImage} alt={isSnapshotCamera && !snapshotFailed ? localize(`${localize(displayCamera.name)} — ${previewLabel}`) : ''} aria-hidden={!isSnapshotCamera || snapshotFailed} loading="lazy" className="absolute inset-0 h-full w-full object-cover" onError={() => setSnapshotFailed(true)}/>

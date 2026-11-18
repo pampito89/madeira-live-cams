@@ -1,28 +1,26 @@
+import tileStyles from "../styles/catalogTiles.module.css";
+import { useTileWeather } from "../lib/useTileWeather";
 import LocationStatusBadge from '../components/LocationStatusBadge';
 import LocationQuickSearch, { locationSearchCopy, normalizeLocationSearch } from '../components/LocationQuickSearch';
 import { useLocationStatuses } from '../lib/useLocationStatuses';
-import { getLocationStatusFeed } from '../lib/locationStatusServer';
 import type { LocationStatus } from '../lib/locationStatus';
 import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { cableCarLabels } from '../lib/scenicLabels';
-import { withServerTranslations } from '../lib/i18n/pageTranslations';
+import { withStaticTranslations } from "../lib/i18n/pageTranslations";
 import { useText } from '../lib/i18n/TranslationProvider';
 import heroStyles from '../styles/locationsHero.module.css';
 import ActivityPhoto from '../components/ActivityPhoto';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from "react";
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations, plannerLocationPath } from '../data/plannerLocations';
-import { locationCoordinates } from '../lib/locationWeather';
 import { useMessages } from '../lib/i18n/useMessages';
-
-type Props = { initialStatuses: Record<string, LocationStatus> };
-type CurrentWeather = { temperature: number; weatherCode: number; windSpeed: number; windDirection: number; time: string };
-type WeatherByLocation = Record<string, CurrentWeather>;
+type Props = {
+    initialStatuses: Record<string, LocationStatus>;
+};
 const visibleLocations = locations.filter(location => !location.hiddenFromExplore);
-
 function getWeatherDetails(code: number, locale: 'en' | 'uk') {
     const weather = {
         clear: { icon: '☀️', en: 'Clear', uk: 'Сонячно' },
@@ -35,13 +33,20 @@ function getWeatherDetails(code: number, locale: 'en' | 'uk') {
         storm: { icon: '⛈️', en: 'Thunderstorm', uk: 'Гроза' },
     };
     let condition = weather.cloudy;
-    if (code === 0) condition = weather.clear;
-    else if (code === 1 || code === 2) condition = weather.partlyCloudy;
-    else if (code === 45 || code === 48) condition = weather.fog;
-    else if ([51, 53, 55, 56, 57].includes(code)) condition = weather.drizzle;
-    else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) condition = weather.rain;
-    else if ([71, 73, 75, 77, 85, 86].includes(code)) condition = weather.snow;
-    else if ([95, 96, 99].includes(code)) condition = weather.storm;
+    if (code === 0)
+        condition = weather.clear;
+    else if (code === 1 || code === 2)
+        condition = weather.partlyCloudy;
+    else if (code === 45 || code === 48)
+        condition = weather.fog;
+    else if ([51, 53, 55, 56, 57].includes(code))
+        condition = weather.drizzle;
+    else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code))
+        condition = weather.rain;
+    else if ([71, 73, 75, 77, 85, 86].includes(code))
+        condition = weather.snow;
+    else if ([95, 96, 99].includes(code))
+        condition = weather.storm;
     return { icon: condition.icon, label: condition[locale] };
 }
 function getWindDirection(degrees: number, locale: 'en' | 'uk') {
@@ -57,48 +62,13 @@ function formatUpdatedTime(time: string, locale: string) {
     const date = new Date(time);
     return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(date);
 }
-
 export default function CamerasPage({ initialStatuses }: Props) {
-    const locationStatuses = useLocationStatuses(initialStatuses);
+    const locationStatuses = useLocationStatuses(initialStatuses, true);
     const { translate: localize, language: translationLanguage } = useText();
     const { locale, messages } = useMessages();
     const [activeFilter, setActiveFilter] = useNavigationState('cameras:activeFilter', 'All');
     const [query, setQuery] = useNavigationState('cameras:search', '');
-    const [weatherByLocation, setWeatherByLocation] = useState<WeatherByLocation>({});
     const normalizedQuery = normalizeLocationSearch(query);
-
-    useEffect(() => {
-        let cancelled = false;
-        async function loadWeather() {
-            const weatherLocations = visibleLocations.filter(location => locationCoordinates[location.slug]);
-            const weatherEntries = await Promise.all(weatherLocations.map(async location => {
-                const coordinates = locationCoordinates[location.slug];
-                const params = new URLSearchParams({
-                    latitude: coordinates.latitude.toString(), longitude: coordinates.longitude.toString(),
-                    current: 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m',
-                    wind_speed_unit: 'kmh', timezone: 'Europe/Lisbon',
-                });
-                try {
-                    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
-                    if (!response.ok) return null;
-                    const data = await response.json();
-                    const current = data.current;
-                    if (!current) return null;
-                    return [location.slug, {
-                        temperature: Math.round(current.temperature_2m), weatherCode: current.weather_code,
-                        windSpeed: Math.round(current.wind_speed_10m), windDirection: current.wind_direction_10m, time: current.time,
-                    }] as const;
-                } catch { return null; }
-            }));
-            if (cancelled) return;
-            const nextWeather: WeatherByLocation = {};
-            weatherEntries.forEach(entry => { if (entry) nextWeather[entry[0]] = entry[1]; });
-            setWeatherByLocation(nextWeather);
-        }
-        loadWeather();
-        return () => { cancelled = true; };
-    }, []);
-
     const filters = [
         { value: 'All', label: messages.exploreList.filters.all },
         { value: 'Viewpoints', label: messages.exploreList.filters.viewpoints },
@@ -114,19 +84,20 @@ export default function CamerasPage({ initialStatuses }: Props) {
     const searchIndex = useMemo(() => locations.map(location => {
         const display = getLocalizedLocation(location, locale);
         return { location, name: normalizeLocationSearch(localize(display.name)), text: normalizeLocationSearch([
-            localize(display.name), localize(display.area), localize(display.category), location.slug,
-            ...Object.values(location.name), ...Object.values(location.area), ...Object.values(location.category), ...location.tags,
-        ].join(' ')) };
+                localize(display.name), localize(display.area), localize(display.category), location.slug,
+                ...Object.values(location.name), ...Object.values(location.area), ...Object.values(location.category), ...location.tags,
+            ].join(' ')) };
     }), [locale, localize]);
     const filteredLocations = useMemo(() => {
-        if (!normalizedQuery) return visibleLocations.filter(location => activeFilter === 'All' || location.tags.includes(activeFilter));
+        if (!normalizedQuery)
+            return visibleLocations.filter(location => activeFilter === 'All' || location.tags.includes(activeFilter));
         const words = normalizedQuery.split(' ');
         const rank = (name: string) => name === normalizedQuery ? 0 : name.startsWith(normalizedQuery) ? 1 : 2;
         return searchIndex.filter(entry => words.every(word => entry.text.includes(word)))
             .sort((a, b) => rank(a.name) - rank(b.name))
             .map(entry => entry.location);
     }, [activeFilter, normalizedQuery, searchIndex]);
-
+    const weatherByLocation = useTileWeather(filteredLocations.map(location => location.slug));
     return <Layout>
       <Head>
         <title>{localize(messages.exploreList.pageTitle)}</title>
@@ -151,9 +122,9 @@ export default function CamerasPage({ initialStatuses }: Props) {
           </div>
           <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
             {filters.map(filter => {
-                const isActive = !normalizedQuery && activeFilter === filter.value;
-                return <button key={filter.value} type="button" aria-pressed={isActive} onClick={() => { setActiveFilter(filter.value); setQuery(''); }} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${isActive ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{localize(filter.label)}</button>;
-            })}
+            const isActive = !normalizedQuery && activeFilter === filter.value;
+            return <button key={filter.value} type="button" aria-pressed={isActive} onClick={() => { setActiveFilter(filter.value); setQuery(''); }} className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition ${isActive ? 'border-ocean bg-ocean text-white' : 'border-slate-200 bg-white text-navy hover:border-ocean hover:text-ocean'}`}>{localize(filter.label)}</button>;
+        })}
           </div>
           <p role="status" aria-live="polite" aria-atomic="true" className="mt-2 text-sm text-slate-500">
             {localize(messages.exploreList.showing)} {filteredLocations.length} {localize(messages.exploreList.of)} {normalizedQuery ? locations.length : visibleLocations.length} {localize(messages.exploreList.places)}
@@ -166,7 +137,7 @@ export default function CamerasPage({ initialStatuses }: Props) {
             const weather = weatherByLocation[location.slug];
             const weatherDetails = weather ? getWeatherDetails(weather.weatherCode, locale) : null;
             const isPracticalPlace = location.tags.some(tag => ['Restaurants', 'Villas', 'Supermarkets'].includes(tag));
-            return <Link key={location.slug} href={{ pathname: plannerLocationPath(location), query: { returnTo: 'cameras' } }} onClick={() => rememberNavigationPosition()} className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md">
+            return <Link key={location.slug} href={{ pathname: plannerLocationPath(location), query: { returnTo: 'cameras' } }} onClick={() => rememberNavigationPosition()} className={tileStyles.card + " group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"} data-weather-slug={location.slug}>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ocean">{localize(displayLocation.category)}</p>
                   <h2 className="mt-1 text-lg font-semibold text-navy">{localize(displayLocation.name)}</h2>
@@ -185,22 +156,13 @@ export default function CamerasPage({ initialStatuses }: Props) {
                         <span className="font-semibold text-ocean" aria-hidden="true">{getWindArrow(weather.windDirection)}</span> {weather.windSpeed} {localize(locale === 'uk' ? 'км/год' : 'km/h')}
                       </p>
                       <p className="mt-1 text-[10px] leading-3 text-slate-400">{localize(locale === 'uk' ? 'Оновлено' : 'Updated')} {formatUpdatedTime(weather.time, translationLanguage)}</p>
-                    </div> : !isPracticalPlace && <div className="mt-2 h-[86px] animate-pulse rounded-lg bg-slate-100"/>}
+                    </div> : !isPracticalPlace && <div className="mt-2 flex items-center justify-center rounded-lg bg-slate-100 px-2 text-center text-xs text-slate-500" aria-busy={weather === undefined}>{weather === null ? localize(locale === "uk" ? "\u041F\u043E\u0433\u043E\u0434\u0430 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430" : "Weather unavailable") : <span className="animate-pulse" aria-hidden="true">…</span>}</div>}
                   {!isPracticalPlace && <LocationStatusBadge status={locationStatuses[location.slug]}/>}
                 </div>
               </Link>;
-          })}
+        })}
         </section>
       </main>
     </Layout>;
 }
-
-export const getServerSideProps = withServerTranslations<Props>(async () => {
-    try {
-        const feed = await getLocationStatusFeed();
-        return { props: { initialStatuses: feed.statuses } };
-    } catch {
-        // Unknown is only rendered when the source cannot confirm access, never as a loading state.
-        return { props: { initialStatuses: {} } };
-    }
-}, '/cameras');
+export const getStaticProps = withStaticTranslations<Props>(async () => ({ props: { initialStatuses: {} } }), "/cameras");

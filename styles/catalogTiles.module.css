@@ -1,0 +1,24 @@
+/* Fixed content slots keep every catalogue tile aligned across rows and filters. */
+.card {
+  height: 22rem;
+  min-width: 0;
+  align-items: stretch;
+  overflow-wrap: anywhere;
+}
+.card > div:first-child { display: flex; flex-direction: column; min-height: 0; }
+.card > div:first-child > p:first-child { height: 2rem; flex-shrink: 0; line-height: 1rem; -webkit-line-clamp: 2; }
+.card h2 { height: 5.25rem; flex-shrink: 0; line-height: 1.75rem; -webkit-line-clamp: 3; }
+.card h2 + p { height: 2.5rem; flex-shrink: 0; line-height: 1.25rem; -webkit-line-clamp: 2; }
+.card h2 + p + p { height: 6rem; flex-shrink: 0; -webkit-line-clamp: 4; }
+.card > div:first-child > p, .card h2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card > div:first-child > span { margin-top: auto; padding-top: .5rem; }
+.card > div:last-child > div:nth-child(2) { height: 9rem; }
+.camera { height: 18rem; min-width: 0; }
+.camera > div:first-child { flex-shrink: 0; }
+.camera h3 { height: 2.5rem; line-height: 1.25rem; -webkit-line-clamp: 2; }
+.camera p { -webkit-line-clamp: 2; }
+.camera h3, .camera p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }

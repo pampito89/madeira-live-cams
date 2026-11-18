@@ -14,15 +14,13 @@ function clean(input: unknown): Statuses {
   return result;
 }
 
-export function useLocationStatuses(initialStatuses: Statuses) {
-  // The same server snapshot is used for HTML and hydration: no unknown-first flash.
+export function useLocationStatuses(initialStatuses: Statuses, refreshOnMount = false) {
   const [statuses, setStatuses] = useState<Statuses>(initialStatuses);
   useEffect(() => {
     let active = true;
     let busy = false;
     const controller = new AbortController();
     setStatuses(clean(initialStatuses));
-    // Never replace the server snapshot with an older browser cache.
     try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(clean(initialStatuses))); } catch { /* Storage is optional. */ }
     const load = async () => {
       if (busy || document.visibilityState === 'hidden') return;
@@ -43,7 +41,8 @@ export function useLocationStatuses(initialStatuses: Statuses) {
       } finally { busy = false; }
     };
     const wake = () => { setStatuses(previous => clean(previous)); void load(); };
-    // The server has just checked the source; refresh periodically, without a duplicate mount request.
+    // Static catalogues load live status after rendering; detail pages retain their server snapshot.
+    if (refreshOnMount) void load();
     const polling = window.setInterval(wake, 60_000);
     const expiry = window.setInterval(() => setStatuses(previous => clean(previous)), 10_000);
     document.addEventListener('visibilitychange', wake);
@@ -56,6 +55,6 @@ export function useLocationStatuses(initialStatuses: Statuses) {
       document.removeEventListener('visibilitychange', wake);
       window.removeEventListener('online', wake);
     };
-  }, [initialStatuses]);
+  }, [initialStatuses, refreshOnMount]);
   return statuses;
 }
