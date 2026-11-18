@@ -1,9 +1,11 @@
 import LocationStatusBadge from '../components/LocationStatusBadge';
 import LocationQuickSearch, { locationSearchCopy, normalizeLocationSearch } from '../components/LocationQuickSearch';
 import { useLocationStatuses } from '../lib/useLocationStatuses';
+import { getLocationStatusFeed } from '../lib/locationStatusServer';
+import type { LocationStatus } from '../lib/locationStatus';
 import { useNavigationState, rememberNavigationPosition } from '../lib/useNavigationMemory';
 import { cableCarLabels } from '../lib/scenicLabels';
-import { translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { withServerTranslations } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import heroStyles from '../styles/locationsHero.module.css';
 import ActivityPhoto from '../components/ActivityPhoto';
@@ -16,6 +18,7 @@ import { getLocalizedLocation, locations, plannerLocationPath } from '../data/pl
 import { locationCoordinates } from '../lib/locationWeather';
 import { useMessages } from '../lib/i18n/useMessages';
 
+type Props = { initialStatuses: Record<string, LocationStatus> };
 type CurrentWeather = { temperature: number; weatherCode: number; windSpeed: number; windDirection: number; time: string };
 type WeatherByLocation = Record<string, CurrentWeather>;
 const visibleLocations = locations.filter(location => !location.hiddenFromExplore);
@@ -55,8 +58,8 @@ function formatUpdatedTime(time: string, locale: string) {
     return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' }).format(date);
 }
 
-export default function CamerasPage() {
-    const locationStatuses = useLocationStatuses();
+export default function CamerasPage({ initialStatuses }: Props) {
+    const locationStatuses = useLocationStatuses(initialStatuses);
     const { translate: localize, language: translationLanguage } = useText();
     const { locale, messages } = useMessages();
     const [activeFilter, setActiveFilter] = useNavigationState('cameras:activeFilter', 'All');
@@ -191,4 +194,13 @@ export default function CamerasPage() {
       </main>
     </Layout>;
 }
-export const getStaticProps = translatedStaticProps('/cameras');
+
+export const getServerSideProps = withServerTranslations<Props>(async () => {
+    try {
+        const feed = await getLocationStatusFeed();
+        return { props: { initialStatuses: feed.statuses } };
+    } catch {
+        // Unknown is only rendered when the source cannot confirm access, never as a loading state.
+        return { props: { initialStatuses: {} } };
+    }
+}, '/cameras');
