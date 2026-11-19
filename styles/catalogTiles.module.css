@@ -23,8 +23,9 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.camera { height: 18rem; min-width: 0; }
+.camera { min-width: 0; align-self: start; }
 .camera > div:first-child { flex-shrink: 0; }
-.camera h3 { height: 2.5rem; line-height: 1.25rem; -webkit-line-clamp: 2; }
-.camera p { -webkit-line-clamp: 2; }
+.camera > div:last-child { padding: .5rem .75rem; }
+.camera h3 { margin: 0; line-height: 1.25rem; -webkit-line-clamp: 2; }
+.camera p { margin: 0; -webkit-line-clamp: 2; }
 .camera h3, .camera p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
