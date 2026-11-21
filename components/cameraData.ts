@@ -105,7 +105,7 @@ export const cameras: Camera[] = [
     {
         id: 'doca-do-cavacas', name: { en: 'Doca do Cavacas Pools', uk: 'Басейни Дока-ду-Кавакаш' },
         region: { en: 'South Coast', uk: 'Південне узбережжя' }, category: ['Beaches', 'Towns', 'South Coast'],
-        latitude: 32.6353, longitude: -16.9481, sourceUrl: 'https://www.youtube.com/watch?v=8ZmLLUPqlPM', youtubeId: 'v-EXKlzjTW0',
+        latitude: 32.6353, longitude: -16.9481, sourceUrl: 'https://www.youtube.com/watch?v=8ZmLLUPqlPM', youtubeId: 'QsExsE3GScU',
         hiddenFromHome: true,
     },
     {
