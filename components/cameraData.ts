@@ -136,7 +136,7 @@ export const cameras: Camera[] = [
     {
         id: 'santo-da-serra-golf', name: { en: 'Santo da Serra Golf Club', uk: 'Гольф-клуб Санту-да-Серра' },
         region: { en: 'East Coast', uk: 'Східне узбережжя' }, category: ['Mountains', 'East Coast'],
-        latitude: 32.7222, longitude: -16.8039, sourceUrl: 'https://www.youtube.com/watch?v=xiQC5Qbi3qE', youtubeId: 'Uvm4ijRmnyQ',
+        latitude: 32.7222, longitude: -16.8039, sourceUrl: 'https://www.youtube.com/watch?v=xiQC5Qbi3qE', youtubeId: 'hODDER3QVq8',
     },
     {
         id: 'boaventura', name: { en: 'Boaventura', uk: 'Боавентура' },
