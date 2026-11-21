@@ -50,7 +50,7 @@ export const cameras: Camera[] = [
         id: 'madeira-airport', name: { en: 'Madeira Airport (FNC)', uk: 'Аеропорт Мадейри (FNC)' },
         region: { en: 'East Coast', uk: 'Східне узбережжя' }, category: ['Towns', 'East Coast'],
         latitude: 32.6979, longitude: -16.7745,
-        sourceUrl: 'https://www.youtube.com/watch?v=STpCvDHD__I', youtubeId: 'RFEGOudkDEc',
+        sourceUrl: 'https://www.youtube.com/watch?v=STpCvDHD__I', youtubeId: '1_1svopiuqg',
     },
     {
         id: 'pico-do-arieiro', name: { en: 'Pico do Arieiro', uk: 'Піку-ду-Аріейру' },
