@@ -151,7 +151,7 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const groupOutside = groupRanges.some(range => range.from < calendarDates[0] || range.to > calendarDates[calendarDates.length - 1]);
 
     return <Layout><Head>
-        <title>{localize(title)} | Madeira Live Cams</title><meta name="description" content={localize(description)} />
+        <title>{`${localize(title)} | Madeira Live Cams`}</title><meta name="description" content={localize(description)} />
         <meta property="og:title" content={localize(title)} /><meta property="og:description" content={localize(description)} /><meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={localize(title)} /><meta name="twitter:description" content={localize(description)} />
     </Head><div className={`page-shell ${styles.page}`}>

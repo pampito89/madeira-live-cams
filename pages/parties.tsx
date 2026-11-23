@@ -84,7 +84,7 @@ export default function PartiesPage({ initialFeed }: {
     const reset = () => { setMunicipality(''); setCategory(''); setDateRange({ from: '', to: '' }); };
     return <Layout>
     <Head>
-      <title>{text.title} | Madeira Live Cams</title>
+      <title>{`${text.title} | Madeira Live Cams`}</title>
       <meta name="description" content={text.intro}/>
       <meta property="og:title" content={text.title}/><meta property="og:description" content={text.intro}/><meta property="og:type" content="website"/>
       <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={text.title}/><meta name="twitter:description" content={text.intro}/>

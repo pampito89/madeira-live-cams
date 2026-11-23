@@ -48,6 +48,7 @@ function StandardLocationPage({ location }: Props) {
     const [copied, setCopied] = useState(false);
     const url = `https://madeiralivecams.com${translationLanguage === "en" ? "" : "/" + translationLanguage}/explore/${display.slug}`;
     const image = `https://madeiralivecams.com${display.image}`;
+    const hasSocialImage = Boolean(display.image) && !display.image.endsWith('.svg');
     const destination = navigationDestinations[display.slug];
     const navigationQuery = destination
         ? `${destination.latitude},${destination.longitude}`
@@ -79,21 +80,19 @@ function StandardLocationPage({ location }: Props) {
             window.prompt(localize(uk ? 'Скопіюйте це посилання:' : 'Copy this link:'), url);
         }
     };
-    return (<Layout><PlaceStructuredData name={display.name} description={display.summary} url={url} mapUrl={mapsUrl} image={image}/>
+    return (<Layout><PlaceStructuredData name={display.name} description={display.summary} url={url} mapUrl={mapsUrl} image={hasSocialImage ? image : undefined}/>
       <Head>
         <title>{[localize(display.name), localize(" | "), localize(messages.location.pageTitleSuffix)].join("")}</title>
         <meta name="description" content={localize(display.summary)}/>
         <meta property="og:title" content={localize(`${localize(display.name)} | ${messages.location.ogTitleSuffix}`)}/>
         <meta property="og:description" content={localize(display.summary)}/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content={url}/>
-        <meta property="og:locale" content={({ en: "en_GB", pt: "pt_PT", de: "de_DE", fr: "fr_FR", es: "es_ES", pl: "pl_PL", uk: "uk_UA" })[translationLanguage]}/>
-        <meta property="og:image" content={image}/>
-        <meta property="og:image:alt" content={localize(display.imageAlt)}/>
+        {hasSocialImage && <meta key="og:image" property="og:image" content={image}/>}
+        {hasSocialImage && <meta key="og:image:alt" property="og:image:alt" content={localize(display.imageAlt)}/>}
         <meta name="twitter:card" content="summary_large_image"/>
         <meta name="twitter:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", localize(display.name)))}/>
         <meta name="twitter:description" content={localize(display.summary)}/>
-        <meta name="twitter:image" content={image}/>
+        {hasSocialImage && <meta key="twitter:image" name="twitter:image" content={image}/>}
       </Head>
       <main className="page-shell">
 

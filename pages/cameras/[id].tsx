@@ -41,7 +41,6 @@ export default function CameraPage({ camera }: CameraPageProps) {
         <meta property="og:title" content={localize(pageTitle)}/>
         <meta property="og:description" content={localize(description)}/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content={canonicalUrl}/>
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:title" content={localize(pageTitle)}/>
         <meta name="twitter:description" content={localize(description)}/>

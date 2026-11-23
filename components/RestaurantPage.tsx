@@ -78,16 +78,12 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
         <meta property="og:title" content={localize(seoTitle)}/>
         <meta property="og:description" content={localize(description)}/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content={canonical}/>
-        <meta property="og:locale" content={({ en: "en_GB", pt: "pt_PT", de: "de_DE", fr: "fr_FR", es: "es_ES", pl: "pl_PL", uk: "uk_UA" })[translationLanguage]}/>
         <meta name="twitter:card" content={hasPhoto ? 'summary_large_image' : 'summary'}/>
         <meta name="twitter:title" content={localize(seoTitle)}/>
         <meta name="twitter:description" content={localize(description)}/>
-        {localize(hasPhoto && (<>
-            <meta property="og:image" content={`${ORIGIN}${r.image}`}/>
-            <meta property="og:image:alt" content={localize(r.name)}/>
-            <meta name="twitter:image" content={`${ORIGIN}${r.image}`}/>
-          </>))}
+        {hasPhoto && <meta key="og:image" property="og:image" content={`${ORIGIN}${r.image}`}/>}
+        {hasPhoto && <meta key="og:image:alt" property="og:image:alt" content={localize(r.name)}/>}
+        {hasPhoto && <meta key="twitter:image" name="twitter:image" content={`${ORIGIN}${r.image}`}/>}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizeStructuredData(schema, localize)).replace(/</g, '\\u003c') }}/>
       </Head>
       <main className="page-shell">

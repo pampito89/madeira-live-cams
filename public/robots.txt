@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /guide/
+Disallow: /admin/
 
 Sitemap: https://madeiralivecams.com/sitemap.xml
