@@ -6,13 +6,16 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Layout from '../../components/Layout';
+import NearbyLinks from '../../components/NearbyLinks';
 import { useMessages } from '../../lib/i18n/useMessages';
 import { getStayBySlug, stays, type Stay } from '../../data/stays';
 import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
+import { getNearbyForStay, type NearbyLinksData } from '../../lib/nearbyLinks';
 type Props = {
     stay: Stay;
+    nearby: NearbyLinksData;
 };
-export default function StayPage({ stay }: Props) {
+export default function StayPage({ stay, nearby }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale } = useMessages();
     const uk = locale === 'uk';
@@ -90,6 +93,7 @@ export default function StayPage({ stay }: Props) {
             <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
         </article>
+        <NearbyLinks nearby={nearby} variant="location"/>
       </main>
     </Layout>);
 }
@@ -102,5 +106,6 @@ export const getStaticProps: GetStaticProps<Props> = withStaticTranslations<Prop
     const stay = typeof slug === 'string' ? getStayBySlug(slug) : undefined;
     if (!stay)
         return { notFound: true };
-    return { props: { stay } };
+    const nearby = getNearbyForStay({ latitude: stay.latitude, longitude: stay.longitude });
+    return { props: { stay, nearby } };
 }, "/stays/[slug]");

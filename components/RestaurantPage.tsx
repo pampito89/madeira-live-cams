@@ -4,13 +4,16 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from './Layout';
+import NearbyLinks from './NearbyLinks';
 import RestaurantPhoto from './RestaurantPhoto';
 import type { Restaurant } from '../data/restaurants';
 import { useMessages } from '../lib/i18n/useMessages';
 import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
+import type { NearbyLinksData } from '../lib/nearbyLinks';
 type Props = {
     restaurant: Restaurant;
     hasPhoto: boolean;
+    nearby?: NearbyLinksData;
 };
 type OfficialRestaurantInfo = {
     website: string;
@@ -29,7 +32,7 @@ const officialRestaurantInfo: Record<string, OfficialRestaurantInfo> = {
         },
     },
 };
-export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
+export default function RestaurantPage({ restaurant: r, hasPhoto, nearby }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale } = useMessages();
     const uk = locale === 'uk';
@@ -163,6 +166,7 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
             <a href={r.googleMapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
         </article>
+        <NearbyLinks nearby={nearby} variant="location"/>
       </main>
     </Layout>);
 }

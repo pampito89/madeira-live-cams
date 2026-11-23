@@ -9,16 +9,19 @@ import { cameraPageText } from '../../lib/i18n/cameraPage';
 import { translateCameraLabel } from '../../lib/i18n/cameraUi';
 import { localePath, supportedLocales } from '../../lib/i18n/config';
 import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
+import { getNearbyForCamera, type NearbyLinksData } from '../../lib/nearbyLinks';
 import Layout from '../../components/Layout';
+import NearbyLinks from '../../components/NearbyLinks';
 import AirportFlightBoard from '../../components/AirportFlightBoard';
 import AirportWeatherPanel from '../../components/AirportWeatherPanel';
 import AirportUpdatesPanel from '../../components/AirportUpdatesPanel';
 import { cameras, getLocalizedCamera, type Camera } from '../../components/cameraData';
 type CameraPageProps = {
     camera: Camera;
+    nearby: NearbyLinksData;
 };
 const SITE_URL = 'https://madeiralivecams.com';
-export default function CameraPage({ camera }: CameraPageProps) {
+export default function CameraPage({ camera, nearby }: CameraPageProps) {
     const { translate: localize } = useText();
     const { locale, siteLocale, messages } = useMessages();
     const displayCamera = getLocalizedCamera(camera, locale);
@@ -81,6 +84,7 @@ export default function CameraPage({ camera }: CameraPageProps) {
               <p className="mt-2 leading-7 text-slate-600">{localize(text.cameraCheck)}</p>
               <Link href="/weather-guide" className="mt-3 inline-flex text-sm font-semibold text-ocean hover:underline">{localize(text.weatherLink)} →</Link>
             </section>)}
+          <NearbyLinks nearby={nearby} variant="camera"/>
         </article>
       </main>
     </Layout>);
@@ -94,5 +98,5 @@ export const getStaticProps: GetStaticProps<CameraPageProps> = withStaticTransla
     const camera = typeof id === 'string' ? cameras.find(item => item.id === id) : undefined;
     if (!camera)
         return { notFound: true };
-    return { props: { camera } };
+    return { props: { camera, nearby: getNearbyForCamera(camera.id) } };
 }, '/cameras/[id]');
