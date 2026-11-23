@@ -52,7 +52,7 @@ export default function AirportUpdatesPanel({ locale }: { locale: Locale }) {
     <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-ocean">
       <a className="underline" href="https://www.madeiraairport.pt/en/fnc/home" target="_blank" rel="noopener noreferrer">{text.official} ↗</a>
       <a className="underline" href="https://pt.newsroom.ana.pt/news/" target="_blank" rel="noopener noreferrer">ANA ↗</a>
-      <a className="underline" href="https://www.jm-madeira.pt/topic/-/meta/aeroporto-da-madeira" target="_blank" rel="noopener noreferrer">{text.local} · JM ↗</a>
+      <a className="underline" href="https://www.jm-madeira.pt/" target="_blank" rel="noopener noreferrer">{text.local} · JM ↗</a>
     </div>
   </section>;
 }
