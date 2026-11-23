@@ -4,16 +4,19 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from './Layout';
+import NearbyLinks from './NearbyLinks';
 import ActivityPhoto from './ActivityPhoto';
 import type { Activity } from '../data/activities';
 import { useMessages } from '../lib/i18n/useMessages';
 import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
+import type { NearbyLinksData } from '../lib/nearbyLinks';
 type Props = {
     restaurant: Activity;
     hasPhoto: boolean;
+    nearby?: NearbyLinksData;
 };
 const ORIGIN = 'https://madeiralivecams.com';
-export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) {
+export default function ActivityPage({ restaurant: activity, hasPhoto, nearby }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale } = useMessages();
     const uk = locale === 'uk';
@@ -122,6 +125,7 @@ export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) 
             <a href={activity.googleMapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
         </article>
+        <NearbyLinks nearby={nearby} variant="location"/>
       </main>
     </Layout>);
 }

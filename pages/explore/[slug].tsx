@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
+import NearbyLinks from '../../components/NearbyLinks';
 import LevadaNovaRoute from '../../components/LevadaNovaRoute';
 import RestaurantPage from '../../components/RestaurantPage';
 import ActivityPage from '../../components/ActivityPage';
@@ -15,10 +16,12 @@ import { getActivity } from '../../data/activities';
 import { getLocalizedLocation, getLocationBySlug, locations, type Location, } from '../../data/plannerLocations';
 import { useMessages } from '../../lib/i18n/useMessages';
 import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
+import { getNearbyForLocation, type NearbyLinksData } from '../../lib/nearbyLinks';
 type Props = {
     location: Location;
     restaurant?: Restaurant | null;
     hasPhoto?: boolean;
+    nearby?: NearbyLinksData;
 };
 type Coordinates = {
     latitude: number;
@@ -40,7 +43,7 @@ const navigationDestinations: Record<string, Coordinates> = {
         "longitude": -17.0681673
     }
 };
-function StandardLocationPage({ location }: Props) {
+function StandardLocationPage({ location, nearby }: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { locale, messages } = useMessages();
     const display = getLocalizedLocation(location, locale);
@@ -140,6 +143,7 @@ function StandardLocationPage({ location }: Props) {
             <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className={`${actionClass} mt-8`}>{localize("\uD83D\uDCCD ")}{localize(uk ? 'Відкрити точку на карті' : 'View location on map')}</a>
           </div>
         </article>
+        <NearbyLinks nearby={nearby} variant="location"/>
       </main>
     </Layout>);
 }
@@ -165,14 +169,16 @@ export const getStaticProps: GetStaticProps<Props> = withStaticTranslations<Prop
             hasPhoto = false;
         }
     }
-    return { props: { location, restaurant, hasPhoto } };
+    const fallbackCoords = restaurant ? { latitude: restaurant.latitude, longitude: restaurant.longitude } : null;
+    const nearby = getNearbyForLocation(location.slug, fallbackCoords, location.mapQuery);
+    return { props: { location, restaurant, hasPhoto, nearby } };
 }, "/explore/[slug]");
 export default function LocationPage(props: Props) {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const activity = getActivity(props.location.slug);
     if (activity)
-        return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)}/>;
+        return <ActivityPage restaurant={activity} hasPhoto={Boolean(props.hasPhoto)} nearby={props.nearby}/>;
     return props.restaurant
-        ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)}/>
+        ? <RestaurantPage restaurant={props.restaurant} hasPhoto={Boolean(props.hasPhoto)} nearby={props.nearby}/>
         : <StandardLocationPage {...props}/>;
 }
