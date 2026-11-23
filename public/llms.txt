@@ -1,0 +1,53 @@
+# Madeira Live Cams
+
+> Live webcams, current weather conditions, Pico do Arieiro sunrise radar, SIMplifica PR trail availability, local events, and day-trip planning for Madeira Island, Portugal. Available in English (`/`), Portuguese (`/pt`), German (`/de`), French (`/fr`), Spanish (`/es`), Polish (`/pl`), and Ukrainian (`/uk`).
+
+## Core Pages
+
+- [Madeira Live Webcams Directory](https://madeiralivecams.com/): Live webcams across Madeira mountains, beaches, towns, north coast, south coast, and east coast, plus live Madeira Airport (FNC) stream and flight tracker.
+- [Madeira Locations & Travel Guide](https://madeiralivecams.com/cameras): Searchable catalog of viewpoints (miradouros), levada walks, mountain hikes, beaches, cable cars, outdoor activities, and live local weather conditions.
+- [Pico do Arieiro Sunrise Weather Radar](https://madeiralivecams.com/weather-guide): 7-day sunrise cloud cover (low, mid, high), cloud inversion outlook, rain probability, and wind forecast for Pico do Arieiro.
+- [Madeira PR Trail Availability](https://madeiralivecams.com/trail-availability): Check available booking time slots for official Madeira PR hiking trails using SIMplifica data.
+- [Madeira Day Trip Planner](https://madeiralivecams.com/trip-plan): Build custom Madeira day itineraries with driving times, stop durations, and route links for Google Maps and Waze.
+- [Madeira Events & Festivals](https://madeiralivecams.com/parties): Upcoming festivals, concerts, nightlife, racing, food, and cultural events in Madeira and Porto Santo.
+- [About Madeira Live Cams](https://madeiralivecams.com/about): Project overview and contact information.
+
+## Key Live Webcams
+
+- [Madeira Airport (FNC) Live Webcam, Weather & Flights](https://madeiralivecams.com/cameras/madeira-airport): Live stream of Funchal Airport runway with wind warnings, weather updates, and arrivals/departures board.
+- [Pico do Arieiro Live Webcam](https://madeiralivecams.com/cameras/pico-do-arieiro): Live mountain view from 1,818 m altitude for checking clouds and sunrise visibility.
+- [Funchal Pontinha Live Webcam](https://madeiralivecams.com/cameras/funchal-pontinha): Live view of Funchal bay and harbour.
+- [Porto Moniz Natural Pools Live Webcam](https://madeiralivecams.com/cameras/porto-moniz): Live ocean and volcanic pool conditions on the north-west coast.
+- [Seixal Beach Live Webcam](https://madeiralivecams.com/cameras/seixal-beach): Live view of Seixal black sand beach on Madeira's north coast.
+- [Calheta Beach Live Webcam](https://madeiralivecams.com/cameras/calheta-beach): Live weather and beach view on the sunny south-west coast.
+- [Ponta do Sol Live Webcam](https://madeiralivecams.com/cameras/ponta-do-sol): Live south-coast coastal view.
+- [Eira do Serrado Live Webcam](https://madeiralivecams.com/cameras/eira-do-serrado): Live view overlooking Curral das Freiras (Nuns Valley).
+- [Rabaçal Live Webcam](https://madeiralivecams.com/cameras/rabacal): Live mountain conditions near PR6 Levada das 25 Fontes.
+
+## Top Madeira Guides & Trails
+
+- [Pico do Arieiro Guide](https://madeiralivecams.com/explore/pico-do-arieiro): Practical visitor guide, coordinates, and navigation links.
+- [Pico Ruivo Guide](https://madeiralivecams.com/explore/pico-ruivo): Guide to Madeira's highest peak (1,862 m).
+- [Fanal Forest Guide](https://madeiralivecams.com/explore/fanal-forest): Ancient laurel forest (Laurissilva) highlights and tips.
+- [Ponta de São Lourenço Guide](https://madeiralivecams.com/explore/ponta-de-sao-lourenco): Eastern peninsula coastal hike guide.
+- [PR6 Levada das 25 Fontes Guide](https://madeiralivecams.com/explore/pr6-25-fontes): Rabaçal waterfall levada walk guide.
+- [PR9 Levada do Caldeirão Verde Guide](https://madeiralivecams.com/explore/pr9-levada-do-caldeirao-verde): Classic green cauldron levada walk guide.
+- [Cabo Girão Skywalk Guide](https://madeiralivecams.com/explore/cabo-girao-skywalk): Glass skywalk cliff viewpoint guide and official ticket link.
+- [Porto Moniz Natural Pools Guide](https://madeiralivecams.com/explore/porto-moniz-natural-pools): Volcanic swimming pools visitor guide.
+- [Praia do Porto do Seixal Guide](https://madeiralivecams.com/explore/praia-do-porto-do-seixal): Seixal black sand beach visitor guide.
+
+## Language Editions
+
+- [English (default)](https://madeiralivecams.com/)
+- [Português](https://madeiralivecams.com/pt)
+- [Deutsch](https://madeiralivecams.com/de)
+- [Français](https://madeiralivecams.com/fr)
+- [Español](https://madeiralivecams.com/es)
+- [Polski](https://madeiralivecams.com/pl)
+- [Українська](https://madeiralivecams.com/uk)
+- [Оренда авто на Мадейрі (UK)](https://madeiralivecams.com/uk/car-rental): Ukrainian-language car rental page for Madeira.
+
+## Optional
+
+- [XML Sitemap](https://madeiralivecams.com/sitemap.xml): Index of all public canonical pages across all 7 languages.
+- [Privacy Policy](https://madeiralivecams.com/privacy): Privacy and data usage notice.
