@@ -12,6 +12,7 @@ import { eventText } from '../lib/events/text';
 import { eventCategoryName } from '../lib/events/classification';
 import { getEventFeed } from '../lib/events/feed';
 import type { EventFeed, ImportedEvent } from '../lib/events/types';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 import styles from '../styles/events.module.css';
 const visibleCategories = categories.filter(category => category !== 'Talks');
 const detailLabels = { en: 'Details', uk: 'Деталі', pt: 'Detalhes', de: 'Details', fr: 'Détails', es: 'Detalles', pl: 'Szczegóły' };
@@ -29,6 +30,8 @@ export default function PartiesPage({ initialFeed }: {
 }) {
     const { siteLocale } = useMessages();
     const text = eventText(siteLocale);
+    const seoTitle = fitSeoTitle(`${text.title} | Madeira Live Cams`);
+    const seoDescription = fitSeoDescription(text.intro, siteLocale, 'generic');
     const [storedFeed, setFeed] = useState(initialFeed);
     const feed = storedFeed.locale === siteLocale ? storedFeed : initialFeed;
     const [today, setToday] = useState(initialFeed.today);
@@ -84,10 +87,10 @@ export default function PartiesPage({ initialFeed }: {
     const reset = () => { setMunicipality(''); setCategory(''); setDateRange({ from: '', to: '' }); };
     return <Layout>
     <Head>
-      <title>{`${text.title} | Madeira Live Cams`}</title>
-      <meta name="description" content={text.intro}/>
-      <meta property="og:title" content={text.title}/><meta property="og:description" content={text.intro}/><meta property="og:type" content="website"/>
-      <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={text.title}/><meta name="twitter:description" content={text.intro}/>
+      <title>{seoTitle}</title>
+      <meta name="description" content={seoDescription}/>
+      <meta property="og:title" content={text.title}/><meta property="og:description" content={seoDescription}/><meta property="og:type" content="website"/>
+      <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={text.title}/><meta name="twitter:description" content={seoDescription}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: text.title, description: text.intro, url: `https://madeiralivecams.com${siteLocale === 'en' ? '' : `/${siteLocale}`}/parties`, mainEntity: { '@type': 'ItemList', itemListElement: visibleEvents.map((event, index) => ({ '@type': 'ListItem', position: index + 1, name: event.title, url: event.sourceUrl })) } }).replace(/</g, '\\u003c') }}/>
     </Head>
     <div className={`page-shell ${styles.page}`}>

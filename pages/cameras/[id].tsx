@@ -8,6 +8,7 @@ import { useMessages } from '../../lib/i18n/useMessages';
 import { cameraPageText } from '../../lib/i18n/cameraPage';
 import { translateCameraLabel } from '../../lib/i18n/cameraUi';
 import { localePath, supportedLocales } from '../../lib/i18n/config';
+import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
 import Layout from '../../components/Layout';
 import AirportFlightBoard from '../../components/AirportFlightBoard';
 import AirportWeatherPanel from '../../components/AirportWeatherPanel';
@@ -24,8 +25,10 @@ export default function CameraPage({ camera }: CameraPageProps) {
     const text = cameraPageText[siteLocale];
     const isAirport = camera.id === 'madeira-airport';
     const region = translateCameraLabel(siteLocale, displayCamera.region);
-    const pageTitle = isAirport ? text.airportTitle : text.title(localize(displayCamera.name));
-    const description = isAirport ? text.airportDescription : text.description(localize(displayCamera.name), region);
+    const rawPageTitle = isAirport ? text.airportTitle : text.title(localize(displayCamera.name));
+    const rawDescription = isAirport ? text.airportDescription : text.description(localize(displayCamera.name), region);
+    const pageTitle = fitSeoTitle(localize(rawPageTitle));
+    const description = fitSeoDescription(localize(rawDescription), siteLocale, 'camera');
     const heading = isAirport ? text.airportHeading : text.heading(localize(displayCamera.name));
     const intro = isAirport ? text.airportIntro : text.intro(localize(displayCamera.name));
     const canonicalUrl = `${SITE_URL}${localePath(siteLocale, `/cameras/${camera.id}`)}`;
@@ -36,14 +39,14 @@ export default function CameraPage({ camera }: CameraPageProps) {
     };
     return (<Layout>
       <Head>
-        <title>{localize(pageTitle)}</title>
-        <meta name="description" content={localize(description)}/>
-        <meta property="og:title" content={localize(pageTitle)}/>
-        <meta property="og:description" content={localize(description)}/>
+        <title>{pageTitle}</title>
+        <meta name="description" content={description}/>
+        <meta property="og:title" content={pageTitle}/>
+        <meta property="og:description" content={description}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content="summary"/>
-        <meta name="twitter:title" content={localize(pageTitle)}/>
-        <meta name="twitter:description" content={localize(description)}/>
+        <meta name="twitter:title" content={pageTitle}/>
+        <meta name="twitter:description" content={description}/>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizeStructuredData(schema, localize)).replace(/</g, '\\u003c') }}/>
       </Head>
       <main className="page-shell">

@@ -7,6 +7,7 @@ import Layout from './Layout';
 import ActivityPhoto from './ActivityPhoto';
 import type { Activity } from '../data/activities';
 import { useMessages } from '../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 type Props = {
     restaurant: Activity;
     hasPhoto: boolean;
@@ -20,6 +21,8 @@ export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) 
     const [copied, setCopied] = useState(false);
     const url = `${ORIGIN}${translationLanguage === "en" ? "" : "/" + translationLanguage}/explore/${activity.slug}`;
     const description = activity.summary[locale];
+    const seoTitle = fitSeoTitle([localize(activity.name), localize(" \u2014 "), localize(activity.area), localize(" | Madeira Live Cams")].join(""));
+    const seoDescription = fitSeoDescription(localize(description), translationLanguage, 'activity');
     const position = `${activity.latitude},${activity.longitude}`;
     const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
     const share = async () => {
@@ -49,14 +52,14 @@ export default function ActivityPage({ restaurant: activity, hasPhoto }: Props) 
     };
     return (<Layout>
       <Head>
-        <title>{[localize(activity.name), localize(" \u2014 "), localize(activity.area), localize(" | Madeira Live Cams")].join("")}</title>
-        <meta name="description" content={localize(description)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
         <meta property="og:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", activity.name))}/>
-        <meta property="og:description" content={localize(description)}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content={hasPhoto ? 'summary_large_image' : 'summary'}/>
         <meta name="twitter:title" content={localize(activity.name)}/>
-        <meta name="twitter:description" content={localize(description)}/>
+        <meta name="twitter:description" content={seoDescription}/>
         {hasPhoto && <meta key="og:image" property="og:image" content={`${ORIGIN}${activity.image}`}/>}
         {hasPhoto && <meta key="og:image:alt" property="og:image:alt" content={localize(activity.name)}/>}
         {hasPhoto && <meta key="twitter:image" name="twitter:image" content={`${ORIGIN}${activity.image}`}/>}

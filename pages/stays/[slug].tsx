@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Layout from '../../components/Layout';
 import { useMessages } from '../../lib/i18n/useMessages';
 import { getStayBySlug, stays, type Stay } from '../../data/stays';
+import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
 type Props = {
     stay: Stay;
 };
@@ -18,6 +19,8 @@ export default function StayPage({ stay }: Props) {
     const [routeOpen, setRouteOpen] = useState(false);
     const [copied, setCopied] = useState(false);
     const description = stay.shortDescription[locale];
+    const seoTitle = fitSeoTitle([localize(stay.name), localize(" | Madeira Live Cams")].join(""));
+    const seoDescription = fitSeoDescription(localize(description), translationLanguage, 'stay');
     const url = `https://madeiralivecams.com${translationLanguage === "en" ? "" : "/" + translationLanguage}/stays/${stay.slug}`;
     const coordinates = `${stay.latitude},${stay.longitude}`;
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(coordinates)}`;
@@ -46,14 +49,14 @@ export default function StayPage({ stay }: Props) {
     };
     return (<Layout><PlaceStructuredData name={stay.name} description={description} url={url} mapUrl={mapsUrl}/>
       <Head>
-        <title>{[localize(stay.name), localize(" | Madeira Live Cams")].join("")}</title>
-        <meta name="description" content={localize(description)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
         <meta property="og:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", stay.name))}/>
-        <meta property="og:description" content={localize(description)}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="article"/>
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:title" content={localize(stay.name)}/>
-        <meta name="twitter:description" content={localize(description)}/>
+        <meta name="twitter:description" content={seoDescription}/>
       </Head>
       <main className="page-shell">
 

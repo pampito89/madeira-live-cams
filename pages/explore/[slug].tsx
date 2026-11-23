@@ -14,6 +14,7 @@ import { getRestaurant, type Restaurant } from '../../data/restaurants';
 import { getActivity } from '../../data/activities';
 import { getLocalizedLocation, getLocationBySlug, locations, type Location, } from '../../data/plannerLocations';
 import { useMessages } from '../../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../../lib/seoMeta';
 type Props = {
     location: Location;
     restaurant?: Restaurant | null;
@@ -49,6 +50,8 @@ function StandardLocationPage({ location }: Props) {
     const url = `https://madeiralivecams.com${translationLanguage === "en" ? "" : "/" + translationLanguage}/explore/${display.slug}`;
     const image = `https://madeiralivecams.com${display.image}`;
     const hasSocialImage = Boolean(display.image) && !display.image.endsWith('.svg');
+    const seoTitle = fitSeoTitle([localize(display.name), localize(" | "), localize(messages.location.pageTitleSuffix)].join(""));
+    const seoDescription = fitSeoDescription(localize(display.summary), translationLanguage, 'explore');
     const destination = navigationDestinations[display.slug];
     const navigationQuery = destination
         ? `${destination.latitude},${destination.longitude}`
@@ -82,16 +85,16 @@ function StandardLocationPage({ location }: Props) {
     };
     return (<Layout><PlaceStructuredData name={display.name} description={display.summary} url={url} mapUrl={mapsUrl} image={hasSocialImage ? image : undefined}/>
       <Head>
-        <title>{[localize(display.name), localize(" | "), localize(messages.location.pageTitleSuffix)].join("")}</title>
-        <meta name="description" content={localize(display.summary)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
         <meta property="og:title" content={localize(`${localize(display.name)} | ${messages.location.ogTitleSuffix}`)}/>
-        <meta property="og:description" content={localize(display.summary)}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="article"/>
         {hasSocialImage && <meta key="og:image" property="og:image" content={image}/>}
         {hasSocialImage && <meta key="og:image:alt" property="og:image:alt" content={localize(display.imageAlt)}/>}
         <meta name="twitter:card" content="summary_large_image"/>
         <meta name="twitter:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", localize(display.name)))}/>
-        <meta name="twitter:description" content={localize(display.summary)}/>
+        <meta name="twitter:description" content={seoDescription}/>
         {hasSocialImage && <meta key="twitter:image" name="twitter:image" content={image}/>}
       </Head>
       <main className="page-shell">

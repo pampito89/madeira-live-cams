@@ -10,6 +10,7 @@ import { useMessages } from '../lib/i18n/useMessages';
 import { addDays, AvailabilityResult, BOOKING_URL, BookingCategory, madeiraDate, Trail, TrailDay } from '../lib/trailAvailability';
 import { planningDates, weekStarts } from '../lib/trailPlanning';
 import { availableSlots, timeSlotLabel } from '../lib/trailBooking';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 import styles from '../styles/trailAvailability.module.css';
 import lab from '../styles/trailLabTravel.module.css';
 
@@ -70,6 +71,8 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const version = useRef(0);
     const title = t('Trail availability', 'Завантаженість маршрутів');
     const description = t('View available Madeira PR trail time slots for the next 7, 14, 30 or 60 days using SIMplifica data.', 'Переглядайте доступні тайм-слоти маршрутів PR на Мадейрі на найближчі 7, 14, 30 або 60 днів за даними SIMplifica.');
+    const seoTitle = fitSeoTitle(`${localize(title)} | Madeira Live Cams`);
+    const seoDescription = fitSeoDescription(localize(description), translationLanguage, 'generic');
 
     useEffect(() => {
         setNow(Date.now());
@@ -151,9 +154,9 @@ export default function TrailAvailabilityPage({ trails, initialDate, catalogUnav
     const groupOutside = groupRanges.some(range => range.from < calendarDates[0] || range.to > calendarDates[calendarDates.length - 1]);
 
     return <Layout><Head>
-        <title>{`${localize(title)} | Madeira Live Cams`}</title><meta name="description" content={localize(description)} />
-        <meta property="og:title" content={localize(title)} /><meta property="og:description" content={localize(description)} /><meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={localize(title)} /><meta name="twitter:description" content={localize(description)} />
+        <title>{seoTitle}</title><meta name="description" content={seoDescription} />
+        <meta property="og:title" content={localize(title)} /><meta property="og:description" content={seoDescription} /><meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={localize(title)} /><meta name="twitter:description" content={seoDescription} />
     </Head><div className={`page-shell ${styles.page}`}>
         <section className={styles.hero}><div className={styles.eyebrow}>{t('MADEIRA · GROUP PLANNING', 'МАДЕЙРА · ПЛАНУВАННЯ ДЛЯ ГРУП')}</div><h1>{localize(title)}</h1><p>{t('Your group. Your dates. Find the right time slot.', 'Ваша група. Ваші дати. Знайдіть зручний тайм-слот.')}</p></section>
         <form className={styles.filters} onSubmit={load}>

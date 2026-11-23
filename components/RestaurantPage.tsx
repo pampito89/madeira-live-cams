@@ -7,6 +7,7 @@ import Layout from './Layout';
 import RestaurantPhoto from './RestaurantPhoto';
 import type { Restaurant } from '../data/restaurants';
 import { useMessages } from '../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 type Props = {
     restaurant: Restaurant;
     hasPhoto: boolean;
@@ -43,6 +44,8 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
     const seoTitle = uk
         ? `${r.name}, ${r.area}: меню, відгуки та інформація`
         : localizeFormat("__VAR_0__, __VAR_1__: Reviews, Menu & Visitor Info", r.name, r.area);
+    const fittedTitle = fitSeoTitle(localize(seoTitle));
+    const fittedDescription = fitSeoDescription(localize(description), translationLanguage, 'restaurant');
     const officialInfo = officialRestaurantInfo[r.slug];
     const actionClass = 'inline-flex h-10 items-center justify-center rounded-lg border border-ocean px-3 text-sm font-semibold text-ocean transition hover:bg-ocean hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2';
     const share = async () => {
@@ -73,14 +76,14 @@ export default function RestaurantPage({ restaurant: r, hasPhoto }: Props) {
     };
     return (<Layout>
       <Head>
-        <title>{[localize(seoTitle)].join("")}</title>
-        <meta name="description" content={localize(description)}/>
-        <meta property="og:title" content={localize(seoTitle)}/>
-        <meta property="og:description" content={localize(description)}/>
+        <title>{fittedTitle}</title>
+        <meta name="description" content={fittedDescription}/>
+        <meta property="og:title" content={fittedTitle}/>
+        <meta property="og:description" content={fittedDescription}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content={hasPhoto ? 'summary_large_image' : 'summary'}/>
-        <meta name="twitter:title" content={localize(seoTitle)}/>
-        <meta name="twitter:description" content={localize(description)}/>
+        <meta name="twitter:title" content={fittedTitle}/>
+        <meta name="twitter:description" content={fittedDescription}/>
         {hasPhoto && <meta key="og:image" property="og:image" content={`${ORIGIN}${r.image}`}/>}
         {hasPhoto && <meta key="og:image:alt" property="og:image:alt" content={localize(r.name)}/>}
         {hasPhoto && <meta key="twitter:image" name="twitter:image" content={`${ORIGIN}${r.image}`}/>}

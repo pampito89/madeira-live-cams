@@ -7,6 +7,7 @@ import { useMessages } from '../lib/i18n/useMessages';
 import { weatherUi } from '../lib/i18n/weatherUi';
 import { localePath, type Locale } from '../lib/i18n/config';
 import { MADEIRA_TIME_ZONE, clockChange, clockMessages, formatSunrise, sunriseDays, windyCloudUrl, type SunriseDay } from '../lib/sunriseTime';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 
 type ForecastState = { loading: boolean; error: string | null; days: SunriseDay[] };
 const availabilityLabels: Record<Locale, string> = {
@@ -20,6 +21,8 @@ export default function WeatherGuidePage() {
     const [forecast, setForecast] = useState<ForecastState>({ loading: true, error: null, days: [] });
     const ui = weatherUi[siteLocale];
     const text = messages.weatherGuide;
+    const seoTitle = fitSeoTitle(localize(text.pageTitle));
+    const seoDescription = fitSeoDescription(localize(text.pageDescription), siteLocale, 'generic');
     const availabilityUrl = `${localePath(siteLocale, '/trail-availability')}?route=225&days=7&autoload=1#time-slots`;
 
     function sunriseRating(day: SunriseDay) {
@@ -52,14 +55,14 @@ export default function WeatherGuidePage() {
 
     return (<Layout>
         <Head>
-            <title>{localize(text.pageTitle)}</title>
-            <meta name="description" content={localize(text.pageDescription)} />
-            <meta property="og:title" content={localize(text.pageTitle)} />
-            <meta property="og:description" content={localize(text.ogDescription)} />
+            <title>{seoTitle}</title>
+            <meta name="description" content={seoDescription} />
+            <meta property="og:title" content={seoTitle} />
+            <meta property="og:description" content={seoDescription} />
             <meta property="og:type" content="website" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={localize(text.pageTitle)} />
-            <meta name="twitter:description" content={localize(text.pageDescription)} />
+            <meta name="twitter:title" content={seoTitle} />
+            <meta name="twitter:description" content={seoDescription} />
         </Head>
         <main className="page-shell">
             <section className="relative isolate mb-6 overflow-hidden rounded-2xl bg-forest px-5 py-7 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-9">

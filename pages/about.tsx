@@ -4,19 +4,22 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import { aboutPageText } from '../lib/i18n/aboutPage';
 import { useMessages } from '../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 export default function AboutPage() {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { siteLocale } = useMessages();
     const content = aboutPageText[siteLocale];
+    const seoTitle = fitSeoTitle([localize(content.title), localize(" | Madeira Live Cams")].join(""));
+    const seoDescription = fitSeoDescription(localize(content.description), siteLocale, 'generic');
     const whatsappUrl = `https://wa.me/351932006352?text=${encodeURIComponent(content.whatsappMessage)}`;
     return (<>
       <Head>
-        <title>{[localize(content.title), localize(" | Madeira Live Cams")].join("")}</title>
-        <meta name="description" content={localize(content.description)}/>
-        <meta property="og:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", content.title))}/>
-        <meta property="og:description" content={localize(content.description)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
+        <meta property="og:title" content={seoTitle}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="website"/>
-      <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", content.title))}/><meta name="twitter:description" content={localize(content.description)}/></Head>
+      <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={seoTitle}/><meta name="twitter:description" content={seoDescription}/></Head>
 
       <Layout>
         <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
