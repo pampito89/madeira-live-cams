@@ -1051,6 +1051,27 @@
       }
     ]
   },
+  "/images/madeira-coast-heading-v1.png": {
+    "src": "/images/optimized/madeira-coast-heading-v1-4f6e5da069-1440.webp",
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/madeira-coast-heading-v1-4f6e5da069-320.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/madeira-coast-heading-v1-4f6e5da069-640.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/madeira-coast-heading-v1-4f6e5da069-960.webp"
+      },
+      {
+        "width": 1440,
+        "src": "/images/optimized/madeira-coast-heading-v1-4f6e5da069-1440.webp"
+      }
+    ]
+  },
   "/images/oleksandr.png": {
     "src": "/images/optimized/oleksandr-8f62867f11-200.webp",
     "variants": [

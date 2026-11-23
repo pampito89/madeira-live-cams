@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import sharp from 'sharp';
 import { cameras } from '../../components/cameraData';
 
 const ALLOWED_CAMERA_HOSTS = new Set([
@@ -7,6 +8,9 @@ const ALLOWED_CAMERA_HOSTS = new Set([
   'worldcam.eu',
   'www.worldcam.eu',
 ]);
+
+const SNAPSHOT_MAX_WIDTH = 800;
+const SNAPSHOT_JPEG_QUALITY = 78;
 
 function getImageUrlFromCameraPage(
   pageHtml: string,
@@ -41,6 +45,37 @@ function getImageUrlFromCameraPage(
   } catch {
     return null;
   }
+}
+
+async function optimizeSnapshotBuffer(
+  imageBuffer: Buffer,
+  originalContentType: string
+): Promise<{ buffer: Buffer; contentType: string }> {
+  try {
+    const optimized = await sharp(imageBuffer, { failOn: 'none' })
+      .rotate()
+      .resize({ width: SNAPSHOT_MAX_WIDTH, withoutEnlargement: true })
+      .jpeg({
+        quality: SNAPSHOT_JPEG_QUALITY,
+        progressive: true,
+        mozjpeg: true,
+      })
+      .toBuffer();
+
+    if (optimized.length > 0 && optimized.length < imageBuffer.length) {
+      return {
+        buffer: optimized,
+        contentType: 'image/jpeg',
+      };
+    }
+  } catch {
+    // Fall back to the original upstream frame if optimization fails.
+  }
+
+  return {
+    buffer: imageBuffer,
+    contentType: originalContentType,
+  };
 }
 
 export default async function handler(
@@ -137,18 +172,23 @@ export default async function handler(
       return;
     }
 
-    const contentType =
+    const originalContentType =
       snapshotResponse.headers.get('content-type') || 'image/jpeg';
 
-    const imageBuffer = Buffer.from(await snapshotResponse.arrayBuffer());
+    const rawImageBuffer = Buffer.from(await snapshotResponse.arrayBuffer());
+    const { buffer: outputBuffer, contentType } = await optimizeSnapshotBuffer(
+      rawImageBuffer,
+      originalContentType
+    );
 
     res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Length', String(outputBuffer.length));
     res.setHeader(
       'Cache-Control',
       'public, s-maxage=60, stale-while-revalidate=300'
     );
 
-    res.status(200).send(imageBuffer);
+    res.status(200).send(outputBuffer);
   } catch {
     res.status(502).json({
       error: 'Unable to load the live camera preview',
