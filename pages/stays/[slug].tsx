@@ -51,8 +51,6 @@ export default function StayPage({ stay }: Props) {
         <meta property="og:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", stay.name))}/>
         <meta property="og:description" content={localize(description)}/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content={url}/>
-        <meta property="og:locale" content={({ en: "en_GB", pt: "pt_PT", de: "de_DE", fr: "fr_FR", es: "es_ES", pl: "pl_PL", uk: "uk_UA" })[translationLanguage]}/>
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:title" content={localize(stay.name)}/>
         <meta name="twitter:description" content={localize(description)}/>

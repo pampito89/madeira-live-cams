@@ -70,13 +70,12 @@ export default function CarRentalPage() {
       <meta property="og:title" content={TITLE}/>
       <meta property="og:description" content={DESCRIPTION}/>
       <meta property="og:type" content="website"/>
-      <meta property="og:locale" content="uk_UA"/>
-      <meta property="og:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
-      <meta property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power"/>
+      <meta key="og:image" property="og:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
+      <meta key="og:image:alt" property="og:image:alt" content="Ілюстративне фото білого Nissan Qashqai e-Power"/>
       <meta name="twitter:card" content="summary_large_image"/>
       <meta name="twitter:title" content={TITLE}/>
       <meta name="twitter:description" content={DESCRIPTION}/>
-      <meta name="twitter:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
+      <meta key="twitter:image" name="twitter:image" content={`${ORIGIN}/images/car-rental/nissan.jpg`}/>
       <link rel="preload" as="image" href="/images/car-rental/madeira-road-trip-1280.webp" imageSrcSet={HERO_SRCSET} imageSizes={HERO_SIZES}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}/>
     </Head>
