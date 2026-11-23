@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import RentalDateRange, { madeiraToday, displayRentalDate, type RentalPeriod } from '../components/RentalDateRange';
 const ORIGIN = 'https://madeiralivecams.com';
 const TITLE = 'Оренда авто на Мадейрі — Nissan та MINI | Madeira Live Cams';
-const DESCRIPTION = '\u041E\u0440\u0435\u043D\u0434\u0430 \u0430\u0432\u0442\u043E \u043D\u0430 \u041C\u0430\u0434\u0435\u0439\u0440\u0456: Nissan Qashqai e-Power \u2014 60 \u20AC/\u0434\u043E\u0431\u0443, MINI Countryman S ALL4 \u2014 60 \u20AC/\u0434\u043E\u0431\u0443. \u0410\u0431\u043E 50 \u20AC/\u0434\u043E\u0431\u0443 \u0437\u0456 \u0441\u0442\u0440\u0430\u0445\u043E\u0432\u0438\u043C \u0434\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u043C. \u0411\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0431\u0435\u0437 \u043F\u0435\u0440\u0435\u0434\u043E\u043F\u043B\u0430\u0442\u0438.';
+const DESCRIPTION = 'Оренда авто на Мадейрі: Nissan Qashqai e-Power — 60 €/добу, MINI Countryman S ALL4 — 60 €/добу (або 50 €/добу з депозитом). Без передоплати.';
 const WHATSAPP_URL = 'https://wa.me/380632558450';
 const TELEGRAM_URL = 'https://t.me/thomasedison33';
 const HERO_SIZES = '(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1151px) calc(100vw - 64px), 1088px';

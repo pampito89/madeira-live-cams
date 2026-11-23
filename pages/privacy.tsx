@@ -4,18 +4,21 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import { privacyPageText } from '../lib/i18n/privacyPage';
 import { useMessages } from '../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 export default function PrivacyPage() {
     const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
     const { siteLocale } = useMessages();
     const content = privacyPageText[siteLocale];
+    const seoTitle = fitSeoTitle([localize(content.title), localize(" | Madeira Live Cams")].join(""));
+    const seoDescription = fitSeoDescription(localize(content.description), siteLocale, 'generic');
     return (<Layout>
       <Head>
-        <title>{[localize(content.title), localize(" | Madeira Live Cams")].join("")}</title>
-        <meta name="description" content={localize(content.description)}/>
-        <meta property="og:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", content.title))}/>
-        <meta property="og:description" content={localize(content.description)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
+        <meta property="og:title" content={seoTitle}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="website"/>
-      <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={localize(localizeFormat("__VAR_0__ | Madeira Live Cams", content.title))}/><meta name="twitter:description" content={localize(content.description)}/></Head>
+      <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={seoTitle}/><meta name="twitter:description" content={seoDescription}/></Head>
 
       <main className="page-shell">
         <section className="mb-6 rounded-2xl bg-gradient-to-br from-forest via-ocean to-leaf px-5 py-8 text-white shadow-lg shadow-forest/15 sm:px-8 sm:py-10">

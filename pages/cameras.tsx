@@ -17,6 +17,7 @@ import Link from 'next/link';
 import Layout from '../components/Layout';
 import { getLocalizedLocation, locations, plannerLocationPath } from '../data/plannerLocations';
 import { useMessages } from '../lib/i18n/useMessages';
+import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
 type Props = {
     initialStatuses: Record<string, LocationStatus>;
 };
@@ -66,6 +67,8 @@ export default function CamerasPage({ initialStatuses }: Props) {
     const locationStatuses = useLocationStatuses(initialStatuses, true);
     const { translate: localize, language: translationLanguage } = useText();
     const { locale, messages } = useMessages();
+    const seoTitle = fitSeoTitle(localize(messages.exploreList.pageTitle));
+    const seoDescription = fitSeoDescription(localize(messages.exploreList.pageDescription), translationLanguage, 'generic');
     const [activeFilter, setActiveFilter] = useNavigationState('cameras:activeFilter', 'All');
     const [query, setQuery] = useNavigationState('cameras:search', '');
     const normalizedQuery = normalizeLocationSearch(query);
@@ -100,14 +103,14 @@ export default function CamerasPage({ initialStatuses }: Props) {
     const weatherByLocation = useTileWeather(filteredLocations.map(location => location.slug));
     return <Layout>
       <Head>
-        <title>{localize(messages.exploreList.pageTitle)}</title>
-        <meta name="description" content={localize(messages.exploreList.pageDescription)}/>
-        <meta property="og:title" content={localize(messages.exploreList.pageTitle)}/>
-        <meta property="og:description" content={localize(messages.exploreList.pageDescription)}/>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription}/>
+        <meta property="og:title" content={seoTitle}/>
+        <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:title" content={localize(messages.exploreList.pageTitle)}/>
-        <meta name="twitter:description" content={localize(messages.exploreList.pageDescription)}/>
+        <meta name="twitter:title" content={seoTitle}/>
+        <meta name="twitter:description" content={seoDescription}/>
       </Head>
       <main className="page-shell">
         <section className={heroStyles.hero}>
