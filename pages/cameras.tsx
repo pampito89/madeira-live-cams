@@ -137,7 +137,7 @@ export default function CamerasPage({ initialStatuses }: Props) {
             const weather = weatherByLocation[location.slug];
             const weatherDetails = weather ? getWeatherDetails(weather.weatherCode, locale) : null;
             const isPracticalPlace = location.tags.some(tag => ['Restaurants', 'Villas', 'Supermarkets'].includes(tag));
-            return <Link key={location.slug} href={{ pathname: plannerLocationPath(location), query: { returnTo: 'cameras' } }} onClick={() => rememberNavigationPosition()} className={tileStyles.card + " group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"} data-weather-slug={location.slug}>
+            return <Link key={location.slug} href={plannerLocationPath(location)} onClick={() => rememberNavigationPosition()} className={tileStyles.card + " group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-leaf hover:shadow-md"} data-weather-slug={location.slug}>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ocean">{localize(displayLocation.category)}</p>
                   <h2 className="mt-1 text-lg font-semibold text-navy">{localize(displayLocation.name)}</h2>

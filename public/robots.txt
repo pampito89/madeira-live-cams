@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
+Allow: /api/camera-snapshot
 Disallow: /api/
+Disallow: /en$
+Disallow: /en/
 Disallow: /guide/
 Disallow: /admin/
 
