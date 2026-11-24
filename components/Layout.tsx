@@ -94,15 +94,25 @@ const Layout: React.FC<{
     };
     const navItems = [
         { href: '/', label: text.home, icon: '⌂' },
+        { href: '/cameras/madeira-airport', label: text.weatherWarnings, icon: '⚠️' },
+        { href: '/weather-guide', label: messages.nav.sunrise, icon: '☀' },
         { href: '/cameras', label: text.locations, icon: '⌖' },
         { href: '/trip-plan', label: text.tripPlan, icon: '🗺️' },
-        ...(siteLocale === 'uk' ? [{ href: '/car-rental', label: 'Оренда авто', icon: '🚘' }] : []),
         { href: '/trail-availability', label: text.trails, icon: '📈' },
         { href: '/parties', label: eventLabels[siteLocale], icon: '♫' },
-        { href: '/weather-guide', label: messages.nav.sunrise, icon: '☀' },
+        ...(siteLocale === 'uk' ? [{ href: '/car-rental', label: 'Оренда авто', icon: '🚘' }] : []),
         { href: '/about', label: messages.nav.about, icon: 'ⓘ' },
     ];
-    const isActivePage = (href: string) => href === '/' ? router.pathname === '/' : router.pathname === href || router.pathname.startsWith(`${href}/`);
+    const isAirportWarningsPage = router.pathname === '/cameras/[id]' && router.query.id === 'madeira-airport';
+    const isActivePage = (href: string) => {
+        if (href === '/')
+            return router.pathname === '/';
+        if (href === '/cameras/madeira-airport')
+            return isAirportWarningsPage;
+        if (href === '/cameras')
+            return router.pathname === '/cameras' || (router.pathname.startsWith('/cameras/') && !isAirportWarningsPage);
+        return router.pathname === href || router.pathname.startsWith(`${href}/`);
+    };
     const installButtonLabel = isIosDevice ? text.addIphone : text.installApp;
     const showInstallButton = !isPwaInstalled && (isIosDevice || isAndroidDevice || deferredInstallPrompt);
     const hasInnerMain = hasMainElement(children);
