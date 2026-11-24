@@ -34,7 +34,7 @@ export const cameraPageText: Record<Locale, CameraPageText> = {
     cameraCheck: 'Compare the live view with the current forecast, account for the location and elevation, and check official notices before a mountain walk.', weatherLink: 'Check weather and sunrise information',
   },
   pt: {
-    airportTitle: 'Webcam em direto do Aeroporto da Madeira (FNC), chegadas e partidas',
+    airportTitle: 'Webcam Aeroporto da Madeira (FNC): chegadas e partidas',
     airportDescription: 'Veja a webcam do Aeroporto da Madeira FNC e consulte as chegadas e partidas oficiais em tempo real. Verifique a visibilidade antes de viajar.',
     airportHeading: 'Webcam em direto do Aeroporto da Madeira (FNC)',
     airportIntro: 'Esta imagem em direto mostra a zona da pista do Aeroporto Internacional da Madeira Cristiano Ronaldo (FNC/LPMA). Use-a para verificar nuvens, visibilidade e condições gerais. Confirme o voo nas páginas oficiais de chegadas e partidas.',
@@ -60,7 +60,7 @@ export const cameraPageText: Record<Locale, CameraPageText> = {
     cameraCheck: 'Vergleichen Sie das Livebild mit der aktuellen Vorhersage und prüfen Sie vor einer Bergwanderung offizielle Hinweise.', weatherLink: 'Wetter und Sonnenaufgang prüfen',
   },
   fr: {
-    airportTitle: 'Webcam en direct de l’aéroport de Madère (FNC), arrivées et départs',
+    airportTitle: 'Webcam Aéroport de Madère (FNC) : arrivées et départs',
     airportDescription: 'Regardez la webcam de l’aéroport de Madère FNC et consultez les arrivées et départs officiels en temps réel.',
     airportHeading: 'Webcam en direct de l’aéroport de Madère (FNC)',
     airportIntro: 'Cette vue en direct montre la piste de l’aéroport international Cristiano Ronaldo de Madère (FNC/LPMA). Vérifiez les nuages, la visibilité et les conditions générales. Pour le statut exact d’un vol, consultez les arrivées et départs officiels.',
@@ -73,7 +73,7 @@ export const cameraPageText: Record<Locale, CameraPageText> = {
     cameraCheck: 'Comparez la vue avec les prévisions, tenez compte du lieu et de l’altitude et consultez les avis officiels avant une randonnée.', weatherLink: 'Voir la météo et le lever du soleil',
   },
   es: {
-    airportTitle: 'Webcam en directo del aeropuerto de Madeira (FNC), llegadas y salidas',
+    airportTitle: 'Webcam Aeropuerto de Madeira (FNC): llegadas y salidas',
     airportDescription: 'Mira la webcam del aeropuerto de Madeira FNC y consulta las llegadas y salidas oficiales en tiempo real.',
     airportHeading: 'Webcam en directo del aeropuerto de Madeira (FNC)',
     airportIntro: 'Esta vista en directo muestra la zona de la pista del Aeropuerto Internacional Cristiano Ronaldo de Madeira (FNC/LPMA). Comprueba nubes, visibilidad y condiciones generales. Consulta el estado exacto del vuelo en las páginas oficiales de llegadas y salidas.',
@@ -86,7 +86,7 @@ export const cameraPageText: Record<Locale, CameraPageText> = {
     cameraCheck: 'Compara la imagen con la previsión actual, ten en cuenta la ubicación y la altitud y consulta los avisos oficiales antes de una ruta de montaña.', weatherLink: 'Consultar tiempo y amanecer',
   },
   pl: {
-    airportTitle: 'Kamera na żywo z lotniska na Maderze (FNC), przyloty i odloty',
+    airportTitle: 'Kamera na żywo Lotnisko Madera (FNC): przyloty i odloty',
     airportDescription: 'Oglądaj kamerę lotniska na Maderze FNC i sprawdzaj oficjalne przyloty oraz odloty w czasie rzeczywistym.',
     airportHeading: 'Kamera na żywo z lotniska na Maderze (FNC)',
     airportIntro: 'Widok na żywo pokazuje rejon pasa startowego Międzynarodowego Portu Lotniczego Cristiano Ronaldo na Maderze (FNC/LPMA). Sprawdź zachmurzenie, widoczność i ogólne warunki. Dokładny status lotu znajdziesz na oficjalnych stronach przylotów i odlotów.',

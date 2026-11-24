@@ -1,16 +1,18 @@
-import { withStaticTranslations, withServerTranslations, translatedStaticProps } from '../lib/i18n/pageTranslations';
+import { translatedStaticProps } from '../lib/i18n/pageTranslations';
 import { useText } from '../lib/i18n/TranslationProvider';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { aboutPageText } from '../lib/i18n/aboutPage';
 import { useMessages } from '../lib/i18n/useMessages';
 import { fitSeoDescription, fitSeoTitle } from '../lib/seoMeta';
+import { buildAboutStructuredData } from '../lib/organizationSchema';
 export default function AboutPage() {
-    const { translate: localize, language: translationLanguage, format: localizeFormat } = useText();
+    const { translate: localize } = useText();
     const { siteLocale } = useMessages();
     const content = aboutPageText[siteLocale];
     const seoTitle = fitSeoTitle([localize(content.title), localize(" | Madeira Live Cams")].join(""));
     const seoDescription = fitSeoDescription(localize(content.description), siteLocale, 'generic');
+    const aboutSchema = buildAboutStructuredData(siteLocale, localize(content.title), seoDescription);
     const whatsappUrl = `https://wa.me/351932006352?text=${encodeURIComponent(content.whatsappMessage)}`;
     return (<>
       <Head>
@@ -19,7 +21,11 @@ export default function AboutPage() {
         <meta property="og:title" content={seoTitle}/>
         <meta property="og:description" content={seoDescription}/>
         <meta property="og:type" content="website"/>
-      <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={seoTitle}/><meta name="twitter:description" content={seoDescription}/></Head>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content={seoTitle}/>
+        <meta name="twitter:description" content={seoDescription}/>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema).replace(/</g, '\\u003c') }}/>
+      </Head>
 
       <Layout>
         <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">

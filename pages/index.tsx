@@ -9,6 +9,7 @@ import { cameras, type CameraCategory } from '../components/cameraData';
 import CameraCard from '../components/CameraCard';
 import { useMessages } from '../lib/i18n/useMessages';
 import { homePageText } from '../lib/i18n/homePage';
+import { buildHomeStructuredData } from '../lib/organizationSchema';
 const cameraFilters: CameraCategory[] = ['Mountains', 'Beaches', 'Towns', 'North Coast', 'South Coast', 'East Coast'];
 const directoryCameras = cameras.filter(camera => camera.id !== 'madeira-airport' && !camera.hiddenFromHome);
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
     const [activeFilter, setActiveFilter] = useNavigationState<CameraCategory | 'All'>("index:cameraFilter:v2", 'All');
     const [flightNumber, setFlightNumber] = useState('');
     const text = homePageText[siteLocale];
+    const homeSchema = buildHomeStructuredData(siteLocale, localize(text.description));
     const trackFlight = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const cleanFlightNumber = flightNumber.trim().replace(/\s+/g, '').toUpperCase();
@@ -35,6 +37,7 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:title" content={localize(text.title)}/>
         <meta name="twitter:description" content={localize(text.description)}/>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema).replace(/</g, '\\u003c') }}/>
       </Head>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
         <header className="relative isolate overflow-hidden rounded-xl bg-navy px-5 py-5 text-white sm:px-7 sm:py-6">

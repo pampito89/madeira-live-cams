@@ -24,9 +24,10 @@ type Props = {
 };
 type Search = { route: number; dates: string[] };
 
-export const getServerSideProps: GetServerSideProps<Props> = withServerTranslations<Props>(async ({ query }) => {
+export const getServerSideProps: GetServerSideProps<Props> = withServerTranslations<Props>(async ({ query, res }) => {
     const { getTrails } = await import('../lib/simplifica');
     const initialDate = madeiraDate();
+    const hasCustomQuery = typeof query.route === 'string' || typeof query.days === 'string' || typeof query.autoload === 'string';
     try {
         const trails = await getTrails();
         const requestedRoute = typeof query.route === 'string'
@@ -35,6 +36,9 @@ export const getServerSideProps: GetServerSideProps<Props> = withServerTranslati
         const defaultRoute = trails.find(item => item.id === 301 && item.available !== false)
             ?? trails.find(item => item.available !== false);
         const requestedPeriod = typeof query.days === 'string' && ['7', '14', '30', '60'].includes(query.days) ? Number(query.days) : 30;
+        if (!hasCustomQuery) {
+            res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=3600');
+        }
         return { props: {
             trails, initialDate, catalogUnavailable: false,
             initialRoute: String(requestedRoute?.id ?? defaultRoute?.id ?? ''),
@@ -42,6 +46,7 @@ export const getServerSideProps: GetServerSideProps<Props> = withServerTranslati
             autoLoad: Boolean(requestedRoute && query.autoload === '1'),
         } };
     } catch {
+        res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=30, stale-while-revalidate=60');
         return { props: { trails: [], initialDate, catalogUnavailable: true, initialRoute: '', initialPeriod: 30, autoLoad: false } };
     }
 }, '/trail-availability');
