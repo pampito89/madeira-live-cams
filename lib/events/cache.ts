@@ -3,8 +3,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash, randomUUID } from 'node:crypto';
 import { Redis } from '@upstash/redis';
+const isServerless = Boolean(process.env.VERCEL || process.env.NETLIFY);
 const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN ? Redis.fromEnv() : null;
-const directory = process.env.VERCEL ? path.join(os.tmpdir(), 'madeira-events-v2') : path.join(process.cwd(), 'backups', 'events-cache-v2');
+const directory = isServerless ? path.join(os.tmpdir(), 'madeira-events-v2') : path.join(process.cwd(), 'backups', 'events-cache-v2');
 const keyFor = (key: string) => `events:v2:${createHash('sha256').update(key).digest('hex')}`;
 export async function readCache<T>(key: string): Promise<T | null> {
   try { if (redis) return await redis.get<T>(keyFor(key)); return JSON.parse(await fs.readFile(path.join(directory, `${keyFor(key).split(':').pop()}.json`), 'utf8')); } catch { return null; }
@@ -27,7 +28,7 @@ export function reserveTranslation(characters: number): Promise<boolean> {
       return Number(count) === 1;
     }
     // A serverless /tmp directory cannot enforce an account-wide daily quota.
-    if (process.env.VERCEL) return false;
+    if (isServerless) return false;
     const used = (await readCache<number>(key)) || 0;
     if (used + characters > 4800) return false;
     await fs.mkdir(directory, { recursive: true });
