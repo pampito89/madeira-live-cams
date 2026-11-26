@@ -18,7 +18,7 @@ export const SOURCES = [
  { id: 'eventbrite-madeira', name: 'Eventbrite · Madeira · All events', url: 'https://www.eventbrite.com/d/portugal--ilha-da-madeira--85687345/all-events/', endpoint: 'https://www.eventbrite.com/d/portugal--ilha-da-madeira--85687345/all-events/', format: 'all' },
  { id: 'eventbrite-porto-santo', name: 'Eventbrite · Porto Santo · All events', url: 'https://www.eventbrite.com/d/portugal--ilha-de-porto-santo/all-events/', endpoint: 'https://www.eventbrite.com/d/portugal--ilha-de-porto-santo/all-events/', format: 'all' },
 ] as const;
-const FRESH_MS = 30 * 60_000;
+export const EVENTS_FRESH_MS = 12 * 60 * 60_000;
 const STALE_MS = 7 * 24 * 60 * 60_000;
 const inflight = new Map<string, Promise<SourceSnapshot>>();
 export async function fetchText(url: string): Promise<string> {
@@ -32,13 +32,13 @@ export async function fetchText(url: string): Promise<string> {
 export function sourceView(source: typeof SOURCES[number], snapshot: SourceSnapshot, now: number): { events: ImportedEvent[]; state: SourceState } {
  const age = now - Date.parse(snapshot.fetchedAt);
  const usable = Number.isFinite(age) && age <= STALE_MS;
- const fresh = usable && age < FRESH_MS && !snapshot.retryAfter;
+ const fresh = usable && age < EVENTS_FRESH_MS && !snapshot.retryAfter;
  return { events: usable ? snapshot.events : [], state: { id: source.id, name: source.name, url: source.url, status: fresh ? 'fresh' : usable ? 'stale' : 'unavailable', fetchedAt: snapshot.fetchedAt || null, count: usable ? snapshot.events.length : 0 } };
 }
 async function loadSource(source: typeof SOURCES[number]) {
  const key = `source:${source.id}`; const now = Date.now();
  const saved = await readCache<SourceSnapshot>(key);
- if (saved?.version === 1 && (now < saved.retryAfter || now - Date.parse(saved.fetchedAt) < FRESH_MS)) return sourceView(source, saved, now);
+ if (saved?.version === 1 && (now < saved.retryAfter || now - Date.parse(saved.fetchedAt) < EVENTS_FRESH_MS)) return sourceView(source, saved, now);
  let work = inflight.get(key);
  if (!work) {
    work = (async (): Promise<SourceSnapshot> => {

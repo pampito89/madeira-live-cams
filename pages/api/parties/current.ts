@@ -12,6 +12,7 @@ type EventData = {
 
 const ACCOUNT = 'thepurplefridays';
 const INSTAGRAM_URL = `https://www.instagram.com/${ACCOUNT}/`;
+const UPSTREAM_TIMEOUT_MS = 8_000;
 
 const text = (value: unknown) =>
   typeof value === 'string'
@@ -103,11 +104,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  res.setHeader('X-Robots-Tag', 'noindex');
+
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed.' });
   }
 
-  res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate=3600');
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=3600, s-maxage=43200, stale-while-revalidate=86400',
+  );
+  res.setHeader(
+    'CDN-Cache-Control',
+    'public, s-maxage=43200, stale-while-revalidate=86400',
+  );
 
   try {
     const token = process.env.META_PAGE_ACCESS_TOKEN;
@@ -126,7 +136,9 @@ export default async function handler(
     metaUrl.searchParams.set('fields', fields);
     metaUrl.searchParams.set('access_token', token);
 
-    const metaResponse = await fetch(metaUrl.toString());
+    const metaResponse = await fetch(metaUrl.toString(), {
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    });
 
     if (!metaResponse.ok) {
       throw new Error('Instagram could not be reached.');
@@ -153,6 +165,7 @@ export default async function handler(
           'User-Agent':
             'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0)',
         },
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
       });
 
       if (eventbrite.ok) {
@@ -177,6 +190,7 @@ export default async function handler(
       instagramUrl: INSTAGRAM_URL,
     });
   } catch (error) {
+    res.setHeader('Cache-Control', 'no-store');
     const message =
       error instanceof Error
         ? error.message
