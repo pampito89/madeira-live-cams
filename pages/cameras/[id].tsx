@@ -23,23 +23,26 @@ type CameraPageProps = {
 };
 const SITE_URL = 'https://madeiralivecams.com';
 const FALLBACK_CAMERA_IMAGE = '/images/cameras/madeira-camera-2.png';
+const SNAPSHOT_REFRESH_MS = 300_000;
 export default function CameraPage({ camera, nearby }: CameraPageProps) {
     const { translate: localize } = useText();
     const { locale, siteLocale, messages } = useMessages();
     const displayCamera = getLocalizedCamera(camera, locale);
     const snapshotImageRef = useRef<HTMLImageElement | null>(null);
-    const [snapshotVersion, setSnapshotVersion] = useState(0);
+    const [snapshotBucket, setSnapshotBucket] = useState<number | null>(null);
     const [failedCameraId, setFailedCameraId] = useState<string | null>(null);
     const isSnapshotCamera = !displayCamera.youtubeId && (displayCamera.sourceUrl.includes('netmadeira.com/webcams-madeira/') || displayCamera.sourceUrl.includes('worldcam.eu/'));
     const snapshotFailed = failedCameraId === camera.id;
     useEffect(() => {
-        setSnapshotVersion(0);
+        setSnapshotBucket(null);
         if (!isSnapshotCamera)
             return;
         const interval = window.setInterval(() => {
+            if (document.visibilityState !== 'visible')
+                return;
             setFailedCameraId(null);
-            setSnapshotVersion(Math.floor(Date.now() / 60000));
-        }, 60000);
+            setSnapshotBucket(Math.floor(Date.now() / SNAPSHOT_REFRESH_MS));
+        }, SNAPSHOT_REFRESH_MS);
         return () => window.clearInterval(interval);
     }, [camera.id, isSnapshotCamera]);
     useEffect(() => {
@@ -48,12 +51,14 @@ export default function CameraPage({ camera, nearby }: CameraPageProps) {
         const img = snapshotImageRef.current;
         if (img && img.complete && img.naturalWidth === 0)
             setFailedCameraId(camera.id);
-    }, [camera.id, isSnapshotCamera, snapshotFailed, snapshotVersion]);
+    }, [camera.id, isSnapshotCamera, snapshotFailed, snapshotBucket]);
     const text = cameraPageText[siteLocale];
     const isAirport = camera.id === 'madeira-airport';
     const region = translateCameraLabel(siteLocale, displayCamera.region);
     const previewLabel = cameraPreviewLabel(siteLocale);
-    const snapshotUrl = `/api/camera-snapshot?id=${encodeURIComponent(camera.id)}&v=${snapshotVersion}`;
+    const snapshotUrl = snapshotBucket === null
+        ? `/api/camera-snapshot?id=${encodeURIComponent(camera.id)}`
+        : `/api/camera-snapshot?id=${encodeURIComponent(camera.id)}&t=${snapshotBucket}`;
     const rawPageTitle = isAirport ? text.airportTitle : text.title(localize(displayCamera.name));
     const rawDescription = isAirport ? text.airportDescription : text.description(localize(displayCamera.name), region);
     const pageTitle = fitSeoTitle(localize(rawPageTitle));
@@ -89,7 +94,7 @@ export default function CameraPage({ camera, nearby }: CameraPageProps) {
             <div className="flex min-w-0 flex-col gap-4">
               <div className="aspect-video overflow-hidden rounded-xl bg-slate-900">
                 {displayCamera.youtubeId ? (<iframe key={displayCamera.youtubeId} className="h-full w-full" src={`https://www.youtube.com/embed/${displayCamera.youtubeId}?autoplay=0&mute=1`} title={`${localize(displayCamera.name)} ${localize(messages.cameraCard.liveStreamTitleSuffix)}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>) : (<div className="relative h-full overflow-hidden">
-                    <img ref={snapshotImageRef} key={camera.id} src={isSnapshotCamera && !snapshotFailed ? snapshotUrl : FALLBACK_CAMERA_IMAGE} alt={isSnapshotCamera && !snapshotFailed ? localize(`${localize(displayCamera.name)} — ${previewLabel}`) : ''} aria-hidden={!isSnapshotCamera || snapshotFailed} className="absolute inset-0 h-full w-full object-cover" onError={() => setFailedCameraId(camera.id)}/>
+                    <img ref={snapshotImageRef} key={camera.id} src={isSnapshotCamera && !snapshotFailed ? snapshotUrl : FALLBACK_CAMERA_IMAGE} alt={isSnapshotCamera && !snapshotFailed ? localize(`${localize(displayCamera.name)} — ${previewLabel}`) : ''} aria-hidden={!isSnapshotCamera || snapshotFailed} decoding="async" className="absolute inset-0 h-full w-full object-cover" onError={() => setFailedCameraId(camera.id)}/>
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/20 to-navy/15"/>
                     {isSnapshotCamera && !snapshotFailed && <div className="absolute left-3 top-3 z-10 rounded-full bg-navy/75 px-3 py-1 text-xs font-semibold text-white backdrop-blur sm:left-4 sm:top-4">{localize(previewLabel)}</div>}
                     <div className="relative z-10 flex h-full flex-col items-center justify-end gap-3 p-4 text-center sm:p-6">
