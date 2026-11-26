@@ -4,6 +4,7 @@ import { normalizeAirportWeather, type AirportWeather } from '../../lib/airportW
 let cache: AirportWeather | undefined;
 let pending: Promise<AirportWeather> | undefined;
 let retryAt = 0;
+const CACHE_TTL_MS = 600_000;
 async function fetchObservation(): Promise<AirportWeather> {
   const response = await fetch('https://aviationweather.gov/api/data/metar?ids=LPMA&format=json', {
     headers: { 'User-Agent': 'MadeiraLiveCams/1.0 (https://madeiralivecams.com)', Accept: 'application/json' },
@@ -18,11 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); return res.status(405).json({ error: 'method_not_allowed' }); }
   try {
     if (Date.now() < retryAt) throw new Error('Retry later');
-    if (!cache || Date.now() - Date.parse(cache.fetchedAt) >= 300_000) {
+    if (!cache || Date.now() - Date.parse(cache.fetchedAt) >= CACHE_TTL_MS) {
       if (!pending) pending = fetchObservation().finally(() => { pending = undefined; });
       await pending;
     }
-    res.setHeader('Cache-Control', 'public, max-age=30, s-maxage=60');
+    res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=600, stale-while-revalidate=600');
+    res.setHeader('CDN-Cache-Control', 'public, s-maxage=600, stale-while-revalidate=600');
     return res.status(200).json(cache);
   } catch {
     if (Date.now() >= retryAt) retryAt = Date.now() + 60_000;

@@ -3,6 +3,8 @@ import type { AirportUpdates } from '../lib/airportUpdates';
 import { airportUpdatesText } from '../lib/i18n/airportUpdates';
 import type { Locale } from '../lib/i18n/config';
 
+const REFRESH_MS = 600_000;
+
 export default function AirportUpdatesPanel({ locale }: { locale: Locale }) {
   const text = airportUpdatesText(locale);
   const [data, setData] = useState<AirportUpdates | null>(null);
@@ -11,8 +13,10 @@ export default function AirportUpdatesPanel({ locale }: { locale: Locale }) {
   useEffect(() => {
     let stopped = false;
     let active: AbortController | null = null;
+    let lastAttempt = 0;
     async function load() {
       if (active) return;
+      lastAttempt = Date.now();
       const controller = new AbortController();
       active = controller;
       const timeout = window.setTimeout(() => controller.abort(), 12000);
@@ -29,9 +33,9 @@ export default function AirportUpdatesPanel({ locale }: { locale: Locale }) {
         active = null;
       }
     }
-    const refresh = () => { if (!document.hidden) void load(); };
+    const refresh = () => { if (!document.hidden && Date.now() - lastAttempt >= REFRESH_MS) void load(); };
     void load();
-    const timer = window.setInterval(refresh, 300000);
+    const timer = window.setInterval(refresh, REFRESH_MS);
     document.addEventListener('visibilitychange', refresh);
     return () => { stopped = true; active?.abort(); window.clearInterval(timer); document.removeEventListener('visibilitychange', refresh); };
   }, []);

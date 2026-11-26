@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { parseAirportNews, parseAirportWarnings, type AirportUpdates } from '../../lib/airportUpdates';
 let cache: AirportUpdates | undefined;
 let pending: Promise<AirportUpdates> | undefined;
+const CACHE_TTL_MS = 600_000;
 async function read(url: string) {
   const response = await fetch(url, { signal: AbortSignal.timeout(8000), headers: { 'User-Agent': 'MadeiraLiveCams/1.0 (+https://madeiralivecams.com)' } });
   if (!response.ok) throw new Error('Source unavailable');
@@ -19,10 +20,11 @@ async function collect(): Promise<AirportUpdates> {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('X-Robots-Tag', 'noindex');
   if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); return res.status(405).end(); }
-  if (!cache || Date.now() - Date.parse(cache.fetchedAt) >= 300_000) {
+  if (!cache || Date.now() - Date.parse(cache.fetchedAt) >= CACHE_TTL_MS) {
     if (!pending) pending = collect().then(result => { cache = result; return result; }).finally(() => { pending = undefined; });
     await pending;
   }
-  res.setHeader('Cache-Control', 'public, max-age=30, s-maxage=60');
+  res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=600, stale-while-revalidate=600');
+  res.setHeader('CDN-Cache-Control', 'public, s-maxage=600, stale-while-revalidate=600');
   return res.status(200).json(cache);
 }
