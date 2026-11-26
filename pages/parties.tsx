@@ -18,6 +18,7 @@ const visibleCategories = categories.filter(category => category !== 'Talks');
 const detailLabels = { en: 'Details', uk: 'Деталі', pt: 'Detalhes', de: 'Details', fr: 'Détails', es: 'Detalles', pl: 'Szczegóły' };
 const icons: Record<string, string> = { Festivals: '✦', Music: '♫', Nightlife: '◒', Sport: '⚑', Racing: '🏁', Food: '♨', Culture: '◇' };
 const artwork: Record<string, string> = { Nightlife: 'madeira-nightlife', Music: 'madeira-festival', Festivals: 'madeira-festivals-day', Sport: 'madeira-sport', Racing: 'madeira-racing', Food: 'madeira-food', Culture: 'madeira-culture' };
+const EVENTS_REFRESH_MS = 12 * 60 * 60_000;
 function EventBackground({ event }: {
     event: ImportedEvent;
 }) {
@@ -43,41 +44,37 @@ export default function PartiesPage({ initialFeed }: {
         // Keep expired events hidden even when the cached page crosses Madeira midnight.
         const updateDay = () => setToday(madeiraDate());
         updateDay();
-        const timer = setInterval(updateDay, 30000);
+        const timer = setInterval(updateDay, 60_000);
         document.addEventListener('visibilitychange', updateDay);
         return () => { clearInterval(timer); document.removeEventListener('visibilitychange', updateDay); };
     }, []);
     useEffect(() => {
         setFeed(initialFeed);
         setConnectionError(false);
+        const generatedAtMs = Date.parse(initialFeed.generatedAt);
+        if (Number.isFinite(generatedAtMs) && Date.now() - generatedAtMs < EVENTS_REFRESH_MS)
+            return;
         const controller = new AbortController();
-        let timer: ReturnType<typeof setTimeout>;
         const refresh = async () => {
-            if (controller.signal.aborted)
-                return;
-            if (!document.hidden) {
-                try {
-                    const response = await fetch(`/api/events?locale=${siteLocale}`, { signal: controller.signal });
-                    if (!response.ok)
-                        throw new Error('Unavailable');
-                    const data: EventFeed = await response.json();
-                    if (data.locale !== siteLocale || !Array.isArray(data.events) || !Array.isArray(data.sources))
-                        throw new Error('Invalid feed');
-                    if (!controller.signal.aborted) {
-                        setFeed(data);
-                        setConnectionError(false);
-                    }
-                }
-                catch {
-                    if (!controller.signal.aborted)
-                        setConnectionError(true);
+            try {
+                const response = await fetch(`/api/events?locale=${siteLocale}`, { signal: controller.signal });
+                if (!response.ok)
+                    throw new Error('Unavailable');
+                const data: EventFeed = await response.json();
+                if (data.locale !== siteLocale || !Array.isArray(data.events) || !Array.isArray(data.sources))
+                    throw new Error('Invalid feed');
+                if (!controller.signal.aborted) {
+                    setFeed(data);
+                    setConnectionError(false);
                 }
             }
-            if (!controller.signal.aborted)
-                timer = setTimeout(refresh, 60000);
+            catch {
+                if (!controller.signal.aborted)
+                    setConnectionError(true);
+            }
         };
-        timer = setTimeout(refresh, 1500);
-        return () => { controller.abort(); clearTimeout(timer); };
+        void refresh();
+        return () => { controller.abort(); };
     }, [siteLocale, initialFeed]);
     const visibleEvents = feed.events.filter(event => event.category !== 'Talks' && event.end >= today);
     const filtered = filterEvents(visibleEvents, { today, municipality, category, dateRange }) as ImportedEvent[];
@@ -131,11 +128,11 @@ export default function PartiesPage({ initialFeed }: {
     </div>
   </Layout>;
 }
-// Generate all locales at build time; ISR serves existing HTML while refreshing it.
+// Generate all locales at build time; ISR serves existing HTML while refreshing twice daily.
 export const getStaticProps = withStaticTranslations(async ({ locale }) => {
     const initialFeed = await getEventFeed(isSupportedLocale(locale) ? locale : 'en');
     // A complete upstream outage must not replace the last usable ISR page.
     if (initialFeed.sources.every(source => source.status === 'unavailable'))
         throw new Error('All event sources unavailable');
-    return { props: { initialFeed }, revalidate: 300 };
+    return { props: { initialFeed }, revalidate: 43200 };
 }, '/parties');
