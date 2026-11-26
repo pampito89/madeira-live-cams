@@ -10,7 +10,19 @@ const ALLOWED_CAMERA_HOSTS = new Set([
 ]);
 
 const SNAPSHOT_MAX_WIDTH = 800;
-const SNAPSHOT_JPEG_QUALITY = 78;
+const SNAPSHOT_JPEG_QUALITY = 75;
+const SNAPSHOT_CACHE_TTL_MS = 300_000;
+const UPSTREAM_TIMEOUT_MS = 8_000;
+const MAX_MEMORY_CACHE_ENTRIES = 40;
+
+type CachedSnapshot = {
+  buffer: Buffer;
+  contentType: string;
+  expiresAt: number;
+};
+
+const snapshotCache = new Map<string, CachedSnapshot>();
+const pendingSnapshots = new Map<string, Promise<CachedSnapshot>>();
 
 function getImageUrlFromCameraPage(
   pageHtml: string,
@@ -78,10 +90,97 @@ async function optimizeSnapshotBuffer(
   };
 }
 
+function writeMemoryCache(cameraId: string, entry: CachedSnapshot) {
+  if (snapshotCache.size >= MAX_MEMORY_CACHE_ENTRIES && !snapshotCache.has(cameraId)) {
+    const oldestKey = snapshotCache.keys().next().value;
+    if (oldestKey) {
+      snapshotCache.delete(oldestKey);
+    }
+  }
+  snapshotCache.set(cameraId, entry);
+}
+
+async function fetchCameraSnapshot(
+  cameraId: string,
+  sourceUrl: string
+): Promise<CachedSnapshot> {
+  const cameraPageResponse = await fetch(sourceUrl, {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeiralivecams.com)',
+      Accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    },
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+  });
+
+  if (!cameraPageResponse.ok) {
+    throw new Error('Could not load the camera source page');
+  }
+
+  const cameraPageHtml = await cameraPageResponse.text();
+
+  const snapshotImageUrl = getImageUrlFromCameraPage(
+    cameraPageHtml,
+    sourceUrl
+  );
+
+  if (!snapshotImageUrl) {
+    throw new Error('Could not find the current camera image');
+  }
+
+  const snapshotImageUrlObject = new URL(snapshotImageUrl);
+
+  if (!ALLOWED_CAMERA_HOSTS.has(snapshotImageUrlObject.hostname)) {
+    throw new Error('The camera image is from an unsupported host');
+  }
+
+  const snapshotResponse = await fetch(snapshotImageUrl, {
+    headers: {
+      Referer: sourceUrl,
+      'User-Agent':
+        'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeiralivecams.com)',
+      Accept:
+        'image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5',
+    },
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+  });
+
+  if (!snapshotResponse.ok) {
+    throw new Error('Could not load the current camera image');
+  }
+
+  const originalContentType =
+    snapshotResponse.headers.get('content-type') || 'image/jpeg';
+
+  const rawImageBuffer = Buffer.from(await snapshotResponse.arrayBuffer());
+  const { buffer, contentType } = await optimizeSnapshotBuffer(
+    rawImageBuffer,
+    originalContentType
+  );
+
+  const entry: CachedSnapshot = {
+    buffer,
+    contentType,
+    expiresAt: Date.now() + SNAPSHOT_CACHE_TTL_MS,
+  };
+
+  writeMemoryCache(cameraId, entry);
+  return entry;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    res.setHeader('Allow', 'GET, HEAD');
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
   const cameraId = typeof req.query.id === 'string' ? req.query.id : '';
 
   const camera = cameras.find((item) => item.id === cameraId);
@@ -116,80 +215,41 @@ export default async function handler(
   }
 
   try {
-    const cameraPageResponse = await fetch(camera.sourceUrl, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeira-live-cams.vercel.app)',
-        Accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      },
-    });
+    const cached = snapshotCache.get(camera.id);
+    let snapshot: CachedSnapshot;
 
-    if (!cameraPageResponse.ok) {
-      res.status(502).json({
-        error: 'Could not load the camera source page',
-      });
-      return;
+    if (cached && cached.expiresAt > Date.now()) {
+      snapshot = cached;
+    } else {
+      let pending = pendingSnapshots.get(camera.id);
+      if (!pending) {
+        pending = fetchCameraSnapshot(camera.id, camera.sourceUrl).finally(() => {
+          pendingSnapshots.delete(camera.id);
+        });
+        pendingSnapshots.set(camera.id, pending);
+      }
+      snapshot = await pending;
     }
 
-    const cameraPageHtml = await cameraPageResponse.text();
-
-    const snapshotImageUrl = getImageUrlFromCameraPage(
-      cameraPageHtml,
-      camera.sourceUrl
-    );
-
-    if (!snapshotImageUrl) {
-      res.status(502).json({
-        error: 'Could not find the current camera image',
-      });
-      return;
-    }
-
-    const snapshotImageUrlObject = new URL(snapshotImageUrl);
-
-    if (!ALLOWED_CAMERA_HOSTS.has(snapshotImageUrlObject.hostname)) {
-      res.status(502).json({
-        error: 'The camera image is from an unsupported host',
-      });
-      return;
-    }
-
-    const snapshotResponse = await fetch(snapshotImageUrl, {
-      headers: {
-        Referer: camera.sourceUrl,
-        'User-Agent':
-          'Mozilla/5.0 (compatible; MadeiraLiveCams/1.0; +https://madeira-live-cams.vercel.app)',
-        Accept:
-          'image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5',
-      },
-    });
-
-    if (!snapshotResponse.ok) {
-      res.status(502).json({
-        error: 'Could not load the current camera image',
-      });
-      return;
-    }
-
-    const originalContentType =
-      snapshotResponse.headers.get('content-type') || 'image/jpeg';
-
-    const rawImageBuffer = Buffer.from(await snapshotResponse.arrayBuffer());
-    const { buffer: outputBuffer, contentType } = await optimizeSnapshotBuffer(
-      rawImageBuffer,
-      originalContentType
-    );
-
-    res.setHeader('Content-Type', contentType);
-    res.setHeader('Content-Length', String(outputBuffer.length));
+    res.setHeader('Content-Type', snapshot.contentType);
+    res.setHeader('Content-Length', String(snapshot.buffer.length));
     res.setHeader(
       'Cache-Control',
-      'public, s-maxage=60, stale-while-revalidate=300'
+      'public, max-age=300, s-maxage=300, stale-while-revalidate=600'
+    );
+    res.setHeader(
+      'CDN-Cache-Control',
+      'public, s-maxage=300, stale-while-revalidate=600'
     );
 
-    res.status(200).send(outputBuffer);
+    if (req.method === 'HEAD') {
+      res.status(200).end();
+      return;
+    }
+
+    res.status(200).send(snapshot.buffer);
   } catch {
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=30');
     res.status(502).json({
       error: 'Unable to load the live camera preview',
     });
