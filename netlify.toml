@@ -4,3 +4,413 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[headers]]
+  for = "/images/optimized/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Netlify Next.js runtime does not support next.config.mjs rewrites pointing
+# to static files in public/. Serve optimized WebP files at the CDN edge.
+
+[[redirects]]
+  from = "/images/cameras/madeira-camera-2.png"
+  to = "/images/optimized/cameras/madeira-camera-2-a573d51ae4-711.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-culture.jpg"
+  to = "/images/optimized/events/madeira-culture-3db5031118-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-evening.jpg"
+  to = "/images/optimized/events/madeira-evening-2c27592021-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-festival.jpg"
+  to = "/images/optimized/events/madeira-festival-ba5baf8665-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-festivals-day.jpg"
+  to = "/images/optimized/events/madeira-festivals-day-05c4feb24a-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-food.jpg"
+  to = "/images/optimized/events/madeira-food-4b4d83691d-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-nightlife.jpg"
+  to = "/images/optimized/events/madeira-nightlife-b39f8a0844-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-racing.jpg"
+  to = "/images/optimized/events/madeira-racing-8080754cf8-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/events/madeira-sport.jpg"
+  to = "/images/optimized/events/madeira-sport-ee6ceb0a78-960.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/activity-adrenaline-xtreme-adventures.webp"
+  to = "/images/optimized/explore/activity-adrenaline-xtreme-adventures-0189d5b48a-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/activity-h2o-madeira.webp"
+  to = "/images/optimized/explore/activity-h2o-madeira-dc2faab93a-580.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/activity-madeira-sea-emotions.webp"
+  to = "/images/optimized/explore/activity-madeira-sea-emotions-340864d6ed-447.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/airport_madeira.jpg"
+  to = "/images/optimized/explore/airport_madeira-4eb0b4230e-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/anjos-waterfall.jpg"
+  to = "/images/optimized/explore/anjos-waterfall-a3a56eeae7-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/bica-da-cana.jpg"
+  to = "/images/optimized/explore/bica-da-cana-b017275057-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/cabo-girao-skywalk.jpg"
+  to = "/images/optimized/explore/cabo-girao-skywalk-734beac420-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/calheta-beach.jpg"
+  to = "/images/optimized/explore/calheta-beach-a569f52499-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/continente-modelo.jpg"
+  to = "/images/optimized/explore/continente-modelo-dd3105184b-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/cristo-rei.jpg"
+  to = "/images/optimized/explore/cristo-rei-92594b6e71-600.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/eira-da-achada.jpg"
+  to = "/images/optimized/explore/eira-da-achada-cc0c654ec6-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/eira-do-serrado.jpg"
+  to = "/images/optimized/explore/eira-do-serrado-b4101ef135-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/faja-dos-padres.jpg"
+  to = "/images/optimized/explore/faja-dos-padres-b019db4de4-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/fanal-forest.jpg"
+  to = "/images/optimized/explore/fanal-forest-15d2c180fa-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/funchal.jpg"
+  to = "/images/optimized/explore/funchal-c5329d1ae9-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/levada-do-furado.jpg"
+  to = "/images/optimized/explore/levada-do-furado-e4a0ea22f8-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/levada-nova-levada-do-moinho.jpg"
+  to = "/images/optimized/explore/levada-nova-levada-do-moinho-eb33ae1f1e-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/machico-beach.jpg"
+  to = "/images/optimized/explore/machico-beach-a64bcfb61b-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/mercado-dos-lavradores.jpg"
+  to = "/images/optimized/explore/mercado-dos-lavradores-bce6199907-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/miradouro-da-portela.jpg"
+  to = "/images/optimized/explore/miradouro-da-portela-0fc4c634e1-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/miradouro-do-guindaste.jpg"
+  to = "/images/optimized/explore/miradouro-do-guindaste-edb8138147-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/miradouro-sao-cristovao.jpg"
+  to = "/images/optimized/explore/miradouro-sao-cristovao-9746bd112c-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/miradouro-terra-grande.jpg"
+  to = "/images/optimized/explore/miradouro-terra-grande-a2aabdd52e-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/monte-palace-tropical-garden.jpg"
+  to = "/images/optimized/explore/monte-palace-tropical-garden-88781df6ad-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pico-da-murta.jpg"
+  to = "/images/optimized/explore/pico-da-murta-c87107808a-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pico-do-arieiro.jpg"
+  to = "/images/optimized/explore/pico-do-arieiro-5cf02fe1bb-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pico-do-facho.jpg"
+  to = "/images/optimized/explore/pico-do-facho-d2115b9574-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pico-grande.jpg"
+  to = "/images/optimized/explore/pico-grande-b06485efbc-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pico-ruivo.jpg"
+  to = "/images/optimized/explore/pico-ruivo-e22543a11a-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pingo-doce.jpg"
+  to = "/images/optimized/explore/pingo-doce-90e8cd5feb-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/placeholder.jpg"
+  to = "/images/optimized/explore/placeholder-b7b1e79355-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/ponta-de-sao-lourenco.jpg"
+  to = "/images/optimized/explore/ponta-de-sao-lourenco-c4c319a9bf-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/ponta-do-pargo.jpg"
+  to = "/images/optimized/explore/ponta-do-pargo-6ca7eedd08-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/ponta-do-rosto.jpg"
+  to = "/images/optimized/explore/ponta-do-rosto-e828a615c4-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/porto-moniz-pools.jpg"
+  to = "/images/optimized/explore/porto-moniz-pools-9d5f599245-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr11-vereda-dos-balcoes.jpg"
+  to = "/images/optimized/explore/pr11-vereda-dos-balcoes-7d6b42c405-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr13-vereda-do-fanal.jpg"
+  to = "/images/optimized/explore/pr13-vereda-do-fanal-fec080965d-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr14-levada-dos-cedros.jpg"
+  to = "/images/optimized/explore/pr14-levada-dos-cedros-8ccac25b59-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr17-pinaculo-folhadal.jpg"
+  to = "/images/optimized/explore/pr17-pinaculo-folhadal-1210594e4a-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr18-levada-do-rei.jpg"
+  to = "/images/optimized/explore/pr18-levada-do-rei-36797202dc-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr5-vereda-das-funduras.jpg"
+  to = "/images/optimized/explore/pr5-vereda-das-funduras-35c02ab316-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr6-2-levada-do-alecrim.jpg"
+  to = "/images/optimized/explore/pr6-2-levada-do-alecrim-ae82461477-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr6-25-fontes.jpg"
+  to = "/images/optimized/explore/pr6-25-fontes-5ebc49acae-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr6-levada-do-risco.jpg"
+  to = "/images/optimized/explore/pr6-levada-do-risco-60a29d13ab-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/pr9.jpg"
+  to = "/images/optimized/explore/pr9-e10e7239a9-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/praia-do-porto-do-seixal.jpg"
+  to = "/images/optimized/explore/praia-do-porto-do-seixal-bef3da2414-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/prainha-do-canical.jpg"
+  to = "/images/optimized/explore/prainha-do-canical-4e9a468af0-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/ribeira-da-janela.jpg"
+  to = "/images/optimized/explore/ribeira-da-janela-35e6f2271c-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/santana-houses.jpg"
+  to = "/images/optimized/explore/santana-houses-c467083f42-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/explore/veu-da-noiva.jpg"
+  to = "/images/optimized/explore/veu-da-noiva-a64f9e6723-640.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/locations-sao-lourenco.jpg"
+  to = "/images/optimized/locations-sao-lourenco-63a1247232-1440.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/madeira-coast-heading-v1.png"
+  to = "/images/optimized/madeira-coast-heading-v1-4f6e5da069-1440.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/oleksandr.png"
+  to = "/images/optimized/oleksandr-8f62867f11-200.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/pico-radar-desktop.png"
+  to = "/images/optimized/pico-radar-desktop-574c58c77f-1376.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/pico-radar-mobile.png"
+  to = "/images/optimized/pico-radar-mobile-d570f317d3-768.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/trail-hikers-desktop.jpg"
+  to = "/images/optimized/trail-hikers-desktop-6c8d01de69-1440.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/trail-hikers-mobile.jpg"
+  to = "/images/optimized/trail-hikers-mobile-c5cbfbcf1f-1086.webp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/images/trip-plan-map.jpg"
+  to = "/images/optimized/trip-plan-map-2a802a5bf4-1440.webp"
+  status = 200
+  force = true
