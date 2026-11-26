@@ -35,7 +35,7 @@ export async function withFlightStore<T>(apiKey: string, run: (state: FlightStor
     }
   }
   // Serverless disks cannot enforce a shared budget. Fail closed until Redis is configured.
-  if (process.env.VERCEL) throw new Error('Shared flight storage required');
+  if (process.env.VERCEL || process.env.NETLIFY) throw new Error('Shared flight storage required');
   const directory = path.join(process.cwd(), 'backups', 'airport-flight-cache');
   await fs.mkdir(directory, { recursive: true });
   const file = path.join(directory, `${id}.json`);
