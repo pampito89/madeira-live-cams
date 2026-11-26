@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { freshStatus, type LocationStatus, type LocationStatusFeed } from './locationStatus';
 
 const CACHE_KEY = 'madeira:location-status:v1';
+const CLIENT_REUSE_MS = 12 * 60 * 60_000;
 type Statuses = Record<string, LocationStatus>;
 function clean(input: unknown): Statuses {
   const result: Statuses = {};
@@ -13,18 +14,41 @@ function clean(input: unknown): Statuses {
   }
   return result;
 }
+function readSessionCache(): Statuses | null {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = clean(JSON.parse(raw));
+    const entries = Object.values(parsed);
+    if (!entries.length) return null;
+    const newest = Math.max(...entries.map(entry => Date.parse(entry.checkedAt)));
+    return Number.isFinite(newest) && Date.now() - newest < CLIENT_REUSE_MS ? parsed : null;
+  } catch {
+    return null;
+  }
+}
 
 export function useLocationStatuses(initialStatuses: Statuses, refreshOnMount = false) {
   const [statuses, setStatuses] = useState<Statuses>(initialStatuses);
   useEffect(() => {
     let active = true;
-    let busy = false;
     const controller = new AbortController();
-    setStatuses(clean(initialStatuses));
-    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(clean(initialStatuses))); } catch { /* Storage is optional. */ }
+    const cleanedInitial = clean(initialStatuses);
+    if (Object.keys(cleanedInitial).length > 0) {
+      setStatuses(cleanedInitial);
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(cleanedInitial)); } catch { /* Storage is optional. */ }
+      return () => { active = false; controller.abort(); };
+    }
+    const cached = readSessionCache();
+    if (cached) {
+      setStatuses(cached);
+      return () => { active = false; controller.abort(); };
+    }
+    if (!refreshOnMount) {
+      setStatuses({});
+      return () => { active = false; controller.abort(); };
+    }
     const load = async () => {
-      if (busy || document.visibilityState === 'hidden') return;
-      busy = true;
       try {
         const response = await fetch('/api/location-status', { signal: controller.signal });
         if (!response.ok) throw new Error('Status source unavailable');
@@ -38,22 +62,12 @@ export function useLocationStatuses(initialStatuses: Statuses, refreshOnMount = 
           setStatuses({});
           try { sessionStorage.removeItem(CACHE_KEY); } catch { /* Storage is optional. */ }
         }
-      } finally { busy = false; }
+      }
     };
-    const wake = () => { setStatuses(previous => clean(previous)); void load(); };
-    // Static catalogues load live status after rendering; detail pages retain their server snapshot.
-    if (refreshOnMount) void load();
-    const polling = window.setInterval(wake, 60_000);
-    const expiry = window.setInterval(() => setStatuses(previous => clean(previous)), 10_000);
-    document.addEventListener('visibilitychange', wake);
-    window.addEventListener('online', wake);
+    void load();
     return () => {
       active = false;
       controller.abort();
-      window.clearInterval(polling);
-      window.clearInterval(expiry);
-      document.removeEventListener('visibilitychange', wake);
-      window.removeEventListener('online', wake);
     };
   }, [initialStatuses, refreshOnMount]);
   return statuses;
