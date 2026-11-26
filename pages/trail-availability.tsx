@@ -37,7 +37,8 @@ export const getServerSideProps: GetServerSideProps<Props> = withServerTranslati
             ?? trails.find(item => item.available !== false);
         const requestedPeriod = typeof query.days === 'string' && ['7', '14', '30', '60'].includes(query.days) ? Number(query.days) : 30;
         if (!hasCustomQuery) {
-            res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=3600');
+            res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=900, stale-while-revalidate=3600');
+            res.setHeader('CDN-Cache-Control', 'public, s-maxage=900, stale-while-revalidate=3600');
         }
         return { props: {
             trails, initialDate, catalogUnavailable: false,

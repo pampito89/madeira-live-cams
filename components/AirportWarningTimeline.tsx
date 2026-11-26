@@ -5,6 +5,7 @@ import { airportTimelineText } from '../lib/i18n/airportTimeline';
 import type { Locale } from '../lib/i18n/config';
 
 const hour = 3_600_000;
+const REFRESH_MS = 600_000;
 const types = ['Trovoada', 'Agitação Marítima', 'Precipitação', 'Vento', 'Neve', 'Tempo Frio', 'Tempo Quente', 'Nevoeiro'];
 const colors = { yellow: 'bg-yellow-300 text-slate-900', orange: 'bg-orange-500 text-slate-950', red: 'bg-red-700 text-white' };
 const severity = { yellow: 1, orange: 2, red: 3 };
@@ -19,8 +20,10 @@ export default function AirportWarningTimeline({ locale }: { locale: Locale }) {
   useEffect(() => {
     let stopped = false;
     let active: AbortController | null = null;
+    let lastAttempt = 0;
     async function load() {
       if (active) return;
+      lastAttempt = Date.now();
       const controller = new AbortController();
       active = controller;
       const timeout = window.setTimeout(() => controller.abort(), 12_000);
@@ -39,13 +42,13 @@ export default function AirportWarningTimeline({ locale }: { locale: Locale }) {
       }
     }
     void load();
-    const refresh = () => { setNow(Date.now()); if (!document.hidden) void load(); };
-    const timer = window.setInterval(refresh, 300_000);
+    const refresh = () => { setNow(Date.now()); if (!document.hidden && Date.now() - lastAttempt >= REFRESH_MS) void load(); };
+    const timer = window.setInterval(refresh, REFRESH_MS);
     document.addEventListener('visibilitychange', refresh);
     return () => { stopped = true; active?.abort(); window.clearInterval(timer); document.removeEventListener('visibilitychange', refresh); };
   }, []);
 
-  const available = data && now - Date.parse(data.fetchedAt) < 900_000 && Date.parse(data.fetchedAt) <= now + 60_000;
+  const available = data && now - Date.parse(data.fetchedAt) < 1_800_000 && Date.parse(data.fetchedAt) <= now + 60_000;
   const start = data ? Date.parse(data.fetchedAt) : 0;
   const end = start + 72 * hour;
   const format = (value: number) => new Intl.DateTimeFormat(locale, { timeZone: 'UTC', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(value);
