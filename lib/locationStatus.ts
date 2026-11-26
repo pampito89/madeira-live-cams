@@ -1,5 +1,5 @@
 export const IFCN_STATUS_URL = 'https://ifcn.madeira.gov.pt/pt/atividades-de-natureza/percursos-pedestres-recomendados/percursos-pedestres-recomendados.html';
-export const STATUS_MAX_AGE = 5 * 60_000;
+export const STATUS_MAX_AGE = 24 * 60 * 60_000;
 export type LocationState = 'open' | 'closed' | 'restricted' | 'maintenance' | 'unknown';
 export type LocationStatus = { state: LocationState; checkedAt: string; source: string; detail: string };
 export type LocationStatusFeed = { checkedAt: string; statuses: Record<string, LocationStatus> };

@@ -6,7 +6,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.setHeader('X-Robots-Tag', 'noindex');
   try {
     const feed = await getLocationStatusFeed();
-    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=60');
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=43200');
+    res.setHeader('CDN-Cache-Control', 'public, s-maxage=43200, stale-while-revalidate=43200');
     return res.status(200).json(feed);
   } catch {
     res.setHeader('Cache-Control', 'no-store');

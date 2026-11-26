@@ -37,7 +37,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     '</urlset>',
   ].join('\n');
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
+  res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
+  res.setHeader('CDN-Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800');
   res.end(xml);
   return { props: {} };
 };

@@ -1,5 +1,7 @@
 import { IFCN_STATUS_URL, parseIfcnStatuses, type LocationStatusFeed } from './locationStatus';
 
+export const LOCATION_STATUS_CACHE_MS = 12 * 60 * 60_000;
+
 let cached: LocationStatusFeed | undefined;
 let pending: Promise<LocationStatusFeed> | undefined;
 let retryAt = 0;
@@ -16,7 +18,7 @@ async function refresh(): Promise<LocationStatusFeed> {
 
 // Shared by the initial server-rendered page and browser refreshes.
 export async function getLocationStatusFeed(): Promise<LocationStatusFeed> {
-  if (cached && Date.now() - Date.parse(cached.checkedAt) < 60_000) return cached;
+  if (cached && Date.now() - Date.parse(cached.checkedAt) < LOCATION_STATUS_CACHE_MS) return cached;
   if (Date.now() < retryAt) throw new Error('IFCN retry pending');
   pending ??= refresh().catch(error => {
     retryAt = Date.now() + 30_000;
