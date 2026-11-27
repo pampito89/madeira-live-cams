@@ -100,7 +100,7 @@ export const cameras: Camera[] = [
     {
         id: 'calheta-beach', name: { en: 'Calheta Beach', uk: 'Пляж Кальєта' },
         region: { en: 'South Coast', uk: 'Південне узбережжя' }, category: ['Beaches', 'South Coast'],
-        latitude: 32.7189, longitude: -17.1744, sourceUrl: 'https://www.youtube.com/watch?v=4dbXjCzI5FU', youtubeId: '4dbXjCzI5FU',
+        latitude: 32.7189, longitude: -17.1744, sourceUrl: 'https://www.youtube.com/watch?v=4dbXjCzI5FU', youtubeId: '-fYPQ44qgXM',
     },
     {
         id: 'doca-do-cavacas', name: { en: 'Doca do Cavacas Pools', uk: 'Басейни Дока-ду-Кавакаш' },
