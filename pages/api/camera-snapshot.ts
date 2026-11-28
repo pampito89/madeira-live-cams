@@ -14,6 +14,7 @@ const SNAPSHOT_JPEG_QUALITY = 75;
 const SNAPSHOT_CACHE_TTL_MS = 300_000;
 const UPSTREAM_TIMEOUT_MS = 8_000;
 const MAX_MEMORY_CACHE_ENTRIES = 40;
+const CDN_CACHE_CONTROL = 'public, s-maxage=300, stale-while-revalidate=600';
 
 type CachedSnapshot = {
   buffer: Buffer;
@@ -146,12 +147,11 @@ async function fetchCameraSnapshot(
     signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   });
 
-  if (!snapshotResponse.ok) {
+  const originalContentType = snapshotResponse.headers.get('content-type') || '';
+
+  if (!snapshotResponse.ok || !originalContentType.toLowerCase().startsWith('image/')) {
     throw new Error('Could not load the current camera image');
   }
-
-  const originalContentType =
-    snapshotResponse.headers.get('content-type') || 'image/jpeg';
 
   const rawImageBuffer = Buffer.from(await snapshotResponse.arrayBuffer());
   const { buffer, contentType } = await optimizeSnapshotBuffer(
@@ -174,6 +174,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  // Preserve camera identity and refresh buckets in Netlify's cache key,
+  // including legacy query-based clients. Use the same policy on all responses.
+  res.setHeader('Netlify-Vary', 'query=id|t|v');
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('CDN-Cache-Control', 'no-store');
+  res.setHeader('Netlify-CDN-Cache-Control', 'no-store');
 
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.setHeader('Allow', 'GET, HEAD');
@@ -233,14 +239,13 @@ export default async function handler(
 
     res.setHeader('Content-Type', snapshot.contentType);
     res.setHeader('Content-Length', String(snapshot.buffer.length));
+    res.setHeader('X-Camera-Id', camera.id);
     res.setHeader(
       'Cache-Control',
       'public, max-age=300, s-maxage=300, stale-while-revalidate=600'
     );
-    res.setHeader(
-      'CDN-Cache-Control',
-      'public, s-maxage=300, stale-while-revalidate=600'
-    );
+    res.setHeader('CDN-Cache-Control', CDN_CACHE_CONTROL);
+    res.setHeader('Netlify-CDN-Cache-Control', CDN_CACHE_CONTROL);
 
     if (req.method === 'HEAD') {
       res.status(200).end();
@@ -249,7 +254,6 @@ export default async function handler(
 
     res.status(200).send(snapshot.buffer);
   } catch {
-    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=30');
     res.status(502).json({
       error: 'Unable to load the live camera preview',
     });

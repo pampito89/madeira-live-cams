@@ -5,6 +5,13 @@ const previewLabels: Record<Locale, string> = {
   fr: 'Dernier aperçu en direct', es: 'Última vista en directo', pl: 'Najnowszy podgląd na żywo', uk: 'Останній кадр трансляції',
 };
 
+const previewUnavailableLabels: Record<Locale, string> = {
+  en: 'Preview temporarily unavailable', pt: 'Pré-visualização temporariamente indisponível',
+  de: 'Vorschau vorübergehend nicht verfügbar', fr: 'Aperçu temporairement indisponible',
+  es: 'Vista previa temporalmente no disponible', pl: 'Podgląd chwilowo niedostępny',
+  uk: 'Перегляд тимчасово недоступний',
+};
+
 const labelMaps: Record<Locale, Record<string, string>> = {
   en: {},
   pt: { Mountains: 'Montanhas', Beaches: 'Praias', Towns: 'Localidades', 'North Coast': 'Costa norte', 'South Coast': 'Costa sul', 'East Coast': 'Costa leste', 'Sunrise spots': 'Locais para o nascer do sol', 'Central Mountains': 'Montanhas centrais' },
@@ -17,6 +24,10 @@ const labelMaps: Record<Locale, Record<string, string>> = {
 
 export function cameraPreviewLabel(locale: Locale) {
   return previewLabels[locale];
+}
+
+export function cameraPreviewUnavailableLabel(locale: Locale) {
+  return previewUnavailableLabels[locale];
 }
 
 export function translateCameraLabel(locale: Locale, value: string) {
